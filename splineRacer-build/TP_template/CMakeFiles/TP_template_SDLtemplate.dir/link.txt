@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.o  -o TP_template_SDLtemplate ../glimac/libglimac.a -Wl,-Bstatic -lSDLmain -Wl,-Bdynamic -lSDL -lpthread /usr/lib/x86_64-linux-gnu/libGL.so.1 -lGLEW 

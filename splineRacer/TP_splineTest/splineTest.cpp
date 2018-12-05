@@ -19,9 +19,9 @@ int playerRotDirection = 0; //1 pour droite, -1 pour gauche
 
 glm::vec3 spline(float t) {
     return glm::vec3(
-        30*glm::perlin(glm::vec2(0.1*t)), 
-        30*glm::perlin(glm::vec2(-0.1*t)), 
-        30*glm::perlin(glm::vec2(0.1*t+100))
+        t+30*glm::perlin(glm::vec2(0.1*t)), 
+        t-30*glm::perlin(glm::vec2(-0.1*t)), 
+        t+30*glm::perlin(glm::vec2(0.1*t+100))
     );
 }
 
@@ -108,18 +108,18 @@ int main(int argc, char** argv) {
                     break;
             case SDL_KEYDOWN:
                 if (e.key.keysym.sym==113){ //q
-                    playerRotDirection = 1;
+                    playerRotDirection = -1;
                 }
                 if (e.key.keysym.sym==100){ //d
-                    playerRotDirection = -1;
+                    playerRotDirection = 1;
                 }
                 break;
 
             case SDL_KEYUP:
-                if (e.key.keysym.sym==113 && playerRotDirection ==1) { //q
+                if (e.key.keysym.sym==113 && playerRotDirection == -1) { //q
                     playerRotDirection = 0;
                 }
-                if (e.key.keysym.sym==100 && playerRotDirection == -1){ //d
+                if (e.key.keysym.sym==100 && playerRotDirection == 1){ //d
                     playerRotDirection = 0;
                 }
                 break;
@@ -146,7 +146,7 @@ int main(int argc, char** argv) {
         float camProgress = windowManager.getTime() * playerSpeed;
         playerAngle += playerRotSpeed * float(playerRotDirection);
         //float playerAngle = 0*windowManager.getTime();
-        float delta = 0.1; //used to calculate a derivate
+        float delta = 0.3; //used to calculate a derivate
 
         //translation of the camera folowing the spline
         glm::vec3 camPos = spline(camProgress);

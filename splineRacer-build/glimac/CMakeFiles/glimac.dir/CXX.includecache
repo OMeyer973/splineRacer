@@ -6,21 +6,21 @@
 
 #IncludeRegexTransform: 
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/BBox.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/BBox.hpp
 glm.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/glm.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/glm.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/Cone.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/Cone.hpp
 vector
 -
 common.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/common.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/common.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/FilePath.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/FilePath.hpp
 string
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/Geometry.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/Geometry.hpp
 glm/glm.hpp
 -
 vector
@@ -28,13 +28,13 @@ vector
 string
 -
 Image.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/Image.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/Image.hpp
 FilePath.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/FilePath.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/FilePath.hpp
 BBox.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/BBox.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/BBox.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/Image.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/Image.hpp
 vector
 -
 memory
@@ -42,47 +42,47 @@ memory
 unordered_map
 -
 glm.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/glm.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/glm.hpp
 FilePath.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/FilePath.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/FilePath.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/Program.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/Program.hpp
 GL/glew.h
 -
 Shader.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/Shader.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/Shader.hpp
 FilePath.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/FilePath.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/FilePath.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/SDLWindowManager.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/SDLWindowManager.hpp
 cstdint
 -
 SDL/SDL.h
 -
 glm.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/glm.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/glm.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/Shader.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/Shader.hpp
 GL/glew.h
 -
 string
 -
 FilePath.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/FilePath.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/FilePath.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/Sphere.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/Sphere.hpp
 vector
 -
 common.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/common.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/common.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/common.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/common.hpp
 GL/glew.h
 -
 glm.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/glm.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/glm.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/include/glimac/glm.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/include/glimac/glm.hpp
 glm/glm.hpp
 -
 glm/gtc/matrix_transform.hpp
@@ -96,7 +96,7 @@ glm/gtx/io.hpp
 glm/gtc/random.hpp
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/Cone.cpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/Cone.cpp
 cmath
 -
 vector
@@ -104,43 +104,43 @@ vector
 iostream
 -
 glimac/common.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/glimac/common.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/glimac/common.hpp
 glimac/Cone.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/glimac/Cone.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/glimac/Cone.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/Geometry.cpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/Geometry.cpp
 glimac/Geometry.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/glimac/Geometry.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/glimac/Geometry.hpp
 tiny_obj_loader.h
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/tiny_obj_loader.h
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/tiny_obj_loader.h
 iostream
 -
 algorithm
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/Image.cpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/Image.cpp
 glimac/Image.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/glimac/Image.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/glimac/Image.hpp
 stb_image.h
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/stb_image.h
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/stb_image.h
 iostream
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/Program.cpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/Program.cpp
 glimac/Program.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/glimac/Program.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/glimac/Program.hpp
 stdexcept
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/SDLWindowManager.cpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/SDLWindowManager.cpp
 glimac/SDLWindowManager.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/glimac/SDLWindowManager.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/glimac/SDLWindowManager.hpp
 iostream
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/Shader.cpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/Shader.cpp
 glimac/Shader.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/glimac/Shader.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/glimac/Shader.hpp
 fstream
 -
 stdexcept
@@ -150,7 +150,7 @@ string
 sstream
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/Sphere.cpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/Sphere.cpp
 cmath
 -
 vector
@@ -158,11 +158,11 @@ vector
 iostream
 -
 glimac/common.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/glimac/common.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/glimac/common.hpp
 glimac/Sphere.hpp
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/glimac/Sphere.hpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/glimac/Sphere.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/stb_image.h
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/stb_image.h
 stdio.h
 -
 math.h
@@ -184,7 +184,7 @@ stddef.h
 stdint.h
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/tiny_obj_loader.cpp
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/tiny_obj_loader.cpp
 cstdlib
 -
 cstring
@@ -202,9 +202,9 @@ fstream
 sstream
 -
 tiny_obj_loader.h
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/tiny_obj_loader.h
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/tiny_obj_loader.h
 
-/home/olivier/Documents/splineRunner/splineRacer/glimac/src/tiny_obj_loader.h
+/home/olivier/Documents/splineRacer/splineRacer/glimac/src/tiny_obj_loader.h
 string
 -
 vector
@@ -212,201 +212,201 @@ vector
 map
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/common.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/common.hpp
 detail/func_common.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_common.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_common.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_fixes.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_fixes.hpp
 cmath
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_swizzle.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_swizzle.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_swizzle_func.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_swizzle_func.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_vectorize.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_vectorize.hpp
 type_vec1.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec1.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec1.hpp
 type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_common.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_common.hpp
 setup.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/setup.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/setup.hpp
 precision.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/precision.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/precision.hpp
 type_int.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_int.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_int.hpp
 _fixes.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_fixes.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_fixes.hpp
 func_common.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_common.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_common.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_common.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_common.inl
 func_vector_relational.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_vector_relational.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_vector_relational.hpp
 type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 _vectorize.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_vectorize.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_vectorize.hpp
 limits
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_exponential.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_exponential.hpp
 type_vec1.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec1.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec1.hpp
 type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 cmath
 -
 func_exponential.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_exponential.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_exponential.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_exponential.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_exponential.inl
 func_vector_relational.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_vector_relational.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_vector_relational.hpp
 _vectorize.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_vectorize.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_vectorize.hpp
 limits
 -
 cassert
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_geometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_geometric.hpp
 type_vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 func_geometric.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_geometric.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_geometric.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_geometric.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_geometric.inl
 func_exponential.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_exponential.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_exponential.hpp
 func_common.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_common.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_common.hpp
 type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 type_float.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_float.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_float.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_integer.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_integer.hpp
 setup.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/setup.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/setup.hpp
 func_integer.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_integer.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_integer.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_integer.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_integer.inl
 type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 type_int.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_int.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_int.hpp
 _vectorize.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_vectorize.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_vectorize.hpp
 intrin.h
 -
 limits
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_matrix.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_matrix.hpp
 ../detail/precision.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/precision.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/precision.hpp
 ../detail/setup.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/setup.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/setup.hpp
 ../detail/type_mat.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 ../vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec2.hpp
 ../vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec3.hpp
 ../vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec4.hpp
 ../mat2x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x2.hpp
 ../mat2x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x3.hpp
 ../mat2x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x4.hpp
 ../mat3x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x2.hpp
 ../mat3x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x3.hpp
 ../mat3x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x4.hpp
 ../mat4x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x2.hpp
 ../mat4x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x3.hpp
 ../mat4x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x4.hpp
 func_matrix.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_matrix.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_matrix.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_matrix.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_matrix.inl
 ../geometric.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/geometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/geometric.hpp
 limits
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_packing.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_packing.hpp
 type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 func_packing.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_packing.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_packing.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_packing.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_packing.inl
 func_common.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_common.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_common.hpp
 type_half.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_half.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_half.hpp
 ../fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_trigonometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_trigonometric.hpp
 func_trigonometric.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_trigonometric.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_trigonometric.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_trigonometric.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_trigonometric.inl
 _vectorize.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_vectorize.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_vectorize.hpp
 cmath
 -
 limits
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_vector_relational.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_vector_relational.hpp
 precision.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/precision.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/precision.hpp
 setup.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/setup.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/setup.hpp
 func_vector_relational.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_vector_relational.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_vector_relational.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_vector_relational.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_vector_relational.inl
 limits
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/precision.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/precision.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/setup.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/setup.hpp
 cassert
 -
 cuda.h
@@ -424,255 +424,255 @@ pmmintrin.h
 emmintrin.h
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_float.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_float.hpp
 setup.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/setup.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/setup.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_half.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_half.hpp
 setup.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/setup.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/setup.hpp
 type_half.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_half.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_half.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_half.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_half.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_int.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_int.hpp
 setup.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/setup.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/setup.hpp
 cstdint
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 precision.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/precision.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/precision.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x2.hpp
 ../fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_mat.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 limits
 -
 type_mat2x2.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x2.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x2.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x2.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x2.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x3.hpp
 ../fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 type_mat.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 limits
 -
 type_mat2x3.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x3.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x3.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x3.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x3.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x4.hpp
 ../fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 type_mat.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 limits
 -
 type_mat2x4.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x4.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x4.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x4.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x4.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x2.hpp
 ../fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 type_mat.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 limits
 -
 type_mat3x2.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x2.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x2.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x2.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x2.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x3.hpp
 ../fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 type_vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 type_mat.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 limits
 -
 type_mat3x3.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x3.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x3.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x3.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x3.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x4.hpp
 ../fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 type_vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 type_mat.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 limits
 -
 type_mat3x4.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x4.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x4.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x4.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x4.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x2.hpp
 ../fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 type_mat.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 limits
 -
 type_mat4x2.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x2.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x2.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x2.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x2.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x3.hpp
 ../fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 type_vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 type_mat.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 limits
 -
 type_mat4x3.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x3.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x3.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x3.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x3.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x4.hpp
 ../fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 type_mat.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 limits
 -
 cstddef
 -
 type_mat4x4.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x4.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x4.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x4.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x4.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec.hpp
 precision.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/precision.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/precision.hpp
 type_int.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_int.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_int.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec1.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec1.hpp
 ../fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 type_vec.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec.hpp
 _swizzle.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_swizzle.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_swizzle.hpp
 _swizzle_func.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_swizzle_func.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_swizzle_func.hpp
 cstddef
 -
 type_vec1.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec1.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec1.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec1.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec1.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 type_vec.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec.hpp
 _swizzle.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_swizzle.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_swizzle.hpp
 _swizzle_func.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_swizzle_func.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_swizzle_func.hpp
 cstddef
 -
 type_vec2.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 type_vec.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec.hpp
 _swizzle.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_swizzle.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_swizzle.hpp
 _swizzle_func.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_swizzle_func.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_swizzle_func.hpp
 cstddef
 -
 type_vec3.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 setup.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/setup.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/setup.hpp
 type_vec.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec.hpp
 _swizzle.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_swizzle.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_swizzle.hpp
 _swizzle_func.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_swizzle_func.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_swizzle_func.hpp
 cstddef
 -
 type_vec4.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/exponential.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/exponential.hpp
 detail/func_exponential.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_exponential.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_exponential.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 detail/type_int.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_int.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_int.hpp
 detail/type_float.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_float.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_float.hpp
 detail/type_vec.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec.hpp
 detail/type_mat.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/geometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/geometric.hpp
 detail/func_geometric.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_geometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_geometric.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/glm.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/glm.hpp
 detail/_fixes.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/_fixes.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/_fixes.hpp
 cmath
 -
 climits
@@ -684,117 +684,117 @@ limits
 cassert
 -
 fwd.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/fwd.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/fwd.hpp
 vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec2.hpp
 vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec3.hpp
 vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec4.hpp
 mat2x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x2.hpp
 mat2x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x3.hpp
 mat2x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x4.hpp
 mat3x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x2.hpp
 mat3x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x3.hpp
 mat3x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x4.hpp
 mat4x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x2.hpp
 mat4x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x3.hpp
 mat4x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x4.hpp
 trigonometric.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/trigonometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/trigonometric.hpp
 exponential.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/exponential.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/exponential.hpp
 common.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/common.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/common.hpp
 packing.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/packing.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/packing.hpp
 geometric.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/geometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/geometric.hpp
 matrix.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/matrix.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/matrix.hpp
 vector_relational.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vector_relational.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vector_relational.hpp
 integer.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/integer.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/integer.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/constants.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/constants.hpp
 ../detail/setup.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/setup.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/setup.hpp
 constants.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/constants.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/constants.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/constants.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/constants.inl
 limits
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/matrix_transform.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/matrix_transform.hpp
 ../mat4x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x4.hpp
 ../vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec2.hpp
 ../vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec3.hpp
 ../vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec4.hpp
 ../gtc/constants.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/constants.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/constants.hpp
 matrix_transform.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/matrix_transform.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/matrix_transform.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/matrix_transform.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/matrix_transform.inl
 ../geometric.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/geometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/geometric.hpp
 ../trigonometric.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/trigonometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/trigonometric.hpp
 ../matrix.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/matrix.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/matrix.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/quaternion.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/quaternion.hpp
 ../mat3x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x3.hpp
 ../mat4x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x4.hpp
 ../vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec3.hpp
 ../vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec4.hpp
 ../gtc/constants.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/constants.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/constants.hpp
 quaternion.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/quaternion.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/quaternion.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/quaternion.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/quaternion.inl
 ../trigonometric.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/trigonometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/trigonometric.hpp
 ../geometric.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/geometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/geometric.hpp
 ../exponential.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/exponential.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/exponential.hpp
 limits
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/random.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/random.hpp
 ../vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec2.hpp
 ../vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec3.hpp
 random.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/random.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/random.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/random.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/random.inl
 ../geometric.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/geometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/geometric.hpp
 ../exponential.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/exponential.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/exponential.hpp
 cstdlib
 -
 ctime
@@ -802,47 +802,47 @@ ctime
 cassert
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/type_ptr.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/type_ptr.hpp
 ../gtc/quaternion.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/quaternion.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/quaternion.hpp
 ../vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec2.hpp
 ../vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec3.hpp
 ../vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec4.hpp
 ../mat2x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x2.hpp
 ../mat2x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x3.hpp
 ../mat2x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x4.hpp
 ../mat3x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x2.hpp
 ../mat3x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x3.hpp
 ../mat3x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x4.hpp
 ../mat4x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x2.hpp
 ../mat4x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x3.hpp
 ../mat4x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x4.hpp
 cstring
 -
 type_ptr.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/type_ptr.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/type_ptr.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/type_ptr.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/type_ptr.inl
 cstring
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtx/io.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtx/io.hpp
 ../glm.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/glm.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/glm.hpp
 ../gtx/quaternion.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtx/quaternion.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtx/quaternion.hpp
 iosfwd
 -
 locale
@@ -850,101 +850,101 @@ locale
 utility
 -
 io.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtx/io.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtx/io.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtx/io.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtx/io.inl
 iomanip
 -
 ostream
 -
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtx/norm.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtx/norm.hpp
 ../glm.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/glm.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/glm.hpp
 ../gtx/quaternion.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtx/quaternion.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtx/quaternion.hpp
 norm.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtx/norm.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtx/norm.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtx/norm.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtx/norm.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtx/quaternion.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtx/quaternion.hpp
 ../glm.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/glm.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/glm.hpp
 ../gtc/constants.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/constants.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/constants.hpp
 ../gtc/quaternion.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtc/quaternion.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtc/quaternion.hpp
 ../gtx/norm.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtx/norm.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtx/norm.hpp
 quaternion.inl
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/gtx/quaternion.inl
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/gtx/quaternion.inl
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/integer.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/integer.hpp
 detail/func_integer.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_integer.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_integer.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x2.hpp
 detail/type_mat2x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x2.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x3.hpp
 detail/type_mat2x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x3.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat2x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat2x4.hpp
 detail/type_mat2x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat2x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat2x4.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x2.hpp
 detail/type_mat3x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x2.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x3.hpp
 detail/type_mat3x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x3.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat3x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat3x4.hpp
 detail/type_mat3x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat3x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat3x4.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x2.hpp
 detail/type_mat4x2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x2.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x3.hpp
 detail/type_mat4x3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x3.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/mat4x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/mat4x4.hpp
 detail/type_mat4x4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_mat4x4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_mat4x4.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/matrix.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/matrix.hpp
 detail/func_matrix.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_matrix.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_matrix.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/packing.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/packing.hpp
 detail/func_packing.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_packing.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_packing.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/trigonometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/trigonometric.hpp
 detail/func_trigonometric.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_trigonometric.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_trigonometric.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec2.hpp
 detail/type_vec2.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec2.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec2.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec3.hpp
 detail/type_vec3.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec3.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec3.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vec4.hpp
 detail/type_vec4.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/type_vec4.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/type_vec4.hpp
 
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/vector_relational.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/vector_relational.hpp
 detail/func_vector_relational.hpp
-/home/olivier/Documents/splineRunner/splineRacer/third-party/include/glm/detail/func_vector_relational.hpp
+/home/olivier/Documents/splineRacer/splineRacer/third-party/include/glm/detail/func_vector_relational.hpp
 

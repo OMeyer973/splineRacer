@@ -1,4 +1,4 @@
-# Install script for directory: /home/olivier/Documents/splineRunner/splineRacer/glimac
+# Install script for directory: /home/olivier/Documents/splineRacer/splineRacer/glimac
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

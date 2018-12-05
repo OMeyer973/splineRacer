@@ -6,5 +6,5 @@ CXX_FLAGS =   -std=c++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/include/SDL -I/home/olivier/Documents/splineRunner/splineRacer/glimac/include -I/home/olivier/Documents/splineRunner/splineRacer/third-party/include 
+CXX_INCLUDES = -I/usr/include/SDL -I/home/olivier/Documents/splineRacer/splineRacer/glimac/include -I/home/olivier/Documents/splineRacer/splineRacer/third-party/include 
 

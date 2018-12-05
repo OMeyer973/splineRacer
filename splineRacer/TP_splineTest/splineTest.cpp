@@ -5,15 +5,24 @@
 #include <GL/glew.h>
 #include <iostream>
 
+#include <glm/gtc/noise.hpp>
+
 using namespace glimac;
 
 // cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_splineTest
 
 Sphere sphere(1, 8, 4);
-
+float playerSpeed = 1;
+float playerAngle = 0;
+float playerRotSpeed = 0.01;
+int playerRotDirection = 0; //1 pour droite, -1 pour gauche
 
 glm::vec3 spline(float t) {
-    return glm::vec3(glm::sin(t), glm::cos(t), t);
+    return glm::vec3(
+        30*glm::perlin(glm::vec2(0.1*t)), 
+        30*glm::perlin(glm::vec2(-0.1*t)), 
+        30*glm::perlin(glm::vec2(0.1*t+100))
+    );
 }
 
 int main(int argc, char** argv) {
@@ -93,9 +102,29 @@ int main(int argc, char** argv) {
         // Event loop:
         SDL_Event e;
         while(windowManager.pollEvent(e)) {
-            if(e.type == SDL_QUIT) {
-                done = true; // Leave the loop after this iteration
-            }
+            switch (e.type) {
+                case SDL_QUIT :
+                    done = true; // Leave the loop after this iteration
+                    break;
+            case SDL_KEYDOWN:
+                if (e.key.keysym.sym==113){ //q
+                    playerRotDirection = 1;
+                }
+                if (e.key.keysym.sym==100){ //d
+                    playerRotDirection = -1;
+                }
+                break;
+
+            case SDL_KEYUP:
+                if (e.key.keysym.sym==113 && playerRotDirection ==1) { //q
+                    playerRotDirection = 0;
+                }
+                if (e.key.keysym.sym==100 && playerRotDirection == -1){ //d
+                    playerRotDirection = 0;
+                }
+                break;
+            }            
+
         }
         /*********************************
          * RENDERING CODE
@@ -104,7 +133,7 @@ int main(int argc, char** argv) {
 
         
         //calcul des view matrix, model matrix, projetion matrix
-        glm::mat4 ProjMatrix = glm::perspective(glm::radians(90.f), 4.f/3.f, 0.1f, 100.f);
+        glm::mat4 ProjMatrix = glm::perspective(glm::radians(110.f), 4.f/3.f, 0.1f, 100.f);
         
 
         //glm::mat4 MVMatrix = glm::translate(glm::mat4(), glm::vec3(0.f, 0.f ,-5.f));
@@ -113,22 +142,28 @@ int main(int argc, char** argv) {
 
         glm::mat4 camMatrix = glm::mat4();    
         //camera part
-        //camMatrix = glm::translate(camMatrix, glm::vec3(0.2,0.2,0));
-        //how far have we traveled on the pline ?
-        float camProgress = windowManager.getTime();
-        float delta = 0.1;
+        //how far have we traveled on the spline ?
+        float camProgress = windowManager.getTime() * playerSpeed;
+        playerAngle += playerRotSpeed * float(playerRotDirection);
+        //float playerAngle = 0*windowManager.getTime();
+        float delta = 0.1; //used to calculate a derivate
 
-        //translation of the camera folowing the spline (here the camera is inside the spline)
+        //translation of the camera folowing the spline
         glm::vec3 camPos = spline(camProgress);
-        //camPos.x *= 0.7; 
-        //camPos.y *= 0.7; 
 
-        camMatrix = glm::translate(camMatrix, camPos);
         
-        //calculating the 3 vectors of the spline reference
+        // calculating the 3 vectors of the spline reference
+        // used to rotate the camera -> face the direction of the spline
+
+        //using (0,1,0) as the ""kinda up direction""
         glm::vec3 zS = glm::normalize(spline(camProgress+delta) - spline(camProgress-delta));
-        glm::vec3 yS = glm::normalize(glm::cross(glm::vec3(0,1,0), zS));
-        glm::vec3 xS = glm::normalize(glm::cross(zS, yS));
+        glm::vec3 xS = glm::normalize(glm::cross(glm::vec3(0,1,0), zS));
+        glm::vec3 yS = glm::normalize(glm::cross(zS, xS));
+        
+        //using the curvature of the spline  as the up direction
+        // glm::vec3 zS = glm::normalize(spline(camProgress+delta) - spline(camProgress));
+        // glm::vec3 xS = glm::normalize(glm::cross(spline(camProgress) - spline(camProgress-delta), zS));
+        // glm::vec3 yS = glm::normalize(glm::cross(zS, xS));
 
         float splineRotContent[16] = {
             xS[0], yS[0], zS[0], 0,
@@ -138,20 +173,22 @@ int main(int argc, char** argv) {
 
         glm::mat4 splineRotMat = glm::make_mat4(splineRotContent);
 
-        camMatrix = splineRotMat * camMatrix;
-        //here the camera is inside the spline
-
-        // TODO : here should come the rotation around the curve part 
-        // but I can't find the right axis
-        // or maybe it's not here that this should be done
-        // idk anymore
-        //camMatrix = glm::rotate(camMatrix, 3*windowManager.getTime(), zS);
-
         //offset to hover above the spline
-        camMatrix = glm::translate(camMatrix, glm::vec3(-0.6,0,0));
+        camMatrix = glm::translate(camMatrix, glm::vec3(-0.6*yS[0], -0.6*yS[1], -0.6*yS[2]));
+
+        // rotation around the curve part (player left-right)
+        camMatrix = glm::rotate(camMatrix, playerAngle, zS);
+
+        // translate to the camera position on the spline
+        camMatrix = glm::translate(camMatrix, camPos);
+
+        // rotate to face the spline
+        camMatrix = splineRotMat * camMatrix;
 
 
-        for (float t=3; t<50; t+=0.2) {
+
+
+        for (float t=0; t<50; t+=0.2) {
 
             //curve part
             glm::mat4 MVMatrix = glm::translate(camMatrix, -spline(t));

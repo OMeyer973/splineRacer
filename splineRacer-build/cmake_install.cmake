@@ -1,4 +1,4 @@
-# Install script for directory: /home/olivier/Documents/splineRunner/splineRacer
+# Install script for directory: /home/olivier/Documents/splineRacer/splineRacer
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,9 +39,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/olivier/Documents/splineRunner/splineRacer-build/glimac/cmake_install.cmake")
-  include("/home/olivier/Documents/splineRunner/splineRacer-build/TP_splineTest/cmake_install.cmake")
-  include("/home/olivier/Documents/splineRunner/splineRacer-build/TP_template/cmake_install.cmake")
+  include("/home/olivier/Documents/splineRacer/splineRacer-build/glimac/cmake_install.cmake")
+  include("/home/olivier/Documents/splineRacer/splineRacer-build/TP_splineTest/cmake_install.cmake")
+  include("/home/olivier/Documents/splineRacer/splineRacer-build/TP_template/cmake_install.cmake")
 
 endif()
 
@@ -53,5 +53,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/olivier/Documents/splineRunner/splineRacer-build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/olivier/Documents/splineRacer/splineRacer-build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

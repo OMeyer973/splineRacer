@@ -4,20 +4,20 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/olivier/Documents/splineRunner/splineRacer/TP_template/SDLtemplate.cpp" "/home/olivier/Documents/splineRunner/splineRacer-build/TP_template/CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.o"
+  "/home/olivier/Documents/splineRacer/splineRacer/TP_template/SDLtemplate.cpp" "/home/olivier/Documents/splineRacer/splineRacer-build/TP_template/CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/SDL"
-  "/home/olivier/Documents/splineRunner/splineRacer/glimac/include"
-  "/home/olivier/Documents/splineRunner/splineRacer/third-party/include"
+  "/home/olivier/Documents/splineRacer/splineRacer/glimac/include"
+  "/home/olivier/Documents/splineRacer/splineRacer/third-party/include"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/olivier/Documents/splineRunner/splineRacer-build/glimac/CMakeFiles/glimac.dir/DependInfo.cmake"
+  "/home/olivier/Documents/splineRacer/splineRacer-build/glimac/CMakeFiles/glimac.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

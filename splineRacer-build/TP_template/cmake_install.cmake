@@ -1,4 +1,4 @@
-# Install script for directory: /home/olivier/Documents/splineRunner/splineRacer/TP_template
+# Install script for directory: /home/olivier/Documents/splineRacer/splineRacer/TP_template
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/olivier/Documents/splineRunner/splineRacer
+CMAKE_SOURCE_DIR = /home/olivier/Documents/splineRacer/splineRacer
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/olivier/Documents/splineRunner/splineRacer-build
+CMAKE_BINARY_DIR = /home/olivier/Documents/splineRacer/splineRacer-build
 
 # Include any dependencies generated for this target.
 include TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/depend.make
@@ -58,17 +58,17 @@ include TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/progress.make
 include TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/flags.make
 
 TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.o: TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/flags.make
-TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.o: /home/olivier/Documents/splineRunner/splineRacer/TP_splineTest/splineTest.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/olivier/Documents/splineRunner/splineRacer-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.o"
-	cd /home/olivier/Documents/splineRunner/splineRacer-build/TP_splineTest && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.o -c /home/olivier/Documents/splineRunner/splineRacer/TP_splineTest/splineTest.cpp
+TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.o: /home/olivier/Documents/splineRacer/splineRacer/TP_splineTest/splineTest.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/olivier/Documents/splineRacer/splineRacer-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.o"
+	cd /home/olivier/Documents/splineRacer/splineRacer-build/TP_splineTest && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.o -c /home/olivier/Documents/splineRacer/splineRacer/TP_splineTest/splineTest.cpp
 
 TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.i"
-	cd /home/olivier/Documents/splineRunner/splineRacer-build/TP_splineTest && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/olivier/Documents/splineRunner/splineRacer/TP_splineTest/splineTest.cpp > CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.i
+	cd /home/olivier/Documents/splineRacer/splineRacer-build/TP_splineTest && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/olivier/Documents/splineRacer/splineRacer/TP_splineTest/splineTest.cpp > CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.i
 
 TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.s"
-	cd /home/olivier/Documents/splineRunner/splineRacer-build/TP_splineTest && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/olivier/Documents/splineRunner/splineRacer/TP_splineTest/splineTest.cpp -o CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.s
+	cd /home/olivier/Documents/splineRacer/splineRacer-build/TP_splineTest && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/olivier/Documents/splineRacer/splineRacer/TP_splineTest/splineTest.cpp -o CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.s
 
 TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.o.requires:
 
@@ -96,8 +96,8 @@ TP_splineTest/TP_splineTest_splineTest: /usr/lib/x86_64-linux-gnu/libSDL.so
 TP_splineTest/TP_splineTest_splineTest: /usr/lib/x86_64-linux-gnu/libGL.so.1
 TP_splineTest/TP_splineTest_splineTest: /usr/lib/x86_64-linux-gnu/libGLEW.so
 TP_splineTest/TP_splineTest_splineTest: TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/olivier/Documents/splineRunner/splineRacer-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable TP_splineTest_splineTest"
-	cd /home/olivier/Documents/splineRunner/splineRacer-build/TP_splineTest && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TP_splineTest_splineTest.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/olivier/Documents/splineRacer/splineRacer-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable TP_splineTest_splineTest"
+	cd /home/olivier/Documents/splineRacer/splineRacer-build/TP_splineTest && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TP_splineTest_splineTest.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/build: TP_splineTest/TP_splineTest_splineTest
@@ -109,10 +109,10 @@ TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/requires: TP_splineTest/CM
 .PHONY : TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/requires
 
 TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/clean:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build/TP_splineTest && $(CMAKE_COMMAND) -P CMakeFiles/TP_splineTest_splineTest.dir/cmake_clean.cmake
+	cd /home/olivier/Documents/splineRacer/splineRacer-build/TP_splineTest && $(CMAKE_COMMAND) -P CMakeFiles/TP_splineTest_splineTest.dir/cmake_clean.cmake
 .PHONY : TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/clean
 
 TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/depend:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/olivier/Documents/splineRunner/splineRacer /home/olivier/Documents/splineRunner/splineRacer/TP_splineTest /home/olivier/Documents/splineRunner/splineRacer-build /home/olivier/Documents/splineRunner/splineRacer-build/TP_splineTest /home/olivier/Documents/splineRunner/splineRacer-build/TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/olivier/Documents/splineRacer/splineRacer /home/olivier/Documents/splineRacer/splineRacer/TP_splineTest /home/olivier/Documents/splineRacer/splineRacer-build /home/olivier/Documents/splineRacer/splineRacer-build/TP_splineTest /home/olivier/Documents/splineRacer/splineRacer-build/TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/depend
 

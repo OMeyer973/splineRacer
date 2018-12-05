@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/olivier/Documents/splineRunner/splineRacer
+CMAKE_SOURCE_DIR = /home/olivier/Documents/splineRacer/splineRacer
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/olivier/Documents/splineRunner/splineRacer-build
+CMAKE_BINARY_DIR = /home/olivier/Documents/splineRacer/splineRacer-build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(CMAKE_COMMAND) -E cmake_progress_start /home/olivier/Documents/splineRunner/splineRacer-build/CMakeFiles /home/olivier/Documents/splineRunner/splineRacer-build/TP_splineTest/CMakeFiles/progress.marks
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(MAKE) -f CMakeFiles/Makefile2 TP_splineTest/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/olivier/Documents/splineRunner/splineRacer-build/CMakeFiles 0
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(CMAKE_COMMAND) -E cmake_progress_start /home/olivier/Documents/splineRacer/splineRacer-build/CMakeFiles /home/olivier/Documents/splineRacer/splineRacer-build/TP_splineTest/CMakeFiles/progress.marks
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(MAKE) -f CMakeFiles/Makefile2 TP_splineTest/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/olivier/Documents/splineRacer/splineRacer-build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(MAKE) -f CMakeFiles/Makefile2 TP_splineTest/clean
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(MAKE) -f CMakeFiles/Makefile2 TP_splineTest/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(MAKE) -f CMakeFiles/Makefile2 TP_splineTest/preinstall
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(MAKE) -f CMakeFiles/Makefile2 TP_splineTest/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(MAKE) -f CMakeFiles/Makefile2 TP_splineTest/preinstall
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(MAKE) -f CMakeFiles/Makefile2 TP_splineTest/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/rule:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(MAKE) -f CMakeFiles/Makefile2 TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/rule
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(MAKE) -f CMakeFiles/Makefile2 TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/rule
 .PHONY : TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/rule
 
 # Convenience name for target.
@@ -122,7 +122,7 @@ TP_splineTest_splineTest: TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/
 
 # fast build rule for target.
 TP_splineTest_splineTest/fast:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(MAKE) -f TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/build.make TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/build
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(MAKE) -f TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/build.make TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/build
 .PHONY : TP_splineTest_splineTest/fast
 
 splineTest.o: splineTest.cpp.o
@@ -131,7 +131,7 @@ splineTest.o: splineTest.cpp.o
 
 # target to build an object file
 splineTest.cpp.o:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(MAKE) -f TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/build.make TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.o
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(MAKE) -f TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/build.make TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.o
 .PHONY : splineTest.cpp.o
 
 splineTest.i: splineTest.cpp.i
@@ -140,7 +140,7 @@ splineTest.i: splineTest.cpp.i
 
 # target to preprocess a source file
 splineTest.cpp.i:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(MAKE) -f TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/build.make TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.i
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(MAKE) -f TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/build.make TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.i
 .PHONY : splineTest.cpp.i
 
 splineTest.s: splineTest.cpp.s
@@ -149,7 +149,7 @@ splineTest.s: splineTest.cpp.s
 
 # target to generate assembly for a file
 splineTest.cpp.s:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(MAKE) -f TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/build.make TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.s
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(MAKE) -f TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/build.make TP_splineTest/CMakeFiles/TP_splineTest_splineTest.dir/splineTest.cpp.s
 .PHONY : splineTest.cpp.s
 
 # Help Target
@@ -175,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

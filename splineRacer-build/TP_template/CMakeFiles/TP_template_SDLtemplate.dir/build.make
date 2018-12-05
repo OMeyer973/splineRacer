@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/olivier/Documents/splineRunner/splineRacer
+CMAKE_SOURCE_DIR = /home/olivier/Documents/splineRacer/splineRacer
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/olivier/Documents/splineRunner/splineRacer-build
+CMAKE_BINARY_DIR = /home/olivier/Documents/splineRacer/splineRacer-build
 
 # Include any dependencies generated for this target.
 include TP_template/CMakeFiles/TP_template_SDLtemplate.dir/depend.make
@@ -58,17 +58,17 @@ include TP_template/CMakeFiles/TP_template_SDLtemplate.dir/progress.make
 include TP_template/CMakeFiles/TP_template_SDLtemplate.dir/flags.make
 
 TP_template/CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.o: TP_template/CMakeFiles/TP_template_SDLtemplate.dir/flags.make
-TP_template/CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.o: /home/olivier/Documents/splineRunner/splineRacer/TP_template/SDLtemplate.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/olivier/Documents/splineRunner/splineRacer-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object TP_template/CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.o"
-	cd /home/olivier/Documents/splineRunner/splineRacer-build/TP_template && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.o -c /home/olivier/Documents/splineRunner/splineRacer/TP_template/SDLtemplate.cpp
+TP_template/CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.o: /home/olivier/Documents/splineRacer/splineRacer/TP_template/SDLtemplate.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/olivier/Documents/splineRacer/splineRacer-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object TP_template/CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.o"
+	cd /home/olivier/Documents/splineRacer/splineRacer-build/TP_template && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.o -c /home/olivier/Documents/splineRacer/splineRacer/TP_template/SDLtemplate.cpp
 
 TP_template/CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.i"
-	cd /home/olivier/Documents/splineRunner/splineRacer-build/TP_template && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/olivier/Documents/splineRunner/splineRacer/TP_template/SDLtemplate.cpp > CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.i
+	cd /home/olivier/Documents/splineRacer/splineRacer-build/TP_template && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/olivier/Documents/splineRacer/splineRacer/TP_template/SDLtemplate.cpp > CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.i
 
 TP_template/CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.s"
-	cd /home/olivier/Documents/splineRunner/splineRacer-build/TP_template && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/olivier/Documents/splineRunner/splineRacer/TP_template/SDLtemplate.cpp -o CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.s
+	cd /home/olivier/Documents/splineRacer/splineRacer-build/TP_template && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/olivier/Documents/splineRacer/splineRacer/TP_template/SDLtemplate.cpp -o CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.s
 
 TP_template/CMakeFiles/TP_template_SDLtemplate.dir/SDLtemplate.cpp.o.requires:
 
@@ -96,8 +96,8 @@ TP_template/TP_template_SDLtemplate: /usr/lib/x86_64-linux-gnu/libSDL.so
 TP_template/TP_template_SDLtemplate: /usr/lib/x86_64-linux-gnu/libGL.so.1
 TP_template/TP_template_SDLtemplate: /usr/lib/x86_64-linux-gnu/libGLEW.so
 TP_template/TP_template_SDLtemplate: TP_template/CMakeFiles/TP_template_SDLtemplate.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/olivier/Documents/splineRunner/splineRacer-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable TP_template_SDLtemplate"
-	cd /home/olivier/Documents/splineRunner/splineRacer-build/TP_template && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TP_template_SDLtemplate.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/olivier/Documents/splineRacer/splineRacer-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable TP_template_SDLtemplate"
+	cd /home/olivier/Documents/splineRacer/splineRacer-build/TP_template && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TP_template_SDLtemplate.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 TP_template/CMakeFiles/TP_template_SDLtemplate.dir/build: TP_template/TP_template_SDLtemplate
@@ -109,10 +109,10 @@ TP_template/CMakeFiles/TP_template_SDLtemplate.dir/requires: TP_template/CMakeFi
 .PHONY : TP_template/CMakeFiles/TP_template_SDLtemplate.dir/requires
 
 TP_template/CMakeFiles/TP_template_SDLtemplate.dir/clean:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build/TP_template && $(CMAKE_COMMAND) -P CMakeFiles/TP_template_SDLtemplate.dir/cmake_clean.cmake
+	cd /home/olivier/Documents/splineRacer/splineRacer-build/TP_template && $(CMAKE_COMMAND) -P CMakeFiles/TP_template_SDLtemplate.dir/cmake_clean.cmake
 .PHONY : TP_template/CMakeFiles/TP_template_SDLtemplate.dir/clean
 
 TP_template/CMakeFiles/TP_template_SDLtemplate.dir/depend:
-	cd /home/olivier/Documents/splineRunner/splineRacer-build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/olivier/Documents/splineRunner/splineRacer /home/olivier/Documents/splineRunner/splineRacer/TP_template /home/olivier/Documents/splineRunner/splineRacer-build /home/olivier/Documents/splineRunner/splineRacer-build/TP_template /home/olivier/Documents/splineRunner/splineRacer-build/TP_template/CMakeFiles/TP_template_SDLtemplate.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/olivier/Documents/splineRacer/splineRacer-build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/olivier/Documents/splineRacer/splineRacer /home/olivier/Documents/splineRacer/splineRacer/TP_template /home/olivier/Documents/splineRacer/splineRacer-build /home/olivier/Documents/splineRacer/splineRacer-build/TP_template /home/olivier/Documents/splineRacer/splineRacer-build/TP_template/CMakeFiles/TP_template_SDLtemplate.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : TP_template/CMakeFiles/TP_template_SDLtemplate.dir/depend
 

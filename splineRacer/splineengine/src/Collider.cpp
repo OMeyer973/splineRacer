@@ -1,5 +1,5 @@
 #include <glimac/SDLWindowManager.hpp>
-#include <glimac/Collider.hpp>
+#include <splineengine/Collider.hpp>
 
 // Constructors
 Collider::Collider()

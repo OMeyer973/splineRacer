@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 #include "glimac/common.hpp"
-#include "glimac/Player.hpp"
+#include "splineengine/Player.hpp"
 
 namespace glimac {
 

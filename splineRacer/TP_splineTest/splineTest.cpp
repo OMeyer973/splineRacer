@@ -2,9 +2,9 @@
 #include <glimac/Program.hpp>
 #include <glimac/common.hpp>
 #include <glimac/Sphere.hpp>
-#include <glimac/Player.hpp>
 #include <GL/glew.h>
 #include <iostream>
+#include <splineengine/Player.hpp>
 
 #include <glm/gtc/noise.hpp>
 

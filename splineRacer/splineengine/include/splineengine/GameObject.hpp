@@ -1,7 +1,10 @@
-#ifndef __GAME__OBJECT
-#define __GAME__OBJECT
+#ifndef __GAME__OBJECT__HPP
+#define __GAME__OBJECT__HPP
 
 #pragma once
+
+
+namespace splineengine {
 
 class GameObject 
 {
@@ -30,4 +33,5 @@ class GameObject
 		glm::vec3 _sPosition; // x: Angle, y: Distance, z: Progression on the spline
 };
 
+}
 #endif

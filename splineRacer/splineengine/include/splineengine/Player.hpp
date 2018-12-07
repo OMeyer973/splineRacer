@@ -2,13 +2,13 @@
 #ifndef __PLAYER__HPP
 #define __PLAYER__HPP
 
-#include "common.hpp"
 #include "GameObject.hpp"
 
 namespace splineengine {
 
 // Represents the player
-class Player : public GameObject {
+class Player : public GameObject 
+{
 
 public:
     /// \brief player Constructor

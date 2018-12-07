@@ -1,7 +1,9 @@
-#ifndef __COLLIDER
-#define __COLLIDER
+#ifndef __COLLIDER__HPP
+#define __COLLIDER__HHP
 
 #pragma once
+
+namespace splineengine {
 
 class Collider
 {
@@ -13,4 +15,5 @@ class Collider
 		
 };
 
+}
 #endif

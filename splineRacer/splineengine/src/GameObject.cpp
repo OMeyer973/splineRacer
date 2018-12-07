@@ -1,5 +1,5 @@
 #include <glimac/SDLWindowManager.hpp>
-#include <glimac/GameObject.hpp>
+#include <splineengine/GameObject.hpp>
 
 // Constructors
 GameObject::GameObject()

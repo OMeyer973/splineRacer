@@ -13,9 +13,14 @@ using namespace glimac;
 
 Sphere sphere(1, 8, 4);
 float playerSpeed = 1;
-float playerAngle = 0;
-float playerRotSpeed = 0.01;
-int playerRotDirection = 0; //1 pour droite, -1 pour gauche
+
+float playerLeft = 0;
+float playerMaxLeftSpeed = 0.01;
+float playerLeftSpeed = 0; // <0 pour droite, >0 pour gauche
+
+float playerUp = 0.01;
+float playerMaxUpSpeed = 0.01;
+float playerUpSpeed = 0; // <0 pour droite, >0 pour gauche
 
 glm::vec3 spline(float t) {
     return glm::vec3(
@@ -107,20 +112,33 @@ int main(int argc, char** argv) {
                     done = true; // Leave the loop after this iteration
                     break;
             case SDL_KEYDOWN:
-                if (e.key.keysym.sym==113){ //q
-                    playerRotDirection = -1;
+                if (e.key.keysym.sym==SDLK_q){
+                    playerLeftSpeed = playerMaxLeftSpeed;
                 }
-                if (e.key.keysym.sym==100){ //d
-                    playerRotDirection = 1;
+                if (e.key.keysym.sym==SDLK_d){
+                    playerLeftSpeed = -playerMaxLeftSpeed;
+                }
+                 if (e.key.keysym.sym==SDLK_z){
+                    playerUpSpeed = playerMaxUpSpeed;
+
+                }
+                if (e.key.keysym.sym==SDLK_s){
+                    playerUpSpeed = -playerMaxUpSpeed;
                 }
                 break;
 
             case SDL_KEYUP:
-                if (e.key.keysym.sym==113 && playerRotDirection == -1) { //q
-                    playerRotDirection = 0;
+                if (e.key.keysym.sym==SDLK_q && playerLeftSpeed > 0) {
+                    playerLeftSpeed = 0;
                 }
-                if (e.key.keysym.sym==100 && playerRotDirection == 1){ //d
-                    playerRotDirection = 0;
+                if (e.key.keysym.sym==SDLK_d && playerLeftSpeed < 0){
+                    playerLeftSpeed = 0;
+                }
+                if (e.key.keysym.sym==SDLK_z && playerUpSpeed > 0) {
+                    playerUpSpeed = 0;
+                }
+                if (e.key.keysym.sym==SDLK_s && playerUpSpeed < 0){
+                    playerUpSpeed = 0;
                 }
                 break;
             }            
@@ -144,8 +162,11 @@ int main(int argc, char** argv) {
         //camera part
         //how far have we traveled on the spline ?
         float camProgress = windowManager.getTime() * playerSpeed;
-        playerAngle += playerRotSpeed * float(playerRotDirection);
-        //float playerAngle = 0*windowManager.getTime();
+        playerLeft += playerLeftSpeed;
+        playerUp += playerUpSpeed;
+
+        std::cout << playerUpSpeed << std::endl; 
+
         float delta = 0.3; //used to calculate a derivate
 
         //translation of the camera folowing the spline
@@ -174,10 +195,10 @@ int main(int argc, char** argv) {
         glm::mat4 splineRotMat = glm::make_mat4(splineRotContent);
 
         //offset to hover above the spline
-        camMatrix = glm::translate(camMatrix, glm::vec3(-0.6*yS[0], -0.6*yS[1], -0.6*yS[2]));
+        camMatrix = glm::translate(camMatrix, glm::vec3(-playerUp*yS[0], -playerUp*yS[1], -playerUp*yS[2]));
 
         // rotation around the curve part (player left-right)
-        camMatrix = glm::rotate(camMatrix, playerAngle, zS);
+        camMatrix = glm::rotate(camMatrix, playerLeft, zS);
 
         // translate to the camera position on the spline
         camMatrix = glm::translate(camMatrix, camPos);

@@ -26,7 +26,7 @@ class GameObject
 		}
 
 
-	private:
+	protected:
 		glm::vec3 _sPosition; // x: Angle, y: Distance, z: Progression on the spline
 };
 

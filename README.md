@@ -10,7 +10,6 @@ make
 ./PATH/TO/EXECUTABLE
 ```
 
-<<<<<<< HEAD
 ## Coding norms
 
 - all variables must be in lowerCamelCase
@@ -39,9 +38,15 @@ class MyClass {
 
 
 
+## Possible optimisations
+
+- to check collisions: instead of checking several colliders per object, first check one big bounding box collider per object and if a collision is detected with this bounding box, the list of colliders is checked 
+
+
 
 ## Inspirations and references
 
+#### Games inspirations
 - [Proun](http://www.proun-game.com)
 - [Tail Drift](https://store.steampowered.com/app/330520/Tail_Drift/)
 

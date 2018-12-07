@@ -2,16 +2,20 @@
 #include <glimac/Program.hpp>
 #include <glimac/common.hpp>
 #include <glimac/Sphere.hpp>
+#include <glimac/Player.hpp>
 #include <GL/glew.h>
 #include <iostream>
 
 #include <glm/gtc/noise.hpp>
 
 using namespace glimac;
+using namespace splineengine;
 
 // cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_splineTest
 
 Sphere sphere(1, 8, 4);
+Player player();
+
 float playerSpeed = 1;
 
 float playerLeft = 0;
@@ -165,7 +169,7 @@ int main(int argc, char** argv) {
         playerLeft += playerLeftSpeed;
         playerUp += playerUpSpeed;
 
-        std::cout << playerUpSpeed << std::endl; 
+        //std::cout << playerUpSpeed << std::endl; 
 
         float delta = 0.3; //used to calculate a derivate
 

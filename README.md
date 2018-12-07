@@ -1,6 +1,5 @@
-# splineRunner
+# splineRacer
 IMAC semester 3 C++ and openGL 3 project. temple run clone but about a plane flying around a spline.
-
 
 #### Install project
 ```shell
@@ -11,6 +10,7 @@ make
 ./PATH/TO/EXECUTABLE
 ```
 
+<<<<<<< HEAD
 ## Coding norms
 
 - all variables must be in lowerCamelCase
@@ -42,8 +42,8 @@ class MyClass {
 
 ## Inspirations and references
 
-- Proun      - http://www.proun-game.com
-- Tail Drift - https://store.steampowered.com/app/330520/Tail_Drift/
+- [Proun](http://www.proun-game.com)
+- [Tail Drift](https://store.steampowered.com/app/330520/Tail_Drift/)
 
-Catmull Rom spline reference :
-https://en.wikipedia.org/wiki/Cubic_Hermite_spline
+#### References
+- [Catmull Rom spline reference](https://en.wikipedia.org/wiki/Cubic_Hermite_spline)

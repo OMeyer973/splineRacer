@@ -1,4 +1,4 @@
-# splineRunner
+# splineRacer
 IMAC semester 3 C++ and openGL 3 project. temple run clone but about a plane flying around a spline.
 
 #### Install project

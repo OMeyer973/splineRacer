@@ -1,2 +1,5 @@
-
+# CLION files
 \.idea/
+
+# Built files
+splineRacer-build/

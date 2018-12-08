@@ -1,5 +1,5 @@
 #ifndef __COLLIDER__HPP
-#define __COLLIDER__HHP
+#define __COLLIDER__HPP
 
 #pragma once
 
@@ -10,8 +10,6 @@ class Collider
 	public:
 		Collider();
 		~Collider();
-
-	private:
 		
 };
 

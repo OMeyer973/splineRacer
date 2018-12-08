@@ -1,9 +1,11 @@
-#ifndef __TRACKBALL__CAMERA
-#define __TRACKBALL__CAMERA
+#ifndef __TRACKBALL__CAMERA__HPP
+#define __TRACKBALL__CAMERA__HPP
 
 #pragma once
 
-class TrackballCamera 
+namespace splineengine {
+
+class TrackballCamera
 {
 	public:
 		TrackballCamera();
@@ -20,5 +22,7 @@ class TrackballCamera
 		float _fAngleX;
 		float _fAngleY;
 };
+
+}
 
 #endif

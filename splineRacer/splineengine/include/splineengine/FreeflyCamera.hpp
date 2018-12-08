@@ -1,7 +1,9 @@
-#ifndef __FREEFLY__CAMERA
-#define __FREEFLY__CAMERA
+#ifndef __FREEFLY__CAMERA__HPP
+#define __FREEFLY__CAMERA__HPP
 
 #pragma once
+
+namespace splineengine {
 
 class FreeflyCamera
 {
@@ -25,5 +27,7 @@ class FreeflyCamera
 
 		void computeDirectionVectors();
 };
+
+}
 
 #endif

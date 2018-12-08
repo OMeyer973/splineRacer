@@ -1,6 +1,7 @@
 #include <glimac/SDLWindowManager.hpp>
-#include <glimac/TrackballCamera.hpp>
+#include <splineengine/TrackballCamera.hpp>
 
+namespace splineengine {
 
 // Constructor
 TrackballCamera::TrackballCamera()
@@ -31,3 +32,5 @@ glm::mat4 TrackballCamera::getViewMatrix() const {
 	ViewMatrix = glm::rotate(ViewMatrix, glm::radians(_fAngleY), glm::vec3(0, 1, 0));
 	return ViewMatrix;
 }
+
+} // namespace splineengine

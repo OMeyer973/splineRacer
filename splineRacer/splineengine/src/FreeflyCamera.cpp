@@ -1,7 +1,9 @@
 #include <glimac/SDLWindowManager.hpp>
-#include <glimac/FreeflyCamera.hpp>
+#include <splineengine/FreeflyCamera.hpp>
 #include <math.h>
 #include <iostream>
+
+namespace splineengine {
 
 // Constructor
 FreeflyCamera::FreeflyCamera()
@@ -50,3 +52,5 @@ void FreeflyCamera::rotateUp(float degrees) {
 glm::mat4 FreeflyCamera::getViewMatrix() const {
 	return glm::lookAt(_Position, _Position+_FrontVector, _UpVector);
 }
+
+} // namespace splineengine

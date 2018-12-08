@@ -4,6 +4,6 @@
 #include "glimac/common.hpp"
 #include "splineengine/Player.hpp"
 
-namespace glimac {
+namespace splineengine {
 
 }

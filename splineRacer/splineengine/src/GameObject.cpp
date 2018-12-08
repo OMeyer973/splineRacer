@@ -1,6 +1,9 @@
 #include <glimac/SDLWindowManager.hpp>
 #include <splineengine/GameObject.hpp>
 
+
+namespace splineengine {
+
 // Constructors
 GameObject::GameObject()
 	:_sPosition(glm::vec3(0, 0, 0))
@@ -13,3 +16,5 @@ GameObject::GameObject(float angle, float distance, float progression)
 // Destructor
 GameObject::~GameObject() 
 {}
+
+}

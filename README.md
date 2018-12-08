@@ -19,7 +19,7 @@ int myVariable = 1;
 
 - Class must have both pragma once and indef..define..endif
 - Class names must be in UpperCamelCase
-- Class members must be protected and start with _ 
+- Class members must be protected and have an underscore as prefix ("\_")
 
 ```c++
 #pragma once
@@ -35,7 +35,6 @@ class MyClass {
 
 - Comments must be written in english as much as possible
 - Don't forget to use Doxigen syntax when commenting your classes !
-
 
 
 ## Possible optimisations

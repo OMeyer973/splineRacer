@@ -6,42 +6,52 @@
 
 namespace splineengine {
 
-// Represents the player
-class Player : public GameObject 
-{
+/// \brief Represents the player as a Gameobject but with more useful stuff
+class Player : public GameObject {
+    // METHODS
+    public:
+        // CONSTRUCTORS - DESTRUCTORS
+        /// \brief default player Constructor
+        Player() 
+            :GameObject(SplineCoord(0.f,0.f,0.6f)),
+            _speed(0.005f, 0.f, 0.f),
+            _maxSpeed(1.f, 0.1f, 0.05f)
+        {};
 
-public:
-    /// \brief player Constructor
-    Player() {
-        _sPosition = glm::vec3(0.f, 0.6f, 0.f);
-        _speed = glm::vec3(0.f, 0.f, 1.f);
-        _maxSpeed = glm::vec3(0.01f, 0.005f, 0.01f);
-    };
-    /// \brief player Destructor
-    ~Player()
-    {};
-    
-    /// \brief update player position 
-    void speed() {
+        /// \brief player Destructor
+        ~Player()
+        {};
+        
+        // CONST GETTERS
+        /// \brief get the speed of the player (relative to the spline) as a const reference
+        const SplineCoord& speed() const {
+            return _speed;
+        }
 
-    };
+        /// \brief get the speed of the player (relative to the spline) as a const reference
+        const SplineCoord& maxSpeed() const {
+            return _maxSpeed;
+        }
 
+        // NON-CONST GETTERS (can be used as setters)
+        /// \brief get the speed of the player (relative to the spline) as a reference
+        SplineCoord& speed() {
+            return _speed;
+        }
 
-    /// \brief update player position 
-    void updatePosition() {
+        /// \brief get the maximum speed of the player (relative to the spline) as a reference
+        SplineCoord& maxSpeed() {
+            return _maxSpeed;
+        }
 
-    };
-    
+        /// \brief update the player position using it's current speed
+        void updatePosition();
 
-
-protected:
-    // (float) speed of the player - x : left speed - y : up speed -z : forward speed;  
-    glm::vec3 _speed;
-
-    // (float) maximum speed of the player - x : left speed - y : up speed -z : forward speed;  
-    glm::vec3 _maxSpeed;
-};
-    
+    // MEMBERS        
+    protected:
+        // \brief position of the object relative to the spline
+        SplineCoord _speed;
+        SplineCoord _maxSpeed;
+};        
 }
-
 #endif

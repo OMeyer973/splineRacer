@@ -1,0 +1,75 @@
+#pragma once
+#ifndef __SPLINECOORD__HPP
+#define __SPLINECOORD__HPP
+
+namespace splineengine {
+
+/// \brief represents a point in the spline reference : forward, left (angle), up
+class SplineCoord : public glm::vec3 {
+	// METHODS
+	public:
+		// CONSTRUCTORS - DESTRUCTORS
+	    /// \brief default constructor (fwd = left = up = 0.f)
+		SplineCoord()
+			:glm::vec3(0.f, 0.f, 0.f)
+		{};
+		
+	    /// \brief constructor from parameters
+		/// \param fwd  : forward distance folowing the spline
+		/// \param left : angle to the normal vector of the spline (trigonometric direction, ie rotating left is positive)
+		/// \param up   : normal distance to the spline
+		SplineCoord(const float fwd, const float left, const float up)
+			:glm::vec3(fwd, left, up)
+		{};
+
+		///\brief copy constructor
+		/// \param s : SplineCoord to copy from
+		SplineCoord(const SplineCoord& s)
+			:glm::vec3(s)
+		{};
+
+	    /// \brief destructor
+		~SplineCoord()
+		{};
+		
+		//CONST GETTERS
+		/// \brief get the fwd coord (forward distance folowing the spline) as a const reference 
+		const float& fwd() const {
+			return x;
+		}
+	    /// \brief get the left coord (angle to the normal vector of the spline) as a const reference
+		const float& left() const {
+			return y;
+		}
+	    /// \brief get the up coord as a const reference (normal distance to the spline)
+		const float& up() const {
+			return z;
+		}
+
+		// NON-CONST GETTERS (can be used as setters)
+		/// \brief get the fwd coord as a reference (forward distance folowing the spline) 
+		float& fwd() {
+			return x;
+		}
+		// TODO : when setting the left value, set it modulo 2*PI
+		// ^ how to do this when you have a non-const getter as a setter and no real setter ?
+	    /// \brief get the left coord as a reference (angle to the normal vector of the spline)
+		float& left() {
+			return y;
+		}
+	    /// \brief get the up coord as a reference (normal distance to the spline)
+		float& up() {
+			return z;
+		}
+
+		//OPERATORS
+	    using glm::vec3::operator=;
+
+	// MEMBERS
+	// protected members herited from glm::vec3 :
+	// x -> fwd
+	// y -> left
+	// z -> up
+};
+}
+#endif

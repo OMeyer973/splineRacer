@@ -14,17 +14,7 @@ using namespace splineengine;
 // cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_splineTest
 
 Sphere sphere(1, 8, 4);
-Player player();
-
-float playerSpeed = 1;
-
-float playerLeft = 0;
-float playerMaxLeftSpeed = 0.01;
-float playerLeftSpeed = 0; // <0 pour droite, >0 pour gauche
-
-float playerUp = 0.01;
-float playerMaxUpSpeed = 0.01;
-float playerUpSpeed = 0; // <0 pour droite, >0 pour gauche
+Player player;
 
 glm::vec3 spline(float t) {
     return glm::vec3(
@@ -117,32 +107,32 @@ int main(int argc, char** argv) {
                     break;
             case SDL_KEYDOWN:
                 if (e.key.keysym.sym==SDLK_q){
-                    playerLeftSpeed = playerMaxLeftSpeed;
+                    player.speed().left() = player.maxSpeed().left();
                 }
                 if (e.key.keysym.sym==SDLK_d){
-                    playerLeftSpeed = -playerMaxLeftSpeed;
+                    player.speed().left() = -player.maxSpeed().left();
                 }
                  if (e.key.keysym.sym==SDLK_z){
-                    playerUpSpeed = playerMaxUpSpeed;
+                    player.speed().up() = player.maxSpeed().up();
 
                 }
                 if (e.key.keysym.sym==SDLK_s){
-                    playerUpSpeed = -playerMaxUpSpeed;
+                    player.speed().up() = -player.maxSpeed().up();
                 }
                 break;
 
             case SDL_KEYUP:
-                if (e.key.keysym.sym==SDLK_q && playerLeftSpeed > 0) {
-                    playerLeftSpeed = 0;
+                if (e.key.keysym.sym==SDLK_q && player.speed().left() > 0) {
+                    player.speed().left() = 0;
                 }
-                if (e.key.keysym.sym==SDLK_d && playerLeftSpeed < 0){
-                    playerLeftSpeed = 0;
+                if (e.key.keysym.sym==SDLK_d && player.speed().left() < 0){
+                    player.speed().left() = 0;
                 }
-                if (e.key.keysym.sym==SDLK_z && playerUpSpeed > 0) {
-                    playerUpSpeed = 0;
+                if (e.key.keysym.sym==SDLK_z && player.speed().up() > 0) {
+                    player.speed().up() = 0;
                 }
-                if (e.key.keysym.sym==SDLK_s && playerUpSpeed < 0){
-                    playerUpSpeed = 0;
+                if (e.key.keysym.sym==SDLK_s && player.speed().up() < 0){
+                    player.speed().up() = 0;
                 }
                 break;
             }            
@@ -165,23 +155,21 @@ int main(int argc, char** argv) {
         glm::mat4 camMatrix = glm::mat4();    
         //camera part
         //how far have we traveled on the spline ?
-        float camProgress = windowManager.getTime() * playerSpeed;
-        playerLeft += playerLeftSpeed;
-        playerUp += playerUpSpeed;
+        player.updatePosition();
 
         //std::cout << playerUpSpeed << std::endl; 
 
         float delta = 0.3; //used to calculate a derivate
 
         //translation of the camera folowing the spline
-        glm::vec3 camPos = spline(camProgress);
+        glm::vec3 playerWorldPos = spline(player.position().fwd());
 
         
         // calculating the 3 vectors of the spline reference
         // used to rotate the camera -> face the direction of the spline
 
         //using (0,1,0) as the ""kinda up direction""
-        glm::vec3 zS = glm::normalize(spline(camProgress+delta) - spline(camProgress-delta));
+        glm::vec3 zS = glm::normalize(spline(player.position().fwd()+delta) - spline(player.position().fwd()-delta));
         glm::vec3 xS = glm::normalize(glm::cross(glm::vec3(0,1,0), zS));
         glm::vec3 yS = glm::normalize(glm::cross(zS, xS));
         
@@ -199,13 +187,16 @@ int main(int argc, char** argv) {
         glm::mat4 splineRotMat = glm::make_mat4(splineRotContent);
 
         //offset to hover above the spline
-        camMatrix = glm::translate(camMatrix, glm::vec3(-playerUp*yS[0], -playerUp*yS[1], -playerUp*yS[2]));
+        camMatrix = glm::translate(camMatrix, glm::vec3(
+            -player.position().up()*yS[0],
+            -player.position().up()*yS[1],
+            -player.position().up()*yS[2]));
 
         // rotation around the curve part (player left-right)
-        camMatrix = glm::rotate(camMatrix, playerLeft, zS);
+        camMatrix = glm::rotate(camMatrix, player.position().left(), zS);
 
         // translate to the camera position on the spline
-        camMatrix = glm::translate(camMatrix, camPos);
+        camMatrix = glm::translate(camMatrix, playerWorldPos);
 
         // rotate to face the spline
         camMatrix = splineRotMat * camMatrix;

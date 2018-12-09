@@ -2,7 +2,8 @@
 #ifndef __GAMEOBJECT__HPP
 #define __GAMEOBJECT__HPP
 
-#include "SplineCoord.hpp"
+#include <GL/glew.h>
+#include "Common.hpp"
 
 namespace splineengine {
 
@@ -13,41 +14,38 @@ class GameObject {
 		// CONSTRUCTORS - DESTRUCTORS
 	    /// \brief default constructor (position(0.f,0.f,0.f), no colliders)
 		GameObject()
-			:_position(0.f,0.f,0.f)
+			:_sPosition(0.f,0.f,0.f)
 		{};
 
 		/// \brief constructor from parameters
-		/// \param position : SplineCoord position of the object (relative to the spline)
-		GameObject(const SplineCoord& position)
-			:_position(position)
+		/// \param position : glm::vec3 position of the object (relative to the spline)
+		GameObject(const glm::vec3& sPosition)
+			:_sPosition(sPosition)
 		{};
 
 		/// \brief copy constructor
 		/// \param g : GameObject to copy from
 		GameObject(const GameObject& g)
-			:_position(g._position)
+			:_sPosition(g._sPosition)
 		{};
 
 		/// \brief destructor
 		~GameObject()
 		{};
 
+
 		//CONST GETTERS
 		/// \brief get the position of the object (relative to the spline) as a const reference
-		const SplineCoord& position() const {
-			return _position;
-		}
+		const glm::vec3& sPosition() const { return _sPosition; }
 
 		// NON-CONST GETTERS (can be used as setters)
 		/// \brief get the position of the object (relative to the spline) as a reference
-		SplineCoord& position() {
-			return _position;
-		}
+		glm::vec3& sPosition() { return _sPosition; }
 		
 	// MEMBERS
 	protected:
 		// \brief position of the object relative to the spline
-		SplineCoord _position;
+		glm::vec3 _sPosition;
 		// TODO
 		// \brief colliders of the object
 		//std::vector<collider> _colliders;

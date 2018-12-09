@@ -13,45 +13,66 @@ class Player : public GameObject {
         // CONSTRUCTORS - DESTRUCTORS
         /// \brief default player Constructor
         Player() 
-            :GameObject(SplineCoord(0.f,0.f,0.6f)),
-            _speed(0.005f, 0.f, 0.f),
-            _maxSpeed(1.f, 0.1f, 0.05f)
+            :GameObject(glm::vec3(0.f,0.f,0.6f)),
+            _sSpeed(0.002f, 0.f, 0.f),
+            _sMaxSpeed(1.f, 0.005f, 0.005f),
+            _sAcceleration(0.f, 0.05f, 0.05f)
         {};
 
         /// \brief player Destructor
         ~Player()
         {};
+
         
         // CONST GETTERS
         /// \brief get the speed of the player (relative to the spline) as a const reference
-        const SplineCoord& speed() const {
-            return _speed;
-        }
+        //const glm::vec3& speed() const { return _sSpeed; }
 
         /// \brief get the speed of the player (relative to the spline) as a const reference
-        const SplineCoord& maxSpeed() const {
-            return _maxSpeed;
-        }
+        //const glm::vec3& maxSpeed() const { return _sMaxSpeed; }
+
+        /// \brief get the left-right input direction as a const 
+        const float& goingLeft() const { return _sInput[LEFT]; }
+
+        /// \brief get the up_down input direction as a const 
+        const float& goingUp() const { return _sInput[UP]; }
+
 
         // NON-CONST GETTERS (can be used as setters)
         /// \brief get the speed of the player (relative to the spline) as a reference
-        SplineCoord& speed() {
-            return _speed;
-        }
+        //glm::vec3& speed() { return _sSpeed; }
 
         /// \brief get the maximum speed of the player (relative to the spline) as a reference
-        SplineCoord& maxSpeed() {
-            return _maxSpeed;
-        }
+        //glm::vec3& maxSpeed() { return _sMaxSpeed; }
+
+        /// \brief get the left-right input direction as a reference
+        float& goingLeft() { return _sInput[LEFT]; }
+
+        /// \brief get the up_down input direction as a reference
+        float& goingUp() { return _sInput[UP]; }
+
+
+        // METHODS
+        /// \brief update the player speed using it's acceleration and inputs (goingLeft & goingUp)
+        void updateSpeed();
 
         /// \brief update the player position using it's current speed
         void updatePosition();
 
+        /// \brief update the player status at each frame
+        void update();
+
+
     // MEMBERS        
     protected:
         // \brief position of the object relative to the spline
-        SplineCoord _speed;
-        SplineCoord _maxSpeed;
+        glm::vec3 _sSpeed;
+        glm::vec3 _sMaxSpeed;
+        /// \brief acceleration and decceleration of the player
+        glm::vec3 _sAcceleration;
+        
+        /// \brief current input | [0] forward : no input | [1] left -> +1, straight -> 0, right -> -1 | [2] up -> +1, straight -> 0, down -> -1 
+        glm::vec3 _sInput;
 };        
 }
 #endif

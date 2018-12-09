@@ -4,25 +4,29 @@
 #include <glimac/Sphere.hpp>
 #include <GL/glew.h>
 #include <iostream>
+#include <splineengine/GameObject.hpp>
 #include <splineengine/Player.hpp>
-
+#include <splineengine/Spline.hpp>
 #include <glm/gtc/noise.hpp>
+
 
 using namespace glimac;
 using namespace splineengine;
 
 // cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_splineTest
 
-Sphere sphere(1, 8, 4);
+Sphere sphere(2, 3, 2);
 Player player;
 
-glm::vec3 spline(float t) {
-    return glm::vec3(
-        t+30*glm::perlin(glm::vec2(0.1*t)), 
-        t-30*glm::perlin(glm::vec2(-0.1*t)), 
-        t+30*glm::perlin(glm::vec2(0.1*t+100))
-    );
-}
+Spline spline;
+
+// glm::vec3 spline.point(float t) {
+//     return glm::vec3(
+//         t+30*glm::perlin(glm::vec2(0.1*t)), 
+//         t-30*glm::perlin(glm::vec2(-0.1*t)), 
+//         t+30*glm::perlin(glm::vec2(0.1*t+100))
+//     );
+// }
 
 int main(int argc, char** argv) {
     // Initialize SDL and open a window
@@ -106,33 +110,33 @@ int main(int argc, char** argv) {
                     done = true; // Leave the loop after this iteration
                     break;
             case SDL_KEYDOWN:
-                if (e.key.keysym.sym==SDLK_q){
-                    player.speed().left() = player.maxSpeed().left();
+                if (e.key.keysym.sym==SDLK_q){ //going left
+                    player.goingLeft() = 1.f;
                 }
-                if (e.key.keysym.sym==SDLK_d){
-                    player.speed().left() = -player.maxSpeed().left();
+                if (e.key.keysym.sym==SDLK_d){//going right
+                    player.goingLeft() = -1.f;
                 }
-                 if (e.key.keysym.sym==SDLK_z){
-                    player.speed().up() = player.maxSpeed().up();
-
+                 if (e.key.keysym.sym==SDLK_z){//going up
+                    player.goingUp() = 1.f;
                 }
-                if (e.key.keysym.sym==SDLK_s){
-                    player.speed().up() = -player.maxSpeed().up();
+                if (e.key.keysym.sym==SDLK_s){//going down
+                    player.goingUp() = -1.f;
                 }
                 break;
 
             case SDL_KEYUP:
-                if (e.key.keysym.sym==SDLK_q && player.speed().left() > 0) {
-                    player.speed().left() = 0;
+                if (e.key.keysym.sym==SDLK_q && player.goingLeft() > 0) {//stop going left 
+                    player.goingLeft() = 0.f;
                 }
-                if (e.key.keysym.sym==SDLK_d && player.speed().left() < 0){
-                    player.speed().left() = 0;
+                if (e.key.keysym.sym==SDLK_d && player.goingLeft() < 0){//stop going right
+                    player.goingLeft() = 0.f;
                 }
-                if (e.key.keysym.sym==SDLK_z && player.speed().up() > 0) {
-                    player.speed().up() = 0;
+                if (e.key.keysym.sym==SDLK_z && player.goingUp() > 0) {//stop going up
+                    player.goingUp() = 0.f;
                 }
-                if (e.key.keysym.sym==SDLK_s && player.speed().up() < 0){
-                    player.speed().up() = 0;
+                if (e.key.keysym.sym==SDLK_s && player.goingUp() < 0){//stop going down
+                    player.goingUp() = 0.f;
+                    ;
                 }
                 break;
             }            
@@ -152,83 +156,47 @@ int main(int argc, char** argv) {
         ///////////////////////////////////////////////////////////////////////
         // spline stuff
 
-        glm::mat4 camMatrix = glm::mat4();    
-        //camera part
-        //how far have we traveled on the spline ?
-        player.updatePosition();
-
-        //std::cout << playerUpSpeed << std::endl; 
-
-        float delta = 0.3; //used to calculate a derivate
-
-        //translation of the camera folowing the spline
-        glm::vec3 playerWorldPos = spline(player.position().fwd());
-
+        //updating player inner variables (speed, position...)
+        player.update();
         
-        // calculating the 3 vectors of the spline reference
-        // used to rotate the camera -> face the direction of the spline
+        glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 
-        //using (0,1,0) as the ""kinda up direction""
-        glm::vec3 zS = glm::normalize(spline(player.position().fwd()+delta) - spline(player.position().fwd()-delta));
-        glm::vec3 xS = glm::normalize(glm::cross(glm::vec3(0,1,0), zS));
-        glm::vec3 yS = glm::normalize(glm::cross(zS, xS));
-        
-        //using the curvature of the spline  as the up direction
-        // glm::vec3 zS = glm::normalize(spline(camProgress+delta) - spline(camProgress));
-        // glm::vec3 xS = glm::normalize(glm::cross(spline(camProgress) - spline(camProgress-delta), zS));
-        // glm::vec3 yS = glm::normalize(glm::cross(zS, xS));
-
-        float splineRotContent[16] = {
-            xS[0], yS[0], zS[0], 0,
-            xS[1], yS[1], zS[1], 0,
-            xS[2], yS[2], zS[2], 0,
-            0    , 0    , 0    , 1};
-
-        glm::mat4 splineRotMat = glm::make_mat4(splineRotContent);
-
-        //offset to hover above the spline
-        camMatrix = glm::translate(camMatrix, glm::vec3(
-            -player.position().up()*yS[0],
-            -player.position().up()*yS[1],
-            -player.position().up()*yS[2]));
-
-        // rotation around the curve part (player left-right)
-        camMatrix = glm::rotate(camMatrix, player.position().left(), zS);
-
-        // translate to the camera position on the spline
-        camMatrix = glm::translate(camMatrix, playerWorldPos);
-
-        // rotate to face the spline
-        camMatrix = splineRotMat * camMatrix;
-
-
-
-
-        for (float t=0; t<50; t+=0.2) {
+       
+        for (float t=0; t<50; t+=0.5f) {
 
             //curve part
-            glm::mat4 MVMatrix = glm::translate(camMatrix, -spline(t));
+            glm::mat4 MVMatrix ;
+            MVMatrix = camMatrix * spline.matrix(glm::vec3(t,0,0));
+            //MVMatrix = glm::translate(camMatrix, spline.point(t));
             MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2));
-            
-            // end spline stuff
-            ////////////////////////////////////////////////////////////////  
-            glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
-            //on récupère les locations des variables uniformes dans les shaders
-            GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-            GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-            GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
-            //on envoie les matrices à la CG dans les variables uniformes
-            glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(ProjMatrix * MVMatrix));
-            glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
-            glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
+            for (int i=0; i<3; ++i) {
+                if (i==1) {
+                    MVMatrix = glm::translate(MVMatrix, glm::vec3(3,0,0));        
+                }
+                if (i==2) {
+                    MVMatrix = glm::translate(MVMatrix, glm::vec3(0,3,0));        
+                }
+                // end spline stuff
+                ////////////////////////////////////////////////////////////////  
+                glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
-            //Binding du VAO
-            glBindVertexArray(vao);
+                //on récupère les locations des variables uniformes dans les shaders
+                GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+                GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+                GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+                //on envoie les matrices à la CG dans les variables uniformes
+                glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(ProjMatrix * MVMatrix));
+                glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
+                glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
 
-            glDrawArrays(GL_TRIANGLES, 0, sphere.getVertexCount());
+                //Binding du VAO
+                glBindVertexArray(vao);
 
-            glBindVertexArray(0);
+                glDrawArrays(GL_TRIANGLES, 0, sphere.getVertexCount());
+
+                glBindVertexArray(0);
+            }
 
         }
         // Update the display

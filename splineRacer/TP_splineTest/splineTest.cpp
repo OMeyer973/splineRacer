@@ -162,7 +162,7 @@ int main(int argc, char** argv) {
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 
        
-        for (float t=0; t<50; t+=0.5f) {
+        for (float t=0; t<50; t+=0.1f) {
 
             //curve part
             glm::mat4 MVMatrix ;

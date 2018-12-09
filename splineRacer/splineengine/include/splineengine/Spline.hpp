@@ -9,6 +9,13 @@
 
 namespace splineengine {
 
+// delta position used to rotate the camera and the objects facing the curve
+// it is large in order to have smooth camera movements
+const float dx = 1.f;
+// the higher the camera is, the lower it looks on the spline following this factor
+const float lookDownFactor = 0.1f;
+
+
 /// \brief Represents the spline, its equation and transforms
 class Spline {
     // METHODS

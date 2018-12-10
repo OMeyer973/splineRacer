@@ -6,22 +6,45 @@ namespace splineengine {
 
 // CONSTRUCTORS
 Spline::Spline()
-	:Spline(50)
+	:Spline(20)
 {}
 
 Spline::Spline(const int nbAnchors) {
 	glm::vec3 tmpAnchor(1.f,1.f,1.f);
 	_anchors.push_back(tmpAnchor);
     for (size_t i=1; i<nbAnchors; ++i) {
-    	tmpAnchor += glm::sphericalRand(10.f);
+    	tmpAnchor += 10.f*glm::normalize(
+    		glm::vec3(glm::sin(12.f*i/nbAnchors),0.4*glm::sin(-20.f*i/nbAnchors),glm::cos(12.f*i/nbAnchors)) * 
+    		glm::abs(glm::sphericalRand(1.f))
+    		+glm::vec3(0.03f*i,0,0)
+    	);
     	_anchors.push_back(tmpAnchor);
     }
 }
 
 
 glm::vec3 Spline::point(const float t) {
+	// test of perlin noise with harmonics
+	// you can try your perlin here : http://www.iquilezles.org/apps/graphtoy/
+	// if (_anchors.size()==0) {
+	// 	return glm::vec3(
+	// 		//10*noise(x/10)+10*noise(x/20)+10*noise(x/40)+80*noise(x/100)
+	// 		10.f * glm::perlin(glm::vec3(t/10.f,0,0))+
+	// 		10.f * glm::perlin(glm::vec3(t/20.f,0,0))+
+	// 		10.f * glm::perlin(glm::vec3(t/40.f,0,0))+
+	// 		80.f * glm::perlin(glm::vec3(t/100.f,0,0)),
+	// 		10.f * glm::perlin(glm::vec3(0,t/10.f,0))+
+	// 		10.f * glm::perlin(glm::vec3(0,t/20.f,0))+
+	// 		10.f * glm::perlin(glm::vec3(0,t/40.f,0))+
+	// 		80.f * glm::perlin(glm::vec3(0,t/100.f,0)),
+	// 		10.f * glm::perlin(glm::vec3(0,0,t/10.f))+
+	// 		10.f * glm::perlin(glm::vec3(0,0,t/20.f))+
+	// 		10.f * glm::perlin(glm::vec3(0,0,t/40.f))+
+	// 		80.f * glm::perlin(glm::vec3(0,0,t/100.f))
+	// 		);
+	// }
 
-	//id of the first point
+	// id of the first point
 	int i = (int)t;
 	float tmp = t-(float)i;
 

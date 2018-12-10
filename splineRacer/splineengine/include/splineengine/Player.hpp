@@ -14,7 +14,7 @@ class Player : public GameObject {
         /// \brief default player Constructor
         Player() 
             :GameObject(glm::vec3(1.f,0.f,2.f)),
-            _sSpeed(0.01f, 0.f, 0.f),
+            _sSpeed(0.04f, 0.f, 0.f),
             _sMaxSpeed(1.f, 0.03f, 0.03f),
             _sAcceleration(0.f, 0.05f, 0.05f)
         {};

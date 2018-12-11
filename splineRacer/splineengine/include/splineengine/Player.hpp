@@ -14,9 +14,9 @@ class Player : public GameObject {
         /// \brief default player Constructor
         Player() 
             :GameObject(glm::vec3(1.f,0.f,2.f)),
-            _sSpeed(0.04f, 0.f, 0.f),
-            _sMaxSpeed(1.f, 0.03f, 0.03f),
-            _sAcceleration(0.f, 0.05f, 0.05f)
+            _sSpeed(4.f, 0.f, 0.f),
+            _sMaxSpeed(4.f, 10.f, 10.f),
+            _sAcceleration(0.f, 20.f, 20.f)
         {};
 
         /// \brief player Destructor
@@ -55,16 +55,16 @@ class Player : public GameObject {
         // METHODS
 
         /// \brief update the player status at each frame
-        void update();
+        void update(const float dt);
 
 
     protected:
         // METHODS
         /// \brief update the player speed using it's acceleration and inputs (goingLeft & goingUp)
-        void updateSpeed();
+        void updateSpeed(const float dt);
 
         /// \brief update the player position using it's current speed
-        void updatePosition();
+        void updatePosition(const float dt);
 
         // MEMBERS        
         // \brief position of the object relative to the spline

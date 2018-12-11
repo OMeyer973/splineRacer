@@ -4,21 +4,18 @@
 #include <glimac/Sphere.hpp>
 #include <GL/glew.h>
 #include <iostream>
+#include <splineengine/GameManager.hpp>
 #include <splineengine/GameObject.hpp>
 #include <splineengine/Player.hpp>
 #include <splineengine/Spline.hpp>
 #include <glm/gtc/noise.hpp>
 
 
-using namespace glimac;
 using namespace splineengine;
 
 // cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_splineTest
 
-Sphere sphere(2, 3, 2);
-Player player;
 
-Spline spline;
 
 // glm::vec3 spline.point(float t) {
 //     return glm::vec3(
@@ -30,7 +27,7 @@ Spline spline;
 
 int main(int argc, char** argv) {
     // Initialize SDL and open a window
-    SDLWindowManager windowManager(800, 600, "GLImac");
+    glimac::SDLWindowManager windowManager(800, 600, "GLImac");
 
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();
@@ -46,6 +43,11 @@ int main(int argc, char** argv) {
      * INITIALIZATION CODE
      *********************************/
     
+    GameManager gameManager;
+    glimac::Sphere sphere(2, 3, 2);
+    Player player;
+    Spline spline;
+
     // Création d'un seul VBO = contient les données
     GLuint vbo;
     glGenBuffers(1, &vbo);
@@ -55,7 +57,7 @@ int main(int argc, char** argv) {
     //On peut à présent modifier le VBO en passant par la cible 
 
     //Envoi des données
-    glBufferData(GL_ARRAY_BUFFER, sphere.getVertexCount() * sizeof (ShapeVertex), sphere.getDataPointer(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sphere.getVertexCount() * sizeof (glimac::ShapeVertex), sphere.getDataPointer(), GL_STATIC_DRAW);
     //On utilise GL_STATIC_DRAW pour un buffer dont les données ne changeront jamais.
 
     //Débindage, pour éviter de remodifier le VBO par erreur.
@@ -81,9 +83,9 @@ int main(int argc, char** argv) {
 
     //Spécification des attributs de vertex
     //glVertexAttribPointer(GLuint index,GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
-    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof (ShapeVertex), (const GLvoid*) offsetof(ShapeVertex, position));
-    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof (ShapeVertex), (const GLvoid*) offsetof(ShapeVertex, normal));
-    glVertexAttribPointer(VERTEX_ATTR_COORDINATE, 2, GL_FLOAT, GL_FALSE, sizeof (ShapeVertex), (const GLvoid*) offsetof(ShapeVertex, texCoords));
+    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof (glimac::ShapeVertex), (const GLvoid*) offsetof(glimac::ShapeVertex, position));
+    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof (glimac::ShapeVertex), (const GLvoid*) offsetof(glimac::ShapeVertex, normal));
+    glVertexAttribPointer(VERTEX_ATTR_COORDINATE, 2, GL_FLOAT, GL_FALSE, sizeof (glimac::ShapeVertex), (const GLvoid*) offsetof(glimac::ShapeVertex, texCoords));
 
     //Débindage
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -92,8 +94,8 @@ int main(int argc, char** argv) {
 
 
     // Charger et compiler les shaders
-    FilePath applicationPath(argv[0]);
-    Program program = loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
+    glimac::FilePath applicationPath(argv[0]);
+    glimac::Program program = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
                                 applicationPath.dirPath() + "shaders/normals.fs.glsl");
     program.use(); // Indiquer a OpenGL de les utiliser
 
@@ -140,11 +142,14 @@ int main(int argc, char** argv) {
                 }
                 break;
             }            
-
         }
         /*********************************
          * RENDERING CODE
          *********************************/
+        gameManager.update();
+        //std::cout << gameManager.dtime() << std::endl;
+
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         
@@ -157,7 +162,7 @@ int main(int argc, char** argv) {
         // spline stuff
 
         //updating player inner variables (speed, position...)
-        player.update();
+        player.update(gameManager.fixedDtime());
         
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 

@@ -10,7 +10,7 @@
 #include<glm/gtc/random.hpp>
 #include <glm/gtc/noise.hpp>
 #include <glimac/SDLWindowManager.hpp>
-#include "Common.hpp"
+#include "common.hpp"
 
 
 namespace splineengine {

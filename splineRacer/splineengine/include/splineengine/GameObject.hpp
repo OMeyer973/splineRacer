@@ -3,7 +3,7 @@
 #define __GAMEOBJECT__HPP
 
 #include <GL/glew.h>
-#include "Common.hpp"
+#include "common.hpp"
 
 namespace splineengine {
 

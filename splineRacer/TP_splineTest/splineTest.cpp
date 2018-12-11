@@ -10,6 +10,11 @@
 #include <splineengine/Spline.hpp>
 #include <glm/gtc/noise.hpp>
 
+//fps counter
+#include <time.h>
+#include <GL/glut.h>
+static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 30;
+
 
 using namespace splineengine;
 
@@ -17,11 +22,13 @@ using namespace splineengine;
 
 
 
+int initial_time = time(NULL), final_time, frame_count;
+
 // glm::vec3 spline.point(float t) {
 //     return glm::vec3(
-//         t+30*glm::perlin(glm::vec2(0.1*t)), 
-//         t-30*glm::perlin(glm::vec2(-0.1*t)), 
-//         t+30*glm::perlin(glm::vec2(0.1*t+100))
+//         t+30*glm::perlin(glm::vec2(0.1*t)),
+//         t-30*glm::perlin(glm::vec2(-0.1*t)),
+//         t+30*glm::pe rlin(glm::vec2(0.1*t+100))
 //     );
 // }
 
@@ -51,10 +58,10 @@ int main(int argc, char** argv) {
     // Création d'un seul VBO = contient les données
     GLuint vbo;
     glGenBuffers(1, &vbo);
-    
+
     //Binding d'un VBO sur la cible GL_ARRAY_BUFFER: permet de la modifier
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    //On peut à présent modifier le VBO en passant par la cible 
+    //On peut à présent modifier le VBO en passant par la cible
 
     //Envoi des données
     glBufferData(GL_ARRAY_BUFFER, sphere.getVertexCount() * sizeof (glimac::ShapeVertex), sphere.getDataPointer(), GL_STATIC_DRAW);
@@ -104,6 +111,8 @@ int main(int argc, char** argv) {
     // Application loop:
     bool done = false;
     while(!done) {
+        //set tickers to 0 for framerate cap
+        Uint32 startTime = SDL_GetTicks();
         // Event loop:
         SDL_Event e;
         while(windowManager.pollEvent(e)) {
@@ -127,7 +136,7 @@ int main(int argc, char** argv) {
                 break;
 
             case SDL_KEYUP:
-                if (e.key.keysym.sym==SDLK_q && player.goingLeft() > 0) {//stop going left 
+                if (e.key.keysym.sym==SDLK_q && player.goingLeft() > 0) {//stop going left
                     player.goingLeft() = 0.f;
                 }
                 if (e.key.keysym.sym==SDLK_d && player.goingLeft() < 0){//stop going right
@@ -152,10 +161,10 @@ int main(int argc, char** argv) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        
+
         //calcul des view matrix, model matrix, projetion matrix
         glm::mat4 ProjMatrix = glm::perspective(glm::radians(110.f), 4.f/3.f, 0.1f, 100.f);
-        
+
 
         //glm::mat4 MVMatrix = glm::translate(glm::mat4(), glm::vec3(0.f, 0.f ,-5.f));
         ///////////////////////////////////////////////////////////////////////
@@ -166,7 +175,7 @@ int main(int argc, char** argv) {
         
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 
-       
+
         for (float t=1; t<100; t+=0.05f) {
 
             //curve part
@@ -177,13 +186,13 @@ int main(int argc, char** argv) {
 
             for (int i=0; i<3; ++i) {
                 if (i==1) {
-                    MVMatrix = glm::translate(MVMatrix, glm::vec3(3,0,0));        
+                    MVMatrix = glm::translate(MVMatrix, glm::vec3(3,0,0));
                 }
                 if (i==2) {
-                    MVMatrix = glm::translate(MVMatrix, glm::vec3(0,3,0));        
+                    MVMatrix = glm::translate(MVMatrix, glm::vec3(0,3,0));
                 }
                 // end spline stuff
-                ////////////////////////////////////////////////////////////////  
+                ////////////////////////////////////////////////////////////////
                 glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
                 //on récupère les locations des variables uniformes dans les shaders
@@ -206,6 +215,14 @@ int main(int argc, char** argv) {
         }
         // Update the display
         windowManager.swapBuffers();
+        //fps count
+        Uint32 elapsedTime = SDL_GetTicks() - startTime;
+    		if(elapsedTime < FRAMERATE_MILLISECONDS) {
+    			SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
+    		}
+
+
+
     }
 
     return EXIT_SUCCESS;

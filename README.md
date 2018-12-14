@@ -5,7 +5,7 @@ IMAC semester 3 C++ and openGL 3 project. temple run clone but about a plane fly
 ```shell
 mkdir splineRacer-build
 cd splineRacer-build
-cmake ../SplineRacer
+cmake ../splineRacer
 make
 ./PATH/TO/EXECUTABLE
 ```

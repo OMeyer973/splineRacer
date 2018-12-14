@@ -1,5 +1,5 @@
 #include "glimac/Geometry.hpp"
-#include "tiny_obj_loader.h"
+#include <glimac/tiny_obj_loader.h>
 #include <iostream>
 #include <algorithm>
 

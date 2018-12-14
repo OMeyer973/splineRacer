@@ -28,7 +28,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "tiny_obj_loader.h"
+#include <glimac/tiny_obj_loader.h>
 
 namespace tinyobj {
 

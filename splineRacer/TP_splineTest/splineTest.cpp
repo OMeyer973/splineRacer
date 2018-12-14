@@ -34,7 +34,7 @@ int initial_time = time(NULL), final_time, frame_count;
 
 int main(int argc, char** argv) {
     // Initialize SDL and open a window
-    glimac::SDLWindowManager windowManager(800, 600, "GLImac");
+    glimac::SDLWindowManager windowManager(800, 600, "splineRacer");
 
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();

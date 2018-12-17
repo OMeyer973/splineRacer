@@ -1,7 +1,6 @@
+#pragma once
 #ifndef __COLLIDER__HPP
 #define __COLLIDER__HPP
-
-#pragma once
 
 namespace splineengine {
 

@@ -4,11 +4,13 @@
 #include <glimac/Program.hpp>
 #include <glimac/Geometry.hpp>
 #include <glimac/Image.hpp>
+#include <splineengine/Model.hpp>
 #include <glm/gtc/random.hpp>
 #include <GL/glew.h>
 #include <iostream>
 
 using namespace glimac;
+using namespace splineengine;
 
 void print(std::string str) {
 	std::cout << "Debug : "<< str << std::endl; 
@@ -93,8 +95,8 @@ int main(int argc, char** argv) {
 	glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
 	// OBJ Loading
-	Geometry plane;
-	bool ret = plane.loadOBJ(applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.obj", 
+	Geometry planeGeometry;
+	bool ret = planeGeometry.loadOBJ(applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.obj", 
 							 applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.mtl", 
 							 true);
 
@@ -102,44 +104,8 @@ int main(int argc, char** argv) {
 		exit(1); // Lancer Exception : OBJ loading failed
 	}
 
-	// VBO
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, plane.getVertexCount() * sizeof(Geometry::Vertex), plane.getVertexBuffer(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	// IBO
-	GLuint ibo;
-	glGenBuffers(1, &ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, plane.getIndexCount() * sizeof(uint32_t), plane.getIndexBuffer(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	// VAO
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-	// => On bind l'IBO sur GL_ELEMENT_ARRAY_BUFFER; puisqu'un VAO est actuellement bindé,
-	// cela a pour effet d'enregistrer l'IBO dans le VAO
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-
-	const GLuint VERTEX_ATTR_POSITION = 0;
-	const GLuint VERTEX_ATTR_NORMAL = 1;
-	const GLuint VERTEX_ATTR_TEXCOORD = 2;
-	glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-	glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
-	glEnableVertexAttribArray(VERTEX_ATTR_TEXCOORD);
-
-	// Spécification de l'attribut de sommet et de texture
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), (const GLvoid*) offsetof(Geometry::Vertex, m_Position));
-	glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), (const GLvoid*) offsetof(Geometry::Vertex, m_Normal));
-	glVertexAttribPointer(VERTEX_ATTR_TEXCOORD, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), (const GLvoid*) offsetof(Geometry::Vertex, m_TexCoords));
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	// Débinding du VAO
-	glBindVertexArray(0);
+	// Create the model and create VBO, IBO, VAO based on the geometry
+	Model planeModel(planeGeometry);
 
 	// Application loop:
 	bool done = false;
@@ -168,13 +134,13 @@ int main(int argc, char** argv) {
 		glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 
 		// Dessin de l'OBJ
-		glBindVertexArray(vao);
+		glBindVertexArray(planeModel.getVAO());
 
 		/* On boucle sur les meshs de l'object pour les afficher un par un et 
 		   appliquer des textures ou des tranformations différentes pour chaque mesh. */
-		for (int i = 0; i < plane.getMeshCount(); ++i)
+		for (int i = 0; i < planeGeometry.getMeshCount(); ++i)
 		{
-			const Geometry::Mesh* currentMesh = (plane.getMeshBuffer()+i);
+			const Geometry::Mesh* currentMesh = (planeGeometry.getMeshBuffer()+i);
 			GLint indexCount = currentMesh->m_nIndexCount;
 			GLint indexOffset = currentMesh->m_nIndexOffset;
 			if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices 
@@ -194,7 +160,7 @@ int main(int argc, char** argv) {
 			// Cela indique à OpenGL qu'il doit utiliser l'IBO enregistré dans le VAO
 			glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (const GLvoid*) (indexOffset * sizeof(GLuint)));
 		}
-		// glDrawElements(GL_TRIANGLES, plane.getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
+		// glDrawElements(GL_TRIANGLES, planeGeometry.getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
 		glBindVertexArray(0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -203,8 +169,6 @@ int main(int argc, char** argv) {
 	}
 
 	// Libérations des ressources
-	glDeleteBuffers(1, &vbo);
-	glDeleteVertexArrays(1, &vao);
 	delete textures;
 
 	return EXIT_SUCCESS;

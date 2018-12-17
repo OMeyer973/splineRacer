@@ -12,24 +12,17 @@
 
 //fps counter
 #include <time.h>
+//#include <GL/glut.h>
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 30;
 
 
 using namespace splineengine;
 
-// cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_splineTest
+// cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_gameObjTest
 
 
 
 int initial_time = time(NULL), final_time, frame_count;
-
-// glm::vec3 spline.point(float t) {
-//     return glm::vec3(
-//         t+30*glm::perlin(glm::vec2(0.1*t)),
-//         t-30*glm::perlin(glm::vec2(-0.1*t)),
-//         t+30*glm::pe rlin(glm::vec2(0.1*t+100))
-//     );
-// }
 
 int main(int argc, char** argv) {
     // Initialize SDL and open a window
@@ -138,7 +131,7 @@ int main(int argc, char** argv) {
                 if (e.key.keysym.sym==SDLK_q && player.goingLeft() > 0) {//stop going left
                     player.goingLeft() = 0.f;
                 }
-                if (e.key.keysym.sym==SDLK_d && player.goingLeft() < 0){//stop going right
+                if (e.key.keysym.sym==SDLK_d && player.goingLeft() < 0) {//stop going right
                     player.goingLeft() = 0.f;
                 }
                 if (e.key.keysym.sym==SDLK_z && player.goingUp() > 0) {//stop going up
@@ -166,7 +159,7 @@ int main(int argc, char** argv) {
 
 
         //glm::mat4 MVMatrix = glm::translate(glm::mat4(), glm::vec3(0.f, 0.f ,-5.f));
-        ///////////////////////////////////////////////////////////////////////
+        ///////////////
         // spline stuff
 
         //updating player inner variables (speed, position...)
@@ -178,7 +171,7 @@ int main(int argc, char** argv) {
         for (float t=1; t<100; t+=0.05f) {
 
             //curve part
-            glm::mat4 MVMatrix ;
+            glm::mat4 MVMatrix;
             MVMatrix = camMatrix * spline.matrix(glm::vec3(t,0,0));
             //MVMatrix = glm::translate(camMatrix, spline.point(t));
             MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2));
@@ -190,8 +183,6 @@ int main(int argc, char** argv) {
                 if (i==2) {
                     MVMatrix = glm::translate(MVMatrix, glm::vec3(0,3,0));
                 }
-                // end spline stuff
-                ////////////////////////////////////////////////////////////////
                 glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
                 //on récupère les locations des variables uniformes dans les shaders
@@ -210,15 +201,62 @@ int main(int argc, char** argv) {
 
                 glBindVertexArray(0);
             }
-
         }
+        // end spline stuff
+        ////////////////////////////////////////////////////////////////
+        // gameobj stuff 
+        std::vector<GameObject> walls;
+
+        walls.push_back(GameObject(
+            glm::vec3(2.0f, 2.0f, 1.5f),
+            glm::vec3(10.0f, 10.0f, 10.0f),
+            glm::vec3(10.0f, 10.0f, 10.0f)
+        ));
+        // walls.push_back(GameObject(
+        //     glm::vec3(2.5f, 2.0f, 1.5f),
+        //     glm::vec3(10.0f, 20.0f, 10.0f),
+        //     glm::vec3(20.0f, 20.0f, 10.0f)
+        // ));
+        // walls.push_back(GameObject(
+        //     glm::vec3(3.0f, 2.0f, 1.5f),
+        //     glm::vec3(10.0f, 40.0f, 10.0f),
+        //     glm::vec3(10.0f, 40.0f, 10.0f)
+        // ));
+        walls[0].print();
+        for (float i=0; i<walls.size(); ++i) {
+            //std::cout << "walls[i].rotation() " << walls[i].rotation() << std::endl;
+            glm::mat4 MVMatrix;
+            MVMatrix = camMatrix * spline.matrix(walls[i].sPosition());
+            //MVMatrix = glm::rotate(MVMatrix, walls[i].rotation()[UP], glm::vec3(1.f,0.f,0.f));
+            
+            glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+
+            //on récupère les locations des variables uniformes dans les shaders
+            GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+            GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+            GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+            //on envoie les matrices à la CG dans les variables uniformes
+            glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(ProjMatrix * MVMatrix));
+            glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
+            glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
+
+            //Binding du VAO
+            glBindVertexArray(vao);
+
+            glDrawArrays(GL_TRIANGLES, 0, sphere.getVertexCount());
+
+            glBindVertexArray(0);
+        }
+
+        //end gameobj stuff
+        ////////////////////////////////////////////////////////////////
         // Update the display
         windowManager.swapBuffers();
         //fps count
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
-    		if(elapsedTime < FRAMERATE_MILLISECONDS) {
-    			SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
-    		}
+            if(elapsedTime < FRAMERATE_MILLISECONDS) {
+                SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
+            }
 
 
 

@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST); // Permet d'activer le test de profondeur du GPU
 
 	// Chargement d'une texture
-	std::unique_ptr<Image> planeTexture = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/planetexture.jpg");
+	std::unique_ptr<Image> planeTexture = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/planetexture2.jpg");
 	std::unique_ptr<Image> propellerTexture = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/finish_line2.jpg");
 
 	if (planeTexture == NULL)

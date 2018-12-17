@@ -7,7 +7,7 @@ mkdir splineRacer-build
 cd splineRacer-build
 cmake ../splineRacer
 make
-./PATH/TO/EXECUTABLE
+./src/SPLINERACER
 ```
 
 ## Coding norms

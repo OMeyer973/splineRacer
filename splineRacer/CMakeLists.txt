@@ -20,8 +20,13 @@ set(ALL_LIBRARIES glimac splineengine ${SDL_LIBRARY} ${OPENGL_LIBRARIES} ${GLEW_
 add_subdirectory(glimac)
 add_subdirectory(splineengine)
 
-file(GLOB TP_DIRECTORIES "TP*")
 
+# Compiler les tests
+file(GLOB TP_DIRECTORIES "TP*")
 foreach(TP ${TP_DIRECTORIES})
     add_subdirectory(${TP})
 endforeach()
+
+# Compiler le main global
+file(GLOB MAIN "src")
+add_subdirectory(${MAIN})

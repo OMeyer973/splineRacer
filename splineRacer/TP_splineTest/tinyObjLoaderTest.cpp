@@ -177,7 +177,6 @@ int main(int argc, char** argv) {
 			const Geometry::Mesh* currentMesh = (plane.getMeshBuffer()+i);
 			GLint indexCount = currentMesh->m_nIndexCount;
 			GLint indexOffset = currentMesh->m_nIndexOffset;
-			print(currentMesh->m_sName);
 			if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices 
 			{
 				glBindTexture(GL_TEXTURE_2D, textures[1]);

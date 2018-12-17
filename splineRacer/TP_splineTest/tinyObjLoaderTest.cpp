@@ -10,6 +10,10 @@
 
 using namespace glimac;
 
+void print(std::string str) {
+	std::cout << "Debug : "<< str << std::endl; 
+}
+
 int main(int argc, char** argv) {
 	// Initialize SDL and open a window
 	SDLWindowManager windowManager(800, 600, "splineRacer");
@@ -31,7 +35,7 @@ int main(int argc, char** argv) {
 	// Shaders
 	FilePath applicationPath(argv[0]);
 	Program program = loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
-								  applicationPath.dirPath() + "shaders/normals.fs.glsl");
+								  applicationPath.dirPath() + "shaders/tex3D.fs.glsl");
 	program.use();
 
 	// Location des variables uniformes
@@ -39,16 +43,17 @@ int main(int argc, char** argv) {
 	GLint MVMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVMatrix");
 	GLint NormalMatrixLocation = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 	GLint textureLocation = glGetUniformLocation(program.getGLId(), "uTexture");
-	
+
 	glEnable(GL_DEPTH_TEST); // Permet d'activer le test de profondeur du GPU
 
 	// Chargement d'une texture
-	std::unique_ptr<Image> earthTexture = loadImage("/home/torresf/CLionProjects/splineRacer/splineRacer/assets/textures/EarthMap.jpg");
+	std::unique_ptr<Image> planeTexture = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/planetexture.jpg");
+	std::unique_ptr<Image> propellerTexture = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/finish_line2.jpg");
 
-	if (earthTexture == NULL)
-		std::cerr << "Erreur au chargement de l'image de la Terre." << std::endl;
+	if (planeTexture == NULL)
+		std::cerr << "Erreur au chargement de l'image." << std::endl;
 
-	unsigned int nbTextures = 1;
+	unsigned int nbTextures = 2;
 	GLuint *textures = new GLuint[nbTextures];
 	glGenTextures(nbTextures, textures);
 
@@ -56,12 +61,29 @@ int main(int argc, char** argv) {
 	glTexImage2D(GL_TEXTURE_2D,
 		0,
 		GL_RGBA,
-		earthTexture->getWidth(),
-		earthTexture->getHeight(),
+		planeTexture->getWidth(),
+		planeTexture->getHeight(),
 		0,
 		GL_RGBA,
 		GL_FLOAT,
-		earthTexture->getPixels());
+		planeTexture->getPixels());
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	if (propellerTexture == NULL)
+		std::cerr << "Erreur au chargement de l'image." << std::endl;
+
+	glBindTexture(GL_TEXTURE_2D, textures[1]);
+	glTexImage2D(GL_TEXTURE_2D,
+		0,
+		GL_RGBA,
+		propellerTexture->getWidth(),
+		propellerTexture->getHeight(),
+		0,
+		GL_RGBA,
+		GL_FLOAT,
+		propellerTexture->getPixels());
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -70,46 +92,37 @@ int main(int argc, char** argv) {
 	glm::mat4 MVMatrix = glm::translate(glm::mat4(), glm::vec3(0, 0, -5));
 	glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
+	// OBJ Loading
 	Geometry plane;
-	bool ret = plane.loadOBJ("/home/torresf/CLionProjects/splineRacer/splineRacer/assets/models/singe/singe.obj", 
-							 "/home/torresf/CLionProjects/splineRacer/splineRacer/assets/models/singe/singe.mtl", 
+	bool ret = plane.loadOBJ(applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.obj", 
+							 applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.mtl", 
 							 true);
 
 	if (!ret) {
-		exit(1); // Lancer Exception
+		exit(1); // Lancer Exception : OBJ loading failed
 	}
 
-	// Création d'une sphère
-	Sphere sphere(1, 32, 16);
-
+	// VBO
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
-
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-	// Envoie des données de vertex
 	glBufferData(GL_ARRAY_BUFFER, plane.getVertexCount() * sizeof(Geometry::Vertex), plane.getVertexBuffer(), GL_STATIC_DRAW);
-	
-	// Débinding du VBO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	//Gestion de l'ibo
+	// IBO
 	GLuint ibo;
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, plane.getIndexCount() * sizeof(uint32_t), plane.getIndexBuffer(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	// Création du VAO
+	// VAO
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
-
-	// Binding du VAO
 	glBindVertexArray(vao);
-
 	// => On bind l'IBO sur GL_ELEMENT_ARRAY_BUFFER; puisqu'un VAO est actuellement bindé,
-    // cela a pour effet d'enregistrer l'IBO dans le VAO
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	// cela a pour effet d'enregistrer l'IBO dans le VAO
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
 	const GLuint VERTEX_ATTR_POSITION = 0;
 	const GLuint VERTEX_ATTR_NORMAL = 1;
@@ -134,9 +147,9 @@ int main(int argc, char** argv) {
 		// Event loop:
 		SDL_Event e;
 		while(windowManager.pollEvent(e)) {
-				if(e.type == SDL_QUIT) {
-						done = true; // Leave the loop after this iteration
-				}
+			if(e.type == SDL_QUIT) {
+				done = true; // Leave the loop after this iteration
+			}
 		}
 
 		/*********************************
@@ -154,11 +167,35 @@ int main(int argc, char** argv) {
 		glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(MVMatrix));
 		glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 
-		// Dessin de la terre
+		// Dessin de l'OBJ
 		glBindVertexArray(vao);
-		// => On utilise glDrawElements à la place de glDrawArrays
-        // Cela indique à OpenGL qu'il doit utiliser l'IBO enregistré dans le VAO
-        glDrawElements(GL_TRIANGLES, plane.getIndexCount(), GL_UNSIGNED_INT, 0);
+
+		/* On boucle sur les meshs de l'object pour les afficher un par un et 
+		   appliquer des textures ou des tranformations différentes pour chaque mesh. */
+		for (int i = 0; i < plane.getMeshCount(); ++i)
+		{
+			const Geometry::Mesh* currentMesh = (plane.getMeshBuffer()+i);
+			GLint indexCount = currentMesh->m_nIndexCount;
+			GLint indexOffset = currentMesh->m_nIndexOffset;
+			print(currentMesh->m_sName);
+			if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices 
+			{
+				glBindTexture(GL_TEXTURE_2D, textures[1]);
+				glUniform1i(textureLocation, 0);
+				MVMatrix = glm::mat4(1); // Translation
+				MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, -5)); // Translation
+				MVMatrix = glm::rotate(MVMatrix, windowManager.getTime(), glm::vec3(0, 1, 0)); // Translation * Rotation
+				MVMatrix = glm::rotate(MVMatrix, 10*windowManager.getTime(), glm::vec3(0, 0, 1)); // Translation * Rotation
+				glUniformMatrix4fv(MVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
+				glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(MVMatrix));
+				glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
+			}
+
+			// => On utilise glDrawElements à la place de glDrawArrays
+			// Cela indique à OpenGL qu'il doit utiliser l'IBO enregistré dans le VAO
+			glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (const GLvoid*) (indexOffset * sizeof(GLuint)));
+		}
+		// glDrawElements(GL_TRIANGLES, plane.getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
 		glBindVertexArray(0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 

@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/TP_Main_Main.dir/Main.cpp.o  -o TP_Main_Main ../glimac/libglimac.a ../splineengine/libsplineengine.a -Wl,-Bstatic -lSDLmain -Wl,-Bdynamic -lSDL -lpthread -lGL -lGLU -lGLEW 

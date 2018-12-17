@@ -17,10 +17,11 @@ int main(int argc, char** argv) {
     std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
     std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 
+    /*
     GameManager gameManager;
 
     gameManager.init();
-
+    */
 
     // Application loop:
     bool done = false;
@@ -32,7 +33,7 @@ int main(int argc, char** argv) {
                 done = true; // Leave the loop after this iteration
             }
         }
-
+        /*
         if( gameMode.ingame() ){
           Input.getInput();
           Game.update();
@@ -42,7 +43,7 @@ int main(int argc, char** argv) {
           Menu.update();
           Menu.render();
         }
-
+        */
         // Update the display
         windowManager.swapBuffers();
     }

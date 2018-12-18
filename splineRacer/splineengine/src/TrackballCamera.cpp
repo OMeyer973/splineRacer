@@ -18,11 +18,11 @@ void TrackballCamera::moveFront(const float delta) {
 }
 
 void TrackballCamera::rotateLeft(const float degrees) {
-	_fAngleX += degrees;
+	_fAngleY += degrees;
 }
 
 void TrackballCamera::rotateUp(const float degrees) {
-	_fAngleY += degrees;
+	_fAngleX += degrees;
 }
 
 glm::mat4 TrackballCamera::getViewMatrix() const {

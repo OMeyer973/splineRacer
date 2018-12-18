@@ -70,7 +70,7 @@ class GameObject {
 		glm::vec3 _sPosition;
 		// \brief scale of the object
 		glm::vec3 _scale;
-		// \brief rotation of the object
+		// \brief rotation of the object folowing the 3 spline-reference vectors (fwd, left, up) in trigonometric rotation direction
 		glm::vec3 _rotation;
 		// \brief model of the 3D object
 		std::unique_ptr<Model> _model;

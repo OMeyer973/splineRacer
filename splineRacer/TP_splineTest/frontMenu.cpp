@@ -12,7 +12,6 @@
 
 //fps counter
 #include <time.h>
-#include <GL/glut.h>
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 30;
 
 

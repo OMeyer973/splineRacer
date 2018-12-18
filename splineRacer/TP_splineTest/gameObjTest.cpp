@@ -118,6 +118,8 @@ int main(int argc, char** argv) {
 
     glEnable(GL_DEPTH_TEST);
 
+
+    bool displayInGameMenu=false;
     // Application loop:
     bool done = false;
     while(!done) {
@@ -143,6 +145,12 @@ int main(int argc, char** argv) {
                 if (e.key.keysym.sym==SDLK_s){//going down
                     player.goingUp() = -1.f;
                 }
+                if(e.key.keysym.sym==SDLK_ESCAPE && !displayInGameMenu){
+                    displayInGameMenu = true;
+                }else if(e.key.keysym.sym == SDLK_ESCAPE && displayInGameMenu ){
+                    displayInGameMenu = false;
+                }
+
                 break;
 
             case SDL_KEYUP:
@@ -181,8 +189,10 @@ int main(int argc, char** argv) {
         // spline stuff
 
         //updating player inner variables (speed, position...)
-        player.update(gameManager.fixedDtime());
-        
+
+        if(!displayInGameMenu){
+            player.update(gameManager.fixedDtime());
+        }
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 
 
@@ -226,33 +236,14 @@ int main(int argc, char** argv) {
 
         std::vector<GameObject> walls;
 
-        walls.push_back (GameObject(
-            planeModel,
-            glm::vec3(3.0f, 2.0f, 1.5f),
-            glm::vec3(0.4f, 0.4f, 0.4f),
-            glm::vec3(0.0f, 0.0f, 0.0f)
-        ));
-
-        walls.push_back (GameObject(
-            planeModel,
-            glm::vec3(3.1f, 2.0f, 1.5f),
-            glm::vec3(0.4f, 0.4f, 0.4f),
-            glm::vec3(0.0f, 1.0f, 0.0f)
-        ));
-
-        walls.push_back (GameObject(
-            planeModel,
-            glm::vec3(3.2f, 2.0f, 1.5f),
-            glm::vec3(0.4f, 0.4f, 0.4f),
-            glm::vec3(0.0f, 2.0f, 0.0f)
-        ));
-
-        walls.push_back (GameObject(
-            planeModel,
-            glm::vec3(3.3f, 2.0f, 1.5f),
-            glm::vec3(0.4f, 0.4f, 0.4f),
-            glm::vec3(0.0f, 3.0f, 0.0f)
-        ));
+        for (float i=0; i<50; ++i) {
+            walls.push_back (GameObject(
+                planeModel,
+                glm::vec3(3+i/8, 0.f, 1.5f),
+                glm::vec3(0.4f, 0.4f, 0.4f),
+                glm::vec3(0.0f, 0.0f, i/5)
+            ));
+        }
 
         for (float i=0; i<walls.size(); ++i) {
             glm::mat4 MVMatrix;

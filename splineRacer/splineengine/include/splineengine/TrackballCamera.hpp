@@ -3,9 +3,11 @@
 
 #pragma once
 
+#include <splineengine/Camera.hpp>
+
 namespace splineengine {
 
-class TrackballCamera
+class TrackballCamera : public Camera
 {
 	public:
 		TrackballCamera();

@@ -1,3 +1,7 @@
+#include <glm/gtc/random.hpp>
+#include <GL/glew.h>
+#include <iostream>
+#include <vector>
 #include <glimac/SDLWindowManager.hpp>
 #include <glimac/Sphere.hpp>
 #include <glimac/FilePath.hpp>
@@ -5,9 +9,9 @@
 #include <glimac/Geometry.hpp>
 #include <glimac/Image.hpp>
 #include <splineengine/Model.hpp>
-#include <glm/gtc/random.hpp>
-#include <GL/glew.h>
-#include <iostream>
+#include <splineengine/POVCamera.hpp>
+#include <splineengine/TrackballCamera.hpp>
+
 
 using namespace glimac;
 using namespace splineengine;
@@ -97,8 +101,8 @@ int main(int argc, char** argv) {
 	// OBJ Loading
 	Geometry planeGeometry;
 	bool ret = planeGeometry.loadOBJ(applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.obj", 
-							 applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.mtl", 
-							 true);
+									 applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.mtl", 
+									 true);
 
 	if (!ret) {
 		exit(1); // Lancer Exception : OBJ loading failed
@@ -107,14 +111,59 @@ int main(int argc, char** argv) {
 	// Create the model and create VBO, IBO, VAO based on the geometry
 	Model planeModel(planeGeometry);
 
+	// Create the Camera
+	std::vector<std::unique_ptr<Camera>> cameras;
+	POVCamera povCamera;
+	TrackballCamera tbCamera;
+	cameras.emplace_back(new POVCamera());
+	cameras.emplace_back(new TrackballCamera());
+	int chosenCamera = POV_CAMERA;
+
+	float rotateSpeed = 1.0f;
+	float zoom = 1.0f;
+
 	// Application loop:
 	bool done = false;
 	while(!done) {
 		// Event loop:
 		SDL_Event e;
 		while(windowManager.pollEvent(e)) {
-			if(e.type == SDL_QUIT) {
-				done = true; // Leave the loop after this iteration
+			switch (e.type) {
+				case SDL_QUIT:
+					done = true;
+					break;
+				case SDL_KEYDOWN:
+					switch (e.key.keysym.sym) {
+						case SDLK_ESCAPE:
+							done = true;
+							break;
+						case SDLK_c:
+							chosenCamera = (chosenCamera == TRACKBALL_CAMERA) ? POV_CAMERA : TRACKBALL_CAMERA;
+							break;
+						case SDLK_UP:
+							if (chosenCamera == TRACKBALL_CAMERA)
+								cameras[chosenCamera]->moveFront(zoom);
+							break;
+						case SDLK_DOWN:
+							if (chosenCamera == TRACKBALL_CAMERA)
+								cameras[chosenCamera]->moveFront(-zoom);
+							break;
+						default:
+							break;
+					}
+					break;
+				case SDL_MOUSEMOTION:
+					if (windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
+						if (e.motion.xrel != 0) {
+							cameras[chosenCamera]->rotateLeft(e.motion.xrel * rotateSpeed);
+						}
+						if (e.motion.yrel != 0) {
+							cameras[chosenCamera]->rotateUp(e.motion.yrel * rotateSpeed);
+						}
+						break;
+					}
+				default:
+					break;
 			}
 		}
 
@@ -127,8 +176,10 @@ int main(int argc, char** argv) {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, -5)); // Translation
-		MVMatrix = glm::rotate(MVMatrix, windowManager.getTime(), glm::vec3(0, 1, 0)); // Translation * Rotation
+		MVMatrix = cameras[chosenCamera]->getViewMatrix(); // Init MVMatrix based on the camera
+
+		// MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, -5)); // Translation
+		// MVMatrix = glm::rotate(MVMatrix, windowManager.getTime(), glm::vec3(0, 1, 0)); // Translation * Rotation
 		glUniformMatrix4fv(MVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
 		glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(MVMatrix));
 		glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
@@ -143,13 +194,13 @@ int main(int argc, char** argv) {
 			const Geometry::Mesh* currentMesh = (planeGeometry.getMeshBuffer()+i);
 			GLint indexCount = currentMesh->m_nIndexCount;
 			GLint indexOffset = currentMesh->m_nIndexOffset;
-			if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices 
+			if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices
 			{
 				glBindTexture(GL_TEXTURE_2D, textures[1]);
 				glUniform1i(textureLocation, 0);
-				MVMatrix = glm::mat4(1); // Translation
-				MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, -5)); // Translation
-				MVMatrix = glm::rotate(MVMatrix, windowManager.getTime(), glm::vec3(0, 1, 0)); // Translation * Rotation
+				MVMatrix = cameras[chosenCamera]->getViewMatrix(); // Init MVMatrix based on the camera
+				// MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, -5)); // Translation
+				// MVMatrix = glm::rotate(MVMatrix, windowManager.getTime(), glm::vec3(0, 1, 0)); // Translation * Rotation
 				MVMatrix = glm::rotate(MVMatrix, 10*windowManager.getTime(), glm::vec3(0, 0, 1)); // Translation * Rotation
 				glUniformMatrix4fv(MVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
 				glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(MVMatrix));

@@ -52,17 +52,7 @@ int main(int argc, char** argv) {
     Player player;
     Spline spline;
 
-    glimac::Geometry planeGeometry;
-    bool ret = planeGeometry.loadOBJ(applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.obj", 
-                             applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.mtl", 
-                             true);
-    if (!ret) {
-        exit(1); // Lancer Exception : OBJ loading failed
-    }
-
-    // Create the model and create VBO, IBO, VAO based on the geometry
-    Model planeModel(planeGeometry);
-
+    Model planeModel(applicationPath, "plane");
 
     // Création d'un seul VBO = contient les données
     GLuint vbo;
@@ -265,8 +255,7 @@ int main(int argc, char** argv) {
             //Binding du VAO
             //glBindVertexArray(vao);
             glBindVertexArray(planeModel.getVAO());
-            glDrawElements(GL_TRIANGLES, planeGeometry.getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
-        
+            glDrawElements(GL_TRIANGLES, planeModel.getGeometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
             //glDrawArrays(GL_TRIANGLES, 0, sphere.getVertexCount());
 
             glBindVertexArray(0);

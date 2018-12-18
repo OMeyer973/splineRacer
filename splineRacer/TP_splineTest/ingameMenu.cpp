@@ -119,12 +119,7 @@ int main(int argc, char** argv) {
 
     program.use(); // Indiquer a OpenGL de les utiliser
 
-    glimac::Geometry menuGeometry;
-	bool ret = menuGeometry.loadOBJ(applicationPath.dirPath() + "../../splineRacer/assets/models/menu/menu.obj",
-        							 applicationPath.dirPath() + "../../splineRacer/assets/models/menu/menu.mtl",
-        							 true);
-
-    Model menuModel(menuGeometry);
+    Model menuModel(applicationPath, "menu");
 
     glEnable(GL_DEPTH_TEST);
 
@@ -219,7 +214,7 @@ int main(int argc, char** argv) {
 
             glBindVertexArray(menuModel.getVAO());
 
-            glDrawElements(GL_TRIANGLES, menuGeometry.getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
+            glDrawElements(GL_TRIANGLES, menuModel.getGeometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
             glBindVertexArray(0);
 
         }

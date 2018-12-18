@@ -4,7 +4,7 @@
 
 #include <GL/glew.h>
 #include <glimac/Geometry.hpp>
-#include <glimac/Geometry.hpp>
+#include <glimac/FilePath.hpp>
 #include "Collider.hpp"
 
 namespace splineengine {
@@ -19,10 +19,18 @@ class Model {
 		{};
 
 		/// \brief model Constructor
-		Model(glimac::Geometry &geometry)
-			:
-			_geometry(geometry)
+		Model(const glimac::FilePath &applicationPath, const std::string &modelName)
 		{
+			glimac::Geometry geometry;
+			glimac::FilePath modelPath = applicationPath.dirPath() + "../../splineRacer/assets/models/" + modelName + "/" + modelName;
+			glimac::FilePath objPath(modelPath.addExt(".obj")); // Constructeur par copie
+			glimac::FilePath mtlPath(modelPath.addExt(".mtl")); // Constructeur par copie
+			bool ret = geometry.loadOBJ(objPath, mtlPath, true);
+			if (!ret)
+				exit(1); // Lancer Exception : OBJ loading failed
+
+			// OBJ is correctly loaded
+			_geometry = geometry;
 			setVBO(geometry);
 			setIBO(geometry);
 			setVAO();
@@ -49,6 +57,11 @@ class Model {
 		/// \brief get VAO
 		GLuint getVAO() const {
 			return _VAO;
+		};
+
+		/// \brief get Geometry
+		glimac::Geometry getGeometry() const {
+			return _geometry;
 		};
 
 		void draw();

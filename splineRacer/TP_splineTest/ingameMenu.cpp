@@ -9,9 +9,14 @@
 #include <splineengine/Player.hpp>
 #include <splineengine/Spline.hpp>
 #include <glm/gtc/noise.hpp>
+#include <glimac/Image.hpp>
+#include <glimac/FilePath.hpp>
+#include <glimac/Geometry.hpp>
+#include <splineengine/Model.hpp>
 
 //fps counter
 #include <time.h>
+#include <GL/glut.h>
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 30;
 
 
@@ -33,7 +38,7 @@ int initial_time = time(NULL), final_time, frame_count;
 
 int main(int argc, char** argv) {
     // Initialize SDL and open a window
-    glimac::SDLWindowManager windowManager(800, 600, "splineRacer");
+    glimac::SDLWindowManager windowManager(1200, 900, "splineRacer");
 
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();
@@ -97,16 +102,36 @@ int main(int argc, char** argv) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
+    /****
 
+    PROGRAMME DE TEXTURES
+
+    ***/
+
+
+
+    glimac::FilePath applicationPath(argv[0]);
+    std::unique_ptr<glimac::Image> buttonContinue = loadImage(applicationPath.dirPath() + "../../GLImac-Template/assets/textures/Continue.png");
+    if ( buttonContinue == NULL ) std::cout << "Image Not Loaded" << std::endl;
 
     // Charger et compiler les shaders
-    glimac::FilePath applicationPath(argv[0]);
     glimac::Program program = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
                                 applicationPath.dirPath() + "shaders/normals.fs.glsl");
+
     program.use(); // Indiquer a OpenGL de les utiliser
+
+    glimac::Geometry menuGeometry;
+	bool ret = menuGeometry.loadOBJ(applicationPath.dirPath() + "../../splineRacer/assets/models/menu/menu.obj",
+        							 applicationPath.dirPath() + "../../splineRacer/assets/models/menu/menu.mtl",
+        							 true);
+
+    Model menuModel(menuGeometry);
 
     glEnable(GL_DEPTH_TEST);
 
+
+
+    bool displayInGameMenu=false;
     // Application loop:
     bool done = false;
     while(!done) {
@@ -131,6 +156,10 @@ int main(int argc, char** argv) {
                 }
                 if (e.key.keysym.sym==SDLK_s){//going down
                     player.goingUp() = -1.f;
+                }if(e.key.keysym.sym==SDLK_ESCAPE && !displayInGameMenu){
+                    displayInGameMenu = true;
+                }else if(e.key.keysym.sym == SDLK_ESCAPE && displayInGameMenu ){
+                    displayInGameMenu = false;
                 }
                 break;
 
@@ -144,13 +173,11 @@ int main(int argc, char** argv) {
                 if (e.key.keysym.sym==SDLK_z && player.goingUp() > 0) {//stop going up
                     player.goingUp() = 0.f;
                 }
-                if (e.key.keysym.sym==SDLK_s && player.goingUp() < 0){//stop going down
-                    player.goingUp() = 0.f;
-                    ;
-                }
                 break;
             }
         }
+
+
         /*********************************
          * RENDERING CODE
          *********************************/
@@ -164,33 +191,66 @@ int main(int argc, char** argv) {
         //calcul des view matrix, model matrix, projetion matrix
         glm::mat4 ProjMatrix = glm::perspective(glm::radians(110.f), 4.f/3.f, 0.1f, 100.f);
 
-
         //glm::mat4 MVMatrix = glm::translate(glm::mat4(), glm::vec3(0.f, 0.f ,-5.f));
         ///////////////////////////////////////////////////////////////////////
         // spline stuff
 
 
+        glm::mat4 camMatrix = glm::mat4();
+        //curve part
+        glm::mat4 MVMatrix ;
+
+        MVMatrix = camMatrix;
+        //MVMatrix = glm::translate(camMatrix, spline.point(t));
+
+        if(displayInGameMenu){
+            //:cout << "menu" << std::endl;
+            MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2));
+            MVMatrix = glm::translate(MVMatrix, glm::vec3(0,0,-6));
+            glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+
+            //on récupère les locations des variables uniformes dans les shaders
+            GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+            GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+            GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+            //on envoie les matrices à la CG dans les variables uniformes
+            glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(ProjMatrix * MVMatrix));
+            glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
+            glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
+
+            glBindVertexArray(menuModel.getVAO());
+
+            glDrawElements(GL_TRIANGLES, menuGeometry.getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
+            glBindVertexArray(0);
+
+        }
         //updating player inner variables (speed, position...)
-        player.update(gameManager.fixedDtime());
+        if(!displayInGameMenu){
+            player.update(gameManager.fixedDtime());
 
-        glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
+        }
 
+        camMatrix = spline.camMatrix(player.sPosition());
 
         for (float t=1; t<100; t+=0.05f) {
 
             //curve part
-            glm::mat4 MVMatrix ;
+
             MVMatrix = camMatrix * spline.matrix(glm::vec3(t,0,0));
             //MVMatrix = glm::translate(camMatrix, spline.point(t));
             MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2));
 
+
+
             for (int i=0; i<3; ++i) {
+
                 if (i==1) {
                     MVMatrix = glm::translate(MVMatrix, glm::vec3(3,0,0));
                 }
                 if (i==2) {
                     MVMatrix = glm::translate(MVMatrix, glm::vec3(0,3,0));
                 }
+
                 // end spline stuff
                 ////////////////////////////////////////////////////////////////
                 glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));

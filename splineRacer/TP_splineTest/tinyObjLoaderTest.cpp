@@ -17,7 +17,7 @@ using namespace glimac;
 using namespace splineengine;
 
 void print(std::string str) {
-	std::cout << "Debug : "<< str << std::endl; 
+	std::cout << "Debug : "<< str << std::endl;
 }
 
 int main(int argc, char** argv) {
@@ -187,7 +187,7 @@ int main(int argc, char** argv) {
 		// Dessin de l'OBJ
 		glBindVertexArray(planeModel.getVAO());
 
-		/* On boucle sur les meshs de l'object pour les afficher un par un et 
+		/* On boucle sur les meshs de l'object pour les afficher un par un et
 		   appliquer des textures ou des tranformations différentes pour chaque mesh. */
 		for (int i = 0; i < planeGeometry.getMeshCount(); ++i)
 		{

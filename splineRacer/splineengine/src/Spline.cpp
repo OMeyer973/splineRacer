@@ -25,7 +25,7 @@ Spline::Spline(const int nbAnchors)
 }
 
 
-glm::vec3 const Spline::point(const float t) {
+glm::vec3 Spline::point(const float t) const {
 	float pos = t/_segmentLength;
 
 	// id of the first point
@@ -42,12 +42,12 @@ glm::vec3 const Spline::point(const float t) {
 
 
 // simple catmull-rom stolen from https://www.habrador.com/tutorials/interpolation/1-catmull-rom-splines/
-glm::vec3 const Spline::getCatmullRomPosition(
+glm::vec3 Spline::getCatmullRomPosition(
 	const float t,
 	const glm::vec3& p0,
 	const glm::vec3& p1,
 	const glm::vec3& p2,
-	const glm::vec3& p3)
+	const glm::vec3& p3) const
 {
 	glm::vec3 a = 2.f * p1;
 	glm::vec3 b = p2  - p0;
@@ -61,7 +61,7 @@ glm::vec3 const Spline::getCatmullRomPosition(
 }
 
 
-int const Spline::loopInt(int i, const int loopSize) {
+int Spline::loopInt(int i, const int loopSize) const {
 	i = i%loopSize;
 	if (i<0) {
 		return loopSize+i;
@@ -70,7 +70,7 @@ int const Spline::loopInt(int i, const int loopSize) {
 }
 
 
-glm::mat4 const Spline::camMatrix(const glm::vec3& sPoint) {
+glm::mat4 Spline::camMatrix(const glm::vec3& sPoint) const {
 
 	// 4 tilt camera forward (the higher the camera is, the lower it looks on the spline)
 	// TODO : this will probably go in the camera class
@@ -88,7 +88,7 @@ glm::mat4 const Spline::camMatrix(const glm::vec3& sPoint) {
 	return camMat;
 }
 
-glm::mat4 Spline::matrix(const glm::vec3& sPoint) {
+glm::mat4 Spline::matrix(const glm::vec3& sPoint) const {
 	
 	// 1 moving the object forward and have it face toward the spline derivate
 	glm::mat4 objMat = glm::inverse(glm::lookAt(point(sPoint[FWD]), point(sPoint[FWD]+deltaSpline), glm::vec3(0,1,0)));

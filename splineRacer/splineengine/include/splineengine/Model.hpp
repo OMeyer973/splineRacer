@@ -60,7 +60,7 @@ class Model {
 		};
 
 		/// \brief get Geometry
-		glimac::Geometry getGeometry() const {
+		glimac::Geometry geometry() const {
 			return _geometry;
 		};
 
@@ -69,9 +69,13 @@ class Model {
 	private:
 		/// \brief Contains the vertices and materials of the model
 		glimac::Geometry _geometry;
+		/// \brief Represent the VBO of the model
 		GLuint _VBO;
+		/// \brief Represent the IBO of the model
 		GLuint _IBO;
+		/// \brief Represent the VAO of the model
 		GLuint _VAO;
+		/// \brief Collider of the model
 		Collider _collider;
 };
 

@@ -255,7 +255,7 @@ int main(int argc, char** argv) {
             //Binding du VAO
             //glBindVertexArray(vao);
             glBindVertexArray(planeModel.getVAO());
-            glDrawElements(GL_TRIANGLES, planeModel.getGeometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
+            glDrawElements(GL_TRIANGLES, planeModel.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
             //glDrawArrays(GL_TRIANGLES, 0, sphere.getVertexCount());
 
             glBindVertexArray(0);

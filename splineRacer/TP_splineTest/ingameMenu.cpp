@@ -214,7 +214,7 @@ int main(int argc, char** argv) {
 
             glBindVertexArray(menuModel.getVAO());
 
-            glDrawElements(GL_TRIANGLES, menuModel.getGeometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
+            glDrawElements(GL_TRIANGLES, menuModel.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
             glBindVertexArray(0);
 
         }

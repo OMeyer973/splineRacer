@@ -179,9 +179,9 @@ int main(int argc, char** argv) {
 
 		/* On boucle sur les meshs de l'object pour les afficher un par un et
 		   appliquer des textures ou des tranformations différentes pour chaque mesh. */
-		for (int i = 0; i < planeModel.getGeometry().getMeshCount(); ++i)
+		for (int i = 0; i < planeModel.geometry().getMeshCount(); ++i)
 		{
-			const Geometry::Mesh* currentMesh = (planeModel.getGeometry().getMeshBuffer()+i);
+			const Geometry::Mesh* currentMesh = (planeModel.geometry().getMeshBuffer()+i);
 			GLint indexCount = currentMesh->m_nIndexCount;
 			GLint indexOffset = currentMesh->m_nIndexOffset;
 			if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices
@@ -201,7 +201,7 @@ int main(int argc, char** argv) {
 			// Cela indique à OpenGL qu'il doit utiliser l'IBO enregistré dans le VAO
 			glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (const GLvoid*) (indexOffset * sizeof(GLuint)));
 		}
-		// glDrawElements(GL_TRIANGLES, planeModel.getGeometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
+		// glDrawElements(GL_TRIANGLES, planeModel.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
 		glBindVertexArray(0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 

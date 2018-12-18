@@ -150,9 +150,7 @@ int main(int argc, char** argv) {
     GLint NormalMatrixLocation = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
     GLint textureLocation = glGetUniformLocation(program.getGLId(), "uTexture");
 
-e);
-
-    Model menuModel(menuGeometry,"menu");
+    Model menuModel(applicationPath,"menu");
 
     glEnable(GL_DEPTH_TEST);
 
@@ -182,7 +180,8 @@ e);
                 }
                 if (e.key.keysym.sym==SDLK_s){//going down
                     player.goingUp() = -1.f;
-                }if(e.key.keysym.sym==SDLK_ESCAPE && !displayInGameMenu){
+                }
+                if(e.key.keysym.sym==SDLK_ESCAPE && !displayInGameMenu){
                     displayInGameMenu = true;
                 }else if(e.key.keysym.sym == SDLK_ESCAPE && displayInGameMenu ){
                     displayInGameMenu = false;
@@ -193,11 +192,15 @@ e);
                 if (e.key.keysym.sym==SDLK_q && player.goingLeft() > 0) {//stop going left
                     player.goingLeft() = 0.f;
                 }
-                if (e.key.keysym.sym==SDLK_d && player.goingLeft() < 0){//stop going right
+                if (e.key.keysym.sym==SDLK_d && player.goingLeft() < 0) {//stop going right
                     player.goingLeft() = 0.f;
                 }
                 if (e.key.keysym.sym==SDLK_z && player.goingUp() > 0) {//stop going up
                     player.goingUp() = 0.f;
+                }
+                if (e.key.keysym.sym==SDLK_s && player.goingUp() < 0){//stop going down
+                    player.goingUp() = 0.f;
+                    ;
                 }
                 break;
             }
@@ -251,6 +254,8 @@ e);
             glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
 
             glBindVertexArray(menuModel.getVAO());
+
+            //chargement des textures
 
             glDrawElements(GL_TRIANGLES, menuModel.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
             glBindVertexArray(0);

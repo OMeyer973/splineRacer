@@ -107,7 +107,7 @@ int main(int argc, char** argv) {
 
 
     glEnable(GL_DEPTH_TEST);
-
+    bool displayInGameMenu = false;
     // Application loop:
     bool done = false;
     while(!done) {
@@ -132,10 +132,6 @@ int main(int argc, char** argv) {
                 }
                 if (e.key.keysym.sym==SDLK_s){//going down
                     player.goingUp() = -1.f;
-                }if(e.key.keysym.sym==SDLK_ESCAPE && !displayInGameMenu){
-                    displayInGameMenu = true;
-                }else if(e.key.keysym.sym == SDLK_ESCAPE && displayInGameMenu ){
-                    displayInGameMenu = false;
                 }
                 if(e.key.keysym.sym==SDLK_ESCAPE && !displayInGameMenu){
                     displayInGameMenu = true;
@@ -182,7 +178,7 @@ int main(int argc, char** argv) {
 
         //updating player inner variables (speed, position...)
         player.update(gameManager.fixedDtime());
-        
+
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 
 

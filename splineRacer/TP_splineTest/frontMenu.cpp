@@ -12,12 +12,13 @@
 
 //fps counter
 #include <time.h>
+#include <GL/glut.h>
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 30;
 
 
 using namespace splineengine;
 
-// cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_splineTest
+// cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_frontMenu
 
 
 

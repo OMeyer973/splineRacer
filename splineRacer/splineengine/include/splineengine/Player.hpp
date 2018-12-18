@@ -23,7 +23,7 @@ class Player : public GameObject {
         ~Player()
         {};
 
-        
+
         // CONST GETTERS
         /// \brief get the speed of the player (relative to the spline) as a const reference
         //const glm::vec3& speed() const { return _sSpeed; }
@@ -31,10 +31,10 @@ class Player : public GameObject {
         /// \brief get the speed of the player (relative to the spline) as a const reference
         //const glm::vec3& maxSpeed() const { return _sMaxSpeed; }
 
-        /// \brief get the left-right input direction as a const 
+        /// \brief get the left-right input direction as a const
         const float& goingLeft() const { return _sInput[LEFT]; }
 
-        /// \brief get the up_down input direction as a const 
+        /// \brief get the up_down input direction as a const
         const float& goingUp() const { return _sInput[UP]; }
 
 
@@ -66,16 +66,16 @@ class Player : public GameObject {
         /// \brief update the player position using it's current speed
         void updatePosition(const float dt);
 
-        // MEMBERS        
+        // MEMBERS
         // \brief position of the object relative to the spline
         glm::vec3 _sSpeed;
         glm::vec3 _sMaxSpeed;
         /// \brief acceleration and decceleration of the player
         glm::vec3 _sAcceleration;
-        
-        /// \brief current input | [0] forward : no input | [1] left -> +1, straight -> 0, right -> -1 | [2] up -> +1, straight -> 0, down -> -1 
+
+        /// \brief current input | [0] forward : no input | [1] left -> +1, straight -> 0, right -> -1 | [2] up -> +1, straight -> 0, down -> -1
         glm::vec3 _sInput;
 
-};        
+};
 }
 #endif

@@ -98,6 +98,8 @@ int main(int argc, char** argv) {
                                 applicationPath.dirPath() + "shaders/normals.fs.glsl");
     program.use(); // Indiquer a OpenGL de les utiliser
 
+
+
     glEnable(GL_DEPTH_TEST);
 
     // Application loop:
@@ -205,30 +207,39 @@ int main(int argc, char** argv) {
         // end spline stuff
         ////////////////////////////////////////////////////////////////
         // gameobj stuff 
+
         std::vector<GameObject> walls;
 
-        walls.push_back(GameObject(
-            glm::vec3(2.0f, 2.0f, 1.5f),
-            glm::vec3(10.0f, 10.0f, 10.0f),
-            glm::vec3(10.0f, 10.0f, 10.0f)
+        walls.push_back (GameObject(
+            glm::vec3(3.0f, 2.0f, 1.5f),
+            glm::vec3(0.4f, 0.4f, 0.4f),
+            glm::vec3(0.0f, 0.0f, 0.0f)
         ));
-        // walls.push_back(GameObject(
-        //     glm::vec3(2.5f, 2.0f, 1.5f),
-        //     glm::vec3(10.0f, 20.0f, 10.0f),
-        //     glm::vec3(20.0f, 20.0f, 10.0f)
-        // ));
-        // walls.push_back(GameObject(
-        //     glm::vec3(3.0f, 2.0f, 1.5f),
-        //     glm::vec3(10.0f, 40.0f, 10.0f),
-        //     glm::vec3(10.0f, 40.0f, 10.0f)
-        // ));
-        walls[0].print();
+
+        walls.push_back (GameObject(
+            glm::vec3(3.1f, 2.0f, 1.5f),
+            glm::vec3(0.4f, 0.4f, 0.4f),
+            glm::vec3(0.0f, 1.0f, 0.0f)
+        ));
+
+        walls.push_back (GameObject(
+            glm::vec3(3.2f, 2.0f, 1.5f),
+            glm::vec3(0.4f, 0.4f, 0.4f),
+            glm::vec3(0.0f, 2.0f, 0.0f)
+        ));
+
+        walls.push_back (GameObject(
+            glm::vec3(3.3f, 2.0f, 1.5f),
+            glm::vec3(0.4f, 0.4f, 0.4f),
+            glm::vec3(0.0f, 3.0f, 0.0f)
+        ));
+
         for (float i=0; i<walls.size(); ++i) {
-            //std::cout << "walls[i].rotation() " << walls[i].rotation() << std::endl;
             glm::mat4 MVMatrix;
-            MVMatrix = camMatrix * spline.matrix(walls[i].sPosition());
-            //MVMatrix = glm::rotate(MVMatrix, walls[i].rotation()[UP], glm::vec3(1.f,0.f,0.f));
             
+            // get the transform matrix of the object
+            MVMatrix = camMatrix * walls[i].matrix(spline);
+
             glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
             //on récupère les locations des variables uniformes dans les shaders

@@ -2,9 +2,8 @@
 #ifndef __GAMEOBJECT__HPP
 #define __GAMEOBJECT__HPP
 
-#include <GL/glew.h>
-#include <iostream>
 #include "common.hpp"
+#include "Spline.hpp"
 
 namespace splineengine {
 
@@ -15,65 +14,66 @@ class GameObject {
 		// CONSTRUCTORS - DESTRUCTORS
 	    /// \brief default constructor (position(0.f,0.f,0.f), no colliders)
 		GameObject()
-			:_sPosition(0.f,0.f,0.f), _Rotation(0.f,0.f,0.f), _Scale(1.f,1.f,1.f)
+			:_sPosition(0.f,0.f,0.f), _scale(1.f,1.f,1.f), _rotation(0.f,0.f,0.f)
 		{};
 
 		/// \brief constructor from parameters
 		/// \param position : glm::vec3 position of the object (relative to the spline)
 		GameObject(const glm::vec3& sPosition)
-			:_sPosition(sPosition)
+			:_sPosition(sPosition), _scale(1.f,1.f,1.f), _rotation(0.f,0.f,0.f)
 		{};
-
 
 		/// \brief constructor from parameters
 		/// \param position : glm::vec3 position of the object (relative to the spline)
-		GameObject(glm::vec3 sPosition,  glm::vec3 rotation,  glm::vec3 scale)
-			:_sPosition(sPosition), _Rotation(rotation), _Scale(scale)
-		{
-			std::cout << "_sPosition " << _sPosition << std::endl;
-			std::cout << "_Rotation " << _Rotation << std::endl;
-			std::cout << "_Scale " << _Scale << std::endl;
-			
-		};
+		/// \param position : glm::vec3 scale    of the object 
+		/// \param position : glm::vec3 rotation of the object 
+		GameObject(const glm::vec3& sPosition, const glm::vec3& scale, const glm::vec3& rotation)
+			:_sPosition(sPosition), _scale(scale), _rotation(rotation)
+		{};
 
 
 		/// \brief copy constructor
 		/// \param g : GameObject to copy from
 		GameObject(const GameObject& g)
-			:_sPosition(g._sPosition)
+			:_sPosition(g._sPosition), _scale(g._scale), _rotation(g._rotation)
 		{};
 
 		/// \brief destructor
 		~GameObject()
 		{};
 
-		void print() {
-			std::cout << std::endl;
-			std::cout << "print" << std::endl;
-			std::cout << "_sPosition " << _sPosition << std::endl;
-			std::cout << "_Rotation " << _Rotation << std::endl;
-			std::cout << "_Scale " << _Scale << std::endl;
-			std::cout << "/print" << std::endl;
-			std::cout << std::endl;
-		}
+
+        // METHODS
+		/// \brief returns the transform matrix of the object in the given spline reference
+		glm::mat4 const matrix(Spline& spline);
+        
 
 		//CONST GETTERS
 		/// \brief get the position of the object (relative to the spline) as a const reference
 		const glm::vec3& sPosition() const { return _sPosition; }
 
+		/// \brief get the rotation of the object
+		const glm::vec3& rotation() const { return _rotation; }
+
+		/// \brief get the scale of the object
+		const glm::vec3& scale() const { return _scale; }
+
 		// NON-CONST GETTERS (can be used as setters)
 		/// \brief get the position of the object (relative to the spline) as a reference
 		glm::vec3& sPosition() { return _sPosition; }
+
+		/// \brief get the rotation of the object
+		glm::vec3& rotation() { return _rotation; }
+
+		/// \brief get the scale of the object
+		glm::vec3& scale() { return _scale; }
 		
 	// MEMBERS
 	protected:
 		// \brief position of the object relative to the spline
 		glm::vec3 _sPosition;
-		glm::vec3 _Rotation;
-		glm::vec3 _Scale;
-		// TODO
-		// \brief colliders of the object
-		//std::vector<collider> _colliders;
+		glm::vec3 _scale;
+		glm::vec3 _rotation;
 };
 }
 #endif

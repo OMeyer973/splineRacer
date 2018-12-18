@@ -6,10 +6,12 @@ namespace splineengine {
 
 // CONSTRUCTORS
 Spline::Spline()
-	:Spline(20)
+	:Spline(defaultAnchorsNb) 
 {}
 
-Spline::Spline(const int nbAnchors) {
+Spline::Spline(const int nbAnchors) 
+	:_segmentLength(defaultSegmentLength)		
+{
 	glm::vec3 tmpAnchor(1.f,1.f,1.f);
 	_anchors.push_back(tmpAnchor);
     for (size_t i=1; i<nbAnchors; ++i) {
@@ -23,42 +25,30 @@ Spline::Spline(const int nbAnchors) {
 }
 
 
-glm::vec3 Spline::point(const float t) {
-	// test of perlin noise with harmonics
-	// you can try your perlin here : http://www.iquilezles.org/apps/graphtoy/
-	// if (_anchors.size()==0) {
-	// 	return glm::vec3(
-	// 		//10*noise(x/10)+10*noise(x/20)+10*noise(x/40)+80*noise(x/100)
-	// 		10.f * glm::perlin(glm::vec3(t/10.f,0,0))+
-	// 		10.f * glm::perlin(glm::vec3(t/20.f,0,0))+
-	// 		10.f * glm::perlin(glm::vec3(t/40.f,0,0))+
-	// 		80.f * glm::perlin(glm::vec3(t/100.f,0,0)),
-	// 		10.f * glm::perlin(glm::vec3(0,t/10.f,0))+
-	// 		10.f * glm::perlin(glm::vec3(0,t/20.f,0))+
-	// 		10.f * glm::perlin(glm::vec3(0,t/40.f,0))+
-	// 		80.f * glm::perlin(glm::vec3(0,t/100.f,0)),
-	// 		10.f * glm::perlin(glm::vec3(0,0,t/10.f))+
-	// 		10.f * glm::perlin(glm::vec3(0,0,t/20.f))+
-	// 		10.f * glm::perlin(glm::vec3(0,0,t/40.f))+
-	// 		80.f * glm::perlin(glm::vec3(0,0,t/100.f))
-	// 		);
-	// }
+glm::vec3 const Spline::point(const float t) {
+	float pos = t/_segmentLength;
 
 	// id of the first point
-	int i = (int)t;
-	float tmp = t-(float)i;
+	int i = (int)pos;
+	float tmp = pos-(float)i;
 
 	const glm::vec3 p0 = _anchors[loopInt(i-1,_anchors.size())];
 	const glm::vec3 p1 = _anchors[loopInt(i  ,_anchors.size())];
 	const glm::vec3 p2 = _anchors[loopInt(i+1,_anchors.size())];
 	const glm::vec3 p3 = _anchors[loopInt(i+2,_anchors.size())];
    
-	return GetCatmullRomPosition(tmp, p0, p1, p2, p3);
+	return _segmentLength*getCatmullRomPosition(tmp, p0, p1, p2, p3);
 }
 
 
 // simple catmull-rom stolen from https://www.habrador.com/tutorials/interpolation/1-catmull-rom-splines/
-glm::vec3 Spline::GetCatmullRomPosition(float t, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3) {
+glm::vec3 const Spline::getCatmullRomPosition(
+	const float t,
+	const glm::vec3& p0,
+	const glm::vec3& p1,
+	const glm::vec3& p2,
+	const glm::vec3& p3)
+{
 	glm::vec3 a = 2.f * p1;
 	glm::vec3 b = p2  - p0;
 	glm::vec3 c = 2.f * p0  - 5.f * p1  + 4.f * p2 - p3;
@@ -71,7 +61,7 @@ glm::vec3 Spline::GetCatmullRomPosition(float t, glm::vec3 p0, glm::vec3 p1, glm
 }
 
 
-int Spline::loopInt (int i, int loopSize) {
+int const Spline::loopInt(int i, const int loopSize) {
 	i = i%loopSize;
 	if (i<0) {
 		return loopSize+i;
@@ -80,7 +70,7 @@ int Spline::loopInt (int i, int loopSize) {
 }
 
 
-glm::mat4 Spline::camMatrix(const glm::vec3 sPoint) {
+glm::mat4 const Spline::camMatrix(const glm::vec3& sPoint) {
 
 	// 4 tilt camera forward (the higher the camera is, the lower it looks on the spline)
 	// TODO : this will probably go in the camera class
@@ -93,21 +83,21 @@ glm::mat4 Spline::camMatrix(const glm::vec3 sPoint) {
 	camMat = glm::rotate(camMat, sPoint[LEFT], glm::vec3(0,0,-1));
 	
 	// 1 moving the camera forward and have it face toward the spline derivate
-	camMat = camMat * glm::lookAt(point(sPoint[FWD]), point(sPoint[FWD]) + point(sPoint[FWD]+dt) - point(sPoint[FWD]-dt), glm::vec3(0,1,0));
+	camMat = camMat * glm::lookAt(point(sPoint[FWD]), point(sPoint[FWD]) + point(sPoint[FWD]+deltaSpline) - point(sPoint[FWD]-deltaSpline), glm::vec3(0,1,0));
 
 	return camMat;
 }
 
-glm::mat4 Spline::matrix(const glm::vec3 sPoint) {
+glm::mat4 Spline::matrix(const glm::vec3& sPoint) {
 	
 	// 1 moving the object forward and have it face toward the spline derivate
-	glm::mat4 objMat = glm::inverse(glm::lookAt(point(sPoint[FWD]), point(sPoint[FWD]+dt), glm::vec3(0,1,0)));
+	glm::mat4 objMat = glm::inverse(glm::lookAt(point(sPoint[FWD]), point(sPoint[FWD]+deltaSpline), glm::vec3(0,1,0)));
 	
 	// 2 object rotation (left-right)
-	objMat = glm::rotate(objMat, -sPoint[LEFT], glm::vec3(0,0,1));
+	objMat = glm::rotate(objMat, -sPoint[LEFT], sUpVec);
 
 	// 3 object normal distance to the spline (up-down)
-	objMat = glm::translate(objMat, -sPoint[UP] * glm::vec3(0,1,0));
+	objMat = glm::translate(objMat, -sPoint[UP] * sLeftVec);
 
 	return objMat;
 

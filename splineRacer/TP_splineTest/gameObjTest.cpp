@@ -1,14 +1,17 @@
+#include <iostream>
+#include <GL/glew.h>
+#include <glm/gtc/noise.hpp>
+
 #include <glimac/SDLWindowManager.hpp>
 #include <glimac/Program.hpp>
 #include <glimac/common.hpp>
 #include <glimac/Sphere.hpp>
-#include <GL/glew.h>
-#include <iostream>
+#include <glimac/Geometry.hpp>
+
 #include <splineengine/GameManager.hpp>
 #include <splineengine/GameObject.hpp>
 #include <splineengine/Player.hpp>
 #include <splineengine/Spline.hpp>
-#include <glm/gtc/noise.hpp>
 
 //fps counter
 #include <time.h>
@@ -41,11 +44,25 @@ int main(int argc, char** argv) {
     /*********************************
      * INITIALIZATION CODE
      *********************************/
+    glimac::FilePath applicationPath(argv[0]);
+
     
     GameManager gameManager;
     glimac::Sphere sphere(2, 3, 2);
     Player player;
     Spline spline;
+
+    glimac::Geometry planeGeometry;
+    bool ret = planeGeometry.loadOBJ(applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.obj", 
+                             applicationPath.dirPath() + "../../splineRacer/assets/models/plane/plane.mtl", 
+                             true);
+    if (!ret) {
+        exit(1); // Lancer Exception : OBJ loading failed
+    }
+
+    // Create the model and create VBO, IBO, VAO based on the geometry
+    Model planeModel(planeGeometry);
+
 
     // Création d'un seul VBO = contient les données
     GLuint vbo;
@@ -93,7 +110,6 @@ int main(int argc, char** argv) {
 
 
     // Charger et compiler les shaders
-    glimac::FilePath applicationPath(argv[0]);
     glimac::Program program = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
                                 applicationPath.dirPath() + "shaders/normals.fs.glsl");
     program.use(); // Indiquer a OpenGL de les utiliser
@@ -211,24 +227,28 @@ int main(int argc, char** argv) {
         std::vector<GameObject> walls;
 
         walls.push_back (GameObject(
+            planeModel,
             glm::vec3(3.0f, 2.0f, 1.5f),
             glm::vec3(0.4f, 0.4f, 0.4f),
             glm::vec3(0.0f, 0.0f, 0.0f)
         ));
 
         walls.push_back (GameObject(
+            planeModel,
             glm::vec3(3.1f, 2.0f, 1.5f),
             glm::vec3(0.4f, 0.4f, 0.4f),
             glm::vec3(0.0f, 1.0f, 0.0f)
         ));
 
         walls.push_back (GameObject(
+            planeModel,
             glm::vec3(3.2f, 2.0f, 1.5f),
             glm::vec3(0.4f, 0.4f, 0.4f),
             glm::vec3(0.0f, 2.0f, 0.0f)
         ));
 
         walls.push_back (GameObject(
+            planeModel,
             glm::vec3(3.3f, 2.0f, 1.5f),
             glm::vec3(0.4f, 0.4f, 0.4f),
             glm::vec3(0.0f, 3.0f, 0.0f)
@@ -252,9 +272,11 @@ int main(int argc, char** argv) {
             glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
 
             //Binding du VAO
-            glBindVertexArray(vao);
-
-            glDrawArrays(GL_TRIANGLES, 0, sphere.getVertexCount());
+            //glBindVertexArray(vao);
+            glBindVertexArray(planeModel.getVAO());
+            glDrawElements(GL_TRIANGLES, planeGeometry.getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
+        
+            //glDrawArrays(GL_TRIANGLES, 0, sphere.getVertexCount());
 
             glBindVertexArray(0);
         }

@@ -13,7 +13,7 @@ class Player : public GameObject {
         // CONSTRUCTORS - DESTRUCTORS
         /// \brief default player Constructor
         Player() 
-            :GameObject(glm::vec3(1.f,0.f,2.f)),
+            :GameObject(Model(), glm::vec3(1.f,0.f,2.f)),
             _sSpeed(1.f, 0.f, 0.f),
             _sMaxSpeed(4.f, 10.f, 10.f),
             _sAcceleration(0.f, 20.f, 20.f)

@@ -3,6 +3,7 @@
 #define __GAMEOBJECT__HPP
 
 #include "common.hpp"
+#include "Model.hpp"
 #include "Spline.hpp"
 
 namespace splineengine {
@@ -12,22 +13,17 @@ class GameObject {
 	// METHODS
 	public:
 		// CONSTRUCTORS - DESTRUCTORS
-	    /// \brief default constructor (position(0.f,0.f,0.f), no colliders)
-		GameObject()
-			:_sPosition(0.f,0.f,0.f), _scale(1.f,1.f,1.f), _rotation(0.f,0.f,0.f)
-		{};
-
-		/// \brief constructor from parameters
-		/// \param position : glm::vec3 position of the object (relative to the spline)
-		GameObject(const glm::vec3& sPosition)
-			:_sPosition(sPosition), _scale(1.f,1.f,1.f), _rotation(0.f,0.f,0.f)
-		{};
 
 		/// \brief constructor from parameters
 		/// \param position : glm::vec3 position of the object (relative to the spline)
 		/// \param position : glm::vec3 scale    of the object 
 		/// \param position : glm::vec3 rotation of the object 
-		GameObject(const glm::vec3& sPosition, const glm::vec3& scale, const glm::vec3& rotation)
+		GameObject (
+			const Model& model = Model(),
+			const glm::vec3& sPosition = glm::vec3(0),
+			const glm::vec3& scale = glm::vec3(1),
+			const glm::vec3& rotation = glm::vec3(0)
+		)
 			:_sPosition(sPosition), _scale(scale), _rotation(rotation)
 		{};
 
@@ -72,8 +68,12 @@ class GameObject {
 	protected:
 		// \brief position of the object relative to the spline
 		glm::vec3 _sPosition;
+		// \brief scale of the object
 		glm::vec3 _scale;
+		// \brief rotation of the object
 		glm::vec3 _rotation;
+		// \brief model of the 3D object
+		std::unique_ptr<Model> _model;
 };
 }
 #endif

@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
      *********************************/
     glimac::FilePath applicationPath(argv[0]);
 
-    
+
     GameManager gameManager;
     glimac::Sphere sphere(2, 3, 2);
     Player player;
@@ -108,8 +108,6 @@ int main(int argc, char** argv) {
 
     glEnable(GL_DEPTH_TEST);
 
-
-    bool displayInGameMenu=false;
     // Application loop:
     bool done = false;
     while(!done) {
@@ -134,6 +132,10 @@ int main(int argc, char** argv) {
                 }
                 if (e.key.keysym.sym==SDLK_s){//going down
                     player.goingUp() = -1.f;
+                }if(e.key.keysym.sym==SDLK_ESCAPE && !displayInGameMenu){
+                    displayInGameMenu = true;
+                }else if(e.key.keysym.sym == SDLK_ESCAPE && displayInGameMenu ){
+                    displayInGameMenu = false;
                 }
                 if(e.key.keysym.sym==SDLK_ESCAPE && !displayInGameMenu){
                     displayInGameMenu = true;
@@ -158,7 +160,7 @@ int main(int argc, char** argv) {
                     ;
                 }
                 break;
-            }            
+            }
         }
         /*********************************
          * RENDERING CODE
@@ -179,10 +181,8 @@ int main(int argc, char** argv) {
         // spline stuff
 
         //updating player inner variables (speed, position...)
-
-        if(!displayInGameMenu){
-            player.update(gameManager.fixedDtime());
-        }
+        player.update(gameManager.fixedDtime());
+        
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 
 
@@ -222,7 +222,7 @@ int main(int argc, char** argv) {
         }
         // end spline stuff
         ////////////////////////////////////////////////////////////////
-        // gameobj stuff 
+        // gameobj stuff
 
         std::vector<GameObject> walls;
 
@@ -237,7 +237,7 @@ int main(int argc, char** argv) {
 
         for (float i=0; i<walls.size(); ++i) {
             glm::mat4 MVMatrix;
-            
+
             // get the transform matrix of the object
             MVMatrix = camMatrix * walls[i].matrix(spline);
 

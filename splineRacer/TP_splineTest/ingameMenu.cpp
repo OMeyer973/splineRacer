@@ -110,19 +110,51 @@ int main(int argc, char** argv) {
 
 
     glimac::FilePath applicationPath(argv[0]);
-    std::unique_ptr<glimac::Image> buttonContinue = loadImage(applicationPath.dirPath() + "../../GLImac-Template/assets/textures/Continue.png");
-    if ( buttonContinue == NULL ) std::cout << "Image Not Loaded" << std::endl;
+    std::unique_ptr<glimac::Image> buttonContinue = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/Continue.png");
+    if ( buttonContinue == NULL ) std::cout << "Image Button Continue Loaded" << std::endl;
+
+    unsigned int nbTextures = 1;
+    GLuint *textures = new GLuint[nbTextures];
+    glGenTextures(nbTextures, textures);
+
+    glBindTexture(GL_TEXTURE_2D,textures[0]);
+
+    glBindTexture(GL_TEXTURE_2D, textures[0]);
+    glTexImage2D(GL_TEXTURE_2D,
+        0,
+        GL_RGBA,
+        buttonContinue->getWidth(),
+        buttonContinue->getHeight(),
+        0,
+        GL_RGBA,
+        GL_FLOAT,
+        buttonContinue->getPixels());
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+
+
+
 
     // Charger et compiler les shaders
     glimac::Program program = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
                                 applicationPath.dirPath() + "shaders/normals.fs.glsl");
+    glimac::Program menu = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
+                                applicationPath.dirPath() + "shaders/tex3D.fs.glsl");
 
-    program.use(); // Indiquer a OpenGL de les utiliser
 
-    Model menuModel(applicationPath, "menu");
+
+    GLint MVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+    GLint MVMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+    GLint NormalMatrixLocation = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+    GLint textureLocation = glGetUniformLocation(program.getGLId(), "uTexture");
+
+e);
+
+    Model menuModel(menuGeometry,"menu");
 
     glEnable(GL_DEPTH_TEST);
-
 
 
     bool displayInGameMenu=false;
@@ -198,10 +230,16 @@ int main(int argc, char** argv) {
         //MVMatrix = glm::translate(camMatrix, spline.point(t));
 
         if(displayInGameMenu){
+            menu.use(); // Indiquer a OpenGL de les utiliser
+
             //:cout << "menu" << std::endl;
+            glBindTexture(GL_TEXTURE_2D, textures[0]);
+            glUniform1i(textureLocation, 0);
+
             MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2));
-            MVMatrix = glm::translate(MVMatrix, glm::vec3(0,0,-6));
+            MVMatrix = glm::translate(MVMatrix, glm::vec3(0,0,-10));
             glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+
 
             //on récupère les locations des variables uniformes dans les shaders
             GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
@@ -216,14 +254,16 @@ int main(int argc, char** argv) {
 
             glDrawElements(GL_TRIANGLES, menuModel.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
             glBindVertexArray(0);
+    		glBindTexture(GL_TEXTURE_2D, 0);
 
         }
         //updating player inner variables (speed, position...)
         if(!displayInGameMenu){
             player.update(gameManager.fixedDtime());
-
+            program.use();
         }
 
+        program.use(); // Indiquer a OpenGL de les utiliser
         camMatrix = spline.camMatrix(player.sPosition());
 
         for (float t=1; t<100; t+=0.05f) {

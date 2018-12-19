@@ -23,6 +23,8 @@ class GameManager {
 		// CONSTRUCTORS - DESTRUCTORS
 		GameManager();
 
+		GameManager(glimac::SDLWindowManager windowManager);
+
 
 		/// \brief destructor
 		~GameManager()
@@ -59,11 +61,11 @@ class GameManager {
 
 		// THE DIFFERENT SCREENS OF THE PROGRAM
 		/// \brief menu screen with buttons & stuff
-		Menu _menu;
+		//Menu _menu;
 		/// \brief game screen where you play & have fun !
-		Game _game;
+		//Game _game;
 		/// \brief pause screen for when you need to go peepee
-		Pause _pause;
+		//Pause _pause;
 
 		// MEMBERS THAT CAN BE GET & SET
 		/// \brief window manager, SDL & stuff.

@@ -41,39 +41,52 @@ class GameObject {
 
         // METHODS
 		/// \brief returns the transform matrix of the object in the given spline reference
-		glm::mat4 const matrix(const Spline& spline);
+		const glm::mat4 matrix(const Spline& spline);
         
 
 		//CONST GETTERS
 		/// \brief get the position of the object (relative to the spline) as a const reference
 		const glm::vec3& sPosition() const { return _sPosition; }
 
-		/// \brief get the rotation of the object
+		/// \brief get the rotation of the object as aconst reference
 		const glm::vec3& rotation() const { return _rotation; }
 
-		/// \brief get the scale of the object
+		/// \brief get the scale of the object as a const reference
 		const glm::vec3& scale() const { return _scale; }
+
+		/// \brief is the object static ? (const ref)
+		const bool& isStatic() const { return _isStatic; }
+
 
 		// NON-CONST GETTERS (can be used as setters)
 		/// \brief get the position of the object (relative to the spline) as a reference
 		glm::vec3& sPosition() { return _sPosition; }
 
-		/// \brief get the rotation of the object
+		/// \brief get the rotation of the object as a reference
 		glm::vec3& rotation() { return _rotation; }
 
-		/// \brief get the scale of the object
+		/// \brief get the scale of the object as a reference
 		glm::vec3& scale() { return _scale; }
+
+		/// \brief is the object static ? (ref)
+		bool& isStatic() { return _isStatic; }
 		
 	// MEMBERS
 	protected:
-		// \brief position of the object relative to the spline
+		/// \brief position of the object relative to the spline
 		glm::vec3 _sPosition;
-		// \brief scale of the object
+		/// \brief scale of the object
 		glm::vec3 _scale;
-		// \brief rotation of the object folowing the 3 spline-reference vectors (fwd, left, up) in trigonometric rotation direction
+		/// \brief rotation of the object folowing the 3 spline-reference vectors (fwd, left, up) in trigonometric rotation direction
 		glm::vec3 _rotation;
-		// \brief model of the 3D object
+		/// \brief model of the 3D object
 		std::unique_ptr<Model> _model;
+
+		/// \brief is the object static ? 
+		bool _isStatic = true;
+		bool _hasMatrix = false;
+		/// \brief stored transformation matrix of the object in case the object is static
+		glm::mat4 _transformMat;
 };
 }
 #endif

@@ -2,53 +2,84 @@
 #ifndef __GAMEMANAGER__HPP
 #define __GAMEMANAGER__HPP
 
+#include <iostream>
 #include <GL/glew.h>
+#include <glimac/SDLWindowManager.hpp>
+#include <splineengine/GameObject.hpp>
+
 #include "common.hpp"
+#include "Game.hpp"
+#include "Menu.hpp"
+#include "Pause.hpp"
+#include "Player.hpp"
 
 namespace splineengine {
 
-/// \brief represents a object in the game, with a position and a set of colliders
+/// \brief class wich manages the whole program 
+// TODO: make it a singleton ! (it's hard)
 class GameManager {
 	// METHODS
 	public:
 		// CONSTRUCTORS - DESTRUCTORS
-	    /// \brief default constructor (position(0.f,0.f,0.f), no colliders)
-		GameManager()
-			:_time(SDL_GetTicks()), _prevTime(SDL_GetTicks())
-		{};
+		GameManager();
+
 
 		/// \brief destructor
 		~GameManager()
 		{};
 
-		//CONST GETTERS
-		/// \brief get the time of the current frame as a const
-		const float time() const { return _time; }
-
+		
 		//METHODS
-		/// \brief get the current time in seconds
-		void update() {
- 		   _prevTime = _time;
- 		   _time = 0.001f * SDL_GetTicks();
-		};
+		/// \brief init gamemanager when openning the software
+		void init();
+
+		/// \brief update is called at each frame
+		void update();
+
+		/// \brief exit the software
+		void quit();
+
+		// handle events for all the screens
+		void handleEvents();
+		// do the given event when in the MENU screen
+		void doMenuEvent(SDL_Event e);
+		// do the given event when in the GAME screen
+		void doGameEvent(SDL_Event e);
+		// do the given event when in the GAME screen
+		void doPauseEvent(SDL_Event e);
 
 		/// \brief get the time difference in seconds between the current frame and the previous (enforced)
-		float fixedDtime() const { return _fixedDTime; };
-		
-		/// \brief get the time difference in seconds between the current frame and the previous
-		// not useful when framerate is varying too much
-		float dtime() const {
-			return _time - _prevTime;
-		};
+		float deltaTime() const { return _deltaTime; };
 
+		/// \brief are we currently quitting the game ?
+		const bool exiting() const { return _exiting; };
+		
 	// MEMBERS
-	protected:
-		// \brief time of the current frame (in sec)
-		float _time;
-		// \brief time of the previous frame (in sec)
-		float _prevTime;
-		/// \brief fixed timestep 
-		float _fixedDTime = 1.f/60;
+	private:
+
+		// THE DIFFERENT SCREENS OF THE PROGRAM
+		/// \brief menu screen with buttons & stuff
+		Menu _menu;
+		/// \brief game screen where you play & have fun !
+		Game _game;
+		/// \brief pause screen for when you need to go peepee
+		Pause _pause;
+
+		// MEMBERS THAT CAN BE GET & SET
+		/// \brief window manager, SDL & stuff.
+		glimac::SDLWindowManager _windowManager;
+		/// \brief are we currently quitting the game ?
+		bool _exiting;
+		/// \brief wich is the active screen ? can be GAME, MENU, PAUSE (cf commons.hpp)
+		int _activeScreen = GAME; // TODO : initialize at MENU in for final version
+
+		// PRIVATE CONST MEMBERS
+		static const uint32_t _windowWidth = 800;
+		static const uint32_t _windowHeight = 600;
+		/// \brief time between 2 frames (ms)
+		static const Uint32 _framerate_ms = 1000 / 30;
+		/// \brief time between 2 frames (seconds)
+		const float _deltaTime = 1.f/30;
 };
 }
 #endif

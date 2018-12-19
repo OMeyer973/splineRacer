@@ -171,7 +171,7 @@ int main(int argc, char** argv) {
 
 
         //updating player inner variables (speed, position...)
-        player.update(gameManager.fixedDtime());
+        player.update(gameManager.deltaTime());
 
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 

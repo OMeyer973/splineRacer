@@ -46,7 +46,6 @@ int main(int argc, char** argv) {
      *********************************/
     glimac::FilePath applicationPath(argv[0]);
 
-
     GameManager gameManager;
     glimac::Sphere sphere(2, 3, 2);
     Player player;
@@ -162,7 +161,6 @@ int main(int argc, char** argv) {
          * RENDERING CODE
          *********************************/
         gameManager.update();
-        //std::cout << gameManager.dtime() << std::endl;
 
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -177,12 +175,13 @@ int main(int argc, char** argv) {
         // spline stuff
 
         //updating player inner variables (speed, position...)
-        player.update(gameManager.fixedDtime());
+        if (!displayInGameMenu)
+            player.update(gameManager.deltaTime());
+
 
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 
-
-        for (float t=1; t<100; t+=0.05f) {
+        for (float t=1; t<100; t+=0.35f) {
 
             //curve part
             glm::mat4 MVMatrix;
@@ -222,7 +221,7 @@ int main(int argc, char** argv) {
 
         std::vector<GameObject> walls;
 
-        for (float i=0; i<50; ++i) {
+        for (float i=0; i<100; ++i) {
             walls.push_back (GameObject(
                 planeModel,
                 glm::vec3(3+i/8, 0.f, 1.5f),
@@ -264,6 +263,7 @@ int main(int argc, char** argv) {
         //fps count
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
             if(elapsedTime < FRAMERATE_MILLISECONDS) {
+                //std::cout << "not lagging" << std::endl;
                 SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
             }
 

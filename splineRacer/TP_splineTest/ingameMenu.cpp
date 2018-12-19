@@ -21,7 +21,7 @@ static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 30;
 
 using namespace splineengine;
 
-// cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_splineTest
+// cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_ingameMenu
 
 
 
@@ -264,7 +264,7 @@ int main(int argc, char** argv) {
         }
         //updating player inner variables (speed, position...)
         if(!displayInGameMenu){
-            player.update(gameManager.fixedDtime());
+            player.update(gameManager.deltaTime());
             program.use();
         }
 

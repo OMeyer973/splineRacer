@@ -2,50 +2,31 @@
 #include <GL/glew.h>
 #include <iostream>
 
-using namespace glimac;
+#include "splineengine/common.hpp"
+#include "splineengine/GameManager.hpp"
+
+// cmake ../splineRacer && make -j 4 && ./src/SPLINERACER
+
+
+using namespace splineengine;
 
 int main(int argc, char** argv) {
-	// Initialize SDL and open a window
-	SDLWindowManager windowManager(800, 600, "Spline Racer");
-	// Initialize glew for OpenGL3+ support
-	GLenum glewInitError = glewInit();
-	if(GLEW_OK != glewInitError) {
-		std::cerr << glewGetErrorString(glewInitError) << std::endl;
+
+	std::cout << "main in " << std::endl;
+	GameManager gameManager;
+
+	try {
+		gameManager.init();
+	} 
+	catch(...) {
+		// TODO : catch with a cool exception class
+		std::cerr << "GameManager initialisation error" << std::endl;
 		return EXIT_FAILURE;
 	}
 
-	std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
-	std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
-
-	/*
-	GameManager gameManager;
-
-	gameManager.init();
-	*/
-
 	// Application loop:
-	bool done = false;
-	while(!done) {
-		// Event loop:
-		SDL_Event e;
-		while(windowManager.pollEvent(e)) {
-			if(e.type == SDL_QUIT) {
-				done = true; // Leave the loop after this iteration
-			}
-		}
-		/*
-		if ( gameMode.ingame() ){
-			Input.getInput();
-			Game.update();
-			Game.render();
-		} else {
-			Input.getInput();
-			Menu.update();
-			Menu.render();
-		}
-		*/
-		// Update the display
-		windowManager.swapBuffers();
+	while(!gameManager.exiting()) {	
+		gameManager.update();
 	}
 
 	return EXIT_SUCCESS;

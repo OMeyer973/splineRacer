@@ -26,7 +26,7 @@ Spline::Spline(const int nbAnchors)
 
 
 glm::vec3 Spline::point(const float t) const {
-	float pos = t/_segmentLength;
+	double pos = t/_segmentLength;
 
 	// id of the first point
 	int i = (int)pos;

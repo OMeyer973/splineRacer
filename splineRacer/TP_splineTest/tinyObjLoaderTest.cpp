@@ -8,9 +8,11 @@
 #include <glimac/Program.hpp>
 #include <glimac/Geometry.hpp>
 #include <glimac/Image.hpp>
+#include <splineengine/GameObject.hpp>
 #include <splineengine/Model.hpp>
 #include <splineengine/POVCamera.hpp>
 #include <splineengine/TrackballCamera.hpp>
+#include <splineengine/RenderManager.hpp>
 
 
 using namespace glimac;
@@ -94,20 +96,17 @@ int main(int argc, char** argv) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 100.f);
-	glm::mat4 MVMatrix = glm::translate(glm::mat4(), glm::vec3(0, 0, -5));
-	glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-
 	// Create the model and create VBO, IBO, VAO based on the geometry
 	Model planeModel(applicationPath, "plane");
+	GameObject planeObject(planeModel);
 
 	// Create the Camera
-	std::vector<std::unique_ptr<Camera>> cameras;
-	POVCamera povCamera;
-	TrackballCamera tbCamera;
+	std::vector<std::unique_ptr<Camera>> cameras; // Contains two pointers on camera
 	cameras.emplace_back(new POVCamera());
 	cameras.emplace_back(new TrackballCamera());
-	int chosenCamera = POV_CAMERA;
+	int chosenCamera = TRACKBALL_CAMERA;
+
+	RenderManager renderManager(*cameras[chosenCamera]);
 
 	float rotateSpeed = 1.0f;
 	float zoom = 1.0f;
@@ -166,43 +165,18 @@ int main(int argc, char** argv) {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		MVMatrix = cameras[chosenCamera]->getViewMatrix(); // Init MVMatrix based on the camera
+		planeObject.rotation() = glm::vec3(.25*cos(2*windowManager.getTime()), .25*cos(.5*windowManager.getTime()), 0);
 
-		// MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, -5)); // Translation
-		// MVMatrix = glm::rotate(MVMatrix, windowManager.getTime(), glm::vec3(0, 1, 0)); // Translation * Rotation
-		glUniformMatrix4fv(MVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
-		glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(MVMatrix));
-		glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
+		renderManager.updateMVMatrix(*cameras[chosenCamera], planeObject.matrix());
 
-		// Dessin de l'OBJ
-		glBindVertexArray(planeModel.getVAO());
+		glUniformMatrix4fv(MVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.projMatrix() * renderManager.MVMatrix()));
+		glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.MVMatrix()));
+		glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.normalMatrix()));
 
-		/* On boucle sur les meshs de l'object pour les afficher un par un et
-		   appliquer des textures ou des tranformations différentes pour chaque mesh. */
-		for (int i = 0; i < planeModel.geometry().getMeshCount(); ++i)
-		{
-			const Geometry::Mesh* currentMesh = (planeModel.geometry().getMeshBuffer()+i);
-			GLint indexCount = currentMesh->m_nIndexCount;
-			GLint indexOffset = currentMesh->m_nIndexOffset;
-			if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices
-			{
-				glBindTexture(GL_TEXTURE_2D, textures[1]);
-				glUniform1i(textureLocation, 0);
-				MVMatrix = cameras[chosenCamera]->getViewMatrix(); // Init MVMatrix based on the camera
-				// MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, -5)); // Translation
-				// MVMatrix = glm::rotate(MVMatrix, windowManager.getTime(), glm::vec3(0, 1, 0)); // Translation * Rotation
-				MVMatrix = glm::rotate(MVMatrix, 10*windowManager.getTime(), glm::vec3(0, 0, 1)); // Translation * Rotation
-				glUniformMatrix4fv(MVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
-				glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(MVMatrix));
-				glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
-			}
+		planeObject.draw();
 
-			// => On utilise glDrawElements à la place de glDrawArrays
-			// Cela indique à OpenGL qu'il doit utiliser l'IBO enregistré dans le VAO
-			glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (const GLvoid*) (indexOffset * sizeof(GLuint)));
-		}
-		// glDrawElements(GL_TRIANGLES, planeModel.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
-		glBindVertexArray(0);
+		
+
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		// Update the display

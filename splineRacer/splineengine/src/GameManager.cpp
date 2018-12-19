@@ -5,22 +5,17 @@ namespace splineengine {
 
 
 GameManager::GameManager()
-	:_game()
-	{}
+{}
 
 void GameManager::init() {
+	_menu.init();
+	_game.init();
+	_pause.init();
 }
 
 
 void GameManager::update() {
 
-	// comment faire que le menu ou le game puisse dire au gameManager qu'il doit changer d'écran ? 
-	// ex quand on lance une partie
-	// le menu doit pouvoir accéder au gamemanager (qui est son parent)
-	// solution : faire un singleton ! comme ça on peut accéder à gamemanager depuis partout et c'est cool
-	// -> j'ai essayé de faire ça mais il était tard, j'ai eu des bugs relou et ça a pas marché.
-	// 	https://h-deb.clg.qc.ca/Sujets/Divers--cplusplus/CPP--Singletons.html (methode 2)
-	
 	// std::cout << "gamemanager update in " << std::endl;	
 	switch (_activeScreen) {
 	 	case MENU :

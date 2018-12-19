@@ -26,6 +26,7 @@ int main(int argc, char** argv) {
     std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 
 	GameManager& gameManager = GameManager::instance();
+	gameManager.appPath() = glimac::FilePath(argv[0]);
 
 	try {
 		gameManager.init();

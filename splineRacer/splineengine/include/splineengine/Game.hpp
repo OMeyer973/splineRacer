@@ -3,6 +3,7 @@
 #define __GAME__HPP
 
 #include <iostream>
+#include <string>
 #include "common.hpp"
 #include "Player.hpp"
 
@@ -40,11 +41,14 @@ class Game {
 		
 	// MEMBERS
 	private:
+		// VARIABLES
 		/// \brief represents the player
 		Player _player;
 		/// \brief represents the spline
 	    Spline _spline;
 
+		// CONSTANTS
+		std::string _playerModelName = "plane";
 
 
 

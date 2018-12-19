@@ -59,30 +59,39 @@ class GameManager {
 		// do the given event when in the GAME screen
 		void doPauseEvent(SDL_Event e);
 
+		// CONST GETTERS
 		/// \brief get the time difference in seconds between the current frame and the previous (enforced)
 		float deltaTime() const { return _deltaTime; };
 
 		/// \brief are we currently quitting the game ?
 		const bool exiting() const { return _exiting; };
+
+		/// \brief get the application path
+		const glimac::FilePath& appPath() const { return _appPath; };
+
+		// NON-CONST GETTERS (can be used as setters)
+		/// \brief set the application path
+		glimac::FilePath& appPath() { return _appPath; };
 		
 	// MEMBERS
 	private:
 
-		// THE DIFFERENT SCREENS OF THE PROGRAM
+		// VARIABLES
 		/// \brief menu screen with buttons & stuff
 		Menu _menu;
 		/// \brief game screen where you play & have fun !
 		Game _game;
 		/// \brief pause screen for when you need to go peepee
 		Pause _pause;
+		/// \brief path of the app
+		glimac::FilePath _appPath;
 
-		// MEMBERS THAT CAN BE GET & SET
 		/// \brief are we currently quitting the game ?
 		bool _exiting;
 		/// \brief wich is the active screen ? can be GAME, MENU, PAUSE (cf commons.hpp)
 		int _activeScreen = GAME; // TODO : initialize at MENU in for final version
 
-		// PRIVATE CONST MEMBERS
+		// CONSTANTS
 		static const uint32_t _windowWidth = 800;
 		static const uint32_t _windowHeight = 600;
 		/// \brief time between 2 frames (ms)

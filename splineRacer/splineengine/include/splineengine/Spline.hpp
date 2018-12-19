@@ -51,8 +51,8 @@ class Spline {
         /// \brief returns the transforma matrix for an object the given point
         glm::mat4 matrix(const glm::vec3& sPoint) const;
 
-
-
+        /// \brief length of the spline : _segmentLength * anchors.size();
+        float length() const { return _segmentLength * _anchors.size(); }
 
     protected:
         /// \brief wrap i between 0-loopSize.
@@ -73,7 +73,6 @@ class Spline {
         std::vector<glm::vec3> _anchors;
         // length of a segment between 2 anchors
         float _segmentLength;
-
 };        
 }
 #endif

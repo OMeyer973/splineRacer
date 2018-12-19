@@ -27,9 +27,6 @@ class GameManager {
 		{};
 
 	public:
-		float testVar1;
-		float testVar3;
-		float testVar2;
 
 		/// \brief access the singleton instance
 		static GameManager& instance() {
@@ -42,6 +39,7 @@ class GameManager {
 	    GameManager& operator=(const GameManager&) = delete;
 	    GameManager& operator=(GameManager&&) = delete;
 
+	public:
 		//METHODS
 		/// \brief init gamemanager when openning the software
 		void init();
@@ -53,7 +51,7 @@ class GameManager {
 		void quit();
 
 		// handle events for all the screens
-		void handleEvents();
+		void handleEvent(SDL_Event e);
 		// do the given event when in the MENU screen
 		void doMenuEvent(SDL_Event e);
 		// do the given event when in the GAME screen
@@ -79,12 +77,10 @@ class GameManager {
 		Pause _pause;
 
 		// MEMBERS THAT CAN BE GET & SET
-		/// \brief window manager, SDL & stuff.
-		glimac::SDLWindowManager _windowManager;
 		/// \brief are we currently quitting the game ?
 		bool _exiting;
 		/// \brief wich is the active screen ? can be GAME, MENU, PAUSE (cf commons.hpp)
-		int _activeScreen = PAUSE; // TODO : initialize at MENU in for final version
+		int _activeScreen = GAME; // TODO : initialize at MENU in for final version
 
 		// PRIVATE CONST MEMBERS
 		static const uint32_t _windowWidth = 800;
@@ -92,7 +88,7 @@ class GameManager {
 		/// \brief time between 2 frames (ms)
 		static const Uint32 _framerate_ms = 1000 / 30;
 		/// \brief time between 2 frames (seconds)
-		const float _deltaTime = 1.f/30;
+		const float _deltaTime = 1.f/30.f;
 };
 }
 #endif

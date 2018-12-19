@@ -20,21 +20,21 @@ class GameObject {
 		/// \param position : glm::vec3 scale    of the object 
 		/// \param position : glm::vec3 rotation of the object 
 		GameObject (
-			//const Model& model = Model(),
+			const Model& model = Model(),
 			const glm::vec3& sPosition = glm::vec3(0),
 			const glm::vec3& scale = glm::vec3(1),
 			const glm::vec3& rotation = glm::vec3(0)
 		)
-			:/*_model(model),*/ _sPosition(sPosition), _scale(scale), _rotation(rotation)
+			:_model(model), _sPosition(sPosition), _scale(scale), _rotation(rotation)
 		{
-			std::cout << "GameObject constructor " << std::endl;
+			// std::cout << "GameObject constructor " << std::endl;
 		};
 
 
 		/// \brief copy constructor
 		/// \param g : GameObject to copy from
 		GameObject(const GameObject& g)
-			:/*_model(g._model),*/ _sPosition(g._sPosition), _scale(g._scale), _rotation(g._rotation)
+			:_model(g._model), _sPosition(g._sPosition), _scale(g._scale), _rotation(g._rotation)
 		{};
 
 		/// \brief destructor
@@ -83,7 +83,7 @@ class GameObject {
 		/// \brief rotation of the object folowing the 3 spline-reference vectors (fwd, left, up) in trigonometric rotation direction
 		glm::vec3 _rotation;
 		/// \brief model of the 3D object
-		//const Model& _model;
+		const Model& _model;
 		//std::unique_ptr<Model> _model; // better to use const ref ?
 
 		/// \brief is the object static ? 

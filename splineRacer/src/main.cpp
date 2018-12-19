@@ -10,14 +10,24 @@
 
 using namespace splineengine;
 
-int main(int argc, char** argv) {
 
-	//glimac::SDLWindowManager windowManager(600, 800, "splineRacer");
-	std::cout << "main in " << std::endl;
+int main(int argc, char** argv) {
+	// Initialize SDL and open a window
+    glimac::SDLWindowManager windowManager(800, 600, "splineRacer");
+
+    // Initialize glew for OpenGL3+ support
+    GLenum glewInitError = glewInit();
+    if(GLEW_OK != glewInitError) {
+        std::cerr << glewGetErrorString(glewInitError) << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
+    std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
+
 	GameManager& gameManager = GameManager::instance();
 
 	try {
-		std::cout << "trying to init GameManager " << std::endl;
 		gameManager.init();
 	} 
 	catch(...) {
@@ -28,7 +38,17 @@ int main(int argc, char** argv) {
 
 	// Application loop:
 	while(!gameManager.exiting()) {	
+
+		// Event loop:
+		SDL_Event e;
+		while(windowManager.pollEvent(e)) {
+			gameManager.handleEvent(e);
+		}
+
 		gameManager.update();
+	
+
+		windowManager.swapBuffers();
 	}
 
 	return EXIT_SUCCESS;

@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
      * INITIALIZATION CODE
      *********************************/
     glimac::FilePath applicationPath(argv[0]);
-
+    
     GameManager& gameManager = GameManager::instance();
     glimac::Sphere sphere(2, 3, 2);
     Player player;
@@ -181,7 +181,7 @@ int main(int argc, char** argv) {
 
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 
-        for (float t=1; t<100; t+=0.35f) {
+        for (float t=0; t<spline.length(); t+=0.1f) {
 
             //curve part
             glm::mat4 MVMatrix;
@@ -223,7 +223,7 @@ int main(int argc, char** argv) {
 
         for (float i=0; i<100; ++i) {
             walls.push_back (GameObject(
-                //planeModel,
+                planeModel,
                 glm::vec3(3+i/8, 0.f, 1.5f),
                 glm::vec3(0.4f, 0.4f, 0.4f),
                 glm::vec3(0.0f, 0.0f, i/5)

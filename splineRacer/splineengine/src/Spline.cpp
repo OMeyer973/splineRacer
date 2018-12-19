@@ -24,6 +24,10 @@ Spline::Spline(const int nbAnchors)
     }
 }
 
+Spline::Spline(std::string levelName) {
+	// TODO
+}
+
 
 glm::vec3 Spline::point(const float t) const {
 	double pos = t/_segmentLength;

@@ -4,13 +4,14 @@
 
 #include <vector>
 #include <cmath>
+#include <string>
 #include <glimac/SDLWindowManager.hpp>
 #include "common.hpp"
 
 
 namespace splineengine {
 
-const int defaultAnchorsNb = 20;
+const int defaultAnchorsNb = 50;
 const float defaultSegmentLength = 1;
 
 // delta position used to rotate the camera and the objects facing the curve
@@ -25,11 +26,14 @@ class Spline {
     // METHODS
     public:
         // CONSTRUCTORS - DESTRUCTORS
-        /// \brief default random spline constructor spline with 10 anchors
+        /// \brief default random spline constructor spline with "defaultAnchorsNb" anchors
         Spline();
 
         /// \brief random spline constructor with given number of anchors
         Spline(const int nbAnchors);
+
+        /// \brief spline constructor from level
+        Spline(std::string levelName);
 
         /// \brief spline Destructor
         ~Spline()

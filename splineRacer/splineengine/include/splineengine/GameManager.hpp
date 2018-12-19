@@ -11,7 +11,6 @@
 #include "Game.hpp"
 #include "Menu.hpp"
 #include "Pause.hpp"
-#include "Player.hpp"
 
 namespace splineengine {
 
@@ -86,7 +85,6 @@ class GameManager {
 		bool _exiting;
 		/// \brief wich is the active screen ? can be GAME, MENU, PAUSE (cf commons.hpp)
 		int _activeScreen = MENU; // TODO : initialize at MENU for final version
-
 };
 }
 #endif

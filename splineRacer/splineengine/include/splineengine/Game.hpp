@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <string>
 #include "common.hpp"
 #include "Player.hpp"
 
@@ -14,7 +15,11 @@ class Game {
 	// METHODS
 	public:
 		// CONSTRUCTORS - DESTRUCTORS
+		/// \brief default constructor for infinite game
 	    Game();
+
+		/// \brief constructor with level name for loading level
+	    Game(std::string levelName);
 
 		/// \brief destructor
 		~Game();

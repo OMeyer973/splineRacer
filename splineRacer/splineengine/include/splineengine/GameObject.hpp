@@ -30,12 +30,25 @@ class GameObject {
 			// std::cout << "GameObject constructor " << std::endl;
 		};
 
-
 		/// \brief copy constructor
 		/// \param g : GameObject to copy from
 		GameObject(const GameObject& g)
-			:_model(g._model), _sPosition(g._sPosition), _scale(g._scale), _rotation(g._rotation)
+			:_model(g._model),
+			_sPosition(g._sPosition),
+			_scale(g._scale), 
+			_rotation(g._rotation)
 		{};
+		
+		/// \brief operators
+   //      GameObject& operator=(const GameObject& g) {
+   //      	_model 	   = g._model;
+   //      	_sPosition = g._sPosition;
+			// _scale	   = g._scale;
+			// _rotation  = g._rotation;
+			// _isStatic  = g._isStatic;
+			// _hasMatrix = false;
+   //      };
+
 
 		/// \brief destructor
 		~GameObject()
@@ -83,8 +96,8 @@ class GameObject {
 		/// \brief rotation of the object folowing the 3 spline-reference vectors (fwd, left, up) in trigonometric rotation direction
 		glm::vec3 _rotation;
 		/// \brief model of the 3D object
-		const Model& _model;
-		//std::unique_ptr<Model> _model; // better to use const ref ?
+		//std::unique_ptr<Model> _model; // better to use ptr because you can't reassign refs ?
+		const Model& _model; // better to use refs because less mistakes ?
 
 		/// \brief is the object static ? 
 		bool _isStatic = true;

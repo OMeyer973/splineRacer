@@ -17,8 +17,7 @@ class Game {
 	    Game();
 
 		/// \brief destructor
-		~Game()
-		{};
+		~Game();
 
         // CONST GETTERS
 		/// \brief get the player as a const ref
@@ -31,7 +30,7 @@ class Game {
 
 		//METHODS
 		/// \brief init game when launching new game
-		void init();
+		void loadLevel();
 
 		/// \brief update called at each frame (for the physics)
 		void update();

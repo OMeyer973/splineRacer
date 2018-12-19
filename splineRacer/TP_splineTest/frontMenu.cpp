@@ -50,7 +50,8 @@ int main(int argc, char** argv) {
      * INITIALIZATION CODE
      *********************************/
 
-    Settings settings;
+    Settings& settings = Settings::instance();
+    settings.appPath() = glimac::FilePath(argv[0]);
     GameManager& gameManager = GameManager::instance();
     glimac::Sphere sphere(2, 3, 2);
     Player player;

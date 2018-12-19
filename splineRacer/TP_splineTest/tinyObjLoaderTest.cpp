@@ -13,6 +13,7 @@
 #include <splineengine/POVCamera.hpp>
 #include <splineengine/TrackballCamera.hpp>
 #include <splineengine/RenderManager.hpp>
+#include <splineengine/Settings.hpp>
 
 
 using namespace glimac;
@@ -39,6 +40,8 @@ int main(int argc, char** argv) {
 	/*********************************
 	 * HERE SHOULD COME THE INITIALIZATION CODE
 	 *********************************/
+	Settings& settings = Settings::instance();
+	settings.appPath() = glimac::FilePath(argv[0]);
 
 	// Shaders
 	FilePath applicationPath(argv[0]);
@@ -97,7 +100,7 @@ int main(int argc, char** argv) {
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Create the model and create VBO, IBO, VAO based on the geometry
-	Model planeModel(applicationPath, "plane");
+	Model planeModel("plane");
 	GameObject planeObject(planeModel);
 
 	// Create the Camera

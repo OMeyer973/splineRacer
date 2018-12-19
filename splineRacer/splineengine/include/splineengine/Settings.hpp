@@ -10,14 +10,24 @@ namespace splineengine {
 
 /// \brief class wich represents the Settings
 class Settings {
-	// METHODS
-	public:
-		// CONSTRUCTORS - DESTRUCTORS
-		/// \brief constructor
-	    Settings() {};
-
-		/// \brief destructor
+	// SINGLETON CONSTRUCTORS - DESTRUCTORS
+	private:
+		/// \brief private constructor
+		Settings() {};
+		/// \brief private destructor
 		~Settings() {};
+
+	public:
+		/// \brief access the singleton instance
+		static Settings& instance() {
+			static Settings instance;
+			return instance;
+		}
+		// prevent copy
+		Settings(const Settings&) = delete;
+	    Settings(Settings&&) = delete;
+	    Settings& operator=(const Settings&) = delete;
+	    Settings& operator=(Settings&&) = delete;
 
 		// CONST GETTERS
 		/// \brief get the time difference in seconds between the current frame and the previous (enforced)

@@ -4,6 +4,7 @@
 
 #include "splineengine/common.hpp"
 #include "splineengine/GameManager.hpp"
+#include "splineengine/Settings.hpp"
 
 // cmake ../splineRacer && make -j 4 && ./src/SPLINERACER
 
@@ -25,8 +26,9 @@ int main(int argc, char** argv) {
     std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
     std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 
+    Settings settings;
 	GameManager& gameManager = GameManager::instance();
-	gameManager.appPath() = glimac::FilePath(argv[0]);
+	settings.appPath() = glimac::FilePath(argv[0]);
 
 	try {
 		gameManager.init();

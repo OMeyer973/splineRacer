@@ -9,6 +9,7 @@
 #include <glimac/Geometry.hpp>
 
 #include <splineengine/GameManager.hpp>
+#include <splineengine/Settings.hpp>
 #include <splineengine/GameObject.hpp>
 #include <splineengine/Player.hpp>
 #include <splineengine/Spline.hpp>
@@ -46,6 +47,7 @@ int main(int argc, char** argv) {
      *********************************/
     glimac::FilePath applicationPath(argv[0]);
     
+    Settings settings;
     GameManager& gameManager = GameManager::instance();
     glimac::Sphere sphere(2, 3, 2);
     Player player;
@@ -176,7 +178,7 @@ int main(int argc, char** argv) {
 
         //updating player inner variables (speed, position...)
         if (!displayInGameMenu)
-            player.update(gameManager.deltaTime());
+            player.update(settings.deltaTime());
 
 
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());

@@ -91,12 +91,16 @@ void GameManager::doPauseEvent(SDL_Event e) {
 	        if(e.key.keysym.sym==SDLK_ESCAPE) {
 				goToGame();
 			}
+	        if(e.key.keysym.sym==SDLK_SPACE) {
+				goToMenu();
+			}
 			break;
 	}
 }
 
 
 void GameManager::update() {
+	// note : events are handled before update
 	// std::cout << "gamemanager update in " << std::endl;	
 	switch (_activeScreen) {
 	 	case MENU :

@@ -26,7 +26,6 @@ class GameManager {
 		{};
 
 	public:
-
 		/// \brief access the singleton instance
 		static GameManager& instance() {
 			static GameManager instance;
@@ -39,19 +38,6 @@ class GameManager {
 	    GameManager& operator=(GameManager&&) = delete;
 
 	public:
-		//METHODS
-		/// \brief init gamemanager when openning the software
-		void init();
-
-		/// \brief update is called at each frame
-		void update();
-
-		/// \brief exit the software
-		void quit();
-
-		// handle an event for all the screens
-		void handleEvent(SDL_Event e);
-
 		// CONST GETTERS
 		/// \brief get the time difference in seconds between the current frame and the previous (enforced)
 		float deltaTime() const { return _deltaTime; };
@@ -65,9 +51,22 @@ class GameManager {
 		// NON-CONST GETTERS (can be used as setters)
 		/// \brief set the application path
 		glimac::FilePath& appPath() { return _appPath; };
+
+
+		//METHODS
+		/// \brief init gamemanager when openning the software
+		void init();
+
+		/// \brief update is called at each frame
+		void update();
+
+		/// \brief exit the software
+		void quit();
+
+		// handle an event for all the screens
+		void handleEvent(SDL_Event e);
 		
 	private:
-
 		/// \brief do the given event when in the MENU screen
 		void doMenuEvent(SDL_Event e);
 		/// \brief do the given event when in the GAME screen
@@ -107,7 +106,7 @@ class GameManager {
 		/// \brief time between 2 frames (ms)
 		static const Uint32 _framerate_ms = 1000 / 30;
 		/// \brief time between 2 frames (seconds)
-		const float _deltaTime = 1.f/30.f;
+		const float _deltaTime = 1000.f * _framerate_ms;
 };
 }
 #endif

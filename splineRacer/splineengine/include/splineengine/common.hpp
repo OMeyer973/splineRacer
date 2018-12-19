@@ -2,9 +2,7 @@
 #ifndef __COMMON__HPP
 #define __COMMON__HPP
 
-#include <GL/glew.h>
 #include<glm/gtc/random.hpp>
-#include <glm/gtc/noise.hpp>
 
 // declare global variables here
 

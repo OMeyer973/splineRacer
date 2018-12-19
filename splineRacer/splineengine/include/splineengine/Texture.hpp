@@ -13,31 +13,31 @@ namespace splineengine{
 
 class Texture{
 private:
-  /// \  tableau de textures
-  GLuint _texID;
-  std::string _texName;
-  std::unique_ptr<glimac::Image> _textureToLoad;
+	/// \  tableau de textures
+	GLuint _texID;
+	std::string _texName;
+	std::unique_ptr<glimac::Image> _textureToLoad;
 
 
 
 public:
-  //Construcors
-  //default
-  Texture();
-  //basic
-  Texture(const std::string &textureName);
+	//Construcors
+	//default
+	Texture();
+	//basic
+	Texture(const std::string &textureName);
 
-  //getter
-  GLuint getTextureID() const{ return _texID ; };
+	//getter
+	GLuint getTextureID() const{ return _texID ; };
 
-  //setter
-  void setTexture(const std::string &texture){ _texName = texture;  };
+	//setter
+	void setTexture(const std::string &texture){ _texName = texture;  };
 
-  //destructor
-  ~Texture()
-  {};
+	//destructor
+	~Texture()
+	{};
 
-  bool loadTexture(const glimac::FilePath &applicationPath);
+	bool loadTexture(const glimac::FilePath &applicationPath);
 
 };
 

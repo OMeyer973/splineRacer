@@ -135,7 +135,7 @@ bool Geometry::loadOBJ(const FilePath& filepath, const FilePath& mtlBasePath, bo
         if(shapes[i].mesh.texcoords.size()) {
             for (auto j = 0u; j < shapes[i].mesh.texcoords.size(); j += 2) {
                 pVertexTmp->m_TexCoords.x = shapes[i].mesh.texcoords[j];
-                pVertexTmp->m_TexCoords.y = shapes[i].mesh.texcoords[j + 1];
+                pVertexTmp->m_TexCoords.y = - shapes[i].mesh.texcoords[j + 1];
                 ++pVertexTmp;
             }
         } else {

@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
     //On peut à présent modifier le VBO en passant par la cible
 
     //Envoi des données
-    glBufferData(GL_ARRAY_BUFFER, sphere.getVertexCount() * sizeof (glimac::ShapeVertex), sphere.getDataPointer(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sphere.getVertexCount() * sizeof (glimac::Geometry::Vertex), sphere.getDataPointer(), GL_STATIC_DRAW);
     //On utilise GL_STATIC_DRAW pour un buffer dont les données ne changeront jamais.
 
     //Débindage, pour éviter de remodifier le VBO par erreur.
@@ -93,9 +93,9 @@ int main(int argc, char** argv) {
 
     //Spécification des attributs de vertex
     //glVertexAttribPointer(GLuint index,GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
-    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof (glimac::ShapeVertex), (const GLvoid*) offsetof(glimac::ShapeVertex, position));
-    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof (glimac::ShapeVertex), (const GLvoid*) offsetof(glimac::ShapeVertex, normal));
-    glVertexAttribPointer(VERTEX_ATTR_COORDINATE, 2, GL_FLOAT, GL_FALSE, sizeof (glimac::ShapeVertex), (const GLvoid*) offsetof(glimac::ShapeVertex, texCoords));
+    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof (glimac::Geometry::Vertex), (const GLvoid*) offsetof(glimac::Geometry::Vertex, m_Position));
+    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof (glimac::Geometry::Vertex), (const GLvoid*) offsetof(glimac::Geometry::Vertex, m_Normal));
+    glVertexAttribPointer(VERTEX_ATTR_COORDINATE, 2, GL_FLOAT, GL_FALSE, sizeof (glimac::Geometry::Vertex), (const GLvoid*) offsetof(glimac::Geometry::Vertex, m_TexCoords));
 
     //Débindage
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -117,7 +117,6 @@ int main(int argc, char** argv) {
     GLuint *textures = new GLuint[nbTextures];
     glGenTextures(nbTextures, textures);
 
-    glBindTexture(GL_TEXTURE_2D,textures[0]);
 
     glBindTexture(GL_TEXTURE_2D, textures[0]);
     glTexImage2D(GL_TEXTURE_2D,
@@ -239,7 +238,7 @@ int main(int argc, char** argv) {
             glBindTexture(GL_TEXTURE_2D, textures[0]);
             glUniform1i(textureLocation, 0);
 
-            MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2));
+            MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2f,0.2f,0.2f));
             MVMatrix = glm::translate(MVMatrix, glm::vec3(0,0,-10));
             glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 

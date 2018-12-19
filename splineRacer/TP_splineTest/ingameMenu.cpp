@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
      * INITIALIZATION CODE
      *********************************/
 
-    GameManager gameManager;
+    GameManager& gameManager = GameManager::instance();
     glimac::Sphere sphere(2, 3, 2);
     Player player;
     Spline spline;

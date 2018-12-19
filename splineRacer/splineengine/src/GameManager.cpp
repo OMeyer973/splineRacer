@@ -9,15 +9,6 @@ GameManager::GameManager()
 	 _game()
 	{}
 
-GameManager::GameManager(glimac::SDLWindowManager windowManager)
-	:_windowManager(windowManager)
-	//segfault quand est appelé le constructeur de windowmanager...
-	//j'avais un truc qui marchait tout à l'heure ouech
-	//les prints ne sont même pas affichés à l'intérieur du constructeur de SDLWindowManager :'('
-{
-	std::cout << "GameManager constructor in" << std::endl;
-}
-
 void GameManager::init() {
 
     // Initialize glew for OpenGL3+ support
@@ -43,7 +34,8 @@ void GameManager::update() {
 	// solution : faire un singleton ! comme ça on peut accéder à gamemanager depuis partout et c'est cool
 	// -> j'ai essayé de faire ça mais il était tard, j'ai eu des bugs relou et ça a pas marché.
 	// 	https://h-deb.clg.qc.ca/Sujets/Divers--cplusplus/CPP--Singletons.html (methode 2)
-	std::cout << "gamemanager update in " << std::endl;	
+	
+	// std::cout << "gamemanager update in " << std::endl;	
 	switch (_activeScreen) {
 	 	case MENU :
 	 		_menu.update();
@@ -59,7 +51,7 @@ void GameManager::update() {
 	 		_pause.render();
              break;
 	}
-	std::cout << "gamemanager update out " << std::endl;	
+	// std::cout << "gamemanager update out " << std::endl;	
 	
 	_windowManager.swapBuffers();
 }

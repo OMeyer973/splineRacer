@@ -14,8 +14,7 @@ int main(int argc, char** argv) {
 
 	//glimac::SDLWindowManager windowManager(600, 800, "splineRacer");
 	std::cout << "main in " << std::endl;
-	GameManager gameManager;
-	std::cout << "main mid " << std::endl;
+	GameManager& gameManager = GameManager::instance();
 
 	try {
 		std::cout << "trying to init GameManager " << std::endl;

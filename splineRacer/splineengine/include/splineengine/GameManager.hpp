@@ -18,19 +18,30 @@ namespace splineengine {
 /// \brief class wich manages the whole program 
 // TODO: make it a singleton ! (it's hard)
 class GameManager {
-	// METHODS
-	public:
-		// CONSTRUCTORS - DESTRUCTORS
+	// SINGLETON CONSTRUCTORS - DESTRUCTORS
+	private:
+		/// \brief private constructor
 		GameManager();
-
-		GameManager(glimac::SDLWindowManager windowManager);
-
-
-		/// \brief destructor
+		/// \brief private destructor
 		~GameManager()
 		{};
 
-		
+	public:
+		float testVar1;
+		float testVar3;
+		float testVar2;
+
+		/// \brief access the singleton instance
+		static GameManager& instance() {
+			static GameManager instance;
+			return instance;
+		}
+		// prevent copy
+		GameManager(const GameManager&) = delete;
+	    GameManager(GameManager&&) = delete;
+	    GameManager& operator=(const GameManager&) = delete;
+	    GameManager& operator=(GameManager&&) = delete;
+
 		//METHODS
 		/// \brief init gamemanager when openning the software
 		void init();

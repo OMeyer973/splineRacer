@@ -13,6 +13,7 @@
 #include <glimac/FilePath.hpp>
 #include <glimac/Geometry.hpp>
 #include <splineengine/Model.hpp>
+#include <splineengine/Texture.hpp>
 
 //fps counter
 #include <time.h>
@@ -110,27 +111,32 @@ int main(int argc, char** argv) {
 
 
     glimac::FilePath applicationPath(argv[0]);
-    std::unique_ptr<glimac::Image> buttonContinue = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/Continue.png");
-    if ( buttonContinue == NULL ) std::cout << "Image Button Continue Loaded" << std::endl;
 
-    unsigned int nbTextures = 1;
-    GLuint *textures = new GLuint[nbTextures];
-    glGenTextures(nbTextures, textures);
+    Texture buttonContinue("Continue");
 
+    buttonContinue.loadTexture(applicationPath);
 
-    glBindTexture(GL_TEXTURE_2D, textures[0]);
-    glTexImage2D(GL_TEXTURE_2D,
-        0,
-        GL_RGBA,
-        buttonContinue->getWidth(),
-        buttonContinue->getHeight(),
-        0,
-        GL_RGBA,
-        GL_FLOAT,
-        buttonContinue->getPixels());
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    // std::unique_ptr<glimac::Image> buttonContinue = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/Continue.png");
+    // if ( buttonContinue == NULL ) std::cout << "Image Button Continue Loaded" << std::endl;
+    //
+    // unsigned int nbTextures = 4;
+    // GLuint *textures = new GLuint[nbTextures];
+    // glGenTextures(nbTextures, textures);
+    //
+    // glBindTexture(GL_TEXTURE_2D, textures[0]);
+    // glTexImage2D(GL_TEXTURE_2D,
+    //     0,
+    //     GL_RGBA,
+    //     buttonContinue->getWidth(),
+    //     buttonContinue->getHeight(),
+    //     0,
+    //     GL_RGBA,
+    //     GL_FLOAT,
+    //     buttonContinue->getPixels());
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // glBindTexture(GL_TEXTURE_2D, 0);
+
 
 
 
@@ -235,13 +241,12 @@ int main(int argc, char** argv) {
             menu.use(); // Indiquer a OpenGL de les utiliser
 
             //:cout << "menu" << std::endl;
-            glBindTexture(GL_TEXTURE_2D, textures[0]);
+            glBindTexture(GL_TEXTURE_2D, buttonContinue.getTextureID() );
             glUniform1i(textureLocation, 0);
 
             MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2f,0.2f,0.2f));
-            MVMatrix = glm::translate(MVMatrix, glm::vec3(0,0,-10));
+            MVMatrix = glm::translate(MVMatrix, glm::vec3(0,0,-15));
             glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-
 
             //on récupère les locations des variables uniformes dans les shaders
             GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");

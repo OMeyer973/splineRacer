@@ -1,5 +1,3 @@
-#include <iostream>
-#include <GL/glew.h>
 #include "splineengine/Model.hpp"
 
 namespace splineengine {

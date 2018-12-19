@@ -47,13 +47,14 @@ int main(int argc, char** argv) {
      *********************************/
     glimac::FilePath applicationPath(argv[0]);
     
-    Settings settings;
+    Settings& settings = Settings::instance();
+    settings.appPath() = glimac::FilePath(argv[0]);
     GameManager& gameManager = GameManager::instance();
     glimac::Sphere sphere(2, 3, 2);
     Player player;
     Spline spline;
 
-    Model planeModel(applicationPath, "plane");
+    Model planeModel("plane");
 
     // Création d'un seul VBO = contient les données
     GLuint vbo;

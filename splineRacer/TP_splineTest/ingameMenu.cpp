@@ -55,7 +55,8 @@ int main(int argc, char** argv) {
      * INITIALIZATION CODE
      *********************************/
 
-    Settings settings;
+    Settings& settings = Settings::instance();
+    settings.appPath() = glimac::FilePath(argv[0]);
     GameManager& gameManager = GameManager::instance();
     glimac::Sphere sphere(2, 3, 2);
     Player player;
@@ -157,7 +158,7 @@ int main(int argc, char** argv) {
     GLint NormalMatrixLocation = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
     GLint textureLocation = glGetUniformLocation(program.getGLId(), "uTexture");
 
-    Model menuModel(applicationPath,"menu");
+    Model menuModel("menu");
 
     glEnable(GL_DEPTH_TEST);
 

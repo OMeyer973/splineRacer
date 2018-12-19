@@ -2,7 +2,8 @@
 #ifndef __COLLIDER__HPP
 #define __COLLIDER__HPP
 
-#include<vector>
+#include <vector>
+#include <glimac/glm.hpp>
 
 namespace splineengine {
 

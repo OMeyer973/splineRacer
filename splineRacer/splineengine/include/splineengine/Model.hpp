@@ -4,9 +4,14 @@
 
 #include <iostream>
 #include <GL/glew.h>
+#include "Collider.hpp"
+#include <iostream>
 #include <glimac/Geometry.hpp>
 #include <glimac/FilePath.hpp>
-#include "Collider.hpp"
+#include <glimac/SDLWindowManager.hpp>
+#include <glimac/common.hpp>
+#include <splineengine/Settings.hpp>
+#include <splineengine/common.hpp>
 
 namespace splineengine {
 
@@ -16,32 +21,27 @@ class Model {
 	public:
 		// CONSTRUCTORS - DESTRUCTORS
 		/// \brief default model Constructor
-		Model()
-		{
-			std::cout << "model constructor " << std::endl;
-		};
+		Model() {};
 
-		/// \brief model Constructor
-		Model(const glimac::FilePath &applicationPath, const std::string &modelName)
-		{
+		/// \brief model Constructor by model name
+		Model(const std::string &modelName) {
 			glimac::Geometry geometry;
-			glimac::FilePath modelPath = applicationPath.dirPath() + "../../splineRacer/assets/models/" + modelName + "/" + modelName;
+			glimac::FilePath modelPath = Settings::instance().appPath().dirPath() + "../../splineRacer/assets/models/" + modelName + "/" + modelName;
 			glimac::FilePath objPath(modelPath.addExt(".obj")); // Constructeur par copie
 			glimac::FilePath mtlPath(modelPath.addExt(".mtl")); // Constructeur par copie
 			bool ret = geometry.loadOBJ(objPath, mtlPath, true);
 			if (!ret)
-				exit(1); // Lancer Exception : OBJ loading failed
+				exit(1); // Throw Exception : OBJ loading failed
 
 			// OBJ is correctly loaded
 			_geometry = geometry;
 			setVBO(geometry);
 			setIBO(geometry);
 			setVAO();
-		};
+		}
 
 		/// \brief model Destructor
-		~Model()
-		{
+		~Model() {
 			glDeleteBuffers(1, &_VBO);
 			glDeleteVertexArrays(1, &_VAO);
 		};

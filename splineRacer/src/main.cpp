@@ -26,9 +26,9 @@ int main(int argc, char** argv) {
     std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
     std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 
-    Settings settings;
-	GameManager& gameManager = GameManager::instance();
+    Settings& settings = Settings::instance();
 	settings.appPath() = glimac::FilePath(argv[0]);
+	GameManager& gameManager = GameManager::instance();
 
 	try {
 		gameManager.init();

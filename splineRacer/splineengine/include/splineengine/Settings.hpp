@@ -4,6 +4,7 @@
 
 #include "common.hpp"
 #include <glimac/FilePath.hpp>
+#include <SDL/SDL.h>
 
 namespace splineengine {
 

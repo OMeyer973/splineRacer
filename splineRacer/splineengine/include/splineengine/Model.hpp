@@ -67,8 +67,6 @@ class Model {
 			return _geometry;
 		};
 
-		void draw();
-
 	private:
 		/// \brief Contains the vertices and materials of the model
 		glimac::Geometry _geometry;

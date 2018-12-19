@@ -73,6 +73,9 @@ class Player : public GameObject {
         /// \brief update the player status at each frame
         void update(const float dt);
 
+        /// \brief Overriden function to draw the plane
+        void draw() const;
+
     protected:
         // METHODS
         /// \brief update the player speed using it's acceleration and inputs (goingLeft & goingUp)

@@ -45,10 +45,4 @@ namespace splineengine {
 		_VAO = vao;
 	};
 
-
-	/// \brief draw all meshes of the object
-	void Model::draw() {
-
-	}
-
 }

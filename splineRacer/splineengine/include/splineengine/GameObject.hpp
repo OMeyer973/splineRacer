@@ -58,6 +58,12 @@ class GameObject {
         // METHODS
 		/// \brief returns the transform matrix of the object in the given spline reference
 		const glm::mat4 matrix(const Spline& spline);
+		
+		/// \brief returns the transform matrix of the object
+		const glm::mat4 matrix();
+
+		/// \brief Draw object
+		void draw() const;
         
 
 		//CONST GETTERS

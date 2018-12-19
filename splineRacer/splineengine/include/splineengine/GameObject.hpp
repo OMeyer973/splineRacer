@@ -2,6 +2,7 @@
 #ifndef __GAMEOBJECT__HPP
 #define __GAMEOBJECT__HPP
 
+#include <iostream>
 #include "common.hpp"
 #include "Model.hpp"
 #include "Spline.hpp"
@@ -19,13 +20,15 @@ class GameObject {
 		/// \param position : glm::vec3 scale    of the object 
 		/// \param position : glm::vec3 rotation of the object 
 		GameObject (
-			const Model& model = Model(),
+			//const Model& model = Model(),
 			const glm::vec3& sPosition = glm::vec3(0),
 			const glm::vec3& scale = glm::vec3(1),
 			const glm::vec3& rotation = glm::vec3(0)
 		)
 			:_sPosition(sPosition), _scale(scale), _rotation(rotation)
-		{};
+		{
+			std::cout << "GameObject constructor " << std::endl;
+		};
 
 
 		/// \brief copy constructor
@@ -80,12 +83,12 @@ class GameObject {
 		/// \brief rotation of the object folowing the 3 spline-reference vectors (fwd, left, up) in trigonometric rotation direction
 		glm::vec3 _rotation;
 		/// \brief model of the 3D object
-		std::unique_ptr<Model> _model;
+		//std::unique_ptr<Model> _model;
 
 		/// \brief is the object static ? 
 		bool _isStatic = true;
-		bool _hasMatrix = false;
 		/// \brief stored transformation matrix of the object in case the object is static
+		bool _hasMatrix = false;
 		glm::mat4 _transformMat;
 };
 }

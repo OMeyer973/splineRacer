@@ -61,11 +61,11 @@ class GameManager {
 
 		// THE DIFFERENT SCREENS OF THE PROGRAM
 		/// \brief menu screen with buttons & stuff
-		//Menu _menu;
+		Menu _menu;
 		/// \brief game screen where you play & have fun !
-		//Game _game;
+		Game _game;
 		/// \brief pause screen for when you need to go peepee
-		//Pause _pause;
+		Pause _pause;
 
 		// MEMBERS THAT CAN BE GET & SET
 		/// \brief window manager, SDL & stuff.
@@ -73,7 +73,7 @@ class GameManager {
 		/// \brief are we currently quitting the game ?
 		bool _exiting;
 		/// \brief wich is the active screen ? can be GAME, MENU, PAUSE (cf commons.hpp)
-		int _activeScreen = GAME; // TODO : initialize at MENU in for final version
+		int _activeScreen = PAUSE; // TODO : initialize at MENU in for final version
 
 		// PRIVATE CONST MEMBERS
 		static const uint32_t _windowWidth = 800;

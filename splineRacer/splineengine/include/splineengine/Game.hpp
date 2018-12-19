@@ -2,6 +2,7 @@
 #ifndef __GAME__HPP
 #define __GAME__HPP
 
+#include <iostream>
 #include "common.hpp"
 #include "Player.hpp"
 

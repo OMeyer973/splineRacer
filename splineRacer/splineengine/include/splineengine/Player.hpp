@@ -13,11 +13,13 @@ class Player : public GameObject {
         // CONSTRUCTORS - DESTRUCTORS
         /// \brief default player Constructor
         Player() 
-            :GameObject(Model(), glm::vec3(1.f,0.f,2.f)),
+            :GameObject(/*Model(),*/ glm::vec3(1.f,0.f,2.f)),
             _sSpeed(1.f, 0.f, 0.f),
             _sMaxSpeed(4.f, 10.f, 10.f),
             _sAcceleration(0.f, 20.f, 20.f)
-        {};
+        {
+            std::cout << "player constructor " << std::endl;
+        };
 
         /// \brief player Destructor
         ~Player()
@@ -56,7 +58,6 @@ class Player : public GameObject {
 
         /// \brief update the player status at each frame
         void update(const float dt);
-
 
     protected:
         // METHODS

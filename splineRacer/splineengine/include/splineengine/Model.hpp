@@ -2,6 +2,7 @@
 #ifndef __MODEL__HPP
 #define __MODEL__HPP
 
+#include <iostream>
 #include <GL/glew.h>
 #include <glimac/Geometry.hpp>
 #include <glimac/FilePath.hpp>
@@ -16,7 +17,9 @@ class Model {
 		// CONSTRUCTORS - DESTRUCTORS
 		/// \brief default model Constructor
 		Model()
-		{};
+		{
+			std::cout << "model constructor " << std::endl;
+		};
 
 		/// \brief model Constructor
 		Model(const glimac::FilePath &applicationPath, const std::string &modelName)

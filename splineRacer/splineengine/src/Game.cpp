@@ -4,7 +4,9 @@
 namespace splineengine {
 
 Game::Game()
-{}
+{
+	std::cout << "game constructor in " << std::endl;
+}
 
 void Game::init() {
 	// TODO

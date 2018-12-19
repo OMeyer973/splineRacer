@@ -5,7 +5,8 @@ namespace splineengine {
 
 
 GameManager::GameManager()
-	:_windowManager(_windowWidth, _windowHeight, "splineRacer")
+	:_windowManager(_windowWidth, _windowHeight, "splineRacer"),
+	 _game()
 	{}
 
 GameManager::GameManager(glimac::SDLWindowManager windowManager)
@@ -43,21 +44,21 @@ void GameManager::update() {
 	// -> j'ai essayé de faire ça mais il était tard, j'ai eu des bugs relou et ça a pas marché.
 	// 	https://h-deb.clg.qc.ca/Sujets/Divers--cplusplus/CPP--Singletons.html (methode 2)
 	std::cout << "gamemanager update in " << std::endl;	
-	// switch (_activeScreen) {
-	// 	case MENU :
-	// 		_menu.update();
-	// 		_menu.render();
- //            break;
-	// 	case GAME :
-	// 		_game.update();
-	// 		_game.render();
- //            break;
-	// 	case PAUSE :
-	// 		_pause.update();
-	// 		_game.render();
-	// 		_pause.render();
- //            break;
-	// }
+	switch (_activeScreen) {
+	 	case MENU :
+	 		_menu.update();
+	 		_menu.render();
+             break;
+		case GAME :
+			_game.update();
+			_game.render();
+            break;
+	 	case PAUSE :
+	 		_pause.update();
+	 		_game.render();
+	 		_pause.render();
+             break;
+	}
 	std::cout << "gamemanager update out " << std::endl;	
 	
 	_windowManager.swapBuffers();

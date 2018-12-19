@@ -223,7 +223,7 @@ int main(int argc, char** argv) {
 
         for (float i=0; i<100; ++i) {
             walls.push_back (GameObject(
-                planeModel,
+                /*planeModel,*/
                 glm::vec3(3+i/8, 0.f, 1.5f),
                 glm::vec3(0.4f, 0.4f, 0.4f),
                 glm::vec3(0.0f, 0.0f, i/5)

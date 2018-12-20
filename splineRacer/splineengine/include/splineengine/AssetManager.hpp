@@ -3,9 +3,15 @@
 #define __ASSETMANAGER__HPP
 
 #include <iostream>
+#include <map>
 #include "Model.hpp"
 
 namespace splineengine {
+
+// IDs of models
+const int PLANEMODEL = 0;
+const int WHEELBARROWMODEL = 1; 
+const int SINGEMODEL = 2;
 
 /// \brief class wich manages the assets for everyone to access them 
 class AssetManager {
@@ -31,9 +37,18 @@ class AssetManager {
 
 	public:
 		// CONST GETTERS
+		const std::map<int, Model>& models() const { return _models; };
 		
 	private:
-		std::vector<Model> _models;
+		// METHODS
+		void loadAssets();
+
+		// MEMBERS
+		/// \brief have the assets been loaded allready ?
+		static bool _isLoaded;
+		/// \brief 3D models assets
+		std::map<int, Model> _models;
+		//std::vector<Texture> _textures;
 };
 }
 #endif

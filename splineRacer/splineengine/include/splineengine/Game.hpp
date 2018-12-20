@@ -7,6 +7,7 @@
 #include <string>
 #include "common.hpp"
 #include "Player.hpp"
+#include "AssetManager.hpp"
 
 namespace splineengine {
 
@@ -34,8 +35,10 @@ class Game {
 
 
 		//METHODS
-		/// \brief init game when launching new game
+		/// \brief creates a radom level
 		void loadLevel();
+		/// \brief load the given level
+		void loadLevel(std::string levelName);
 
 		/// \brief update called at each frame (for the physics)
 		void update();
@@ -51,6 +54,9 @@ class Game {
 		/// \brief represents the spline
 	    Spline _spline;
 
+	    std::vector<GameObject> decorations;
+	    std::vector<GameObject> obstacles;
+	    std::vector<GameObject> collectables;
 		// CONSTANTS
 		std::string _playerModelName = "plane";
 

@@ -13,6 +13,11 @@
 #include "Pause.hpp"
 
 namespace splineengine {
+	
+// IDs of game screens
+const int MENU = 0;
+const int GAME = 1; 
+const int PAUSE = 2;
 
 /// \brief class wich manages the whole program 
 class GameManager {

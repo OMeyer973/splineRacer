@@ -32,7 +32,7 @@ class Spline {
         /// \brief random spline constructor with given number of anchors
         Spline(const int nbAnchors);
 
-        /// \brief spline constructor from level
+        /// \brief spline constructor from level name
         Spline(std::string levelName);
 
         /// \brief spline Destructor

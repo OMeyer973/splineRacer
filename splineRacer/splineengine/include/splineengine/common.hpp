@@ -6,13 +6,6 @@
 
 // declare global variables here
 
-
-// IDs of game screens
-const int MENU = 0;
-const int GAME = 1; 
-const int PAUSE = 2;
-
-
 // directions for spline-space vectors
 const int FWD = 0;
 const int LEFT = 1; 

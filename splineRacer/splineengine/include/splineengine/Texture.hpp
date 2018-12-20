@@ -37,7 +37,7 @@ public:
 	~Texture()
 	{};
 
-	bool loadTexture(const glimac::FilePath &applicationPath);
+	bool loadTexture();
 
 };
 

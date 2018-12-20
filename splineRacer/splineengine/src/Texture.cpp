@@ -1,6 +1,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include "splineengine/Texture.hpp"
+#include "splineengine/Settings.hpp"
 
 namespace splineengine{
 
@@ -13,10 +14,10 @@ namespace splineengine{
     std::cout << "texture " << textureName << " created " << std::endl;
   }
 
-  bool Texture::loadTexture(const glimac::FilePath &applicationPath){
+  bool Texture::loadTexture(){
     std::cout << "texture " << _texName << "  pas encore  charged " << std::endl;
 
-    glimac::FilePath texPath = applicationPath.dirPath() + "../../splineRacer/assets/textures/" + _texName;
+    glimac::FilePath texPath = Settings::instance().appPath().dirPath() + "../../splineRacer/assets/textures/" + _texName;
     texPath = texPath.addExt(".png"); // Constructeur par copie
     //si texture nulle error
 

@@ -54,7 +54,6 @@ class RenderManager {
 		glm::mat4 _MVMatrix;
 		/// \brief Model-View matrix
 		glm::mat4 _normalMatrix;
-		std::vector<Texture> _textures;
 
 };
 

@@ -117,7 +117,7 @@ int main(int argc, char** argv) {
 
     Texture buttonContinue("Continue");
 
-    buttonContinue.loadTexture(applicationPath);
+    buttonContinue.loadTexture();
 
     // std::unique_ptr<glimac::Image> buttonContinue = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/Continue.png");
     // if ( buttonContinue == NULL ) std::cout << "Image Button Continue Loaded" << std::endl;

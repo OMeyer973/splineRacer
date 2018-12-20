@@ -111,7 +111,7 @@ int main(int argc, char** argv) {
 
 
   Model skyBoxModel("skybox");
-  Texture skyBoxTex("cube_number");
+  Texture skyBoxTex("skurt");
   skyBoxTex.loadTexture();
 
 	GameObject skyBoxObject(skyBoxModel);

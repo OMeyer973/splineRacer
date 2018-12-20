@@ -14,6 +14,8 @@
 #include <splineengine/TrackballCamera.hpp>
 #include <splineengine/RenderManager.hpp>
 #include <splineengine/Settings.hpp>
+#include <splineengine/common.hpp>
+#include <splineengine/CubeMap.hpp>
 
 
 using namespace glimac;
@@ -103,6 +105,28 @@ int main(int argc, char** argv) {
 	Model planeModel("plane");
 	GameObject planeObject(planeModel);
 
+
+	glimac::Program skyBoxProgram = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
+															applicationPath.dirPath() + "shaders/tex3D.fs.glsl");
+
+
+  Model skyBoxModel("skybox");
+  Texture skyBoxTex("skurt");
+  skyBoxTex.loadTexture();
+
+	GameObject skyBoxObject(skyBoxModel);
+	//
+	//
+	// CubeMap	 skyBox((settings.appPath().dirPath() + "../../splineRacer/assets/textures/posx.png").str() ,
+	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/posy.png").str() ,
+	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/posz.png").str() ,
+	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/negx.png").str() ,
+	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/negy.png").str() ,
+	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/negz.png").str() );
+	//
+	// skyBox.loadCubeMap();
+
+
 	// Create the Camera
 	std::vector<std::unique_ptr<Camera>> cameras; // Contains two pointers on camera
 	cameras.emplace_back(new POVCamera());
@@ -178,7 +202,59 @@ int main(int argc, char** argv) {
 
 		planeObject.draw();
 
-		
+
+
+		// glBindTexture(GL_TEXTURE_2D,textures[1]);
+		// glUniform1i(textureLocation, 0);
+
+		//testSkybox
+
+		// glDepthMask(GL_FALSE);
+		// //useProgram(CUBEMAP);
+		//
+		// glActiveTexture(GL_TEXTURE0);
+		// glBindTexture(GL_TEXTURE_CUBE_MAP, skyBox.getID());
+		//
+		// //skyBoxObject.draw();
+		//
+		// glActiveTexture(GL_TEXTURE0);
+		// glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+		// glDepthMask(GL_TRUE);
+
+
+
+		skyBoxProgram.use();
+
+
+		// glBindTexture(GL_TEXTURE_2D, skyBoxTex.getTextureID() );
+		// glUniform1i(textureLocation, 0);
+
+		glm::mat4 MVMatrix;
+    MVMatrix = glm::scale(MVMatrix, 100.f*(fwdVec +upVec + leftVec) );
+		//MVMatrix = glm::translate(MVMatrix, glm::vec3(0,0,0));
+
+		renderManager.updateMVMatrix(*cameras[chosenCamera],  MVMatrix	 );
+
+		glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+
+		//on récupère les locations des variables uniformes dans les shaders
+		GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+		GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+		GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+		//on envoie les matrices à la CG dans les variables uniformes
+		glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(renderManager.projMatrix() * renderManager.MVMatrix()));
+		glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr( MVMatrix ));
+		glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr( NormalMatrix  ));
+
+
+
+
+		//chargement des textures
+
+		glBindTexture(GL_TEXTURE_2D, skyBoxTex.getTextureID());
+
+		skyBoxObject.draw();
+
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 

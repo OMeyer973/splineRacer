@@ -24,19 +24,18 @@ class Model {
 		Model() {};
 
 		/// \brief model Constructor by model name
+		/// \param modelName : std::string& name of the model
 		Model(const std::string &modelName) {
-			glimac::Geometry geometry;
 			glimac::FilePath modelPath = Settings::instance().appPath().dirPath() + "../../splineRacer/assets/models/" + modelName + "/" + modelName;
 			glimac::FilePath objPath(modelPath.addExt(".obj")); // Constructeur par copie
 			glimac::FilePath mtlPath(modelPath.addExt(".mtl")); // Constructeur par copie
-			bool ret = geometry.loadOBJ(objPath, mtlPath, true);
+			bool ret = _geometry.loadOBJ(objPath, mtlPath, true);
 			if (!ret)
 				exit(1); // Throw Exception : OBJ loading failed
 
 			// OBJ is correctly loaded
-			_geometry = geometry;
-			setVBO(geometry);
-			setIBO(geometry);
+			setVBO(_geometry);
+			setIBO(_geometry);
 			setVAO();
 		};
 

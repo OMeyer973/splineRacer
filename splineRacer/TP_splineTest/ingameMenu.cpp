@@ -15,6 +15,7 @@
 #include <glimac/Geometry.hpp>
 #include <splineengine/Model.hpp>
 #include <splineengine/Texture.hpp>
+#include <splineengine/CubeMap.hpp>
 
 //fps counter
 #include <time.h>
@@ -39,7 +40,7 @@ int initial_time = time(NULL), final_time, frame_count;
 
 int main(int argc, char** argv) {
     // Initialize SDL and open a window
-    glimac::SDLWindowManager windowManager(1200, 900, "splineRacer");
+    glimac::SDLWindowManager windowManager(800, 600, "splineRacer");
 
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();
@@ -117,30 +118,7 @@ int main(int argc, char** argv) {
 
     Texture buttonContinue("Continue");
 
-    buttonContinue.loadTexture(applicationPath);
-
-    // std::unique_ptr<glimac::Image> buttonContinue = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/Continue.png");
-    // if ( buttonContinue == NULL ) std::cout << "Image Button Continue Loaded" << std::endl;
-    //
-    // unsigned int nbTextures = 4;
-    // GLuint *textures = new GLuint[nbTextures];
-    // glGenTextures(nbTextures, textures);
-    //
-    // glBindTexture(GL_TEXTURE_2D, textures[0]);
-    // glTexImage2D(GL_TEXTURE_2D,
-    //     0,
-    //     GL_RGBA,
-    //     buttonContinue->getWidth(),
-    //     buttonContinue->getHeight(),
-    //     0,
-    //     GL_RGBA,
-    //     GL_FLOAT,
-    //     buttonContinue->getPixels());
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // glBindTexture(GL_TEXTURE_2D, 0);
-
-
+    buttonContinue.loadTexture();
 
 
 
@@ -151,7 +129,8 @@ int main(int argc, char** argv) {
     glimac::Program menu = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
                                 applicationPath.dirPath() + "shaders/tex3D.fs.glsl");
 
-
+    glimac::Program skyBoxProgram = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
+                                applicationPath.dirPath() + "shaders/tex3D.fs.glsl");
 
     GLint MVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
     GLint MVMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVMatrix");
@@ -159,6 +138,11 @@ int main(int argc, char** argv) {
     GLint textureLocation = glGetUniformLocation(program.getGLId(), "uTexture");
 
     Model menuModel("menu");
+
+    Model skyBox("skybox");
+    Texture skyBoxTex("cube_number");
+    skyBoxTex.loadTexture();
+
 
     glEnable(GL_DEPTH_TEST);
 
@@ -240,6 +224,9 @@ int main(int argc, char** argv) {
         MVMatrix = camMatrix;
         //MVMatrix = glm::translate(camMatrix, spline.point(t));
 
+
+
+
         if(displayInGameMenu){
             menu.use(); // Indiquer a OpenGL de les utiliser
 
@@ -266,14 +253,54 @@ int main(int argc, char** argv) {
 
             glDrawElements(GL_TRIANGLES, menuModel.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
             glBindVertexArray(0);
-    		glBindTexture(GL_TEXTURE_2D, 0);
+    		    glBindTexture(GL_TEXTURE_2D, 0);
 
+
+            //std::cout << "debug" << std::endl
         }
+
+        //               TEST SKYBOX
+
+        //chargement des textures
+        //std::cout<<"oups"<<std::endl;
+
+        skyBoxProgram.use();
+        glBindTexture(GL_TEXTURE_2D, skyBoxTex.getTextureID() );
+        glUniform1i(textureLocation, 0);
+
+        MVMatrix = glm::scale(MVMatrix, glm::vec3(25,25,-25));
+        MVMatrix = glm::translate(MVMatrix, glm::vec3(0,0,0));
+        glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+
+        //on récupère les locations des variables uniformes dans les shaders
+        GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+        GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+        GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+        //on envoie les matrices à la CG dans les variables uniformes
+        glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(ProjMatrix * MVMatrix));
+        glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
+        glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
+
+        glBindVertexArray(skyBox.getVAO());
+
+        //chargement des textures
+
+        glDrawElements(GL_TRIANGLES, skyBox.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
+        glBindVertexArray(0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+
+
+        // FIN TEST SKYBOX
+
         //updating player inner variables (speed, position...)
         if(!displayInGameMenu){
             player.update(settings.deltaTime());
             program.use();
         }
+
+
+
 
         program.use(); // Indiquer a OpenGL de les utiliser
         camMatrix = spline.camMatrix(player.sPosition());
@@ -318,14 +345,16 @@ int main(int argc, char** argv) {
                 glBindVertexArray(0);
             }
 
+
+
         }
         // Update the display
         windowManager.swapBuffers();
         //fps count
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
-    		if(elapsedTime < FRAMERATE_MILLISECONDS) {
-    			SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
-    		}
+		if(elapsedTime <= FRAMERATE_MILLISECONDS) {
+			SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
+		}
 
 
 

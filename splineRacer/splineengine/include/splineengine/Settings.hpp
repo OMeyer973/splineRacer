@@ -45,10 +45,10 @@ class Settings {
 		// CONSTANTS
 		/// \brief path of the app
 		glimac::FilePath _appPath;
-		static const uint32_t _windowWidth = 800;
-		static const uint32_t _windowHeight = 600;
+		const uint32_t _windowWidth = 800;
+		const uint32_t _windowHeight = 600;
 		/// \brief time between 2 frames (ms)
-		static const Uint32 _framerate_ms = 1000 / 30;
+		const Uint32 _framerate_ms = 1000 / 30;
 		/// \brief time between 2 frames (seconds)
 		const float _deltaTime = 1.f/30.f;
 

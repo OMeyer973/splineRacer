@@ -1,26 +1,40 @@
 #pragma once
-#ifndef __COLLIDER__HPP
-#define __COLLIDER__HPP
+#ifndef __BOUNDINGBOX__HPP
+#define __BOUNDINGBOX__HPP
 
 #include <vector>
 #include <glimac/glm.hpp>
+#include <splineengine/BoundingBox.hpp>
 
 namespace splineengine {
 
 class Collider
 {
 	public:
-		/// \brief Bounding box
-		struct BBox {
-		    glm::vec3 _min;
-		    glm::vec3 _max;
-		};
-
+	// METHODS
+		// CONSTRUCTORS - DESTRUCTORS
+		/// \brief default colider : no bounding box
 		Collider();
+
+		/// \brief destructor
 		~Collider();
 
+        // CONST GETTERS
+		// const std::vector<BoundingBox>& boxes() const { return _boxes; };
+		
+
+        // SETTER
+		// void pushBox (BoundingBox box) { _boxes.push_back(box); };
+		
+		// METHODS
+		// brief is the Collider colliding with another collider ? 
+		// brief please provide self position and other position
+		bool collideWith(Collider other, glm::vec3 selfPos, glm::vec3 otherPos);
+
+	// MEMBERS
 	protected:
-		std::vector<BBox> _Boxes;		
+		//std::vector<BoundingBox> _boxes;		
+		//TODO : add single big bounding box to collider
 };
 
 }

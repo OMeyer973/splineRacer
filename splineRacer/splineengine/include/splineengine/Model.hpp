@@ -38,7 +38,7 @@ class Model {
 			setVBO(geometry);
 			setIBO(geometry);
 			setVAO();
-		}
+		};
 
 		/// \brief model Destructor
 		~Model() {

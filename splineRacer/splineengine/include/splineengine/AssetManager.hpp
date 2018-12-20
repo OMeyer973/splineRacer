@@ -43,13 +43,16 @@ class AssetManager {
 		// CONST GETTERS
 		const std::map<int, Model>& models() const { return _models; };
 		
+		// NON-CONST GETTERS
+		std::map<int, Model>& models() { return _models; };
+	
 	private:
 		// METHODS
 		void loadAssets();
 
 		// MEMBERS
 		/// \brief have the assets been loaded allready ?
-		bool _isLoaded;
+		static bool _isLoaded;
 		/// \brief 3D models assets
 		std::map<int, Model> _models;
 		//std::vector<Texture> _textures;

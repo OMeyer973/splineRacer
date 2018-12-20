@@ -48,7 +48,6 @@ class Game {
 		
 	// MEMBERS
 	private:
-		// VARIABLES
 		/// \brief represents the player
 		Player _player;
 		/// \brief represents the spline

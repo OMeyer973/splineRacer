@@ -29,11 +29,15 @@ void Game::loadLevel(std::string levelName) {
 
 void Game::loadLevel() {
 	// TODO
+
+	// TODO : get models from asset manager
+	//Model planemodel("plane");
+
 	AssetManager& assetManager = AssetManager::instance();
     for (float i=0; i<100; ++i) {
         obstacles.push_back (GameObject(
         	Model(),
-            //assetManager.models()[PLANEMODEL],
+        	//planemodel, //assetManager.models()[PLANEMODEL],
             glm::vec3(3+i/8, 0.f, 1.5f),
             glm::vec3(0.4f, 0.4f, 0.4f),
             glm::vec3(0.0f, 0.0f, i/5)

@@ -2,6 +2,7 @@
 
 namespace splineengine {
 
+bool AssetManager::_isLoaded;
 
 AssetManager::AssetManager()
 {

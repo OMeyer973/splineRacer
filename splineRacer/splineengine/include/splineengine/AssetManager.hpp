@@ -19,6 +19,10 @@ class AssetManager {
 	private:
 		/// \brief private constructor
 		AssetManager();
+		// {
+		// 	std::cout << "AssetManager constructor " << std::endl;
+		// 	loadAssets();
+		// };
 		/// \brief private destructor
 		~AssetManager()
 		{};
@@ -45,7 +49,7 @@ class AssetManager {
 
 		// MEMBERS
 		/// \brief have the assets been loaded allready ?
-		static bool _isLoaded;
+		bool _isLoaded;
 		/// \brief 3D models assets
 		std::map<int, Model> _models;
 		//std::vector<Texture> _textures;

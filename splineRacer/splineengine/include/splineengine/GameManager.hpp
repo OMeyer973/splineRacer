@@ -3,10 +3,12 @@
 #define __GAMEMANAGER__HPP
 
 #include <iostream>
+#include <memory>
 #include <GL/glew.h>
 #include <glimac/SDLWindowManager.hpp>
-#include <splineengine/GameObject.hpp>
 
+
+#include "Settings.hpp"
 #include "common.hpp"
 #include "Game.hpp"
 #include "Menu.hpp"
@@ -78,7 +80,6 @@ class GameManager {
 		void goToPause();
 
 		// MEMBERS
-		// VARIABLES
 		/// \brief menu screen with buttons & stuff
 		Menu _menu;
 		/// \brief game screen where you play & have fun !

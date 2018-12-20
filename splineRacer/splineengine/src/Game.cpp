@@ -29,7 +29,7 @@ void Game::loadLevel(std::string levelName) {
 
 void Game::loadLevel() {
 	// TODO
-	//AssetManager& assetManager = AssetManager::instance();
+	AssetManager& assetManager = AssetManager::instance();
     for (float i=0; i<100; ++i) {
         obstacles.push_back (GameObject(
         	Model(),

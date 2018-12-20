@@ -1,23 +1,20 @@
-#include <splineengine/AssetManager.hpp>
-#include <splineengine/Settings.hpp>
-
-#include <memory>
+#include "splineengine/AssetManager.hpp"
 
 namespace splineengine {
 
 
 AssetManager::AssetManager()
-	
 {
 	std::cout << "AssetManager constructor " << std::endl;
-	//loadAssets();
+	loadAssets();
 }
 
 void AssetManager::loadAssets() {
-	_models[PLANEMODEL] = Model("plane");
-	_models[SINGEMODEL] = Model("singe");
-	_models[WHEELBARROWMODEL] = Model("wheelbarrow");
+	// _models[PLANEMODEL] = Model("plane");
+	// _models[SINGEMODEL] = Model("singe");
+	// _models[WHEELBARROWMODEL] = Model("wheelbarrow");
 
+	//AssetManager& assetManager = AssetManager::instance();
 	_isLoaded = true;
 }
 

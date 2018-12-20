@@ -1,7 +1,4 @@
 #include <splineengine/GameManager.hpp>
-#include <splineengine/Settings.hpp>
-
-#include <memory>
 
 namespace splineengine {
 

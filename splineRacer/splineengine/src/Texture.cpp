@@ -15,8 +15,6 @@ namespace splineengine{
   }
 
   bool Texture::loadTexture(){
-    std::cout << "texture " << _texName << "  pas encore  charged " << std::endl;
-
     glimac::FilePath texPath = Settings::instance().appPath().dirPath() + "../../splineRacer/assets/textures/" + _texName;
     texPath = texPath.addExt(".png"); // Constructeur par copie
     //si texture nulle error
@@ -24,7 +22,7 @@ namespace splineengine{
     _textureToLoad = loadImage(texPath);
 
     if ( _textureToLoad == NULL ){
-      std::cout << "Image " << _texName << " couldn't be  Loaded" << std::endl;
+      std::cout << "Image " << _texName << " couldn't be loaded" << std::endl;
       return false;
     }
 

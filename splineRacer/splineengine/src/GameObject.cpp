@@ -29,6 +29,7 @@ const glm::mat4 GameObject::matrix() {
     // }
     
     glm::mat4 objMatrix = glm::mat4();
+    objMatrix = glm::translate(objMatrix, _sPosition);
     objMatrix = glm::scale(objMatrix, _scale);
     objMatrix = glm::rotate(objMatrix, _rotation[FWD],  -fwdVec);
     objMatrix = glm::rotate(objMatrix, _rotation[LEFT], -leftVec);

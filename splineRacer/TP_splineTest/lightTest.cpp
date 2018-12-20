@@ -48,8 +48,14 @@ int main(int argc, char** argv) {
 	// Shaders
 	FilePath applicationPath(argv[0]);
 	Program program = loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
-								  applicationPath.dirPath() + "shaders/tex3D.fs.glsl");
+								  applicationPath.dirPath() + "shaders/directionalLight.fs.glsl");
 	program.use();
+
+	GLint uLightIntensity = glGetUniformLocation(program.getGLId(), "uLightIntensity");
+	GLint uLightDir_vs = glGetUniformLocation(program.getGLId(), "uLightDir_vs");
+	GLint uKd = glGetUniformLocation(program.getGLId(), "uKd");
+	GLint uKs = glGetUniformLocation(program.getGLId(), "uKs");
+	GLint uShininess = glGetUniformLocation(program.getGLId(), "uShininess");
 
 	// Location des variables uniformes
 	GLint MVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
@@ -104,28 +110,6 @@ int main(int argc, char** argv) {
 	// Create the model and create VBO, IBO, VAO based on the geometry
 	Model planeModel("plane");
 	GameObject planeObject(planeModel);
-
-
-	glimac::Program skyBoxProgram = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
-															applicationPath.dirPath() + "shaders/tex3D.fs.glsl");
-
-
-	Model skyBoxModel("skybox");
-	Texture skyBoxTex("skurt");
-	skyBoxTex.loadTexture();
-
-	GameObject skyBoxObject(skyBoxModel);
-	//
-	//
-	// CubeMap	 skyBox((settings.appPath().dirPath() + "../../splineRacer/assets/textures/posx.png").str() ,
-	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/posy.png").str() ,
-	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/posz.png").str() ,
-	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/negx.png").str() ,
-	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/negy.png").str() ,
-	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/negz.png").str() );
-	//
-	// skyBox.loadCubeMap();
-
 
 	// Create the Camera
 	std::vector<std::unique_ptr<Camera>> cameras; // Contains two pointers on camera
@@ -195,64 +179,36 @@ int main(int argc, char** argv) {
 
 		renderManager.updateMVMatrix(*cameras[chosenCamera], planeObject.matrix());
 
+		// Gestion de la lumière
+		glm::mat4 globalMVMatrix = renderManager.MVMatrix();
+		glm::mat4 lightMVMatrix = globalMVMatrix; // Translation * Rotation
+		lightMVMatrix = glm::rotate(globalMVMatrix, windowManager.getTime(), glm::vec3(0, 1, 0)); // Translation * Rotation
+		glm::vec3 lightDir_vs(lightMVMatrix * glm::vec4(1, 1, 1, 0));
+
+		glUniform3f(uLightIntensity, 1, .5, .5);
+		glUniform3fv(uLightDir_vs, 1, glm::value_ptr(lightDir_vs));
+		glUniform3f(uKd, .7, .7, .7);
+		glUniform3f(uKs, .3, .3, .3);
+		glUniform1f(uShininess, 1);
+
+		lightMVMatrix = globalMVMatrix;
+
+		glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(lightMVMatrix));
+		glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(lightMVMatrix))));
+		glUniformMatrix4fv(MVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.projMatrix() * lightMVMatrix));
+		//FIN LUMIERE
+
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
 		glUniform1i(textureLocation, 0);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glUniformMatrix4fv(MVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.projMatrix() * renderManager.MVMatrix()));
-		glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.MVMatrix()));
-		glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.normalMatrix()));
+		// glUniformMatrix4fv(MVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.projMatrix() * renderManager.MVMatrix()));
+		// glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.MVMatrix()));
+		// glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.normalMatrix()));
 
 		planeObject.draw();
 
-
-		// TestSkybox
-		// glBindTexture(GL_TEXTURE_2D,textures[1]);
-		// glUniform1i(textureLocation, 0);
-
-
-		// glDepthMask(GL_FALSE);
-		// //useProgram(CUBEMAP);
-		//
-		// glActiveTexture(GL_TEXTURE0);
-		// glBindTexture(GL_TEXTURE_CUBE_MAP, skyBox.getID());
-		//
-		// //skyBoxObject.draw();
-		//
-		// glActiveTexture(GL_TEXTURE0);
-		// glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-		// glDepthMask(GL_TRUE);
-
-		skyBoxProgram.use();
-
-		// glBindTexture(GL_TEXTURE_2D, skyBoxTex.getTextureID() );
-		// glUniform1i(textureLocation, 0);
-
-		glm::mat4 MVMatrix;
-   		MVMatrix = glm::scale(MVMatrix, 100.f*(fwdVec +upVec + leftVec) );
-		// MVMatrix = glm::translate(MVMatrix, glm::vec3(0,0,0));
-
-		renderManager.updateMVMatrix(*cameras[chosenCamera],  MVMatrix	 );
-
-		glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-
-		// On récupère les locations des variables uniformes dans les shaders
-		GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-		GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-		GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
-		// On envoie les matrices à la CG dans les variables uniformes
-		glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(renderManager.projMatrix() * renderManager.MVMatrix()));
-		glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr( MVMatrix ));
-		glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr( NormalMatrix  ));
-
-
-
-
-		// Chargement des textures
-
-		glBindTexture(GL_TEXTURE_2D, skyBoxTex.getTextureID());
-		skyBoxObject.draw();
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		// Update the display

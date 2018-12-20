@@ -15,6 +15,11 @@
 #include <glimac/Geometry.hpp>
 #include <splineengine/Model.hpp>
 #include <splineengine/Texture.hpp>
+#include <splineengine/POVCamera.hpp>
+#include <splineengine/TrackballCamera.hpp>
+#include <splineengine/RenderManager.hpp>
+#include <splineengine/Settings.hpp>
+#include <splineengine/common.hpp>
 #include <splineengine/CubeMap.hpp>
 
 //fps counter
@@ -137,15 +142,31 @@ int main(int argc, char** argv) {
     GLint NormalMatrixLocation = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
     GLint textureLocation = glGetUniformLocation(program.getGLId(), "uTexture");
 
+    Model planeModel("plane");
+    GameObject planeObject(planeModel);
+    Texture planeTex("menu");
+
+
+
     Model menuModel("menu");
 
     Model skyBox("skybox");
-    Texture skyBoxTex("cube_number");
+    Texture skyBoxTex("skurt");
     skyBoxTex.loadTexture();
 
 
     glEnable(GL_DEPTH_TEST);
 
+
+    std::vector<std::unique_ptr<Camera>> cameras; // Contains two pointers on camera
+	cameras.emplace_back(new POVCamera());
+	cameras.emplace_back(new TrackballCamera());
+	int chosenCamera = TRACKBALL_CAMERA;
+
+	RenderManager renderManager(*cameras[chosenCamera]);
+
+	float rotateSpeed = 1.0f;
+	float zoom = 1.0f;
 
     bool displayInGameMenu=false;
     // Application loop:
@@ -258,6 +279,25 @@ int main(int argc, char** argv) {
 
             //std::cout << "debug" << std::endl
         }
+
+        program.use();
+
+        planeObject.scale() = glm::vec3(1);
+        planeObject.sPosition() = glm::vec3(0);
+        planeObject.rotation() = glm::vec3(.25*cos(2*windowManager.getTime()), .25*cos(.5*windowManager.getTime()), 0);
+
+        renderManager.updateMVMatrix(*cameras[chosenCamera], planeObject.matrix());
+
+        glBindTexture(GL_TEXTURE_2D, planeTex.getTextureID());
+        glUniform1i(textureLocation, 0);
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glUniformMatrix4fv(MVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.projMatrix() * renderManager.MVMatrix()));
+        glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.MVMatrix()));
+        glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.normalMatrix()));
+
+        planeObject.draw();
 
         //               TEST SKYBOX
 

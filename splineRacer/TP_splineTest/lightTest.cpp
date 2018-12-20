@@ -55,6 +55,7 @@ int main(int argc, char** argv) {
 	GLint uLightDir_vs = glGetUniformLocation(program.getGLId(), "uLightDir_vs");
 	GLint uKd = glGetUniformLocation(program.getGLId(), "uKd");
 	GLint uKs = glGetUniformLocation(program.getGLId(), "uKs");
+	GLint uKa = glGetUniformLocation(program.getGLId(), "uKa");
 	GLint uShininess = glGetUniformLocation(program.getGLId(), "uShininess");
 
 	// Location des variables uniformes
@@ -190,6 +191,7 @@ int main(int argc, char** argv) {
 		glUniform3f(uKd, .7, .7, .7);
 		glUniform3f(uKs, .3, .3, .3);
 		glUniform1f(uShininess, 1);
+		glUniform3f(uKa, .1, .1, .1);
 
 		lightMVMatrix = globalMVMatrix;
 

@@ -7,6 +7,7 @@
 #include <splineengine/Texture.hpp>
 #include <iostream>
 #include <vector>
+#include <splineengine/CubeMap.hpp>
 
 namespace splineengine {
 
@@ -18,9 +19,11 @@ class RenderManager {
 
 		/// \brief Default constructor
 		RenderManager(Camera &camera) {
-			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 100.f);
+			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 120.f);
 			_MVMatrix = glm::translate(camera.getViewMatrix(), glm::vec3(0, 0, -5));
 			_normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
+
+
 		};
 
 		/// \brief destructor
@@ -29,7 +32,7 @@ class RenderManager {
 
 		/// \brief Update _MVMatrix and _normalMatrix
 		void updateMVMatrix(Camera &camera, glm::mat4 transformMatrix);
-		
+
 		/// \brief get _MVMatrix
 		glm::mat4 MVMatrix() {
 			return _MVMatrix;
@@ -54,6 +57,8 @@ class RenderManager {
 		glm::mat4 _MVMatrix;
 		/// \brief Model-View matrix
 		glm::mat4 _normalMatrix;
+
+		CubeMap* _skybox;
 
 };
 

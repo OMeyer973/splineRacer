@@ -1,5 +1,5 @@
 #include <splineengine/Game.hpp>
-
+#include <splineengine/CubeMap.hpp>
 
 namespace splineengine {
 
@@ -49,6 +49,7 @@ void Game::update() {
 
 void Game::render() {
 	// TODO
+
 }
 
 

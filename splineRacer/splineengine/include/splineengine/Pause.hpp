@@ -3,6 +3,8 @@
 #define __PAUSE__HPP
 
 #include "common.hpp"
+#include <splineengine/Texture.hpp>
+#include <splineengine/Model.hpp>
 
 namespace splineengine {
 
@@ -18,7 +20,7 @@ class Pause {
 		~Pause()
 		{};
 
-		
+
 		//METHODS
 		/// \brief init menu when launching the game
 		void init();
@@ -28,7 +30,7 @@ class Pause {
 
 		/// \brief  render the pause screen at each frame
 		void render();
-		
+
 	// MEMBERS
 	private:
 

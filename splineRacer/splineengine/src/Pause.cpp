@@ -18,6 +18,7 @@ void Pause::update() {
 
 void Pause::render() {
 	// TODO
+
 }
 
 

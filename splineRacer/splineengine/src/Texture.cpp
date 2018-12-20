@@ -11,7 +11,7 @@ namespace splineengine{
 
   //const glimac::Filepath &applicationPath,
   Texture::Texture(const std::string &textureName): _texID(0),_texName(textureName){
-    std::cout << "texture " << textureName << " created " << std::endl;
+    //std::cout << "texture " << textureName << " created " << std::endl;
   }
 
   bool Texture::loadTexture(){
@@ -28,7 +28,7 @@ namespace splineengine{
       return false;
     }
 
-      std::cout << "texture " << _texName << " c  harged " << std::endl;
+    //std::cout << "texture " << _texName << " c  harged " << std::endl;
 
     glGenTextures(1, &_texID);
     glBindTexture(GL_TEXTURE_2D, _texID);

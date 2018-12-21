@@ -21,11 +21,9 @@ vec3 blinnPhong() {
 }
 
 void main() {
+	float ambientStrength = 0.15f;
 	vec3 tex = vec3(texture(uTexture,vFragTexCoords));
+	vec3 light = clamp(blinnPhong(), ambientStrength, 1);
 
-	//ambient light
-	float ambientStrength = 0.1f;
-	vec3 ambient = ambientStrength  * fFragColor;
-
-	fFragColor = blinnPhong() * tex;
+	fFragColor = tex * light;
 };

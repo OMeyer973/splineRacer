@@ -17,7 +17,6 @@
 #include <splineengine/common.hpp>
 #include <splineengine/CubeMap.hpp>
 
-
 using namespace glimac;
 using namespace splineengine;
 
@@ -186,12 +185,12 @@ int main(int argc, char** argv) {
 		lightMVMatrix = glm::rotate(globalMVMatrix, windowManager.getTime(), glm::vec3(0, 1, 0)); // Translation * Rotation
 		glm::vec3 lightDir_vs(lightMVMatrix * glm::vec4(1, 1, 1, 0));
 
-		glUniform3f(uLightIntensity, 1, .5, .5);
+		glUniform3f(uLightIntensity, 1, 1, 1);
 		glUniform3fv(uLightDir_vs, 1, glm::value_ptr(lightDir_vs));
-		glUniform3f(uKd, .7, .7, .7);
-		glUniform3f(uKs, .3, .3, .3);
-		glUniform1f(uShininess, 1);
+		glUniform3f(uKd, .5, .5, .5);
+		glUniform3f(uKs, .5, .5, .5);
 		glUniform3f(uKa, .1, .1, .1);
+		glUniform1f(uShininess, 1);
 
 		lightMVMatrix = globalMVMatrix;
 

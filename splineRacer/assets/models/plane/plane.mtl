@@ -1,18 +1,7 @@
 # Blender MTL File: 'plane.blend'
-# Material Count: 3
+# Material Count: 2
 
 newmtl Mat.1
-Ns 100.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.510000 0.510000 0.510000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 0.000000
-illum 2
-map_Kd /home/torresf/CLionProjects/splineRacer/splineRacer/assets/textures/planetexture2.jpg
-
-newmtl Mat.1_NONE
 Ns 100.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000

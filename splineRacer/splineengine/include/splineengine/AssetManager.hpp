@@ -19,6 +19,7 @@ class AssetManager {
 	private:
 		/// \brief private constructor
 		AssetManager();
+		// TODO : remove this comented code because probably useless
 		// {
 		// 	std::cout << "AssetManager constructor " << std::endl;
 		// 	loadAssets();
@@ -55,7 +56,13 @@ class AssetManager {
 		static bool _isLoaded;
 		/// \brief 3D models assets
 		std::map<int, Model> _models;
-		//std::vector<Texture> _textures;
+
+		//TODO : add this stuff
+		
+		/// \brief textures assets
+		// std::map<int, Texture> _textures;
+		/// \brief shader programs
+		// std::map<int, Program> _programs;
 };
 }
 #endif

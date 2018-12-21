@@ -8,6 +8,10 @@
 #include "common.hpp"
 #include "Player.hpp"
 #include "AssetManager.hpp"
+#include "Camera.hpp"
+#include "POVCamera.hpp"
+#include "TrackballCamera.hpp"
+#include "RenderManager.hpp"
 
 namespace splineengine {
 
@@ -48,14 +52,21 @@ class Game {
 		
 	// MEMBERS
 	private:
+		/// \brief manage the camera transformations
+		RenderManager _renderManager;
+		/// \brief vector of pointers on available cameras
+		std::vector<std::unique_ptr<Camera>> _cameras;
+		/// \brief id of the current camera
+		int _chosenCamera;
+
 		/// \brief represents the player
 		Player _player;
 		/// \brief represents the spline
 	    Spline _spline;
 
-	    std::vector<GameObject> decorations;
-	    std::vector<GameObject> obstacles;
-	    std::vector<GameObject> collectables;
+	    std::vector<GameObject> _decorations;
+	    std::vector<GameObject> _obstacles;
+	    std::vector<GameObject> _collectables;
 		// CONSTANTS
 		std::string _playerModelName = "plane";
 

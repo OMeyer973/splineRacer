@@ -11,6 +11,7 @@ AssetManager::AssetManager()
 }
 
 void AssetManager::loadAssets() {
+	// TODO : make this work :'(
 	// _models[PLANEMODEL] = Model("plane");
 	// _models[SINGEMODEL] = Model("singe");
 	// _models[WHEELBARROWMODEL] = Model("wheelbarrow");

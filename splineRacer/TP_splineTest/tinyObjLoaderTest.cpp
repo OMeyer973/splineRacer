@@ -17,6 +17,7 @@
 #include <splineengine/common.hpp>
 #include <splineengine/CubeMap.hpp>
 
+// cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_tinyObjLoaderTest
 
 using namespace glimac;
 using namespace splineengine;

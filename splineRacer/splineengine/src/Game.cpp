@@ -7,6 +7,11 @@ Game::Game()
 	:_player(), _spline()
 {
 	std::cout << "infinite game constructor called " << std::endl;
+	_cameras.emplace_back(new POVCamera());
+	_cameras.emplace_back(new TrackballCamera());
+	_chosenCamera = TRACKBALL_CAMERA;
+
+	RenderManager _renderManager(*_cameras[_chosenCamera]);
 }
 
 Game::Game(std::string levelName)
@@ -35,9 +40,8 @@ void Game::loadLevel() {
 
 	AssetManager& assetManager = AssetManager::instance();
     for (float i=0; i<100; ++i) {
-        obstacles.push_back (GameObject(
-        	Model(),
-        	//planemodel, //assetManager.models()[PLANEMODEL],
+        _obstacles.push_back (GameObject(
+        	assetManager.models()[PLANEMODEL],
             glm::vec3(3+i/8, 0.f, 1.5f),
             glm::vec3(0.4f, 0.4f, 0.4f),
             glm::vec3(0.0f, 0.0f, i/5)
@@ -53,6 +57,31 @@ void Game::update() {
 
 void Game::render() {
 	// TODO
+
+	// TODO : have sthis working
+	
+	// GLint uMVPMatrix = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+	// GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+	// GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+	
+	for (float i=0; i<_obstacles.size(); ++i) {
+
+	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], _obstacles[i].matrix());
+	
+	// // TODO : MOVE THIS SHIT TO RENDERMANAGER
+	// glBindTexture(GL_TEXTURE_2D, textures[0]);
+	// glUniform1i(textureLocation, 0);
+
+	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// // TODO : have this working
+	// glUniformMatrix4fv(uMVPMatrix, 1, GL_FALSE, glm::value_ptr(_renderManager.projMatrix() * _renderManager.MVMatrix()));
+	// glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE, glm::value_ptr(_renderManager.MVMatrix()));
+	// glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(_renderManager.normalMatrix()));
+	
+    _obstacles[i].draw();
+
+    }
 
 }
 

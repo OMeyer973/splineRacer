@@ -40,7 +40,9 @@ void Game::loadLevel() {
 
 	AssetManager& assetManager = AssetManager::instance();
     for (float i=0; i<100; ++i) {
+
         _obstacles.push_back (GameObject(
+        	//Model("plane"),
         	assetManager.models()[PLANEMODEL],
             glm::vec3(3+i/8, 0.f, 1.5f),
             glm::vec3(0.4f, 0.4f, 0.4f),

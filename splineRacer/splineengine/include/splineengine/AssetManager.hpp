@@ -32,6 +32,9 @@ class AssetManager {
 		/// \brief access the singleton instance
 		static AssetManager& instance() {
 			static AssetManager instance;
+			if (!instance._isLoaded) {
+				instance.loadAssets();
+			}
 			return instance;
 		}
 		// prevent copy
@@ -53,7 +56,7 @@ class AssetManager {
 
 		// MEMBERS
 		/// \brief have the assets been loaded allready ?
-		static bool _isLoaded;
+		bool _isLoaded;
 		/// \brief 3D models assets
 		std::map<int, Model> _models;
 

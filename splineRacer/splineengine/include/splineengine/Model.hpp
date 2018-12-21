@@ -10,6 +10,7 @@
 #include <glimac/FilePath.hpp>
 #include <glimac/SDLWindowManager.hpp>
 #include <glimac/common.hpp>
+#include <glimac/Program.hpp>
 #include <splineengine/Settings.hpp>
 #include <splineengine/common.hpp>
 
@@ -37,6 +38,11 @@ class Model {
 			setVBO(_geometry);
 			setIBO(_geometry);
 			setVAO();
+
+			_program = glimac::loadProgram(
+				Settings::instance().appPath().dirPath() + "shaders/3D.vs.glsl",
+				Settings::instance().appPath().dirPath() + "shaders/normals.fs.glsl"
+			);
 		};
 
 		/// \brief model Destructor
@@ -66,6 +72,11 @@ class Model {
 			return _geometry;
 		};
 
+		/// \brief get Program
+		const glimac::Program& program() const {
+			return _program;
+		};
+
 	private:
 		/// \brief Contains the vertices and materials of the model
 		glimac::Geometry _geometry;
@@ -77,6 +88,8 @@ class Model {
 		GLuint _VAO;
 		/// \brief Collider of the model
 		Collider _collider;
+		/// \brief Program of the object
+		glimac::Program _program;
 };
 
 }

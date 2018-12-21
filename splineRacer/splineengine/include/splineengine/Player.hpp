@@ -21,11 +21,11 @@ class Player : public GameObject {
         // CONSTRUCTORS - DESTRUCTORS
         /// \brief default player Constructor
         Player(
-            const GameObject gameObject  = GameObject(Model(), defaultPlayerPos),
-            const float     fwdSpeed     = defaultPlayerFwdSpeed,
-            const glm::vec3 maxSpeed     = defaultPlayerMaxSpeed,
-            const glm::vec3 acceleration = defaultPlayerAcceleration
-        ) 
+            const GameObject& gameObject  = GameObject(Model(), defaultPlayerPos),
+            const float       fwdSpeed     = defaultPlayerFwdSpeed,
+            const glm::vec3   maxSpeed     = defaultPlayerMaxSpeed,
+            const glm::vec3   acceleration = defaultPlayerAcceleration
+        )
             :GameObject(gameObject),
             _sSpeed(fwdSpeed, 0.f, 0.f), // initial speed is only forward
             _sMaxSpeed(maxSpeed),

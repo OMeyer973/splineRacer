@@ -16,6 +16,7 @@ class GameObject {
 		// CONSTRUCTORS - DESTRUCTORS
 
 		/// \brief constructor from parameters
+		/// \param position : Model model of the obj
 		/// \param position : glm::vec3 position of the object (relative to the spline)
 		/// \param position : glm::vec3 scale    of the object 
 		/// \param position : glm::vec3 rotation of the object 
@@ -25,9 +26,13 @@ class GameObject {
 			const glm::vec3& scale = glm::vec3(1),
 			const glm::vec3& rotation = glm::vec3(0)
 		)
-			:_model(model), _sPosition(sPosition), _scale(scale), _rotation(rotation)
+			:
+			_model(model),
+			_sPosition(sPosition),
+			_scale(scale),
+			_rotation(rotation)
 		{
-			// std::cout << "GameObject constructor " << std::endl;
+			std::cout << "GameObject constructor " << std::endl;
 		};
 
 		/// \brief copy constructor
@@ -40,14 +45,14 @@ class GameObject {
 		{};
 		
 		/// \brief operators
-   //      GameObject& operator=(const GameObject& g) {
-   //      	_model 	   = g._model;
-   //      	_sPosition = g._sPosition;
-			// _scale	   = g._scale;
-			// _rotation  = g._rotation;
-			// _isStatic  = g._isStatic;
-			// _hasMatrix = false;
-   //      };
+		// GameObject& operator=(const GameObject& g) {
+		// 	_model	   = g._model;
+		// 	_sPosition = g._sPosition;
+		// 	_scale	   = g._scale;
+		// 	_rotation  = g._rotation;
+		// 	_isStatic  = g._isStatic;
+		// 	_hasMatrix = false;
+		// };
 
 
 		/// \brief destructor
@@ -67,32 +72,38 @@ class GameObject {
         
 
 		//CONST GETTERS
-		/// \brief get the position of the object (relative to the spline) as a const reference
+		/// \brief Get the position of the object (relative to the spline) as a const reference
 		const glm::vec3& sPosition() const { return _sPosition; }
 
-		/// \brief get the rotation of the object as aconst reference
+		/// \brief Get the rotation of the object as aconst reference
 		const glm::vec3& rotation() const { return _rotation; }
 
-		/// \brief get the scale of the object as a const reference
+		/// \brief Get the scale of the object as a const reference
 		const glm::vec3& scale() const { return _scale; }
+
+		/// \brief Get the model of the object as a const reference
+		const Model& model() const { return _model; }
 
 		/// \brief is the object static ? (const ref)
 		const bool& isStatic() const { return _isStatic; }
 
 
 		// NON-CONST GETTERS (can be used as setters)
-		/// \brief get the position of the object (relative to the spline) as a reference
+		/// \brief Get the position of the object (relative to the spline) as a reference
 		glm::vec3& sPosition() { return _sPosition; }
 
-		/// \brief get the rotation of the object as a reference
+		/// \brief Get the rotation of the object as a reference
 		glm::vec3& rotation() { return _rotation; }
 
-		/// \brief get the scale of the object as a reference
+		/// \brief Get the scale of the object as a reference
 		glm::vec3& scale() { return _scale; }
+
+		/// \brief Get the model of the object as a reference
+		const Model& model() { return _model; }
 
 		/// \brief is the object static ? (ref)
 		bool& isStatic() { return _isStatic; }
-		
+
 	// MEMBERS
 	protected:
 		/// \brief position of the object relative to the spline
@@ -110,6 +121,9 @@ class GameObject {
 		/// \brief stored transformation matrix of the object in case the object is static
 		bool _hasMatrix = false;
 		glm::mat4 _transformMat;
+
 };
+
 }
+
 #endif

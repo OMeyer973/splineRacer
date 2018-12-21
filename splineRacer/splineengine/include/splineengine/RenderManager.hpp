@@ -25,8 +25,6 @@ class RenderManager {
 			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 200.f);
 			_MVMatrix = glm::translate(camera.getViewMatrix(), glm::vec3(0, 0, -5));
 			_normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
-
-
 		};
 
 		/// \brief destructor

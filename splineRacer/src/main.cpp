@@ -49,7 +49,6 @@ int main(int argc, char** argv) {
 		}
 
 		gameManager.update();
-	
 
 		windowManager.swapBuffers();
 	}

@@ -39,6 +39,10 @@ void Game::loadLevel() {
 	//Model planemodel("plane");
 
 	AssetManager& assetManager = AssetManager::instance();
+
+	// GameObject testObject(assetManager.models()[PLANEMODEL]);
+	// _obstacles.push_back(testObject);
+
     for (float i=0; i<100; ++i) {
 
         _obstacles.push_back (GameObject(
@@ -58,30 +62,32 @@ void Game::update() {
 
 
 void Game::render() {
+	std::cout << "Game Render" << std::endl;
 	// TODO
 
 	// TODO : have sthis working
+	GLuint programId = _obstacles[0].model().program().getGLId();
 	
-	// GLint uMVPMatrix = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-	// GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-	// GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+	GLint uMVPMatrix = glGetUniformLocation(programId, "uMVPMatrix");
+	GLint uMVMatrix = glGetUniformLocation(programId, "uMVMatrix");
+	GLint uNormalMatrix = glGetUniformLocation(programId, "uNormalMatrix");
 	
 	for (float i=0; i<_obstacles.size(); ++i) {
 
-	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], _obstacles[i].matrix());
-	
-	// // TODO : MOVE THIS SHIT TO RENDERMANAGER
-	// glBindTexture(GL_TEXTURE_2D, textures[0]);
-	// glUniform1i(textureLocation, 0);
+		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], _obstacles[i].matrix());
+		
+		// // TODO : MOVE THIS SHIT TO RENDERMANAGER
+		// glBindTexture(GL_TEXTURE_2D, textures[0]);
+		// glUniform1i(textureLocation, 0);
 
-	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// // TODO : have this working
-	// glUniformMatrix4fv(uMVPMatrix, 1, GL_FALSE, glm::value_ptr(_renderManager.projMatrix() * _renderManager.MVMatrix()));
-	// glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE, glm::value_ptr(_renderManager.MVMatrix()));
-	// glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(_renderManager.normalMatrix()));
-	
-    _obstacles[i].draw();
+		// TODO : have this working
+		glUniformMatrix4fv(uMVPMatrix, 1, GL_FALSE, glm::value_ptr(_renderManager.projMatrix() * _renderManager.MVMatrix()));
+		glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE, glm::value_ptr(_renderManager.MVMatrix()));
+		glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(_renderManager.normalMatrix()));
+		
+	    _obstacles[i].draw();
 
     }
 

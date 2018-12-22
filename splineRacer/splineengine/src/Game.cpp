@@ -62,20 +62,21 @@ void Game::update() {
 
 
 void Game::render() {
-	std::cout << "Game Render" << std::endl;
 	// TODO
 
-	// TODO : have sthis working
-	GLuint programId = _obstacles[0].model().program().getGLId();
+	// TODO : have this working
+	const glimac::Program& program = _obstacles[0].model().program();
+	program.use();
 	
-	GLint uMVPMatrix = glGetUniformLocation(programId, "uMVPMatrix");
-	GLint uMVMatrix = glGetUniformLocation(programId, "uMVMatrix");
-	GLint uNormalMatrix = glGetUniformLocation(programId, "uNormalMatrix");
+	GLint uMVPMatrix = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+	GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+	GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 	
+	// _obstacles[0].model().program().use();
 	for (float i=0; i<_obstacles.size(); ++i) {
 
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], _obstacles[i].matrix());
-		
+
 		// // TODO : MOVE THIS SHIT TO RENDERMANAGER
 		// glBindTexture(GL_TEXTURE_2D, textures[0]);
 		// glUniform1i(textureLocation, 0);

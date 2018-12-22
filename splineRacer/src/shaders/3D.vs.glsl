@@ -9,13 +9,13 @@ uniform mat4 uMVPMatrix;
 uniform mat4 uMVMatrix;
 uniform mat4 uNormalMatrix;
 
-out vec3 vFragPosition;
-out vec3 vFragNormal;
+out vec4 vFragPosition;
+out vec4 vFragNormal;
 out vec2 vFragTexCoords;
 
 void main() {
-  vFragPosition = (uMVMatrix * vec4(aVertexPosition,1)).xyz;
-  vFragNormal = (uNormalMatrix * vec4(aVertexNormal,0)).xyz;
+  vFragPosition = (uMVMatrix * vec4(aVertexPosition,1));
+  vFragNormal = (uNormalMatrix * vec4(aVertexNormal,0));
   vFragTexCoords = aVertexTexCoords;
 
   gl_Position = uMVPMatrix * vec4(aVertexPosition,1);

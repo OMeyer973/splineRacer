@@ -9,9 +9,7 @@ void RenderManager::updateMVMatrix(Camera &camera, glm::mat4 transformMatrix) {
     _normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
 }
 
-// Use the correct program associated to the shader
-void RenderManager::useProgram(FS shader)
-{
+void RenderManager::useProgram(FS shader) {
 
 	// std::cout << "useProgram" << std::endl;
 	const ProgramList& programList = AssetManager::instance().programList();
@@ -38,7 +36,6 @@ void RenderManager::useProgram(FS shader)
     }
 }
 
-// Apply Transformations, Update Uniforms
 void RenderManager::applyTransformations(FS shader, glm::mat4 matrix)
 {
     // std::cout << "applyTransformations" << std::endl;

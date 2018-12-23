@@ -22,9 +22,13 @@ class RenderManager {
 		{};
 
 		RenderManager(Camera &camera) {
+			std::cout << "rendermanager construction from camera : " << std::endl
+			<< "	setting projMatrix, MVMatrix, normalMatrix" << std::endl;
+			// TODO : get resolution from settings instead of hard coded 800x600
 			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 200.f);
-			_MVMatrix = glm::translate(camera.getViewMatrix(), glm::vec3(0, 0, -5));
+			_MVMatrix = glm::translate(camera.getViewMatrix(), -5.f*fwdVec);
 			_normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
+			std::cout << "done." << std::endl;
 		};
 
 		/// \brief Destructor
@@ -49,7 +53,10 @@ class RenderManager {
 			return _projMatrix;
 		}
 
+		/// \brief Use the correct program associated to the shader
 		void useProgram(FS shader);
+
+		/// \brief Apply Transformations, Update Uniforms
 		void applyTransformations(FS shader, glm::mat4 matrix);
 
 	// MEMBERS

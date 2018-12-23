@@ -3,22 +3,19 @@
 namespace splineengine {
 
 AssetManager::AssetManager()
-	:_isLoaded(false)
 {
 	std::cout << "AssetManager constructor " << std::endl;
-//	loadAssets();
+	loadAssets();
+	loadPrograms();
 }
 
 void AssetManager::loadAssets() {
 	std::cout << "AssetManager loaded " << std::endl;
 	
-	// TODO : make this work :'(
+	// TODO : load actual assets for the game
 	_models[PLANEMODEL] = Model("plane");
 	_models[SINGEMODEL] = Model("singe");
 	_models[WHEELBARROWMODEL] = Model("wheelbarrow");
-
-	// AssetManager& assetManager = AssetManager::instance();
-	_isLoaded = true;
 }
 
 void AssetManager::loadPrograms() {

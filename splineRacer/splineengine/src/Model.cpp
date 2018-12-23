@@ -2,6 +2,27 @@
 
 namespace splineengine {
 
+	Model::Model(const std::string &modelName) {
+		std::cout << "Model: Constructor by Model Name" << std::endl;
+		glimac::FilePath modelPath = Settings::instance().appPath().dirPath() + "../../splineRacer/assets/models/" + modelName + "/" + modelName;
+		glimac::FilePath objPath(modelPath.addExt(".obj")); // Constructeur par copie
+		glimac::FilePath mtlPath(modelPath.addExt(".mtl")); // Constructeur par copie
+		bool ret = _geometry.loadOBJ(objPath, mtlPath, true);
+		if (!ret) {
+			exit(1); // Throw Exception : OBJ loading failed
+		}
+
+		// OBJ is correctly loaded
+		setVBO(_geometry);
+		setIBO(_geometry);
+		setVAO();
+
+		// _program = glimac::loadProgram(
+		// 	Settings::instance().appPath().dirPath() + "shaders/3D.vs.glsl",
+		// 	Settings::instance().appPath().dirPath() + "shaders/normals.fs.glsl"
+		// );
+	};
+
 	void Model::setVBO(const glimac::Geometry &geometry) {
 		GLuint vbo;
 		glGenBuffers(1, &vbo);

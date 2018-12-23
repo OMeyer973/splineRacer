@@ -14,17 +14,13 @@ const int PLANEMODEL = 0;
 const int WHEELBARROWMODEL = 1; 
 const int SINGEMODEL = 2;
 
-/// \brief class wich manages the assets for everyone to access them 
+/// \brief singleton class wich manages the assets for everyone to access them 
 class AssetManager {
 	// SINGLETON CONSTRUCTORS - DESTRUCTORS
 	private:
 		/// \brief private constructor
 		AssetManager();
-		// TODO : remove this comented code because probably useless
-		// {
-		// 	std::cout << "AssetManager constructor " << std::endl;
-		// 	loadAssets();
-		// };
+		
 		/// \brief private destructor
 		~AssetManager()
 		{};
@@ -33,10 +29,6 @@ class AssetManager {
 		/// \brief access the singleton instance
 		static AssetManager& instance() {
 			static AssetManager instance;
-			if (!instance._isLoaded) {
-				instance.loadAssets();
-				instance.loadPrograms();
-			}
 			return instance;
 		}
 		// prevent copy
@@ -60,8 +52,6 @@ class AssetManager {
 		void loadPrograms();
 
 		// MEMBERS
-		/// \brief have the assets been loaded already ?
-		bool _isLoaded;
 		/// \brief 3D models assets
 		std::map<int, Model> _models;
 

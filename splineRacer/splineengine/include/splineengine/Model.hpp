@@ -22,51 +22,18 @@ class Model {
 	public:
 		// CONSTRUCTORS - DESTRUCTORS
 		/// \brief default model Constructor
-		Model() {
-			std::cout << "Model: Default constructor" << std::endl;
-		};
+		Model();
 
-		/// \brief model Constructor by model name
+		/// \brief Model Constructor by model name
 		/// \param modelName : std::string& name of the model
-		Model(const std::string &modelName) {
-			std::cout << "Model: Constructor by Model Name" << std::endl;
-			glimac::FilePath modelPath = Settings::instance().appPath().dirPath() + "../../splineRacer/assets/models/" + modelName + "/" + modelName;
-			glimac::FilePath objPath(modelPath.addExt(".obj")); // Constructeur par copie
-			glimac::FilePath mtlPath(modelPath.addExt(".mtl")); // Constructeur par copie
-			bool ret = _geometry.loadOBJ(objPath, mtlPath, true);
-			if (!ret) {
-				exit(1); // Throw Exception : OBJ loading failed
-			}
+		Model(const std::string &modelName);
 
-			// OBJ is correctly loaded
-			setVBO(_geometry);
-			setIBO(_geometry);
-			setVAO();
-
-			// _program = glimac::loadProgram(
-			// 	Settings::instance().appPath().dirPath() + "shaders/3D.vs.glsl",
-			// 	Settings::instance().appPath().dirPath() + "shaders/normals.fs.glsl"
-			// );
-		};
-
-		/// \brief model Constructor by model name
-		/// \param modelName : std::string& name of the model
-		Model(const Model &model)
-			:
-			_geometry(model._geometry),
-			_VBO(model._VBO),
-			_IBO(model._IBO),
-			_VAO(model._VAO)
-			// _program(model._program)
-		{
-			std::cout << "Model: Copy Constructor" << std::endl;
-		};
+		/// \brief Model Copy constructor
+		/// \param model : Model Model to copy
+		Model(const Model &model);
 
 		/// \brief model Destructor
-		~Model() {
-			glDeleteBuffers(1, &_VBO);
-			glDeleteVertexArrays(1, &_VAO);
-		};
+		~Model();
 
 		/// \brief set VBO of the model
 		/// \param geometry geometry of the model
@@ -94,11 +61,6 @@ class Model {
 			return _geometry;
 		};
 
-		/// \brief get Program
-		// const glimac::Program& program() const {
-		// 	return _program;
-		// };
-
 	private:
 		/// \brief Contains the vertices and materials of the model
 		glimac::Geometry _geometry;
@@ -110,8 +72,6 @@ class Model {
 		GLuint _VAO;
 		/// \brief Collider of the model
 		Collider _collider;
-		/// \brief Program of the object
-		// glimac::Program _program;
 };
 
 }

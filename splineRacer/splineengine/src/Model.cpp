@@ -2,6 +2,10 @@
 
 namespace splineengine {
 
+	Model::Model() {
+		std::cout << "Model: Default constructor" << std::endl;
+	}
+
 	Model::Model(const std::string &modelName) {
 		std::cout << "Model: Constructor by Model Name" << std::endl;
 		glimac::FilePath modelPath = Settings::instance().appPath().dirPath() + "../../splineRacer/assets/models/" + modelName + "/" + modelName;
@@ -21,6 +25,20 @@ namespace splineengine {
 		// 	Settings::instance().appPath().dirPath() + "shaders/3D.vs.glsl",
 		// 	Settings::instance().appPath().dirPath() + "shaders/normals.fs.glsl"
 		// );
+	};
+
+	Model::Model(const Model &model):
+		_geometry(model._geometry),
+		_VBO(model._VBO),
+		_IBO(model._IBO),
+		_VAO(model._VAO)
+	{
+		std::cout << "Model: Copy Constructor" << std::endl;
+	};
+
+	Model::~Model() {
+		glDeleteBuffers(1, &_VBO);
+		glDeleteVertexArrays(1, &_VAO);
 	};
 
 	void Model::setVBO(const glimac::Geometry &geometry) {

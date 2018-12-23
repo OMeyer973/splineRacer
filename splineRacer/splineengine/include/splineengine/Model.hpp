@@ -22,32 +22,18 @@ class Model {
 	public:
 		// CONSTRUCTORS - DESTRUCTORS
 		/// \brief default model Constructor
-		Model() {
-			std::cout << "Model: Default constructor" << std::endl;
-		};
+		Model();
 
-		/// \brief model Constructor by model name
+		/// \brief Model Constructor by model name
 		/// \param modelName : std::string& name of the model
 		Model(const std::string &modelName);
 
-		/// \brief model Constructor by model name
-		/// \param modelName : std::string& name of the model
-		Model(const Model &model)
-			:
-			_geometry(model._geometry),
-			_VBO(model._VBO),
-			_IBO(model._IBO),
-			_VAO(model._VAO)
-			// _program(model._program)
-		{
-			std::cout << "Model: Copy Constructor" << std::endl;
-		};
+		/// \brief Model Copy constructor
+		/// \param model : Model Model to copy
+		Model(const Model &model);
 
 		/// \brief model Destructor
-		~Model() {
-			glDeleteBuffers(1, &_VBO);
-			glDeleteVertexArrays(1, &_VAO);
-		};
+		~Model();
 
 		/// \brief set VBO of the model
 		/// \param geometry geometry of the model
@@ -75,11 +61,6 @@ class Model {
 			return _geometry;
 		};
 
-		/// \brief get Program
-		// const glimac::Program& program() const {
-		// 	return _program;
-		// };
-
 	private:
 		/// \brief Contains the vertices and materials of the model
 		glimac::Geometry _geometry;
@@ -91,8 +72,6 @@ class Model {
 		GLuint _VAO;
 		/// \brief Collider of the model
 		Collider _collider;
-		/// \brief Program of the object
-		// glimac::Program _program;
 };
 
 }

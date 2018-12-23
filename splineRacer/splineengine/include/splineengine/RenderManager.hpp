@@ -2,12 +2,12 @@
 #ifndef __RENDER__MANAGER__HPP
 #define __RENDER__MANAGER__HPP
 
+#include <iostream>
 #include <glimac/SDLWindowManager.hpp>
 #include <splineengine/Camera.hpp>
 #include <splineengine/Texture.hpp>
-#include <iostream>
-#include <vector>
 #include <splineengine/CubeMap.hpp>
+#include <splineengine/GLSLProgram.hpp>
 
 namespace splineengine {
 
@@ -27,7 +27,7 @@ class RenderManager {
 			_normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
 		};
 
-		/// \brief destructor
+		/// \brief Destructor
 		~RenderManager()
 		{};
 
@@ -49,6 +49,8 @@ class RenderManager {
 			return _projMatrix;
 		}
 
+		void useProgram(FS shader);
+		void applyTransformations(FS shader, glm::mat4 matrix);
 
 	// MEMBERS
 	protected:

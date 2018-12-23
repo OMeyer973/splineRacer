@@ -13,12 +13,17 @@ void AssetManager::loadAssets() {
 	std::cout << "AssetManager loaded " << std::endl;
 	
 	// TODO : make this work :'(
-	//_models[PLANEMODEL] = Model("plane");
-	// _models[SINGEMODEL] = Model("singe");
-	// _models[WHEELBARROWMODEL] = Model("wheelbarrow");
+	_models[PLANEMODEL] = Model("plane");
+	_models[SINGEMODEL] = Model("singe");
+	_models[WHEELBARROWMODEL] = Model("wheelbarrow");
 
-	//AssetManager& assetManager = AssetManager::instance();
+	// AssetManager& assetManager = AssetManager::instance();
 	_isLoaded = true;
+}
+
+void AssetManager::loadPrograms() {
+	// const NormalProgram normalProgram;
+	// _programList.normalProgram = normalProgram;
 }
 
 

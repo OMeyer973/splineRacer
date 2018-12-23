@@ -70,8 +70,7 @@ class Game {
 		// CONSTANTS
 		std::string _playerModelName = "plane";
 
-
-
 };
+
 }
 #endif

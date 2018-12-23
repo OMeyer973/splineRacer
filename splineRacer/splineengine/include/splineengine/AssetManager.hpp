@@ -5,6 +5,7 @@
 #include <iostream>
 #include <map>
 #include "Model.hpp"
+#include <splineengine/GLSLProgram.hpp>
 
 namespace splineengine {
 
@@ -34,6 +35,7 @@ class AssetManager {
 			static AssetManager instance;
 			if (!instance._isLoaded) {
 				instance.loadAssets();
+				instance.loadPrograms();
 			}
 			return instance;
 		}
@@ -46,16 +48,19 @@ class AssetManager {
 	public:
 		// CONST GETTERS
 		const std::map<int, Model>& models() const { return _models; };
+
+		const ProgramList& programList() { return _programList; };
 		
 		// NON-CONST GETTERS
 		std::map<int, Model>& models() { return _models; };
-	
+
 	private:
 		// METHODS
 		void loadAssets();
+		void loadPrograms();
 
 		// MEMBERS
-		/// \brief have the assets been loaded allready ?
+		/// \brief have the assets been loaded already ?
 		bool _isLoaded;
 		/// \brief 3D models assets
 		std::map<int, Model> _models;
@@ -66,6 +71,11 @@ class AssetManager {
 		// std::map<int, Texture> _textures;
 		/// \brief shader programs
 		// std::map<int, Program> _programs;
+
+		/// \brief Program List
+		const ProgramList _programList;
 };
+
 }
+
 #endif

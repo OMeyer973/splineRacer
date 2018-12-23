@@ -32,7 +32,7 @@ class GameObject {
 			_scale(scale),
 			_rotation(rotation)
 		{
-			std::cout << "GameObject constructor " << std::endl;
+			// std::cout << "GameObject constructor " << std::endl;
 		};
 
 		/// \brief copy constructor

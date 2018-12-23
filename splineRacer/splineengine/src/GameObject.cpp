@@ -43,8 +43,11 @@ const glm::mat4 GameObject::matrix() {
 }
 
 void GameObject::draw() const {
+    // std::cout << "DRAWING OBJ: "  << _model.geometry().getIndexCount() << std::endl;
     glBindVertexArray(_model.getVAO());
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _model.getIBO());
     glDrawElements(GL_TRIANGLES, _model.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
 

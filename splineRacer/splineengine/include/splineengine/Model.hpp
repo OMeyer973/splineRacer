@@ -22,27 +22,44 @@ class Model {
 	public:
 		// CONSTRUCTORS - DESTRUCTORS
 		/// \brief default model Constructor
-		Model() {};
+		Model() {
+			std::cout << "Model: Default constructor" << std::endl;
+		};
 
 		/// \brief model Constructor by model name
 		/// \param modelName : std::string& name of the model
 		Model(const std::string &modelName) {
+			std::cout << "Model: Constructor by Model Name" << std::endl;
 			glimac::FilePath modelPath = Settings::instance().appPath().dirPath() + "../../splineRacer/assets/models/" + modelName + "/" + modelName;
 			glimac::FilePath objPath(modelPath.addExt(".obj")); // Constructeur par copie
 			glimac::FilePath mtlPath(modelPath.addExt(".mtl")); // Constructeur par copie
 			bool ret = _geometry.loadOBJ(objPath, mtlPath, true);
-			if (!ret)
+			if (!ret) {
 				exit(1); // Throw Exception : OBJ loading failed
+			}
 
 			// OBJ is correctly loaded
 			setVBO(_geometry);
 			setIBO(_geometry);
 			setVAO();
 
-			_program = glimac::loadProgram(
-				Settings::instance().appPath().dirPath() + "shaders/3D.vs.glsl",
-				Settings::instance().appPath().dirPath() + "shaders/normals.fs.glsl"
-			);
+			// _program = glimac::loadProgram(
+			// 	Settings::instance().appPath().dirPath() + "shaders/3D.vs.glsl",
+			// 	Settings::instance().appPath().dirPath() + "shaders/normals.fs.glsl"
+			// );
+		};
+
+		/// \brief model Constructor by model name
+		/// \param modelName : std::string& name of the model
+		Model(const Model &model)
+			:
+			_geometry(model._geometry),
+			_VBO(model._VBO),
+			_IBO(model._IBO),
+			_VAO(model._VAO)
+			// _program(model._program)
+		{
+			std::cout << "Model: Copy Constructor" << std::endl;
 		};
 
 		/// \brief model Destructor
@@ -67,15 +84,20 @@ class Model {
 			return _VAO;
 		};
 
+		/// \brief get IBO
+		GLuint getIBO() const {
+			return _IBO;
+		};
+
 		/// \brief get Geometry
 		glimac::Geometry geometry() const {
 			return _geometry;
 		};
 
 		/// \brief get Program
-		const glimac::Program& program() const {
-			return _program;
-		};
+		// const glimac::Program& program() const {
+		// 	return _program;
+		// };
 
 	private:
 		/// \brief Contains the vertices and materials of the model
@@ -89,7 +111,7 @@ class Model {
 		/// \brief Collider of the model
 		Collider _collider;
 		/// \brief Program of the object
-		glimac::Program _program;
+		// glimac::Program _program;
 };
 
 }

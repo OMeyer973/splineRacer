@@ -14,7 +14,7 @@ void AssetManager::loadAssets() {
 	
 	// TODO : load actual assets for the game
 	_models[PLANEMODEL] = Model("plane");
-	// _models[SINGEMODEL] = Model("singe");
+	_models[SINGEMODEL] = Model("singe");
 	// _models[WHEELBARROWMODEL] = Model("wheelbarrow");
 }
 

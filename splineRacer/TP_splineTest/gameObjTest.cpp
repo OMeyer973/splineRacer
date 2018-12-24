@@ -50,55 +50,26 @@ int main(int argc, char** argv) {
     Settings& settings = Settings::instance();
     settings.appPath() = glimac::FilePath(argv[0]);
     GameManager& gameManager = GameManager::instance();
+    AssetManager& assetManager = AssetManager::instance();
+
     glimac::Sphere sphere(2, 3, 2);
     Player player;
     Spline spline;
 
+
+    // TODO : truc chelou ici : si on ne créé pas le Model planeModel("plane"); -> les models ne s'affichent pas correctement
     Model planeModel("plane");
+    //Model singeModel("singe");
+    std::vector<GameObject> walls;
 
-    // Création d'un seul VBO = contient les données
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-
-    //Binding d'un VBO sur la cible GL_ARRAY_BUFFER: permet de la modifier
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    //On peut à présent modifier le VBO en passant par la cible
-
-    //Envoi des données
-    glBufferData(GL_ARRAY_BUFFER, sphere.getVertexCount() * sizeof (glimac::ShapeVertex), sphere.getDataPointer(), GL_STATIC_DRAW);
-    //On utilise GL_STATIC_DRAW pour un buffer dont les données ne changeront jamais.
-
-    //Débindage, pour éviter de remodifier le VBO par erreur.
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    //Création du VAO (Vertex Array Object) = décrit les données dans le VBOs
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-
-    //Binding du VAO
-    glBindVertexArray(vao);
-
-    //Activation des attributs de vertex
-    const GLuint VERTEX_ATTR_POSITION = 0;
-    const GLuint VERTEX_ATTR_NORMAL = 1;
-    const GLuint VERTEX_ATTR_COORDINATE = 2;
-    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-    glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
-    glEnableVertexAttribArray(VERTEX_ATTR_COORDINATE);
-
-    //Binding d'un VBO sur la cible GL_ARRAY_BUFFER:
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-    //Spécification des attributs de vertex
-    //glVertexAttribPointer(GLuint index,GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
-    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof (glimac::ShapeVertex), (const GLvoid*) offsetof(glimac::ShapeVertex, position));
-    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof (glimac::ShapeVertex), (const GLvoid*) offsetof(glimac::ShapeVertex, normal));
-    glVertexAttribPointer(VERTEX_ATTR_COORDINATE, 2, GL_FLOAT, GL_FALSE, sizeof (glimac::ShapeVertex), (const GLvoid*) offsetof(glimac::ShapeVertex, texCoords));
-
-    //Débindage
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-
+    for (float t=0; t<spline.length(); t+=0.3f) {
+        walls.push_back (GameObject(
+                assetManager.models()[PLANEMODEL],
+                glm::vec3(t, 0.f, 0.f),
+                glm::vec3(0.4f, 0.4f, 0.4f),
+                glm::vec3(0.0f, 0.0f, t/5)
+        ));
+    }
 
 
     // Charger et compiler les shaders
@@ -169,69 +140,20 @@ int main(int argc, char** argv) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-        //calcul des view matrix, model matrix, projetion matrix
+        //calcul des view matrix, model matrix, projection matrix
         glm::mat4 ProjMatrix = glm::perspective(glm::radians(110.f), 4.f/3.f, 0.1f, 100.f);
 
 
-        //glm::mat4 MVMatrix = glm::translate(glm::mat4(), glm::vec3(0.f, 0.f ,-5.f));
-        ///////////////
-        // spline stuff
-
         //updating player inner variables (speed, position...)
-        if (!displayInGameMenu)
+        if (!displayInGameMenu) {
             player.update(settings.deltaTime());
+        }
 
 
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 
-        for (float t=0; t<spline.length(); t+=0.1f) {
-
-            //curve part
-            glm::mat4 MVMatrix;
-            MVMatrix = camMatrix * spline.matrix(glm::vec3(t,0,0));
-            //MVMatrix = glm::translate(camMatrix, spline.point(t));
-            MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2));
-
-            for (int i=0; i<3; ++i) {
-                if (i==1) {
-                    MVMatrix = glm::translate(MVMatrix, glm::vec3(3,0,0));
-                }
-                if (i==2) {
-                    MVMatrix = glm::translate(MVMatrix, glm::vec3(0,3,0));
-                }
-                glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-
-                //on récupère les locations des variables uniformes dans les shaders
-                GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-                GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-                GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
-                //on envoie les matrices à la CG dans les variables uniformes
-                glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(ProjMatrix * MVMatrix));
-                glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
-                glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
-
-                //Binding du VAO
-                glBindVertexArray(vao);
-
-                glDrawArrays(GL_TRIANGLES, 0, sphere.getVertexCount());
-
-                glBindVertexArray(0);
-            }
-        }
-        // end spline stuff
         ////////////////////////////////////////////////////////////////
         // gameobj stuff
-
-        std::vector<GameObject> walls;
-
-        for (float i=0; i<100; ++i) {
-            walls.push_back (GameObject(
-                planeModel,
-                glm::vec3(3+i/8, 0.f, 1.5f),
-                glm::vec3(0.4f, 0.4f, 0.4f),
-                glm::vec3(0.0f, 0.0f, i/5)
-            ));
-        }
 
         for (float i=0; i<walls.size(); ++i) {
             glm::mat4 MVMatrix;
@@ -250,13 +172,8 @@ int main(int argc, char** argv) {
             glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
             glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
 
-            //Binding du VAO
-            //glBindVertexArray(vao);
-            glBindVertexArray(planeModel.getVAO());
-            glDrawElements(GL_TRIANGLES, planeModel.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
-            //glDrawArrays(GL_TRIANGLES, 0, sphere.getVertexCount());
 
-            glBindVertexArray(0);
+            walls[i].draw();
         }
 
         //end gameobj stuff

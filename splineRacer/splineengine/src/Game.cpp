@@ -37,8 +37,7 @@ void Game::loadLevel() {
     Settings& settings = Settings::instance();
 
 	// TODO : get models from asset manager - ok
-
-    for (float i=0; i<5; ++i) {
+	for (float i=0; i<5; ++i) {
         _obstacles.push_back (GameObject(
         	assetManager.models()[PLANEMODEL],
             glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),

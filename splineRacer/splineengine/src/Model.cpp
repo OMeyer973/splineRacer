@@ -2,6 +2,8 @@
 
 namespace splineengine {
 
+	/* Constructors */
+
 	Model::Model() {
 		std::cout << "Model: Default constructor" << std::endl;
 	}
@@ -36,11 +38,14 @@ namespace splineengine {
 		std::cout << "Model: Copy Constructor" << std::endl;
 	};
 
+	/* Destructor */
 	Model::~Model() {
 		glDeleteBuffers(1, &_VBO);
 		glDeleteVertexArrays(1, &_VAO);
 	};
 
+
+	/* Methods */
 	void Model::setVBO(const glimac::Geometry &geometry) {
 		std::cout << "Model::setVBO called" << std::endl;
 		GLuint vbo;

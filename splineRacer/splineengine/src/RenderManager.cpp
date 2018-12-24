@@ -5,20 +5,18 @@
 namespace splineengine {
 
 void RenderManager::updateMVMatrix(Camera &camera, glm::mat4 transformMatrix) {
+    // std::cout <<"camera.getViewMatrix(): " << camera.getViewMatrix() << std::endl;
+    // std::cout <<"transformMatrix: " << transformMatrix << std::endl;
     _MVMatrix = camera.getViewMatrix() * transformMatrix;
     _normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
 }
 
 void RenderManager::useProgram(FS shader) {
-
-	// std::cout << "useProgram" << std::endl;
 	const ProgramList& programList = AssetManager::instance().programList();
-	// std::cout << "shader : " << shader << std::endl;
 
     switch (shader)
     {
         case NORMAL:
-            // std::cout << "Case Normal" << std::endl;
             programList.normalProgram._program.use();
             break;
 
@@ -38,7 +36,6 @@ void RenderManager::useProgram(FS shader) {
 
 void RenderManager::applyTransformations(FS shader, glm::mat4 matrix)
 {
-    // std::cout << "applyTransformations" << std::endl;
     glm::mat4 lightMatrix;
     glm::vec4 lightVector;
 
@@ -47,14 +44,14 @@ void RenderManager::applyTransformations(FS shader, glm::mat4 matrix)
     switch (shader)
     {
         case NORMAL :
-            glUniformMatrix4fv(programList.normalProgram.uMVPMatrix, 1, GL_FALSE,
-            glm::value_ptr(_projMatrix * matrix));
+            glUniformMatrix4fv(programList.normalProgram.uMVPMatrix, 1, GL_FALSE, 
+                glm::value_ptr(_projMatrix * matrix));
 
             glUniformMatrix4fv(programList.normalProgram.uMVMatrix, 1, GL_FALSE,
-            glm::value_ptr(matrix));
+                glm::value_ptr(matrix));
 
             glUniformMatrix4fv(programList.normalProgram.uNormalMatrix, 1, GL_FALSE,
-            glm::value_ptr(glm::transpose(glm::inverse(matrix))));
+                glm::value_ptr(glm::transpose(glm::inverse(matrix))));
             break;
 
         case TEXTURE :
@@ -77,7 +74,7 @@ void RenderManager::applyTransformations(FS shader, glm::mat4 matrix)
             // White Color to keep the correct color
             glUniform3f(programList.directionalLightProgram.uColor, 1.0,1.0,1.0);
 
-            //lightMatrix = glm::rotate(m_MVMatrix, 180.f, glm::vec3(1,1,1));
+            //lightMatrix = glm::rotate(_MVMatrix, 180.f, glm::vec3(1,1,1));
             lightMatrix = glm::mat4();
             lightVector = glm::normalize(glm::vec4(1,1,1,0)*lightMatrix);
             glUniform3f(programList.directionalLightProgram.uLightDir_vs, lightVector.x, lightVector.y, lightVector.z);

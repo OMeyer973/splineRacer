@@ -16,17 +16,14 @@ namespace splineengine{
 
   bool Texture::loadTexture(){
     glimac::FilePath texPath = Settings::instance().appPath().dirPath() + "../../splineRacer/assets/textures/" + _texName;
-    texPath = texPath.addExt(".png"); // Constructeur par copie
-    //si texture nulle error
 
     _textureToLoad = loadImage(texPath);
 
-    if ( _textureToLoad == NULL ){
+    if ( _textureToLoad == NULL ) {
+      // Throw exception
       std::cout << "Image " << _texName << " couldn't be loaded" << std::endl;
       return false;
     }
-
-    //std::cout << "texture " << _texName << " c  harged " << std::endl;
 
     glGenTextures(1, &_texID);
     glBindTexture(GL_TEXTURE_2D, _texID);

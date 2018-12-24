@@ -39,17 +39,17 @@ class RenderManager {
 		void updateMVMatrix(Camera &camera, glm::mat4 transformMatrix);
 
 		/// \brief get _MVMatrix
-		glm::mat4 MVMatrix() {
+		glm::mat4 MVMatrix() const {
 			return _MVMatrix;
 		}
 
 		/// \brief get _normalMatrix
-		glm::mat4 normalMatrix() {
+		glm::mat4 normalMatrix() const {
 			return _normalMatrix;
 		}
 
 		/// \brief get _projMatrix
-		glm::mat4 projMatrix() {
+		glm::mat4 projMatrix() const {
 			return _projMatrix;
 		}
 

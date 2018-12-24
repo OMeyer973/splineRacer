@@ -51,4 +51,4 @@ class MyClass {
 
 #### References
 - [Catmull Rom spline reference](https://en.wikipedia.org/wiki/Cubic_Hermite_spline)
-- [oglev opengl tutorials](http://ogldev.atspace.co.uk/)
+- [ogldev opengl tutorials](http://ogldev.atspace.co.uk/)

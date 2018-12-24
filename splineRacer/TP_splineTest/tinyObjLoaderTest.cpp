@@ -1,13 +1,7 @@
-#include <glm/gtc/random.hpp>
-#include <GL/glew.h>
-#include <iostream>
-#include <vector>
 #include <glimac/SDLWindowManager.hpp>
-#include <glimac/Sphere.hpp>
 #include <glimac/FilePath.hpp>
 #include <glimac/Program.hpp>
 #include <glimac/Geometry.hpp>
-#include <glimac/Image.hpp>
 #include <splineengine/GameObject.hpp>
 #include <splineengine/Model.hpp>
 #include <splineengine/POVCamera.hpp>
@@ -46,87 +40,32 @@ int main(int argc, char** argv) {
 	Settings& settings = Settings::instance();
 	settings.appPath() = glimac::FilePath(argv[0]);
 
-	// Shaders
-	FilePath applicationPath(argv[0]);
-	Program program = loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
-								  applicationPath.dirPath() + "shaders/tex3D.fs.glsl");
-	program.use();
-
-	// Location des variables uniformes
-	GLint MVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-	GLint MVMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-	GLint NormalMatrixLocation = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
-	GLint textureLocation = glGetUniformLocation(program.getGLId(), "uTexture");
-
 	glEnable(GL_DEPTH_TEST); // Permet d'activer le test de profondeur du GPU
 
-	// Chargement d'une texture
-	std::unique_ptr<Image> planeTexture = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/planetexture2.jpg");
-	std::unique_ptr<Image> propellerTexture = loadImage(applicationPath.dirPath() + "../../splineRacer/assets/textures/finish_line2.jpg");
-
-	if (planeTexture == NULL)
-		std::cerr << "Erreur au chargement de l'image." << std::endl;
-
-	unsigned int nbTextures = 2;
-	GLuint *textures = new GLuint[nbTextures];
-	glGenTextures(nbTextures, textures);
-
-	glBindTexture(GL_TEXTURE_2D, textures[0]);
-	glTexImage2D(GL_TEXTURE_2D,
-		0,
-		GL_RGBA,
-		planeTexture->getWidth(),
-		planeTexture->getHeight(),
-		0,
-		GL_RGBA,
-		GL_FLOAT,
-		planeTexture->getPixels());
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	if (propellerTexture == NULL)
-		std::cerr << "Erreur au chargement de l'image." << std::endl;
-
-	glBindTexture(GL_TEXTURE_2D, textures[1]);
-	glTexImage2D(GL_TEXTURE_2D,
-		0,
-		GL_RGBA,
-		propellerTexture->getWidth(),
-		propellerTexture->getHeight(),
-		0,
-		GL_RGBA,
-		GL_FLOAT,
-		propellerTexture->getPixels());
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	// Create the model and create VBO, IBO, VAO based on the geometry
+	// Create the plane model and create VBO, IBO, VAO based on the geometry
 	Model planeModel("plane");
 	GameObject planeObject(planeModel);
 
+	// Create a texture and load texture
+	Texture planeTex("planetexture2.jpg");
+	planeTex.loadTexture();
 
-	glimac::Program skyBoxProgram = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
-															applicationPath.dirPath() + "shaders/tex3D.fs.glsl");
+	// Create the model and create VBO, IBO, VAO based on the geometry
+	Model skyboxModel("skybox");
+	GameObject skyboxObject(skyboxModel);
 
+	// Create a texture and loadTexture
+	Texture skyboxTex("skurt.png");
+	skyboxTex.loadTexture();
 
-	Model skyBoxModel("skybox");
-	Texture skyBoxTex("skurt");
-	skyBoxTex.loadTexture();
-
-	GameObject skyBoxObject(skyBoxModel);
+	// CubeMap skybox((settings.appPath().dirPath() + "../../splineRacer/assets/textures/posx.png").str() ,
+	// 				  (settings.appPath().dirPath() + "../../splineRacer/assets/textures/posy.png").str() ,
+	// 				  (settings.appPath().dirPath() + "../../splineRacer/assets/textures/posz.png").str() ,
+	// 				  (settings.appPath().dirPath() + "../../splineRacer/assets/textures/negx.png").str() ,
+	// 				  (settings.appPath().dirPath() + "../../splineRacer/assets/textures/negy.png").str() ,
+	// 				  (settings.appPath().dirPath() + "../../splineRacer/assets/textures/negz.png").str() );
 	//
-	//
-	// CubeMap	 skyBox((settings.appPath().dirPath() + "../../splineRacer/assets/textures/posx.png").str() ,
-	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/posy.png").str() ,
-	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/posz.png").str() ,
-	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/negx.png").str() ,
-	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/negy.png").str() ,
-	// 								(settings.appPath().dirPath() + "../../splineRacer/assets/textures/negz.png").str() );
-	//
-	// skyBox.loadCubeMap();
-
+	// skybox.loadCubeMap();
 
 	// Create the Camera
 	std::vector<std::unique_ptr<Camera>> cameras; // Contains two pointers on camera
@@ -187,24 +126,24 @@ int main(int argc, char** argv) {
 		/*********************************
 		 * HERE SHOULD COME THE RENDERING CODE
 		 *********************************/
-
-		program.use();
-
-		planeObject.scale() = glm::vec3(1);
-		planeObject.sPosition() = glm::vec3(0);
-		planeObject.rotation() = glm::vec3(.25*cos(2*windowManager.getTime()), .25*cos(.5*windowManager.getTime()), 0);
-
-		renderManager.updateMVMatrix(*cameras[chosenCamera], planeObject.matrix());
-
-		glBindTexture(GL_TEXTURE_2D, textures[0]);
-		glUniform1i(textureLocation, 0);
-
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glUniformMatrix4fv(MVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.projMatrix() * renderManager.MVMatrix()));
-		glUniformMatrix4fv(MVMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.MVMatrix()));
-		glUniformMatrix4fv(NormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(renderManager.normalMatrix()));
+		renderManager.useProgram(NORMAL);
 
+		// Object transform
+		planeObject.sPosition() = glm::vec3(0);
+		planeObject.scale() = glm::vec3(1);
+		planeObject.rotation() = glm::vec3(.25*cos(2*windowManager.getTime()), .25*cos(.5*windowManager.getTime()), 0);
+
+		// Update MVMatrix according to the object's transformation
+		renderManager.updateMVMatrix(*cameras[chosenCamera], planeObject.matrix());
+		// Send uniforms to shaders
+		renderManager.applyTransformations(NORMAL, renderManager.MVMatrix());
+
+		// Texture binding
+		glBindTexture(GL_TEXTURE_2D, planeTex.getTextureID());
+
+		// Draw object
 		planeObject.draw();
 
 
@@ -217,51 +156,37 @@ int main(int argc, char** argv) {
 		// //useProgram(CUBEMAP);
 		//
 		// glActiveTexture(GL_TEXTURE0);
-		// glBindTexture(GL_TEXTURE_CUBE_MAP, skyBox.getID());
+		// glBindTexture(GL_TEXTURE_CUBE_MAP, skybox.getID());
 		//
-		// //skyBoxObject.draw();
+		// //skyboxObject.draw();
 		//
 		// glActiveTexture(GL_TEXTURE0);
 		// glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 		// glDepthMask(GL_TRUE);
 
-		skyBoxProgram.use();
+		renderManager.useProgram(TEXTURE);
 
-		// glBindTexture(GL_TEXTURE_2D, skyBoxTex.getTextureID() );
-		// glUniform1i(textureLocation, 0);
+		// Object transform
+		skyboxObject.scale() = 100.f*(fwdVec +upVec + leftVec); 
 
-		glm::mat4 MVMatrix;
-   		MVMatrix = glm::scale(MVMatrix, 100.f*(fwdVec +upVec + leftVec) );
-		// MVMatrix = glm::translate(MVMatrix, glm::vec3(0,0,0));
+		// Update MVMatrix according to the object's transformation
+		renderManager.updateMVMatrix(*cameras[chosenCamera], skyboxObject.matrix());
 
-		renderManager.updateMVMatrix(*cameras[chosenCamera],  MVMatrix	 );
+		// Send uniforms to shaders
+		renderManager.applyTransformations(TEXTURE, renderManager.MVMatrix());
 
-		glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+		// Texture binding
+		glBindTexture(GL_TEXTURE_2D, skyboxTex.getTextureID());
 
-		// On récupère les locations des variables uniformes dans les shaders
-		GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-		GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-		GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
-		// On envoie les matrices à la CG dans les variables uniformes
-		glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(renderManager.projMatrix() * renderManager.MVMatrix()));
-		glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr( MVMatrix ));
-		glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr( NormalMatrix  ));
+		// Object drawing
+		skyboxObject.draw();
 
-
-
-
-		// Chargement des textures
-
-		glBindTexture(GL_TEXTURE_2D, skyBoxTex.getTextureID());
-		skyBoxObject.draw();
+		// Unbind texture
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		// Update the display
 		windowManager.swapBuffers();
 	}
-
-	// Libérations des ressources
-	delete textures;
 
 	return EXIT_SUCCESS;
 }

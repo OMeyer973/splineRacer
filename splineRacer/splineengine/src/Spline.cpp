@@ -78,7 +78,10 @@ glm::mat4 Spline::camMatrix(const glm::vec3& sPoint) const {
 
 	// 4 tilt camera forward (the higher the camera is, the lower it looks on the spline)
 	// TODO : this will probably go in the camera class
-	glm::mat4 camMat = glm::rotate(glm::mat4(), -lookDownFactor * sPoint[UP], leftVec);
+
+	glm::mat4 camMat = glm::translate(glm::mat4(), camDistToPlane * fwdVec);
+        
+	camMat = glm::rotate(camMat, -lookDownAngle -lookDownFactor * sPoint[UP], leftVec);
 
 	// 3 camera normal distance to the spline (up-down)
 	camMat = glm::translate(camMat, -sPoint[UP] * upVec);
@@ -87,7 +90,8 @@ glm::mat4 Spline::camMatrix(const glm::vec3& sPoint) const {
 	camMat = glm::rotate(camMat, sPoint[LEFT], fwdVec);
 	
 	// 1 moving the camera forward and have it face toward the spline derivate
-	camMat = camMat * glm::lookAt(point(sPoint[FWD]), point(sPoint[FWD]) + point(sPoint[FWD]+deltaSpline) - point(sPoint[FWD]-deltaSpline), glm::vec3(0,1,0));
+	float fwdPos = sPoint[FWD] + camLead;
+	camMat = camMat * glm::lookAt(point(fwdPos), point(fwdPos) + point(fwdPos+deltaSpline) - point(fwdPos-deltaSpline), upVec);
 
 	return camMat;
 }
@@ -98,7 +102,7 @@ glm::mat4 Spline::matrix(const glm::vec3& sPoint) const {
 	glm::mat4 objMat = glm::inverse(glm::lookAt(point(sPoint[FWD]), point(sPoint[FWD]+deltaSpline), upVec));
 		
 	// 2 object rotation (left-right)
-	objMat = glm::rotate(objMat, sPoint[LEFT], fwdVec);
+	objMat = glm::rotate(objMat, -sPoint[LEFT], fwdVec);
 	
 	// 3 object normal distance to the spline (up-down)
 	objMat = glm::translate(objMat, sPoint[UP] * upVec);

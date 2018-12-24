@@ -6,9 +6,27 @@
 
 namespace splineengine {
 
+Player::Player(
+    const GameObject& gameObject,
+    const float       fwdSpeed,
+    const glm::vec3   maxSpeed,
+    const glm::vec3   acceleration
+)
+    :GameObject(gameObject),
+    _sSpeed(fwdSpeed, 0.f, 0.f), // initial speed is only forward
+    _sMaxSpeed(maxSpeed),
+    _sAcceleration(acceleration)
+{
+
+}
+
 void Player::updateSpeed(const float dt) {
-	// component-wise linear interpolation of the speed toward it's speed target (_sMaxSpeed * _sInput)
-	_sSpeed = glm::mix(_sSpeed, _sMaxSpeed * _sInput, _sAcceleration * dt);
+	// linear interpolation of the speed toward it's speed target (_sMaxSpeed * _sInput)
+	_sSpeed[FWD] = glm::mix(_sSpeed[FWD], _sMaxSpeed[FWD] * _sInput[FWD], _sAcceleration[FWD] * dt);
+	_sSpeed[UP]  = glm::mix(_sSpeed[UP],  _sMaxSpeed[UP] *  _sInput[UP],  _sAcceleration[UP] * dt);
+
+	// the higher you are, the slower you rotate
+	_sSpeed[LEFT]  = glm::mix(_sSpeed[LEFT],  _sMaxSpeed[LEFT] *  _sInput[LEFT] / glm::max(_sPosition[UP],1.f),  _sAcceleration[LEFT] * dt);
 }
 
 void Player::updatePosition(const float dt) {
@@ -22,7 +40,7 @@ void Player::update(const float dt) {
 	updatePosition(dt);	
 }
 
-void Player::draw() const {
+// void Player::draw() const {
 	// // Dessin de l'OBJ Plane
 	// glBindVertexArray(planeModel.getVAO());
 
@@ -52,6 +70,6 @@ void Player::draw() const {
 	// }
 	// // glDrawElements(GL_TRIANGLES, planeModel.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
 	// glBindVertexArray(0);
-}
+// }
 
 }

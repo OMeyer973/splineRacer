@@ -1,5 +1,5 @@
 #include <splineengine/Collider.hpp>
-
+#include <iostream>
 
 namespace splineengine {
 
@@ -11,14 +11,17 @@ Collider::Collider()
 Collider::~Collider()
 {}
 
-bool collideWith(Collider other, glm::vec3 selfPos, glm::vec3 otherPos) {
-	// for (size_t i = 0; i<_boxes.length(); ++i) {
-	// 	for (size_t j = 0; j<other._boxes.length(); ++j) {
-	// 		// todo : add distance factor for cylindrical coordinates projection
-	// 		if (_boxes[i].collideWith(other._boxes[j], selfPos, otherPos))
-	// 			return true;
-	// 	}
-	// }
+bool Collider::collideWith(Collider other, glm::mat4 selfTransformMat, glm::mat4 otherTransformMat) {
+
+	// multiplication of homogenous coordinates with 4 components and immediate cast to vec3
+	glm::vec3 selfWorldPos(glm::vec4(_position,1.f) * selfTransformMat);
+
+	glm::vec3 otherWorldPos(glm::vec4(other._position,1.f) * otherTransformMat);
+
+	if (glm::distance(selfWorldPos, otherWorldPos) < _radius*_radius + other._radius*other._radius) {
+		std::cout << "COLLISION" << std::endl;
+	}
+
 	return false;
 }
 

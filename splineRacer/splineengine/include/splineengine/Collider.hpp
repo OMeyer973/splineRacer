@@ -20,19 +20,19 @@ class Collider
 		~Collider();
 
         // CONST GETTERS
-		// const std::vector<BoundingBox>& boxes() const { return _boxes; };
 		
 
         // SETTER
-		// void pushBox (BoundingBox box) { _boxes.push_back(box); };
 		
 		// METHODS
 		// brief is the Collider colliding with another collider ? 
-		// brief please provide self position and other position
-		bool collideWith(Collider other, glm::vec3 selfPos, glm::vec3 otherPos);
+		// brief please provide self transform matrix & other transform matrix
+		bool collideWith(Collider other, glm::mat4 selfTransformMat, glm::mat4 otherTransformMat);
 
 	// MEMBERS
 	protected:
+		glm::vec3 _position;
+		float _radius;
 		//std::vector<BoundingBox> _boxes;		
 		//TODO : add single big bounding box to collider
 };

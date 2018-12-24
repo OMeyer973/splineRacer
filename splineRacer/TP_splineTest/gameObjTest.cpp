@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
     AssetManager& assetManager = AssetManager::instance();
 
     glimac::Sphere sphere(2, 3, 2);
-    Player player;
+    Player player (GameObject(assetManager.models()[PLANEMODEL], defaultPlayerPos));
     Spline spline;
 
 
@@ -62,12 +62,12 @@ int main(int argc, char** argv) {
     //Model singeModel("singe");
     std::vector<GameObject> walls;
 
-    for (float t=0; t<spline.length(); t+=0.3f) {
+    for (float t=2; t<spline.length(); t+=0.3f) {
         walls.push_back (GameObject(
                 assetManager.models()[PLANEMODEL],
-                glm::vec3(t, 0.f, 0.f),
+                glm::vec3(t, t, 0.f),
                 glm::vec3(0.4f, 0.4f, 0.4f),
-                glm::vec3(0.0f, 0.0f, t/5)
+                glm::vec3(0.0f, 0.0f, 0.f)
         ));
     }
 
@@ -150,11 +150,34 @@ int main(int argc, char** argv) {
         }
 
 
+        //camMatrix = camMatrix * spline.camMatrix(player.sPosition()-0.5f*fwdVec);
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
+        //glm::mat4 camMatrix = spline.camMatrix(glm::vec3(1,0,2));
 
         ////////////////////////////////////////////////////////////////
         // gameobj stuff
 
+        glm::mat4 MVMatrix;
+
+        // get the transform matrix of the object
+        MVMatrix = camMatrix * player.matrix(spline);
+
+
+        
+        glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+
+        //on récupère les locations des variables uniformes dans les shaders
+        GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+        GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+        GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+        //on envoie les matrices à la CG dans les variables uniformes
+        glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(ProjMatrix * MVMatrix));
+        glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
+        glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
+
+        player.draw();
+
+        
         for (float i=0; i<walls.size(); ++i) {
             glm::mat4 MVMatrix;
 

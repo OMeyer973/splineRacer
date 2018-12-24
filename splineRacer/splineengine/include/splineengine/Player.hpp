@@ -10,8 +10,8 @@ namespace splineengine {
 
 const glm::vec3 defaultPlayerPos          = glm::vec3(1.f, 0.f, 2.f);
 const float     defaultPlayerFwdSpeed     = 1.f;
-const glm::vec3 defaultPlayerMaxSpeed     = glm::vec3(1.f, 10.f, 10.f);
-const glm::vec3 defaultPlayerAcceleration = glm::vec3(0.f, 20.f, 20.f);
+const glm::vec3 defaultPlayerMaxSpeed     = glm::vec3(1.f, 7.f, 7.f);
+const glm::vec3 defaultPlayerAcceleration = glm::vec3(0.f, 7.f, 7.f);
   
 
 /// \brief Represents the player as a Gameobject but with more useful stuff
@@ -25,12 +25,7 @@ class Player : public GameObject {
             const float       fwdSpeed     = defaultPlayerFwdSpeed,
             const glm::vec3   maxSpeed     = defaultPlayerMaxSpeed,
             const glm::vec3   acceleration = defaultPlayerAcceleration
-        )
-            :GameObject(gameObject),
-            _sSpeed(fwdSpeed, 0.f, 0.f), // initial speed is only forward
-            _sMaxSpeed(maxSpeed),
-            _sAcceleration(acceleration)
-        {};
+        );
 
         /// \brief player Destructor
         ~Player()
@@ -74,7 +69,7 @@ class Player : public GameObject {
         void update(const float dt);
 
         /// \brief Overriden function to draw the plane
-        void draw() const;
+        // void draw() const;
 
     protected:
         // METHODS

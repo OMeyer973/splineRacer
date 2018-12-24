@@ -20,6 +20,7 @@ class GameObject {
 		/// \param position : glm::vec3 position of the object (relative to the spline)
 		/// \param position : glm::vec3 scale    of the object 
 		/// \param position : glm::vec3 rotation of the object 
+		// TDOO : add isStatic to constructio params ?
 		GameObject (
 			const Model& model = Model(),
 			const glm::vec3& sPosition = glm::vec3(0),
@@ -116,8 +117,11 @@ class GameObject {
 		//std::unique_ptr<Model> _model; // better to use ptr because you can't reassign refs ?
 		const Model& _model; // better to use refs because less mistakes ?
 
+		/// \brief type of the gameObject : PLAYER, OBSTACLE, BONUS ...
+		int _type;
+
 		/// \brief is the object static ? 
-		bool _isStatic = true;
+		bool _isStatic = false;
 		/// \brief stored transformation matrix of the object in case the object is static
 		bool _hasMatrix = false;
 		glm::mat4 _transformMat;

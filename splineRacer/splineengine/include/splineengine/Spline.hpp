@@ -16,9 +16,16 @@ const float defaultSegmentLength = 1;
 
 // delta position used to rotate the camera and the objects facing the curve
 // it is large in order to have smooth camera movements
-const float deltaSpline = 0.1f;
+const float deltaSpline = 0.2f;
+
+// camera distance to the plane (size of the plane on screen)
+const float camDistToPlane = 6.f;
+// the camera always looks a bit down
+const float lookDownAngle = 0.1f;
 // the higher the camera is, the lower it looks on the spline following this factor
-const float lookDownFactor = 0.1f;
+const float lookDownFactor = 0.05f;
+// camera focus point is a bit ahead of the plane
+const float camLead = 0.2f;
 
 
 /// \brief Represents the spline, its equation and transforms

@@ -69,7 +69,6 @@ void Game::render() {
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], _obstacles[i].matrix());
 		_renderManager.applyTransformations(NORMAL, _renderManager.MVMatrix());
 
-		
 	    _obstacles[i].draw();
 
     }

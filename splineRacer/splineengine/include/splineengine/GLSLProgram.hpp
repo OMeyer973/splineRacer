@@ -90,32 +90,10 @@ struct DirectionalLightProgram {
     }
 };
 
-// GLSL Program for Skybox
-struct SkyboxProgram {
-    glimac::Program _program;
-
-    GLint uMVPMatrix;
-    GLint uMVMatrix;
-    GLint uNormalMatrix;
-    GLint uTexture;
-
-    SkyboxProgram()
-        :_program(loadProgram(Settings::instance().appPath().dirPath() + "shaders/cubemap.vs.glsl",
-                              Settings::instance().appPath().dirPath() + "shaders/cubemap.fs.glsl"))
-    {
-        std::cout << "loading Skybox program" << std::endl;
-        uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
-        uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
-        uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
-        uTexture = glGetUniformLocation(_program.getGLId(), "uTexture");
-    }
-};
-
 struct ProgramList {
     NormalProgram normalProgram;
     TextureProgram textureProgram;
     DirectionalLightProgram directionalLightProgram;
-    SkyboxProgram skyboxProgram;
 };
 
 }

@@ -10,12 +10,21 @@ AssetManager::AssetManager()
 }
 
 void AssetManager::loadAssets() {
-	std::cout << "AssetManager loaded " << std::endl;
+	std::cout << "AssetManager : Load assets" << std::endl;
 	
 	// TODO : load actual assets for the game
-	_models[PLANEMODEL] = Model("plane");
-	_models[SINGEMODEL] = Model("singe");
-	// _models[WHEELBARROWMODEL] = Model("wheelbarrow");
+	Model planeModel("plane");
+	Model singeModel("singe");
+	Model skyboxModel("skybox");
+	Model wheelbarrowModel("wheelbarrow");
+	_models.insert(std::make_pair(PLANEMODEL, planeModel));
+	_models.insert(std::make_pair(WHEELBARROWMODEL, wheelbarrowModel));
+	_models.insert(std::make_pair(SINGEMODEL, singeModel));
+	_models.insert(std::make_pair(SKYBOXMODEL, skyboxModel));
+	// _models[PLANEMODEL] = planeModel;
+	// _models[WHEELBARROWMODEL] = wheelbarrowModel;
+	// _models[SINGEMODEL] = singeModel;
+	// _models[SKYBOXMODEL] = skyboxModel;
 }
 
 void AssetManager::loadPrograms() {

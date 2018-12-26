@@ -26,7 +26,7 @@ class Model {
 
 		/// \brief Model Constructor by model name
 		/// \param modelName : std::string& name of the model
-		Model(const std::string &modelName);
+		Model(const std::string& modelName);
 
 		/// \brief Model Copy constructor
 		/// \param model : Model Model to copy
@@ -37,10 +37,12 @@ class Model {
 
 		// GETTERS //TODO : lose the "getXXX" syntax ?
 		/// \brief get VAO
-		GLuint getVAO() const { return _VAO; };
+		const GLuint getVAO() const { return _VAO; };
+
+		const GLuint getVBO() const { return _VBO; };
 
 		/// \brief get IBO
-		GLuint getIBO() const { return _IBO; };
+		const GLuint getIBO() const { return _IBO; };
 
 		/// \brief get Geometry
 		glimac::Geometry geometry() const { return _geometry; };

@@ -2,13 +2,14 @@
 #include <glimac/FilePath.hpp>
 #include <glimac/Program.hpp>
 #include <glimac/Geometry.hpp>
-#include <splineengine/GameObject.hpp>
+#include <splineengine/common.hpp>
+#include <splineengine/Settings.hpp>
+#include <splineengine/AssetManager.hpp>
 #include <splineengine/Model.hpp>
-#include <splineengine/POVCamera.hpp>
+#include <splineengine/GameObject.hpp>
 #include <splineengine/TrackballCamera.hpp>
 #include <splineengine/RenderManager.hpp>
-#include <splineengine/Settings.hpp>
-#include <splineengine/common.hpp>
+#include <splineengine/POVCamera.hpp>
 #include <splineengine/CubeMap.hpp>
 
 // cmake ../splineRacer && make -j 4 && ./TP_splineTest/TP_splineTest_tinyObjLoaderTest
@@ -39,14 +40,25 @@ int main(int argc, char** argv) {
 	 *********************************/
 	Settings& settings = Settings::instance();
 	settings.appPath() = glimac::FilePath(argv[0]);
+	AssetManager& assetManager = AssetManager::instance();
+	Spline spline;
 
 	glEnable(GL_DEPTH_TEST); // Permet d'activer le test de profondeur du GPU
 
-	Spline spline;
+	// Debug: on affiche les infos de tous les models chargés
+	std::map<int, Model> models = AssetManager::instance().models();
+	std::map<int, Model>::iterator it = models.begin();
+	while(it != models.end()) {
+		std::cout << it->first << " a " << it->second.geometry().getIndexCount() << " indices." << std::endl;
+		std::cout << "	VAO: " << it->second.getVAO() << std::endl;
+		std::cout << "	IBO: " << it->second.getIBO() << std::endl;
+		std::cout << "	VBO: " << it->second.getVBO() << std::endl;
+		it++;
+	}
 
 	// Create the plane model and create VBO, IBO, VAO based on the geometry
-	Model planeModel("plane");
-	GameObject planeObject(planeModel, spline);
+	Model planeModel("singe");
+	GameObject planeObject(models[PLANEMODEL], spline);
 
 	// Create a texture and load texture
 	Texture planeTex("planetexture2.jpg");

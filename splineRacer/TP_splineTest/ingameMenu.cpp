@@ -151,7 +151,7 @@ int main(int argc, char** argv) {
     Model menuModel("menu");
 
     Model skyBox("skybox");
-    Texture skyBoxTex("skurt");
+    Texture skyBoxTex("skurt.png");
     skyBoxTex.loadTexture();
 
 

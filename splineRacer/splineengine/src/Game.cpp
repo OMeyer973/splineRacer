@@ -36,10 +36,10 @@ void Game::loadLevel() {
 	AssetManager& assetManager = AssetManager::instance();
     Settings& settings = Settings::instance();
 
-	// TODO : get models from asset manager - ok
+	// TODO : build list from class Obstacle instead of GameObject
 	for (float i=0; i<5; ++i) {
         _obstacles.push_back (GameObject(
-        	assetManager.models()[PLANEMODEL],
+        	assetManager.models()[PLANEMODEL], _spline, true,
             glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
             glm::vec3(0.4f, 0.4f, 0.4f),
             glm::vec3(0.0f, 0.0f, i/5)

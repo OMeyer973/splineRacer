@@ -143,7 +143,7 @@ int main(int argc, char** argv) {
     GLint textureLocation = glGetUniformLocation(program.getGLId(), "uTexture");
 
     Model planeModel("plane");
-    GameObject planeObject(planeModel);
+    GameObject planeObject(planeModel, spline);
     Texture planeTex("menu");
 
 

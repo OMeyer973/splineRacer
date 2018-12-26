@@ -21,7 +21,7 @@ class Player : public GameObject {
         // CONSTRUCTORS - DESTRUCTORS
         /// \brief default player Constructor
         Player(
-            const GameObject& gameObject  = GameObject(Model(), defaultPlayerPos),
+            const GameObject& gameObject  = GameObject(Model(), Spline(), false, defaultPlayerPos),
             const float       fwdSpeed     = defaultPlayerFwdSpeed,
             const glm::vec3   maxSpeed     = defaultPlayerMaxSpeed,
             const glm::vec3   acceleration = defaultPlayerAcceleration

@@ -53,8 +53,8 @@ int main(int argc, char** argv) {
     AssetManager& assetManager = AssetManager::instance();
 
     glimac::Sphere sphere(2, 3, 2);
-    Player player (GameObject(assetManager.models()[PLANEMODEL], defaultPlayerPos));
     Spline spline;
+    Player player (GameObject(assetManager.models()[PLANEMODEL], spline, false));
 
 
     // TODO : truc chelou ici : si on ne créé pas le Model planeModel("plane"); -> les models ne s'affichent pas correctement
@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
 
     for (float t=0; t<spline.length(); t+=0.3f) {
         walls.push_back (GameObject(
-                assetManager.models()[PLANEMODEL],
+                assetManager.models()[PLANEMODEL], spline, true,
                 glm::vec3(t, t, 0.f),
                 glm::vec3(0.4f, 0.4f, 0.4f),
                 glm::vec3(0.0f, 0.0f, 0.f)
@@ -153,7 +153,7 @@ int main(int argc, char** argv) {
 
         // to be put in a function in main architecture
         for (float i=0; i<walls.size(); ++i) {
-            player.intersect(walls[i], spline);
+            player.intersect(walls[i]);
         }
         
         // END UPDATE
@@ -168,7 +168,7 @@ int main(int argc, char** argv) {
         glm::mat4 MVMatrix;
 
         // get the transform matrix of the object
-        MVMatrix = camMatrix * player.matrix(spline);
+        MVMatrix = camMatrix * player.matrix();
 
 
         
@@ -193,7 +193,7 @@ int main(int argc, char** argv) {
             glm::mat4 MVMatrix;
 
             // get the transform matrix of the object
-            MVMatrix = camMatrix * walls[i].matrix(spline);
+            MVMatrix = camMatrix * walls[i].matrix();
 
             glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 

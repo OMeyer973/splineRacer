@@ -107,9 +107,11 @@ int main(int argc, char** argv) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	Spline spline;
+
 	// Create the model and create VBO, IBO, VAO based on the geometry
 	Model planeModel("plane");
-	GameObject planeObject(planeModel);
+	GameObject planeObject(planeModel, spline);
 
 	// Create the Camera
 	std::vector<std::unique_ptr<Camera>> cameras; // Contains two pointers on camera

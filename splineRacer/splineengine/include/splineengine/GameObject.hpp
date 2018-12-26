@@ -23,7 +23,9 @@ class GameObject {
 		// TDOO : add spline reference to gameObject ?
 		// TDOO : add isStatic to construction params ?
 		GameObject (
-			const Model& model = Model(),
+			const Model& model,
+			const Spline& spline,
+			const bool isStatic = false,
 			const glm::vec3& sPosition = glm::vec3(0),
 			const glm::vec3& scale = glm::vec3(1),
 			const glm::vec3& rotation = glm::vec3(0)
@@ -50,23 +52,21 @@ class GameObject {
 
 
         // METHODS
-		/// \brief returns the transform matrix of the object in the given spline reference
-		const glm::mat4 matrix(const Spline& spline);
-		
-		/// \brief returns the transform matrix of the object
+		/// \brief returns the transform matrix of the object in it's spline reference
 		const glm::mat4 matrix();
 
 		/// \brief Draw object
 		void draw() const;
 
 		/// \brief is the gameobject intersecting another gameobject ? 
-		bool intersect(GameObject& other, const Spline& spline);
+		bool intersect(GameObject& other);
 
-		/// \brief trigger self collision behavior when colliding with other Gameobject 
-		// void doCollisionWith(GameObject other);
+		/// \brief trigger self collision behavior when colliding with other Gameobjects. 
+		/// \brief needs to be implemented for classes inheriting from GameObject
+		void doCollisionWith(GameObject other) {};
 		
 		/// \brief check if the gameobject intersects the other gameObject and trigger their collision behavior 
-		// void collideWith(GameObject other);
+		//void collideWith(GameObject other);
 
 		//CONST GETTERS
 		/// \brief Get the position of the object (relative to the spline) as a const reference
@@ -98,26 +98,28 @@ class GameObject {
 		/// \brief Get the model of the object as a reference
 		const Model& model() { return _model; }
 
-		/// \brief is the object static ? (ref)
-		bool& isStatic() { return _isStatic; }
-
 	// MEMBERS
 	protected:
+		/// \brief 3D model of the object
+		//std::unique_ptr<Model> _model; // better to use ptr because you can't reassign refs ?
+		const Model& _model; // better to use refs because less mistakes ?
+		
+		/// \brief is the object unmovable ? 
+		const bool _isStatic = false;
+		/// \brief spline reference for the object placement
+		const Spline& _spline; 
+
 		/// \brief position of the object relative to the spline
 		glm::vec3 _sPosition;
 		/// \brief scale of the object
 		glm::vec3 _scale;
 		/// \brief rotation of the object folowing the 3 spline-reference vectors (fwd, left, up) in trigonometric rotation direction
 		glm::vec3 _rotation;
-		/// \brief model of the 3D object
-		//std::unique_ptr<Model> _model; // better to use ptr because you can't reassign refs ?
-		const Model& _model; // better to use refs because less mistakes ?
 
-		/// \brief type of the gameObject : PLAYER, OBSTACLE, BONUS ...
-		int _type;
+		/// \brief type of the gameObject : PLAYER, OBSTACLE, BONUS ... 
+		// (USELESS : just overload function that would need it with the class you want)
+		// int _type;
 
-		/// \brief is the object static ? 
-		bool _isStatic = false;
 		/// \brief stored transformation matrix of the object in case the object is static
 		bool _hasMatrix = false;
 		glm::mat4 _transformMat;

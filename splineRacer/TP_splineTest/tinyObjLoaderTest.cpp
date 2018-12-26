@@ -42,9 +42,11 @@ int main(int argc, char** argv) {
 
 	glEnable(GL_DEPTH_TEST); // Permet d'activer le test de profondeur du GPU
 
+	Spline spline;
+
 	// Create the plane model and create VBO, IBO, VAO based on the geometry
 	Model planeModel("plane");
-	GameObject planeObject(planeModel);
+	GameObject planeObject(planeModel, spline);
 
 	// Create a texture and load texture
 	Texture planeTex("planetexture2.jpg");
@@ -52,7 +54,7 @@ int main(int argc, char** argv) {
 
 	// Create the model and create VBO, IBO, VAO based on the geometry
 	Model skyboxModel("skybox");
-	GameObject skyboxObject(skyboxModel);
+	GameObject skyboxObject(skyboxModel, spline);
 
 	// Create a texture and loadTexture
 	Texture skyboxTex("skurt.png");

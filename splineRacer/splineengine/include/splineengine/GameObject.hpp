@@ -20,30 +20,18 @@ class GameObject {
 		/// \param position : glm::vec3 position of the object (relative to the spline)
 		/// \param position : glm::vec3 scale    of the object 
 		/// \param position : glm::vec3 rotation of the object 
-		// TDOO : add isStatic to constructio params ?
+		// TDOO : add spline reference to gameObject ?
+		// TDOO : add isStatic to construction params ?
 		GameObject (
 			const Model& model = Model(),
 			const glm::vec3& sPosition = glm::vec3(0),
 			const glm::vec3& scale = glm::vec3(1),
 			const glm::vec3& rotation = glm::vec3(0)
-		)
-			:
-			_model(model),
-			_sPosition(sPosition),
-			_scale(scale),
-			_rotation(rotation)
-		{
-			// std::cout << "GameObject constructor " << std::endl;
-		};
+		);
 
 		/// \brief copy constructor
 		/// \param g : GameObject to copy from
-		GameObject(const GameObject& g)
-			:_model(g._model),
-			_sPosition(g._sPosition),
-			_scale(g._scale), 
-			_rotation(g._rotation)
-		{};
+		GameObject(const GameObject& g);
 		
 		/// \brief operators
 		// GameObject& operator=(const GameObject& g) {
@@ -70,7 +58,15 @@ class GameObject {
 
 		/// \brief Draw object
 		void draw() const;
-        
+
+		/// \brief is the gameobject intersecting another gameobject ? 
+		bool intersect(GameObject& other, const Spline& spline);
+
+		/// \brief trigger self collision behavior when colliding with other Gameobject 
+		// void doCollisionWith(GameObject other);
+		
+		/// \brief check if the gameobject intersects the other gameObject and trigger their collision behavior 
+		// void collideWith(GameObject other);
 
 		//CONST GETTERS
 		/// \brief Get the position of the object (relative to the spline) as a const reference

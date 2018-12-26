@@ -35,6 +35,21 @@ class Model {
 		/// \brief model Destructor
 		~Model();
 
+		// GETTERS //TODO : lose the "getXXX" syntax ?
+		/// \brief get VAO
+		GLuint getVAO() const { return _VAO; };
+
+		/// \brief get IBO
+		GLuint getIBO() const { return _IBO; };
+
+		/// \brief get Geometry
+		glimac::Geometry geometry() const { return _geometry; };
+
+		/// \brief collider non-const getter (to use as setter)
+		const Collider& collider() const { return _collider; };
+
+
+		// SETTERS // TODO : change for non-const getters ?
 		/// \brief set VBO of the model
 		/// \param geometry geometry of the model
 		void setVBO(const glimac::Geometry &geometry);
@@ -46,20 +61,8 @@ class Model {
 		/// \brief set VAO based on the VBO and VAO
 		void setVAO();
 
-		/// \brief get VAO
-		GLuint getVAO() const {
-			return _VAO;
-		};
-
-		/// \brief get IBO
-		GLuint getIBO() const {
-			return _IBO;
-		};
-
-		/// \brief get Geometry
-		glimac::Geometry geometry() const {
-			return _geometry;
-		};
+		/// \brief collider non-const getter (to use as setter)
+		Collider& collider() { return _collider; };
 
 	private:
 		/// \brief Contains the vertices and materials of the model

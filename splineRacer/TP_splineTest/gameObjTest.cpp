@@ -62,7 +62,8 @@ int main(int argc, char** argv) {
     //Model singeModel("singe");
     std::vector<GameObject> walls;
 
-    for (float t=2; t<spline.length(); t+=0.3f) {
+
+    for (float t=0; t<spline.length(); t+=0.3f) {
         walls.push_back (GameObject(
                 assetManager.models()[PLANEMODEL],
                 glm::vec3(t, t, 0.f),
@@ -134,11 +135,12 @@ int main(int argc, char** argv) {
         /*********************************
          * RENDERING CODE
          *********************************/
-        gameManager.update();
-
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        ////////////////////////////////////////////////////////////
+        // UPDATE
+
+        gameManager.update();
 
         //calcul des view matrix, model matrix, projection matrix
         glm::mat4 ProjMatrix = glm::perspective(glm::radians(110.f), 4.f/3.f, 0.1f, 100.f);
@@ -149,13 +151,19 @@ int main(int argc, char** argv) {
             player.update(settings.deltaTime());
         }
 
+        // to be put in a function in main architecture
+        for (float i=0; i<walls.size(); ++i) {
+            player.intersect(walls[i], spline);
+        }
+        
+        // END UPDATE
+        ////////////////////////////////////////////////////////////
+        // RENDER
 
-        //camMatrix = camMatrix * spline.camMatrix(player.sPosition()-0.5f*fwdVec);
         glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
-        //glm::mat4 camMatrix = spline.camMatrix(glm::vec3(1,0,2));
-
-        ////////////////////////////////////////////////////////////////
-        // gameobj stuff
+ 
+        /////////////////////////////////////////
+        // player render
 
         glm::mat4 MVMatrix;
 
@@ -177,6 +185,9 @@ int main(int argc, char** argv) {
 
         player.draw();
 
+        // end player render
+        /////////////////////////////////////////
+        // gameobjects render
         
         for (float i=0; i<walls.size(); ++i) {
             glm::mat4 MVMatrix;
@@ -195,12 +206,12 @@ int main(int argc, char** argv) {
             glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
             glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
 
-
             walls[i].draw();
         }
 
-        //end gameobj stuff
-        ////////////////////////////////////////////////////////////////
+        //end gameobj render
+        ////////////////////////////////
+
         // Update the display
         windowManager.swapBuffers();
         //fps count
@@ -209,9 +220,9 @@ int main(int argc, char** argv) {
                 //std::cout << "not lagging" << std::endl;
                 SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
             }
-
-
-
+        
+        // END RENDER
+        ////////////////////////////////////////////////////////////////
     }
 
     return EXIT_SUCCESS;

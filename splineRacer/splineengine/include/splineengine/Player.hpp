@@ -9,7 +9,7 @@ namespace splineengine {
 
 
 const glm::vec3 defaultPlayerPos          = glm::vec3(1.f, 0.f, 2.f);
-const float     defaultPlayerFwdSpeed     = 1.f;
+const float     defaultPlayerFwdSpeed     = 0.5f;
 const glm::vec3 defaultPlayerMaxSpeed     = glm::vec3(1.f, 7.f, 7.f);
 const glm::vec3 defaultPlayerAcceleration = glm::vec3(0.f, 7.f, 7.f);
   

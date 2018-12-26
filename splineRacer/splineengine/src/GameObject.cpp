@@ -5,6 +5,19 @@
 
 namespace splineengine {
 
+GameObject::GameObject (const Model& model, const glm::vec3& sPosition, const glm::vec3& scale, const glm::vec3& rotation)
+    :_model(model), _sPosition(sPosition), _scale(scale), _rotation(rotation)
+{
+    // std::cout << "GameObject constructor " << std::endl;
+};
+
+GameObject::GameObject(const GameObject& g)
+    :_model(g._model),
+    _sPosition(g._sPosition),
+    _scale(g._scale), 
+    _rotation(g._rotation)
+{};
+
 const glm::mat4 GameObject::matrix(const Spline& spline) {
     // if (_isStatic && _hasMatrix) {
     //     return _transformMat;
@@ -40,6 +53,20 @@ const glm::mat4 GameObject::matrix() {
     //     _hasMatrix = true;
     // }
     return objMatrix;
+}
+
+bool GameObject::intersect(GameObject& other, const Spline& spline) {
+    if (
+        _model.collider().intersect(
+            other._model.collider(),
+            matrix(spline),
+            other.matrix(spline)
+        )
+    ) {
+        std::cout << "COLLISION " << std::endl;
+        return true;
+    }
+        return false;
 }
 
 void GameObject::draw() const {

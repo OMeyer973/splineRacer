@@ -13,8 +13,11 @@ class Collider
 	public:
 	// METHODS
 		// CONSTRUCTORS - DESTRUCTORS
-		/// \brief default colider : no bounding box
-		Collider();
+		/// \brief default colider : center (0,0,0), radius 1
+		Collider(
+			const glm::vec3& position = glm::vec3(0),
+			const float radius = 1.f
+		);
 
 		/// \brief destructor
 		~Collider();
@@ -25,9 +28,9 @@ class Collider
         // SETTER
 		
 		// METHODS
-		// brief is the Collider colliding with another collider ? 
+		// brief is the Collider intersecting another collider ? 
 		// brief please provide self transform matrix & other transform matrix
-		bool collideWith(Collider other, glm::mat4 selfTransformMat, glm::mat4 otherTransformMat);
+		bool intersect(const Collider other, const glm::mat4 selfTransformMat, const glm::mat4 otherTransformMat) const;
 
 	// MEMBERS
 	protected:

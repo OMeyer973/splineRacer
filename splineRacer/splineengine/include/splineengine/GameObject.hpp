@@ -16,12 +16,12 @@ class GameObject {
 		// CONSTRUCTORS - DESTRUCTORS
 
 		/// \brief constructor from parameters
-		/// \param position : Model model of the obj
+		/// \param model 	: model of the obj
+		/// \param spline 	: Spline spline reference for the object position
+		/// \param isStatic : is the object unmovable ? 
 		/// \param position : glm::vec3 position of the object (relative to the spline)
-		/// \param position : glm::vec3 scale    of the object 
-		/// \param position : glm::vec3 rotation of the object 
-		// TDOO : add spline reference to gameObject ?
-		// TDOO : add isStatic to construction params ?
+		/// \param scale 	: glm::vec3 scale    of the object 
+		/// \param rotation : glm::vec3 rotation of the object 
 		GameObject (
 			const Model& model,
 			const Spline& spline,
@@ -61,12 +61,14 @@ class GameObject {
 		/// \brief is the gameobject intersecting another gameobject ? 
 		bool intersect(GameObject& other);
 
-		/// \brief trigger self collision behavior when colliding with other Gameobjects. 
+		/// \brief [virtual function] trigger collision behavior when colliding with another Gameobjects. 
 		/// \brief needs to be implemented for classes inheriting from GameObject
-		void doCollisionWith(GameObject other) {};
+		virtual void doCollisionWith(GameObject other) {
+			std::cout << "doing gameobject collision" << std::endl;
+		};
 		
 		/// \brief check if the gameobject intersects the other gameObject and trigger their collision behavior 
-		//void collideWith(GameObject other);
+		void collideWith(GameObject other);
 
 		//CONST GETTERS
 		/// \brief Get the position of the object (relative to the spline) as a const reference

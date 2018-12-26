@@ -11,7 +11,8 @@ namespace splineengine {
 const glm::vec3 defaultPlayerPos          = glm::vec3(1.f, 0.f, 2.f);
 const float     defaultPlayerFwdSpeed     = 0.5f;
 const glm::vec3 defaultPlayerMaxSpeed     = glm::vec3(1.f, 7.f, 7.f);
-const glm::vec3 defaultPlayerAcceleration = glm::vec3(0.f, 7.f, 7.f);
+const glm::vec3 defaultPlayerAcceleration = glm::vec3(3.f, 7.f, 7.f);
+const glm::vec3 defaultPlayerBounceFactor = glm::vec3(2.f, 4.f, 4.f); //careful with these or you can go through walls or get launched to infinity. above 2 looks kinda safe
   
 
 /// \brief Represents the player as a Gameobject but with more useful stuff
@@ -67,6 +68,9 @@ class Player : public GameObject {
 
         /// \brief update the player status at each frame
         void update(const float dt);
+
+        /// \brief trigger collision behavior when colliding with another Gameobjects. 
+        void doCollisionWith(GameObject other);
 
         /// \brief Overriden function to draw the plane
         // void draw() const;

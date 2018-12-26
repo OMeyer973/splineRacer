@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
     for (float t=0; t<spline.length(); t+=0.3f) {
         walls.push_back (GameObject(
                 assetManager.models()[PLANEMODEL], spline, true,
-                glm::vec3(t, t, 0.f),
+                glm::vec3(t, 5*t, (int)t%10),
                 glm::vec3(0.4f, 0.4f, 0.4f),
                 glm::vec3(0.0f, 0.0f, 0.f)
         ));
@@ -146,14 +146,14 @@ int main(int argc, char** argv) {
         glm::mat4 ProjMatrix = glm::perspective(glm::radians(110.f), 4.f/3.f, 0.1f, 100.f);
 
 
+        // to be put in a function in main architecture
+        for (float i=0; i<walls.size(); ++i) {
+            player.collideWith(walls[i]);
+        }
+
         //updating player inner variables (speed, position...)
         if (!displayInGameMenu) {
             player.update(settings.deltaTime());
-        }
-
-        // to be put in a function in main architecture
-        for (float i=0; i<walls.size(); ++i) {
-            player.intersect(walls[i]);
         }
         
         // END UPDATE

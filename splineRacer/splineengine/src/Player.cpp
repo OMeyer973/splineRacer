@@ -15,7 +15,8 @@ Player::Player(
     :GameObject(gameObject),
     _sSpeed(fwdSpeed, 0.f, 0.f), // initial speed is only forward
     _sMaxSpeed(maxSpeed),
-    _sAcceleration(acceleration)
+    _sAcceleration(acceleration),
+    _sInput(1.f, 0.f, 0.f)
 {
 
 }
@@ -27,6 +28,8 @@ void Player::updateSpeed(const float dt) {
 
 	// the higher you are, the slower you rotate
 	_sSpeed[LEFT]  = glm::mix(_sSpeed[LEFT],  _sMaxSpeed[LEFT] *  _sInput[LEFT] / glm::max(_sPosition[UP],1.f),  _sAcceleration[LEFT] * dt);
+
+	glm::clamp(_sSpeed, -defaultPlayerMaxSpeed, defaultPlayerMaxSpeed);
 }
 
 void Player::updatePosition(const float dt) {
@@ -39,6 +42,15 @@ void Player::update(const float dt) {
 	updateSpeed(dt);	
 	updatePosition(dt);	
 }
+
+
+void Player::doCollisionWith(GameObject other) {
+	std::cout << "doing player collision behaviour" << std::endl;
+	_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
+}
+
+
+
 
 // void Player::draw() const {
 	// // Dessin de l'OBJ Plane

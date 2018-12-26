@@ -47,10 +47,17 @@ bool GameObject::intersect(GameObject& other) {
             other.matrix()
         )
     ) {
-        std::cout << "COLLISION " << std::endl;
         return true;
     }
         return false;
+}
+
+void GameObject::collideWith(GameObject other) {
+    if (intersect(other)) {
+        std::cout << "doing collision stuff " << std::endl;
+        doCollisionWith(other);
+        other.doCollisionWith(*this);
+    }
 }
 
 void GameObject::draw() const {

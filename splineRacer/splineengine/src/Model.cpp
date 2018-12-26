@@ -26,12 +26,12 @@ namespace splineengine {
 
 	Model::Model(const Model &model):
 		_geometry(model._geometry),
-		_VBO(model._VBO),
-		_IBO(model._IBO),
-		_VAO(model._VAO),
 		_collider(model._collider)
 	{
 		std::cout << "Model: Copy Constructor" << std::endl;
+		setVBO(_geometry);
+		setIBO(_geometry);
+		setVAO();
 	};
 
 	/* Destructor */

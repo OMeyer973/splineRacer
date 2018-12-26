@@ -58,14 +58,14 @@ int main(int argc, char** argv) {
 
 
     // TODO : truc chelou ici : si on ne créé pas le Model planeModel("plane"); -> les models ne s'affichent pas correctement
-    Model planeModel("plane");
-    //Model singeModel("singe");
+    // Model planeModel("plane");
+    // Model singeModel("singe");
     std::vector<GameObject> walls;
 
 
     for (float t=0; t<spline.length(); t+=0.3f) {
         walls.push_back (GameObject(
-                assetManager.models()[PLANEMODEL], spline, true,
+                assetManager.models()[SINGEMODEL], spline, true,
                 glm::vec3(t, 5*t, (int)t%10),
                 glm::vec3(0.4f, 0.4f, 0.4f),
                 glm::vec3(0.0f, 0.0f, 0.f)

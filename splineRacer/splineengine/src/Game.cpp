@@ -5,7 +5,12 @@ namespace splineengine {
 
 Game::Game()
 	:
-	_player(GameObject(AssetManager::instance().models()[PLANEMODEL], _spline, false)), 
+	_player(GameObject(
+		AssetManager::instance().models()[PLANEMODEL], _spline, false,
+		glm::vec3(0, 0, 10),
+		glm::vec3(.5f, .5f, .5f),
+		glm::vec3(0.f, 0.f, 0.f)
+	)), 
 	_spline()
 {
 	std::cout << "infinite game constructor called " << std::endl;
@@ -38,15 +43,15 @@ void Game::loadLevel() {
 	AssetManager& assetManager = AssetManager::instance();
 
 	// TODO : build list from class Obstacle instead of GameObject
-	for (float i=0; i<10; ++i) {
+	for (float i=0; i<_spline.length(); i+=.3f) {
         _obstacles.push_back (GameObject(
         	assetManager.models()[SINGEMODEL], _spline, true,
-            glm::vec3(i/8, i/16, 0), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
-            glm::vec3(1.f, 1.f, 1.f),
-            glm::vec3(0.0f, 0.0f, i/5)
+            glm::vec3(i, 0, 0), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
+            glm::vec3(.5f, .5f, .5f),
+            glm::vec3(0.f, 0.f, 0.f)
         ));
 
-        std::cout << "gameobj  spline pos " << _obstacles[i].sPosition() << std::endl;
+        std::cout << "gameobj spline pos " << _obstacles[i].sPosition() << std::endl;
     }
 
     glEnable(GL_DEPTH_TEST);
@@ -55,7 +60,7 @@ void Game::loadLevel() {
 
 void Game::update() {
 	// TODO
-	_player.update(Settings::instance().deltaTime()/100);
+	_player.update(Settings::instance().deltaTime());
 }
 
 

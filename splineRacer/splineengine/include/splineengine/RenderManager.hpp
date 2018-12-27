@@ -19,7 +19,9 @@ class RenderManager {
 
 		/// \brief Default constructor
 		RenderManager()
-		{};
+		{
+			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 200.f);
+		};
 
 		RenderManager(Camera &camera) {
 			std::cout << "rendermanager construction from camera : " << std::endl

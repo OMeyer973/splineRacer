@@ -212,8 +212,8 @@ int main(int argc, char** argv) {
 		// Update MVMatrix according to the object's transformation
 		renderManager.updateMVMatrix(*cameras[chosenCamera], MVMatrix);
 		// Send uniforms to shaders
-		renderManager.useProgram(NORMAL);
-		renderManager.applyTransformations(NORMAL, renderManager.MVMatrix());
+		renderManager.useProgram(DIRECTIONAL_LIGHT);
+		renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
 
 		// Texture binding
 		glBindTexture(GL_TEXTURE_2D, planeTex.getTextureID());

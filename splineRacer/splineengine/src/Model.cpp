@@ -43,7 +43,6 @@ namespace splineengine {
 
 	/* Methods */
 	void Model::setVBO(const glimac::Geometry &geometry) {
-		std::cout << "Model::setVBO called" << std::endl;
 		GLuint vbo;
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -53,7 +52,6 @@ namespace splineengine {
 	}
 
 	void Model::setIBO(const glimac::Geometry &geometry) {
-		std::cout << "Model::setIBO called" << std::endl;
 		GLuint ibo;
 		glGenBuffers(1, &ibo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
@@ -63,7 +61,6 @@ namespace splineengine {
 	}
 
 	void Model::setVAO() {
-		std::cout << "Model::setVAO called" << std::endl;
 		GLuint vao;
 		glGenVertexArrays(1, &vao);
 		glBindVertexArray(vao);
@@ -84,8 +81,6 @@ namespace splineengine {
 
 		glBindVertexArray(0);
 		_VAO = vao;
-		std::cout << "VAO : " << vao << std::endl;
-
 	};
 
 }

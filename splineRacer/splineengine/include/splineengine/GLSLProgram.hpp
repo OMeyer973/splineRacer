@@ -77,12 +77,13 @@ struct DirectionalLightProgram {
         uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
         uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
         uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
-
         uTexture = glGetUniformLocation(_program.getGLId(), "uTexture");
+
         // Variables uniformes materiaux
         uKd = glGetUniformLocation(_program.getGLId(), "uKd");
         uKs = glGetUniformLocation(_program.getGLId(), "uKs");
         uShininess = glGetUniformLocation(_program.getGLId(), "uShininess");
+        
         // Variables uniformes lumieres
         uLightDir_vs = glGetUniformLocation(_program.getGLId(), "uLightDir_vs");
         uLightIntensity = glGetUniformLocation(_program.getGLId(), "uLightIntensity");

@@ -36,8 +36,7 @@ void RenderManager::useProgram(FS shader) {
 
 void RenderManager::applyTransformations(FS shader, glm::mat4 matrix)
 {
-    glm::mat4 lightMatrix;
-    glm::vec4 lightVector;
+    glm::vec3 lightVector(_MVMatrix * glm::vec4(1, 1, 1, 0));
 
     const ProgramList& programList = AssetManager::instance().programList();
 
@@ -72,23 +71,20 @@ void RenderManager::applyTransformations(FS shader, glm::mat4 matrix)
         case DIRECTIONAL_LIGHT :
             glUniform1i(programList.directionalLightProgram.uTexture, 0);
             // White Color to keep the correct color
-            glUniform3f(programList.directionalLightProgram.uColor, 1.0,1.0,1.0);
+            glUniform3f(programList.directionalLightProgram.uColor, 1.0, 1.0, 1.0);
 
-            //lightMatrix = glm::rotate(_MVMatrix, 180.f, glm::vec3(1,1,1));
-            lightMatrix = glm::mat4();
-            lightVector = glm::normalize(glm::vec4(1,1,1,0)*lightMatrix);
-            glUniform3f(programList.directionalLightProgram.uLightDir_vs, lightVector.x, lightVector.y, lightVector.z);
-
-            glUniform3f(programList.directionalLightProgram.uLightIntensity, 2.0,2.0,2.0);
+            glUniform3fv(programList.directionalLightProgram.uLightDir_vs, 1, glm::value_ptr(lightVector));
+            glUniform3f(programList.directionalLightProgram.uLightIntensity, 1.2f, 1.2f, 1.2f);
+            glUniform3f(programList.directionalLightProgram.uKd, .5, .5, .5);
+            glUniform3f(programList.directionalLightProgram.uKs, .5, .5, .5);
+            glUniform1f(programList.directionalLightProgram.uShininess, 1);
 
             glUniformMatrix4fv(programList.directionalLightProgram.uMVPMatrix, 1, GL_FALSE,
-            glm::value_ptr(_projMatrix * matrix));
-
+                glm::value_ptr(_projMatrix * matrix));
             glUniformMatrix4fv(programList.directionalLightProgram.uMVMatrix, 1, GL_FALSE,
-            glm::value_ptr(matrix));
-
+                glm::value_ptr(matrix));
             glUniformMatrix4fv(programList.directionalLightProgram.uNormalMatrix, 1, GL_FALSE,
-            glm::value_ptr(glm::transpose(glm::inverse(matrix))));
+                glm::value_ptr(glm::transpose(glm::inverse(matrix))));
             break;
 
         default :

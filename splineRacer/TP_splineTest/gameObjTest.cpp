@@ -54,7 +54,12 @@ int main(int argc, char** argv) {
 
     glimac::Sphere sphere(2, 3, 2);
     Spline spline;
-    Player player (GameObject(assetManager.models()[PLANEMODEL], spline, false));
+    Player player(GameObject(
+        assetManager.models()[PLANEMODEL], spline, false, 
+        glm::vec3(0, 0, 0),
+        glm::vec3(.5f, .5f, .5f),
+        glm::vec3(0.0f, 0.0f, 0.f)
+    ));
 
 
     // TODO : truc chelou ici : si on ne créé pas le Model planeModel("plane"); -> les models ne s'affichent pas correctement
@@ -62,16 +67,14 @@ int main(int argc, char** argv) {
     // Model singeModel("singe");
     std::vector<GameObject> walls;
 
-
-    for (float t=0; t<spline.length(); t+=0.3f) {
-        walls.push_back (GameObject(
-                assetManager.models()[SINGEMODEL], spline, true,
-                glm::vec3(t, 5*t, (int)t%10),
-                glm::vec3(0.4f, 0.4f, 0.4f),
-                glm::vec3(0.0f, 0.0f, 0.f)
+    for (float t=0; t<spline.length(); t+=.3f) {
+        walls.push_back(GameObject(
+            assetManager.models()[SINGEMODEL], spline, true,
+            glm::vec3(t, 5*t, (int)t%10),
+            glm::vec3(1.f, 1.f, 1.f),
+            glm::vec3(0.0f, 0.0f, 0.f)
         ));
     }
-
 
     // Charger et compiler les shaders
     glimac::Program program = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",

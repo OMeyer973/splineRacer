@@ -45,30 +45,17 @@ int main(int argc, char** argv) {
 
 	glEnable(GL_DEPTH_TEST); // Permet d'activer le test de profondeur du GPU
 
-	// Debug: on affiche les infos de tous les models chargés
-	std::map<int, Model> models = AssetManager::instance().models();
-	std::map<int, Model>::iterator it = models.begin();
-	while(it != models.end()) {
-		std::cout << it->first << " a " << it->second.geometry().getIndexCount() << " indices." << std::endl;
-		std::cout << "	VAO: " << it->second.getVAO() << std::endl;
-		std::cout << "	IBO: " << it->second.getIBO() << std::endl;
-		std::cout << "	VBO: " << it->second.getVBO() << std::endl;
-		it++;
-	}
-
-	// Create the plane model and create VBO, IBO, VAO based on the geometry
-	Model planeModel("singe");
-	GameObject planeObject(models[PLANEMODEL], spline);
+	// Create the plane object
+	GameObject planeObject(assetManager.models()[PLANEMODEL], spline);
 
 	// Create a texture and load texture
 	Texture planeTex("planetexture2.jpg");
 	planeTex.loadTexture();
 
-	// Create the model and create VBO, IBO, VAO based on the geometry
-	Model skyboxModel("skybox");
-	GameObject skyboxObject(skyboxModel, spline);
+	// Create the skybox object
+	GameObject skyboxObject(assetManager.models()[SKYBOXMODEL], spline);
 
-	// Create a texture and loadTexture
+	// Create a texture and load it
 	Texture skyboxTex("skurt.png");
 	skyboxTex.loadTexture();
 
@@ -111,12 +98,14 @@ int main(int argc, char** argv) {
 							chosenCamera = (chosenCamera == TRACKBALL_CAMERA) ? POV_CAMERA : TRACKBALL_CAMERA;
 							break;
 						case SDLK_UP:
-							if (chosenCamera == TRACKBALL_CAMERA)
+							if (chosenCamera == TRACKBALL_CAMERA) {
 								cameras[chosenCamera]->moveFront(zoom);
+							}
 							break;
 						case SDLK_DOWN:
-							if (chosenCamera == TRACKBALL_CAMERA)
+							if (chosenCamera == TRACKBALL_CAMERA) {
 								cameras[chosenCamera]->moveFront(-zoom);
+							}
 							break;
 						default:
 							break;
@@ -142,8 +131,6 @@ int main(int argc, char** argv) {
 		 *********************************/
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		renderManager.useProgram(NORMAL);
-
 		// Object transform
 		planeObject.sPosition() = glm::vec3(0);
 		planeObject.scale() = glm::vec3(1);
@@ -152,7 +139,8 @@ int main(int argc, char** argv) {
 		// Update MVMatrix according to the object's transformation
 		renderManager.updateMVMatrix(*cameras[chosenCamera], planeObject.matrix());
 		// Send uniforms to shaders
-		renderManager.applyTransformations(NORMAL, renderManager.MVMatrix());
+		renderManager.useProgram(DIRECTIONAL_LIGHT);
+		renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
 
 		// Texture binding
 		glBindTexture(GL_TEXTURE_2D, planeTex.getTextureID());

@@ -30,6 +30,8 @@ void Player::updateSpeed(const float dt) {
 	_sSpeed[LEFT]  = glm::mix(_sSpeed[LEFT],  _sMaxSpeed[LEFT] *  _sInput[LEFT] / glm::max(_sPosition[UP],1.f),  _sAcceleration[LEFT] * dt);
 
 	glm::clamp(_sSpeed, -defaultPlayerMaxSpeed, defaultPlayerMaxSpeed);
+	// Rotate player when he moves
+	_rotation = glm::vec3(_sSpeed[LEFT]*.3, _sSpeed[UP]*.05, 0);
 }
 
 void Player::updatePosition(const float dt) {
@@ -39,8 +41,8 @@ void Player::updatePosition(const float dt) {
 void Player::update(const float dt) {
 	_sInput[LEFT] = glm::clamp(_sInput[LEFT], -1.f, 1.f);
 	_sInput[UP] = glm::clamp(_sInput[UP], -1.f, 1.f);
-	updateSpeed(dt);	
-	updatePosition(dt);	
+	updateSpeed(dt);
+	updatePosition(dt);
 }
 
 

@@ -60,7 +60,13 @@ void Game::loadLevel() {
 
 void Game::update() {
 	// TODO
+	// Update player position and speed
 	_player.update(Settings::instance().deltaTime());
+	
+	// check for collisions
+	for (float i=0; i<_obstacles.size(); ++i) {
+		_player.collideWith(_obstacles[i]);
+	}
 }
 
 
@@ -69,7 +75,6 @@ void Game::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 camMatrix = _spline.camMatrix(_player.sPosition());
-
 	glm::mat4 MVMatrix = camMatrix * _player.matrix();
 
 	// Update MVMatrix according to the object's transformation
@@ -77,11 +82,13 @@ void Game::render() {
 	_renderManager.useProgram(NORMAL);
 	_renderManager.applyTransformations(NORMAL, _renderManager.MVMatrix());
 
+	// Draw the player
 	_player.draw();
 
+	// Draw obstacles
 	for (float i=0; i<_obstacles.size(); ++i) {
 
-		// get the transform matrix of the object
+		// Get the transform matrix of the current obstacle
 		MVMatrix = camMatrix * _obstacles[i].matrix();
 
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
@@ -89,7 +96,6 @@ void Game::render() {
 		_renderManager.applyTransformations(NORMAL, _renderManager.MVMatrix());
 
 	    _obstacles[i].draw();
-
     }
 
 }

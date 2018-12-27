@@ -61,15 +61,9 @@ void GameObject::collideWith(GameObject other) {
 }
 
 void GameObject::draw() const {
-    // std::cout << "DRAWING OBJ: " << std::endl;
-    // std::cout << "Index count: "  << _model.geometry().getIndexCount() << std::endl;
-    // std::cout << "IBO: "  << _model.getIBO() << std::endl;
-    // std::cout << "VBO: "  << _model.getVBO() << std::endl;
-    // std::cout << "VAO: "  << _model.getVAO() << std::endl;
-    glBindVertexArray(_model.getVAO());
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _model.getIBO());
+    glBindVertexArray(_model.VAO());
+    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _model.IBO());
     glDrawElements(GL_TRIANGLES, _model.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
 

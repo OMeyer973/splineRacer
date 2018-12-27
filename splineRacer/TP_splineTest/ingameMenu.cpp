@@ -268,7 +268,7 @@ int main(int argc, char** argv) {
             glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
             glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
 
-            glBindVertexArray(menuModel.getVAO());
+            glBindVertexArray(menuModel.VAO());
 
             //chargement des textures
 
@@ -321,7 +321,7 @@ int main(int argc, char** argv) {
         glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
         glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
 
-        glBindVertexArray(skyBox.getVAO());
+        glBindVertexArray(skyBox.VAO());
 
         //chargement des textures
 

@@ -35,14 +35,14 @@ class Model {
 		/// \brief model Destructor
 		~Model();
 
-		// GETTERS //TODO : lose the "getXXX" syntax ?
+		// GETTERS
 		/// \brief get VAO
-		const GLuint getVAO() const { return _VAO; };
+		const GLuint VAO() const { return _VAO; };
 
-		const GLuint getVBO() const { return _VBO; };
+		const GLuint VBO() const { return _VBO; };
 
 		/// \brief get IBO
-		const GLuint getIBO() const { return _IBO; };
+		const GLuint IBO() const { return _IBO; };
 
 		/// \brief get Geometry
 		glimac::Geometry geometry() const { return _geometry; };

@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
 	Spline spline;
 	Player player(GameObject(
 		assetManager.models()[PLANEMODEL], spline, false, 
-		glm::vec3(0, 0, 0),
+		glm::vec3(0, 0, 5),
 		glm::vec3(.5f, .5f, .5f),
 		glm::vec3(0.0f, 0.0f, 0.f)
 	));

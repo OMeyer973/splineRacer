@@ -50,8 +50,8 @@ class Model {
 		/// \brief collider non-const getter (to use as setter)
 		const Collider& collider() const { return _collider; };
 
-
 		// SETTERS // TODO : change for non-const getters ?
+		// NON-CONST GETTERS (can be used as setters)
 		/// \brief set VBO of the model
 		/// \param geometry geometry of the model
 		void setVBO(const glimac::Geometry &geometry);

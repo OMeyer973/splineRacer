@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
 	}
 
 	// Application loop:
-	while(!gameManager.exiting()) {	
+	while(!gameManager.exiting()) {
 
 		// Event loop:
 		SDL_Event e;

@@ -1,10 +1,12 @@
 #include <splineengine/Game.hpp>
-#include <splineengine/CubeMap.hpp>
+// #include <splineengine/CubeMap.hpp>
 
 namespace splineengine {
 
 Game::Game()
-	:_player(), _spline()
+	:
+	_player(GameObject(AssetManager::instance().models()[PLANEMODEL], _spline, false)), 
+	_spline()
 {
 	std::cout << "infinite game constructor called " << std::endl;
 	_cameras.emplace_back(new POVCamera());
@@ -34,14 +36,13 @@ void Game::loadLevel(std::string levelName) {
 void Game::loadLevel() {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
-    Settings& settings = Settings::instance();
 
 	// TODO : build list from class Obstacle instead of GameObject
-	for (float i=0; i<5; ++i) {
+	for (float i=0; i<10; ++i) {
         _obstacles.push_back (GameObject(
-        	assetManager.models()[PLANEMODEL], _spline, true,
-            glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
-            glm::vec3(0.4f, 0.4f, 0.4f),
+        	assetManager.models()[SINGEMODEL], _spline, true,
+            glm::vec3(i/8, i/16, 0), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
+            glm::vec3(1.f, 1.f, 1.f),
             glm::vec3(0.0f, 0.0f, i/5)
         ));
 
@@ -54,19 +55,32 @@ void Game::loadLevel() {
 
 void Game::update() {
 	// TODO
+	_player.update(Settings::instance().deltaTime()/100);
 }
 
 
 void Game::render() {
 	// TODO
-
-	_renderManager.useProgram(NORMAL);
-	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+
+	glm::mat4 camMatrix = _spline.camMatrix(_player.sPosition());
+
+	glm::mat4 MVMatrix = camMatrix * _player.matrix();
+
+	// Update MVMatrix according to the object's transformation
+	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+	_renderManager.useProgram(NORMAL);
+	_renderManager.applyTransformations(NORMAL, _renderManager.MVMatrix());
+
+	_player.draw();
+
 	for (float i=0; i<_obstacles.size(); ++i) {
 
-		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], _obstacles[i].matrix());
+		// get the transform matrix of the object
+		MVMatrix = camMatrix * _obstacles[i].matrix();
+
+		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+		_renderManager.useProgram(NORMAL);
 		_renderManager.applyTransformations(NORMAL, _renderManager.MVMatrix());
 
 	    _obstacles[i].draw();

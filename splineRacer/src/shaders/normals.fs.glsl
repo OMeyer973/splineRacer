@@ -8,5 +8,5 @@ out vec3 fFragColor;
 
 void main() {
 	fFragColor = normalize(vFragNormal.xyz);
-	fFragColor = vec3(1, 0, 0);
+	// fFragColor = vec3(1, 0, 0);
 };

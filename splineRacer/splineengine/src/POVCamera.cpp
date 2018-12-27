@@ -7,7 +7,7 @@ namespace splineengine {
 
 // Constructor
 POVCamera::POVCamera()
-	:_position(glm::vec3(0.0f, 0.0f, 5.0f)), 
+	:_position(glm::vec3(0.0f, 0.0f, -1.0f)), 
 	 _fPhi(M_PI),
 	 _fTheta(0.0f)
 {

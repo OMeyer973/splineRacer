@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
 	//
 	// skybox.loadCubeMap();
 
-	// Create the Camera
+	// Create the Cameras
 	std::vector<std::unique_ptr<Camera>> cameras; // Contains two pointers on camera
 	cameras.emplace_back(new POVCamera());
 	cameras.emplace_back(new TrackballCamera());

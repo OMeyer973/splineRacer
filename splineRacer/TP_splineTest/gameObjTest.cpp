@@ -10,6 +10,7 @@
 
 #include <splineengine/GameManager.hpp>
 #include <splineengine/Settings.hpp>
+#include <splineengine/RenderManager.hpp>
 #include <splineengine/GameObject.hpp>
 #include <splineengine/Player.hpp>
 #include <splineengine/Spline.hpp>
@@ -29,204 +30,237 @@ using namespace splineengine;
 int initial_time = time(NULL), final_time, frame_count;
 
 int main(int argc, char** argv) {
-    // Initialize SDL and open a window
-    glimac::SDLWindowManager windowManager(800, 600, "splineRacer");
+	// Initialize SDL and open a window
+	glimac::SDLWindowManager windowManager(800, 600, "splineRacer");
 
-    // Initialize glew for OpenGL3+ support
-    GLenum glewInitError = glewInit();
-    if(GLEW_OK != glewInitError) {
-        std::cerr << glewGetErrorString(glewInitError) << std::endl;
-        return EXIT_FAILURE;
-    }
+	// Initialize glew for OpenGL3+ support
+	GLenum glewInitError = glewInit();
+	if(GLEW_OK != glewInitError) {
+		std::cerr << glewGetErrorString(glewInitError) << std::endl;
+		return EXIT_FAILURE;
+	}
 
-    std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
-    std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
+	std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
+	std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 
-    /*********************************
-     * INITIALIZATION CODE
-     *********************************/
-    glimac::FilePath applicationPath(argv[0]);
-    
-    Settings& settings = Settings::instance();
-    settings.appPath() = glimac::FilePath(argv[0]);
-    GameManager& gameManager = GameManager::instance();
-    AssetManager& assetManager = AssetManager::instance();
+	/*********************************
+	 * INITIALIZATION CODE
+	 *********************************/
+	glimac::FilePath applicationPath(argv[0]);
+	
+	Settings& settings = Settings::instance();
+	settings.appPath() = glimac::FilePath(argv[0]);
+	GameManager& gameManager = GameManager::instance();
+	AssetManager& assetManager = AssetManager::instance();
 
-    glimac::Sphere sphere(2, 3, 2);
-    Spline spline;
-    Player player(GameObject(
-        assetManager.models()[PLANEMODEL], spline, false, 
-        glm::vec3(0, 0, 0),
-        glm::vec3(.5f, .5f, .5f),
-        glm::vec3(0.0f, 0.0f, 0.f)
-    ));
+	glimac::Sphere sphere(2, 3, 2);
+	Spline spline;
+	Player player(GameObject(
+		assetManager.models()[PLANEMODEL], spline, false, 
+		glm::vec3(0, 0, 0),
+		glm::vec3(.5f, .5f, .5f),
+		glm::vec3(0.0f, 0.0f, 0.f)
+	));
 
+	// Create a texture for the plane and load it
+	Texture planeTex("planetexture2.jpg");
+	planeTex.loadTexture();
 
-    // TODO : truc chelou ici : si on ne créé pas le Model planeModel("plane"); -> les models ne s'affichent pas correctement
-    // Model planeModel("plane");
-    // Model singeModel("singe");
-    std::vector<GameObject> walls;
+	Texture singeTex("planetexture.jpg");
+	singeTex.loadTexture();
 
-    for (float t=0; t<spline.length(); t+=.3f) {
-        walls.push_back(GameObject(
-            assetManager.models()[SINGEMODEL], spline, true,
-            glm::vec3(t, 5*t, (int)t%10),
-            glm::vec3(1.f, 1.f, 1.f),
-            glm::vec3(0.0f, 0.0f, 0.f)
-        ));
-    }
+	// Création des obstacles
+	std::vector<GameObject> walls;
 
-    // Charger et compiler les shaders
-    glimac::Program program = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
-                                applicationPath.dirPath() + "shaders/normals.fs.glsl");
-    program.use(); // Indiquer a OpenGL de les utiliser
+	for (float t=0; t<spline.length(); t+=.3f) {
+		walls.push_back(GameObject(
+			assetManager.models()[SINGEMODEL], spline, true,
+			glm::vec3(t, 5*t, (int)t%10),
+			glm::vec3(1.f, 1.f, 1.f),
+			glm::vec3(0.0f, 0.0f, 0.f)
+		));
+	}
 
+	// Charger et compiler les shaders
+	// glimac::Program program = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
+	//                             applicationPath.dirPath() + "shaders/normals.fs.glsl");
+	// program.use(); // Indiquer a OpenGL de les utiliser
 
+	// Create the Cameras
+	std::vector<std::unique_ptr<Camera>> cameras; // Contains two pointers on camera
+	cameras.emplace_back(new POVCamera());
+	cameras.emplace_back(new TrackballCamera());
+	int chosenCamera = TRACKBALL_CAMERA;
 
-    glEnable(GL_DEPTH_TEST);
-    bool displayInGameMenu = false;
-    // Application loop:
-    bool done = false;
-    while(!done) {
-        //set tickers to 0 for framerate cap
-        Uint32 startTime = SDL_GetTicks();
-        // Event loop:
-        SDL_Event e;
-        while(windowManager.pollEvent(e)) {
-            switch (e.type) {
-                case SDL_QUIT :
-                    done = true; // Leave the loop after this iteration
-                    break;
-            case SDL_KEYDOWN:
-                if (e.key.keysym.sym==SDLK_q){ //going left
-                    player.goingLeft() = 1.f;
-                }
-                if (e.key.keysym.sym==SDLK_d){//going right
-                    player.goingLeft() = -1.f;
-                }
-                 if (e.key.keysym.sym==SDLK_z){//going up
-                    player.goingUp() = 1.f;
-                }
-                if (e.key.keysym.sym==SDLK_s){//going down
-                    player.goingUp() = -1.f;
-                }
-                if(e.key.keysym.sym==SDLK_ESCAPE && !displayInGameMenu){
-                    displayInGameMenu = true;
-                }else if(e.key.keysym.sym == SDLK_ESCAPE && displayInGameMenu ){
-                    displayInGameMenu = false;
-                }
+	// Init render manager
+	RenderManager renderManager(*cameras[chosenCamera]);
 
-                break;
+	// 
+	float cameraRotateSpeed = 0.4f;
+	float zoom = 1.0f;
 
-            case SDL_KEYUP:
-                if (e.key.keysym.sym==SDLK_q && player.goingLeft() > 0) {//stop going left
-                    player.goingLeft() = 0.f;
-                }
-                if (e.key.keysym.sym==SDLK_d && player.goingLeft() < 0) {//stop going right
-                    player.goingLeft() = 0.f;
-                }
-                if (e.key.keysym.sym==SDLK_z && player.goingUp() > 0) {//stop going up
-                    player.goingUp() = 0.f;
-                }
-                if (e.key.keysym.sym==SDLK_s && player.goingUp() < 0){//stop going down
-                    player.goingUp() = 0.f;
-                    ;
-                }
-                break;
-            }
-        }
-        /*********************************
-         * RENDERING CODE
-         *********************************/
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
+	bool displayInGameMenu = false;
+	
+	// Application loop:
+	bool done = false;
+	while(!done) {
+		//set tickers to 0 for framerate cap
+		Uint32 startTime = SDL_GetTicks();
+		// Event loop:
+		SDL_Event e;
+		while(windowManager.pollEvent(e)) {
+			switch (e.type) {
+				case SDL_QUIT :
+					done = true; // Leave the loop after this iteration
+					break;
+			case SDL_KEYDOWN:
+				if (e.key.keysym.sym==SDLK_q){ //going left
+					player.goingLeft() = 1.f;
+				}
+				if (e.key.keysym.sym==SDLK_d){//going right
+					player.goingLeft() = -1.f;
+				}
+				 if (e.key.keysym.sym==SDLK_z){//going up
+					player.goingUp() = 1.f;
+				}
+				if (e.key.keysym.sym==SDLK_s){//going down
+					player.goingUp() = -1.f;
+				}
+				if(e.key.keysym.sym==SDLK_ESCAPE && !displayInGameMenu){
+					displayInGameMenu = true;
+				}else if(e.key.keysym.sym == SDLK_ESCAPE && displayInGameMenu ){
+					displayInGameMenu = false;
+				}
 
-        ////////////////////////////////////////////////////////////
-        // UPDATE
+				// Camera handling
+				if (e.key.keysym.sym==SDLK_c){
+					chosenCamera = (chosenCamera == TRACKBALL_CAMERA) ? POV_CAMERA : TRACKBALL_CAMERA;
+				}
+				if (e.key.keysym.sym==SDLK_UP){
+					if (chosenCamera == TRACKBALL_CAMERA) {
+						cameras[chosenCamera]->moveFront(zoom);
+					}
+				}
+				if (e.key.keysym.sym==SDLK_DOWN){
+					if (chosenCamera == TRACKBALL_CAMERA) {
+						cameras[chosenCamera]->moveFront(-zoom);
+					}
+				}
+				break;
 
-        gameManager.update();
+			case SDL_KEYUP:
+				if (e.key.keysym.sym==SDLK_q && player.goingLeft() > 0) {//stop going left
+					player.goingLeft() = 0.f;
+				}
+				if (e.key.keysym.sym==SDLK_d && player.goingLeft() < 0) {//stop going right
+					player.goingLeft() = 0.f;
+				}
+				if (e.key.keysym.sym==SDLK_z && player.goingUp() > 0) {//stop going up
+					player.goingUp() = 0.f;
+				}
+				if (e.key.keysym.sym==SDLK_s && player.goingUp() < 0){//stop going down
+					player.goingUp() = 0.f;
+				}
+				break;
+			case SDL_MOUSEMOTION:
+				if (windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
+					if (e.motion.xrel != 0) {
+						cameras[chosenCamera]->rotateLeft(e.motion.xrel * cameraRotateSpeed);
+					}
+					if (e.motion.yrel != 0) {
+						cameras[chosenCamera]->rotateUp(e.motion.yrel * cameraRotateSpeed);
+					}
+					break;
+				}
+			}
+		}
+		/*********************************
+		 * RENDERING CODE
+		 *********************************/
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //calcul des view matrix, model matrix, projection matrix
-        glm::mat4 ProjMatrix = glm::perspective(glm::radians(110.f), 4.f/3.f, 0.1f, 100.f);
+		////////////////////////////////////////////////////////////
+		// UPDATE
 
+		gameManager.update();
 
-        // to be put in a function in main architecture
-        for (float i=0; i<walls.size(); ++i) {
-            player.collideWith(walls[i]);
-        }
+		// to be put in a function in main architecture
+		for (float i=0; i<walls.size(); ++i) {
+			player.collideWith(walls[i]);
+		}
 
-        //updating player inner variables (speed, position...)
-        if (!displayInGameMenu) {
-            player.update(settings.deltaTime());
-        }
-        
-        // END UPDATE
-        ////////////////////////////////////////////////////////////
-        // RENDER
+		//updating player inner variables (speed, position...)
+		if (!displayInGameMenu) {
+			player.update(settings.deltaTime());
+		}
+		
+		// END UPDATE
+		////////////////////////////////////////////////////////////
+		// RENDER
 
-        glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
- 
-        /////////////////////////////////////////
-        // player render
+		glm::mat4 camMatrix = spline.camMatrix(player.sPosition());
 
-        glm::mat4 MVMatrix;
+		/////////////////////////////////////////
+		// player render
 
-        // get the transform matrix of the object
-        MVMatrix = camMatrix * player.matrix();
+		glm::mat4 MVMatrix;
 
+		// get the transform matrix of the object
+		MVMatrix = camMatrix * player.matrix();
 
-        
-        glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+		// Update MVMatrix according to the object's transformation
+		renderManager.updateMVMatrix(*cameras[chosenCamera], MVMatrix);
+		// Send uniforms to shaders
+		renderManager.useProgram(NORMAL);
+		renderManager.applyTransformations(NORMAL, renderManager.MVMatrix());
 
-        //on récupère les locations des variables uniformes dans les shaders
-        GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-        GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-        GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
-        //on envoie les matrices à la CG dans les variables uniformes
-        glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(ProjMatrix * MVMatrix));
-        glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
-        glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
+		// Texture binding
+		glBindTexture(GL_TEXTURE_2D, planeTex.getTextureID());
 
-        player.draw();
+		player.draw();
 
-        // end player render
-        /////////////////////////////////////////
-        // gameobjects render
-        
-        for (float i=0; i<walls.size(); ++i) {
-            glm::mat4 MVMatrix;
+		glBindTexture(GL_TEXTURE_2D, 0);
 
-            // get the transform matrix of the object
-            MVMatrix = camMatrix * walls[i].matrix();
+		// End player render
+		/////////////////////////////////////////
+		// GameObjects render
+		
+		// Bind obstacle texture
+		glBindTexture(GL_TEXTURE_2D, singeTex.getTextureID());
 
-            glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+		for (float i=0; i<walls.size(); ++i) {
+			glm::mat4 MVMatrix;
 
-            //on récupère les locations des variables uniformes dans les shaders
-            GLint uMVPMatrixLocation = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-            GLint uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-            GLint uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
-            //on envoie les matrices à la CG dans les variables uniformes
-            glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE,  glm::value_ptr(ProjMatrix * MVMatrix));
-            glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE,  glm::value_ptr(MVMatrix));
-            glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE,  glm::value_ptr(NormalMatrix));
+			// get the transform matrix of the object
+			MVMatrix = camMatrix * walls[i].matrix();
 
-            walls[i].draw();
-        }
+			// Update MVMatrix according to the object's transformation
+			renderManager.updateMVMatrix(*cameras[chosenCamera], MVMatrix);
+			// Send uniforms to shaders
+			renderManager.useProgram(DIRECTIONAL_LIGHT);
+			renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
 
-        //end gameobj render
-        ////////////////////////////////
+			walls[i].draw();
+		}
+		// Unbind obstacle texture
+		glBindTexture(GL_TEXTURE_2D, 0);
 
-        // Update the display
-        windowManager.swapBuffers();
-        //fps count
-        Uint32 elapsedTime = SDL_GetTicks() - startTime;
-            if(elapsedTime < FRAMERATE_MILLISECONDS) {
-                //std::cout << "not lagging" << std::endl;
-                SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
-            }
-        
-        // END RENDER
-        ////////////////////////////////////////////////////////////////
-    }
+		// End gameobj render
+		////////////////////////////////
 
-    return EXIT_SUCCESS;
+		// Update the display
+		windowManager.swapBuffers();
+		// FPS count
+		Uint32 elapsedTime = SDL_GetTicks() - startTime;
+		if(elapsedTime < FRAMERATE_MILLISECONDS) {
+			//std::cout << "not lagging" << std::endl;
+			SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
+		}
+	
+		// END RENDER
+		////////////////////////////////////////////////////////////////
+	}
+
+	return EXIT_SUCCESS;
 }

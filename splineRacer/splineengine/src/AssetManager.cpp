@@ -17,6 +17,7 @@ void AssetManager::loadAssets() {
 	_models.insert(std::make_pair(SINGEMODEL, Model("singe", "planetexture.jpg")));
 	_models.insert(std::make_pair(SKYBOXMODEL, Model("skybox", "skurt.png")));
 	_models.insert(std::make_pair(CLOUDMODEL, Model("cloud", "cloud.jpg")));
+	_models.insert(std::make_pair(COINMODEL, Model("coin", "coin.png")));
 }
 
 

@@ -15,6 +15,7 @@ const int WHEELBARROWMODEL = 1;
 const int SINGEMODEL = 2;
 const int SKYBOXMODEL = 3;
 const int CLOUDMODEL = 4;
+const int COINMODEL = 5;
 
 /// \brief singleton class wich manages the assets for everyone to access them 
 class AssetManager {

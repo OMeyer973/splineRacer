@@ -7,12 +7,12 @@
 
 namespace splineengine {
 
-
 /// \brief Represents an obstacle Gameobject
 class Obstacle : public GameObject {
     // METHODS
     public:
-        void update(const float dt);
+
+    	Obstacle(const GameObject& gameObject = GameObject(Model(), Spline(), false));
 
         /// \brief trigger collision behavior when colliding with another Gameobjects. 
         void doCollisionWith(GameObject other) {
@@ -22,4 +22,5 @@ class Obstacle : public GameObject {
 };
 
 }
+
 #endif

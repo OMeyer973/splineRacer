@@ -45,9 +45,13 @@ void Player::update(const float dt) {
 	updatePosition(dt);
 }
 
-
 void Player::doCollisionWith(GameObject other) {
-	if (debug) std::cout << "doing player collision behaviour" << std::endl;
+	if (debug) std::cout << "doing player collision behaviour with GameObject" << std::endl;
+	_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
+}
+
+void Player::doCollisionWith(Obstacle other) {
+	if (debug) std::cout << "doing player collision behaviour with Obstacle" << std::endl;
 	_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
 }
 

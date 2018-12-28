@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <glimac/glm.hpp>
+#include <splineengine/common.hpp>
 #include <splineengine/BoundingBox.hpp>
 
 namespace splineengine {

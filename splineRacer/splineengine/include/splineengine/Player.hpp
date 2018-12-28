@@ -2,8 +2,9 @@
 #ifndef __PLAYER__HPP
 #define __PLAYER__HPP
 
-#include "GameObject.hpp"
 #include "common.hpp"
+#include "GameObject.hpp"
+#include "Obstacle.hpp"
 
 namespace splineengine {
 
@@ -71,6 +72,9 @@ class Player : public GameObject {
 
         /// \brief trigger collision behavior when colliding with another Gameobjects. 
         void doCollisionWith(GameObject other);
+
+        /// \brief trigger collision behavior when colliding with another Gameobjects. 
+        void doCollisionWith(Obstacle other);
 
         /// \brief Overriden function to draw the plane
         // void draw() const;

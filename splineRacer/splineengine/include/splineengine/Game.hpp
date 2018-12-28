@@ -50,6 +50,15 @@ class Game {
 		/// \brief renders the scene at each frame
 		void render();
 		
+		/// \brief rotate the camera in the horizontal direction by dx pixels
+		void moveCameraX(const float dx);
+		/// \brief rotate the camera in the vertical direction by dx pixels
+		void moveCameraY(const float dy);
+		/// \brief zoom the camera view  by a factor of dz  
+		void zoomCamera(const float dz); 
+		/// \brief switch between the different available cameras
+		void changeCamera();
+
 	// MEMBERS
 	private:
 		/// \brief manage the camera transformations

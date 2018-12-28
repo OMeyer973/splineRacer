@@ -101,4 +101,23 @@ void Game::render() {
 }
 
 
+void Game::moveCameraX(const float dx) {
+	_cameras[_chosenCamera]->rotateLeft(dx * cameraRotateSpeed);
+}
+
+void Game::moveCameraY(const float dy) {
+	_cameras[_chosenCamera]->rotateUp(dy * cameraRotateSpeed);
+}
+
+void Game::changeCamera() {
+	_chosenCamera = (_chosenCamera + 1)  % NUMBER_OF_CAMERAS;
+}
+
+void Game::zoomCamera(const float dz) {
+	if (_chosenCamera == TRACKBALL_CAMERA) {
+		_cameras[_chosenCamera]->moveFront(dz);
+	}			
+}
+
+
 }

@@ -11,6 +11,12 @@ void GameManager::init() {
 	_pause.init();
 }
 
+// function just used in this file
+// button can SDL_BUTTON_LEFT, SDL_BUTTON_RIGHT and SDL_BUTTON_MIDDLE
+bool isMouseButtonPressed(uint32_t button) {
+    return SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button);
+}
+
 void GameManager::handleEvent(SDL_Event e) {
 	if(e.type == SDL_QUIT)
 		_exiting = true; // Leave the game loop after this iteration
@@ -61,7 +67,18 @@ void GameManager::doGameEvent(SDL_Event e) {
 	        if(e.key.keysym.sym==SDLK_SPACE) {
 	            goToMenu();
 	        }
-	        break;
+
+			// Camera handling
+			if (e.key.keysym.sym==SDLK_c){
+				_game->changeCamera();
+			}
+			if (e.key.keysym.sym==SDLK_UP){
+				_game->zoomCamera(cameraZoomSpeed);
+			}
+			if (e.key.keysym.sym==SDLK_DOWN){
+				_game->zoomCamera(-cameraZoomSpeed);
+			}
+			break;
 
 	    case SDL_KEYUP:
 	        if (e.key.keysym.sym==SDLK_q && _game->player().goingLeft() > 0) {//stop going left
@@ -78,6 +95,16 @@ void GameManager::doGameEvent(SDL_Event e) {
 	            ;
 	        }
 	        break;
+		case SDL_MOUSEMOTION:
+		 	if (isMouseButtonPressed(SDL_BUTTON_RIGHT)) {
+		 		if (e.motion.xrel != 0) {
+		 			_game->moveCameraX(e.motion.xrel);
+				}
+				if (e.motion.yrel != 0) {
+					_game->moveCameraY(e.motion.yrel);
+				}
+				break;
+			}
     }
 }
 

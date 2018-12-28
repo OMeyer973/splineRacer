@@ -5,9 +5,13 @@
 
 namespace splineengine {
 
+const unsigned int NUMBER_OF_CAMERAS = 2;
+
 const unsigned int POV_CAMERA = 0;
 const unsigned int TRACKBALL_CAMERA = 1;
 
+const float cameraRotateSpeed = 0.4f;
+const float cameraZoomSpeed = 1.f;
 /// \brief Camera is an abstract class, parent of TrackballCamera and POVCamera
 class Camera
 {

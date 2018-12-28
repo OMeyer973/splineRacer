@@ -1,0 +1,37 @@
+[
+ {
+   "type": "obstacle",
+   "x": 1,
+   "y": 0,
+   "z": 2,
+   "collider radius": 0.5
+ },
+ {
+   "type": "obstacle",
+   "x": 2,
+   "y": 1,
+   "z": 3,
+   "collider radius": 0.5
+ },
+ {
+   "type": "obstacle",
+   "x": 4,
+   "y": 0,
+   "z": 4,
+   "collider radius": 1
+ },
+ {
+   "type": "obstacle",
+   "x": 5,
+   "y": 1,
+   "z": 2,
+   "collider radius": 0.5
+ },
+ {
+   "type": "obstacle",
+   "x": 7,
+   "y": 0,
+   "z": 3,
+   "collider radius": 1
+ }
+]

@@ -9,8 +9,8 @@ namespace splineengine {
 
 
 const glm::vec3 defaultPlayerPos          = glm::vec3(1.f, 0.f, 2.f);
-const float     defaultPlayerFwdSpeed     = 0.5f;
-const glm::vec3 defaultPlayerMaxSpeed     = glm::vec3(1.f, 7.f, 7.f);
+const float     defaultPlayerFwdSpeed     = 1.5f;
+const glm::vec3 defaultPlayerMaxSpeed     = glm::vec3(1.5f, 10.f, 10.f);
 const glm::vec3 defaultPlayerAcceleration = glm::vec3(3.f, 7.f, 7.f);
 const glm::vec3 defaultPlayerBounceFactor = glm::vec3(2.f, 4.f, 4.f); //careful with these or you can go through walls or get launched to infinity. above 2 looks kinda safe
   

@@ -54,7 +54,6 @@ bool GameObject::intersect(GameObject& other) {
 
 void GameObject::collideWith(GameObject other) {
     if (intersect(other)) {
-        std::cout << "doing collision stuff " << std::endl;
         doCollisionWith(other);
         other.doCollisionWith(*this);
     }

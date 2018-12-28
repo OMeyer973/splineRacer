@@ -70,7 +70,9 @@ class GameManager {
 		/// \brief do the given event when in the GAME screen
 		void doPauseEvent(SDL_Event e);
 
-		/// \brief init a new game.
+		/// \brief init a new game form a level id
+		void initGame(const uint levelId);
+		/// \brief init an infinite
 		void initGame();
 		/// \brief go to the game screen. init the game if necessary
 		void goToGame();
@@ -86,6 +88,9 @@ class GameManager {
 		std::unique_ptr<Game> _game;
 		/// \brief pause screen for when you need to go peepee
 		Pause _pause;
+
+		// id of the curently selected level
+		int _levelId = LEVEL_ENDLESS;
 
 		/// \brief are we currently quitting the game ?
 		bool _exiting;

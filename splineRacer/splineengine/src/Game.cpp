@@ -1,4 +1,5 @@
 #include <splineengine/Game.hpp>
+#include <fstream>
 // #include <splineengine/CubeMap.hpp>
 
 namespace splineengine {
@@ -21,8 +22,8 @@ Game::Game()
 	RenderManager _renderManager(*_cameras[_chosenCamera]);
 }
 
-Game::Game(std::string levelName)
-	:_player(), _spline(levelName)
+Game::Game(int levelId)
+	:_player(), _spline(levelId)
 {
 	// TODO
 	std::cout << "game from level constructor called " << std::endl;
@@ -34,8 +35,19 @@ Game::~Game() {
 }
 
 
-void Game::loadLevel(std::string levelName) {
-	// TODO
+void Game::loadLevel(int levelId) {
+	// TODO : fix & finish
+	std::string mapPath = Settings::instance().appPath().dirPath().file()
+		+ "../../splineRacer/assets/levels/level" + std::to_string(levelId) +".json";
+
+	std::cout << "loading level from file : " << mapPath << std::endl;
+	std::ifstream i(mapPath);
+
+	// cf https://github.com/nlohmann/json#examples
+	nlohmann::json map;
+	i >> map;
+	std::cout << "loaded json map : " << map << std::endl;
+
 }
 
 void Game::loadLevel() {
@@ -46,7 +58,7 @@ void Game::loadLevel() {
 	for (float i=0; i<_spline.length(); i+=.3f) {
         _obstacles.push_back (GameObject(
         	assetManager.models()[SINGEMODEL], _spline, true,
-            glm::vec3(i, 0, 0), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
+            glm::vec3(i, i, 0.f), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
             glm::vec3(.5f, .5f, .5f),
             glm::vec3(0.f, 0.f, 0.f)
         ));

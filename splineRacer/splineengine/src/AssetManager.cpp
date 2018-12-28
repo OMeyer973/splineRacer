@@ -21,10 +21,6 @@ void AssetManager::loadAssets() {
 	_models.insert(std::make_pair(WHEELBARROWMODEL, wheelbarrowModel));
 	_models.insert(std::make_pair(SINGEMODEL, singeModel));
 	_models.insert(std::make_pair(SKYBOXMODEL, skyboxModel));
-	// _models[PLANEMODEL] = planeModel;
-	// _models[WHEELBARROWMODEL] = wheelbarrowModel;
-	// _models[SINGEMODEL] = singeModel;
-	// _models[SKYBOXMODEL] = skyboxModel;
 }
 
 void AssetManager::loadPrograms() {

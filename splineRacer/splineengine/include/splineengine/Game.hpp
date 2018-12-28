@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <string>
-#include <string>
+#include "json.hpp"
 #include "common.hpp"
 #include "Player.hpp"
 #include "AssetManager.hpp"
@@ -15,6 +15,11 @@
 
 namespace splineengine {
 
+//special level ID to identif the endless level
+const int LEVEL_ENDLESS = 0;
+//special number of levels (including the endless level)
+const uint NUMBER_OF_LEVELS = 2;
+
 /// \brief class wich represents the game scene , the player and their mechanics
 class Game {
 	// METHODS
@@ -24,7 +29,7 @@ class Game {
 	    Game();
 
 		/// \brief constructor with level name for loading level
-	    Game(std::string levelName);
+	    Game(int levelId);
 
 		/// \brief destructor
 		~Game();
@@ -42,7 +47,7 @@ class Game {
 		/// \brief creates a radom level
 		void loadLevel();
 		/// \brief load the given level
-		void loadLevel(std::string levelName);
+		void loadLevel(int levelId);
 
 		/// \brief update called at each frame (for the physics)
 		void update();

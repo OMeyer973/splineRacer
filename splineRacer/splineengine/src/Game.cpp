@@ -37,11 +37,13 @@ Game::~Game() {
 
 void Game::loadLevel(int levelId) {
 	// TODO : fix & finish
-	std::string mapPath = Settings::instance().appPath().dirPath().file()
-		+ "../../splineRacer/assets/levels/level" + std::to_string(levelId) +".json";
+	std::string mapPath = Settings::instance().appPath().dirPath()
+		+ ("../../splineRacer/assets/levels/level" + std::to_string(levelId) +".map");
 
 	std::cout << "loading level from file : " << mapPath << std::endl;
 	std::ifstream i(mapPath);
+	
+	std::string line;
 
 	// cf https://github.com/nlohmann/json#examples
 	nlohmann::json map;

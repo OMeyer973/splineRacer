@@ -12,6 +12,8 @@
 #include "POVCamera.hpp"
 #include "TrackballCamera.hpp"
 #include "RenderManager.hpp"
+#include "Obstacle.hpp"
+#include "Collectable.hpp"
 
 namespace splineengine {
 
@@ -79,8 +81,8 @@ class Game {
 	    Spline _spline;
 
 	    std::vector<GameObject> _decorations;
-	    std::vector<GameObject> _obstacles;
-	    std::vector<GameObject> _collectables;
+	    std::vector<Obstacle> _obstacles;
+	    std::vector<Collectable> _collectables;
 		// CONSTANTS
 		std::string _playerModelName = "plane";
 

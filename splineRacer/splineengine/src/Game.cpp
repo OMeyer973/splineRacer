@@ -58,17 +58,30 @@ void Game::loadLevel() {
 
 	// TODO : build list from class Obstacle instead of GameObject
 	for (float i=0; i<_spline.length(); i+=.3f) {
-        _obstacles.push_back (GameObject(
-        	assetManager.models()[SINGEMODEL], _spline, true,
-            glm::vec3(i, i, 0.f), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
-            glm::vec3(.5f, .5f, .5f),
-            glm::vec3(0.f, 0.f, 0.f)
-        ));
+		_obstacles.push_back(Obstacle(
+			GameObject(
+				assetManager.models()[CLOUDMODEL], _spline, true,
+				glm::vec3(i, 0, 0), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
+				glm::vec3(1.f, 1.f, 1.f),
+				glm::vec3(0.f, 0.f, 0.f)
+			)
+		));
+	}
 
-        // std::cout << "gameobj spline pos " << _obstacles[i].sPosition() << std::endl;
-    }
+	for (float i=0; i<_spline.length(); i+=10.f) {
+		for (float j = 0; j < 2.5; j+=.5f) {
+			_collectables.push_back(Collectable(
+				GameObject(
+					assetManager.models()[COINMODEL], _spline, true,
+					glm::vec3(i+j, 0, 10), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
+					glm::vec3(1.f, 1.f, 1.f),
+					glm::vec3(0.f, 0.f, 0.f)
+				)
+			));
+		}
+	}
 
-    glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 }
 
 
@@ -77,7 +90,12 @@ void Game::update() {
 	// Update player position and speed
 	_player.update(Settings::instance().deltaTime());
 	
-	// check for collisions
+	// Collectables rotation
+	for (float i=0; i<_collectables.size(); ++i) {
+		_collectables[i].update(Settings::instance().deltaTime(), i);
+	}
+
+	// Check for collisions with Obstacle
 	for (float i=0; i<_obstacles.size(); ++i) {
 		_player.collideWith(_obstacles[i]);
 	}
@@ -110,8 +128,22 @@ void Game::render() {
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 		_renderManager.useProgram(DIRECTIONAL_LIGHT);
 		_renderManager.applyTransformations(DIRECTIONAL_LIGHT, _renderManager.MVMatrix());
-	    _obstacles[i].draw();
-    }
+
+		_obstacles[i].draw();
+	}
+
+	// Draw Collectables
+	for (float i=0; i<_collectables.size(); ++i) {
+
+		// Get the transform matrix of the current obstacle
+		MVMatrix = camMatrix * _collectables[i].matrix();
+
+		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+		_renderManager.useProgram(TEXTURE);
+		_renderManager.applyTransformations(TEXTURE, _renderManager.MVMatrix());
+
+		_collectables[i].draw();
+	}
 
 }
 

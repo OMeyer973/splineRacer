@@ -18,14 +18,14 @@ private:
 	std::string _texName;
 	std::unique_ptr<glimac::Image> _textureToLoad;
 
-
-
 public:
-	//Construcors
-	//default
+	//Constructors
+	// Default
 	Texture();
-	//basic
+	// Basic
 	Texture(const std::string &textureName);
+	// Copy
+	Texture(const Texture& tex);
 
 	//getter
 	GLuint getTextureID() const{ return _texID ; };

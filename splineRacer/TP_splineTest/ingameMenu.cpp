@@ -142,17 +142,16 @@ int main(int argc, char** argv) {
     GLint NormalMatrixLocation = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
     GLint textureLocation = glGetUniformLocation(program.getGLId(), "uTexture");
 
-    Model planeModel("plane");
+    Model planeModel("plane", "planetexture2.jpg");
     GameObject planeObject(planeModel, spline);
     Texture planeTex("menu");
 
 
 
-    Model menuModel("menu");
+    Model menuModel("menu", "Continue.png");
 
-    Model skyBox("skybox");
+    Model skyBox("skybox", "skurt.png");
     Texture skyBoxTex("skurt.png");
-    skyBoxTex.loadTexture();
 
 
     glEnable(GL_DEPTH_TEST);

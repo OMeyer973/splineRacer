@@ -13,6 +13,7 @@
 #include <glimac/Program.hpp>
 #include <splineengine/Settings.hpp>
 #include <splineengine/common.hpp>
+#include <splineengine/Texture.hpp>
 
 namespace splineengine {
 
@@ -26,7 +27,7 @@ class Model {
 
 		/// \brief Model Constructor by model name
 		/// \param modelName : std::string& name of the model
-		Model(const std::string& modelName);
+		Model(const std::string& modelName, const std::string& textureName);
 
 		/// \brief Model Copy constructor
 		/// \param model : Model Model to copy
@@ -39,15 +40,19 @@ class Model {
 		/// \brief get VAO
 		const GLuint VAO() const { return _VAO; };
 
+		/// \brief get VBO
 		const GLuint VBO() const { return _VBO; };
 
 		/// \brief get IBO
 		const GLuint IBO() const { return _IBO; };
 
 		/// \brief get Geometry
-		glimac::Geometry geometry() const { return _geometry; };
+		const glimac::Geometry geometry() const { return _geometry; };
 
-		/// \brief collider non-const getter (to use as setter)
+		/// \brief get Texture ID
+		const GLuint textureID() const { return _textureID; };
+
+		/// \brief collider const getter
 		const Collider& collider() const { return _collider; };
 
 		// SETTERS // TODO : change for non-const getters ?
@@ -77,6 +82,8 @@ class Model {
 		GLuint _VAO;
 		/// \brief Collider of the model
 		Collider _collider;
+		/// \brief Texture ID of the model
+		GLuint _textureID;
 };
 
 }

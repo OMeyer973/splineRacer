@@ -5,7 +5,7 @@ namespace splineengine {
 
 // Constructor
 TrackballCamera::TrackballCamera()
-	:_fDistance(-5.0f), _fAngleX(0.0f), _fAngleY(0.0f)
+	:_fDistance(-6.0f), _fAngleX(0.0f), _fAngleY(0.0f)
 {}
 
 // Destructor

@@ -20,7 +20,7 @@ bool Collider::intersect(const Collider other, const glm::mat4 selfTransformMat,
 	glm::vec3 otherWorldPos(otherTransformMat * glm::vec4(other._position,1.f));
 
 	if (glm::distance(selfWorldPos, otherWorldPos) < _radius*_radius + other._radius*other._radius) {
-		std::cout << "collision at " << selfWorldPos << " (world)" << std::endl;
+		if (debug) std::cout << "collision at " << selfWorldPos << " (world)" << std::endl;
 		return true;
 	}
 

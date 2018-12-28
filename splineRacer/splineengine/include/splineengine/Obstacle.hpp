@@ -16,7 +16,7 @@ class Obstacle : public GameObject {
 
         /// \brief trigger collision behavior when colliding with another Gameobjects. 
         void doCollisionWith(GameObject other) {
-            std::cout << "obstacle doing collision " << std::endl;
+            if (debug) std::cout << "obstacle doing collision " << std::endl;
         };
 
 };

@@ -22,7 +22,7 @@ struct NormalProgram {
         :_program(glimac::loadProgram(Settings::instance().appPath().dirPath() + "shaders/3D.vs.glsl",
                                      Settings::instance().appPath().dirPath() + "shaders/normals.fs.glsl"))
     {
-        std::cout << "loading normal program" << std::endl;
+        if (debug) std::cout << "loading normal program" << std::endl;
         uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
         uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
         uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");

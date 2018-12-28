@@ -24,13 +24,13 @@ class RenderManager {
 		};
 
 		RenderManager(Camera &camera) {
-			std::cout << "rendermanager construction from camera : " << std::endl
+			if (debug) std::cout << "rendermanager construction from camera : " << std::endl
 			<< "	setting projMatrix, MVMatrix, normalMatrix" << std::endl;
 			// TODO : get resolution from settings instead of hard coded 800x600
 			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 200.f);
 			_MVMatrix = glm::translate(camera.getViewMatrix(), -5.f*fwdVec);
 			_normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
-			std::cout << "done." << std::endl;
+			if (debug) std::cout << "done." << std::endl;
 		};
 
 		/// \brief Destructor

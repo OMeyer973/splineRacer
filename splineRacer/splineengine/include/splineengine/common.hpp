@@ -6,6 +6,8 @@
 
 // declare global variables here
 
+const bool debug = false;
+
 // directions for spline-space vectors
 const int FWD = 0;
 const int LEFT = 1; 

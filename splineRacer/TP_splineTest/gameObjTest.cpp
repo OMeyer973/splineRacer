@@ -58,16 +58,9 @@ int main(int argc, char** argv) {
 	Player player(GameObject(
 		assetManager.models()[PLANEMODEL], spline, false, 
 		glm::vec3(0, 0, 5),
-		glm::vec3(.5f, .5f, .5f),
+		glm::vec3(1.f, 1.f, 1.f),
 		glm::vec3(0.0f, 0.0f, 0.f)
 	));
-
-	// Create a texture for the plane and load it
-	Texture planeTex("planetexture2.jpg");
-	planeTex.loadTexture();
-
-	Texture singeTex("planetexture.jpg");
-	singeTex.loadTexture();
 
 	// Création des obstacles
 	std::vector<GameObject> walls;
@@ -80,11 +73,6 @@ int main(int argc, char** argv) {
 			glm::vec3(0.0f, 0.0f, 0.f)
 		));
 	}
-
-	// Charger et compiler les shaders
-	// glimac::Program program = glimac::loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
-	//                             applicationPath.dirPath() + "shaders/normals.fs.glsl");
-	// program.use(); // Indiquer a OpenGL de les utiliser
 
 	// Create the Cameras
 	std::vector<std::unique_ptr<Camera>> cameras; // Contains two pointers on camera
@@ -215,19 +203,11 @@ int main(int argc, char** argv) {
 		renderManager.useProgram(DIRECTIONAL_LIGHT);
 		renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
 
-		// Texture binding
-		glBindTexture(GL_TEXTURE_2D, planeTex.getTextureID());
-
 		player.draw();
-
-		glBindTexture(GL_TEXTURE_2D, 0);
 
 		// End player render
 		/////////////////////////////////////////
 		// GameObjects render
-		
-		// Bind obstacle texture
-		glBindTexture(GL_TEXTURE_2D, singeTex.getTextureID());
 
 		for (float i=0; i<walls.size(); ++i) {
 			glm::mat4 MVMatrix;
@@ -243,8 +223,6 @@ int main(int argc, char** argv) {
 
 			walls[i].draw();
 		}
-		// Unbind obstacle texture
-		glBindTexture(GL_TEXTURE_2D, 0);
 
 		// End gameobj render
 		////////////////////////////////

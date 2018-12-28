@@ -47,7 +47,7 @@ void Player::update(const float dt) {
 
 
 void Player::doCollisionWith(GameObject other) {
-	std::cout << "doing player collision behaviour" << std::endl;
+	if (debug) std::cout << "doing player collision behaviour" << std::endl;
 	_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
 }
 

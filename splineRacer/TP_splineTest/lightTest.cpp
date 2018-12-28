@@ -110,7 +110,7 @@ int main(int argc, char** argv) {
 	Spline spline;
 
 	// Create the model and create VBO, IBO, VAO based on the geometry
-	Model planeModel("plane");
+	Model planeModel("plane", "planetexture2.jpg");
 	GameObject planeObject(planeModel, spline);
 
 	// Create the Camera

@@ -9,7 +9,7 @@ Game::Game()
 	_player(GameObject(
 		AssetManager::instance().models()[PLANEMODEL], _spline, false,
 		glm::vec3(0, 0, 10),
-		glm::vec3(.5f, .5f, .5f),
+		glm::vec3(1.f, 1.f, 1.f),
 		glm::vec3(0.f, 0.f, 0.f)
 	)), 
 	_spline()
@@ -63,7 +63,7 @@ void Game::loadLevel() {
             glm::vec3(0.f, 0.f, 0.f)
         ));
 
-        std::cout << "gameobj spline pos " << _obstacles[i].sPosition() << std::endl;
+        // std::cout << "gameobj spline pos " << _obstacles[i].sPosition() << std::endl;
     }
 
     glEnable(GL_DEPTH_TEST);
@@ -91,11 +91,13 @@ void Game::render() {
 
 	// Update MVMatrix according to the object's transformation
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
-	_renderManager.useProgram(NORMAL);
-	_renderManager.applyTransformations(NORMAL, _renderManager.MVMatrix());
+	_renderManager.useProgram(DIRECTIONAL_LIGHT);
+	_renderManager.applyTransformations(DIRECTIONAL_LIGHT, _renderManager.MVMatrix());
 
-	// Draw the player
-	_player.draw();
+	// Draw the player (hidden in Point Of View Camera)
+	if (_chosenCamera != POV_CAMERA) {
+		_player.draw();
+	}
 
 	// Draw obstacles
 	for (float i=0; i<_obstacles.size(); ++i) {
@@ -104,9 +106,8 @@ void Game::render() {
 		MVMatrix = camMatrix * _obstacles[i].matrix();
 
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
-		_renderManager.useProgram(NORMAL);
-		_renderManager.applyTransformations(NORMAL, _renderManager.MVMatrix());
-
+		_renderManager.useProgram(DIRECTIONAL_LIGHT);
+		_renderManager.applyTransformations(DIRECTIONAL_LIGHT, _renderManager.MVMatrix());
 	    _obstacles[i].draw();
     }
 

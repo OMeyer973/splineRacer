@@ -63,9 +63,7 @@ class GameObject {
 
 		/// \brief [virtual function] trigger collision behavior when colliding with another Gameobjects. 
 		/// \brief needs to be implemented for classes inheriting from GameObject
-		virtual void doCollisionWith(GameObject other) {
-			std::cout << "doing gameobject collision" << std::endl;
-		};
+		virtual void doCollisionWith(GameObject other) {};
 		
 		/// \brief check if the gameobject intersects the other gameObject and trigger their collision behavior 
 		void collideWith(GameObject other);

@@ -23,16 +23,16 @@ void GameManager::handleEvent(SDL_Event e) {
 	else {
 		switch (_activeScreen) {
 			case MENU :
-                doMenuEvent(e); 
+                doMenuEvent(e);
                 break;
 			case GAME :
-                doGameEvent(e); 
+                doGameEvent(e);
                 break;
 			case PAUSE :
-                doPauseEvent(e); 
+                doPauseEvent(e);
                 break;
 		}
-	}		
+	}
 }
 
 void GameManager::doMenuEvent(SDL_Event e) {
@@ -50,6 +50,13 @@ void GameManager::doMenuEvent(SDL_Event e) {
 	            _levelId = (_levelId - 1) % NUMBER_OF_LEVELS;
 	            std::cout << "level id : " << _levelId << std::endl;
 	        }
+					if (e.key.keysym.sym==SDLK_q){ //going left
+						 
+						_menu.moveToPannel( 10.f);
+				 }
+				 if (e.key.keysym.sym==SDLK_d){//going right
+						 _menu.moveToPannel(-10.f);
+				 }
 	        break;
 	}
 }
@@ -134,7 +141,7 @@ void GameManager::doPauseEvent(SDL_Event e) {
 
 void GameManager::update() {
 	// note : events are handled before update
-	// std::cout << "gamemanager update in " << std::endl;	
+	// std::cout << "gamemanager update in " << std::endl;
 	switch (_activeScreen) {
 	 	case MENU :
 	 		_menu.update();
@@ -150,7 +157,7 @@ void GameManager::update() {
 	 		_pause.render();
              break;
 	}
-	// std::cout << "gamemanager update out " << std::endl;	
+	// std::cout << "gamemanager update out " << std::endl;
 }
 
 void GameManager::initGame() {
@@ -181,7 +188,7 @@ void GameManager::goToGame() {
 
 void GameManager::goToPause() {
 	std::cout << "going to pause " << std::endl;
-	
+
 	_pause.init();
 
 	_activeScreen = PAUSE;
@@ -190,7 +197,7 @@ void GameManager::goToPause() {
 void GameManager::goToMenu() {
 	std::cout << "going to menu " << std::endl;
 	_game.reset();
-	
+
 	_activeScreen = MENU;
 
 	_menu.init();

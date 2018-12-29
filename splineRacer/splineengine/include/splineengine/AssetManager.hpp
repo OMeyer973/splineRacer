@@ -15,7 +15,7 @@ class AssetManager {
 	private:
 		/// \brief private constructor
 		AssetManager();
-		
+
 		/// \brief private destructor
 		~AssetManager()
 		{};
@@ -37,7 +37,7 @@ class AssetManager {
 		const std::map<std::string, Model>& models() const { return _models; };
 
 		const ProgramList& programList() { return _programList; };
-		
+
 		// NON-CONST GETTERS
 		std::map<std::string, Model>& models() { return _models; };
 
@@ -50,7 +50,7 @@ class AssetManager {
 		std::map<std::string, Model> _models;
 
 		//TODO : add this stuff
-		
+
 		/// \brief textures assets
 		// std::map<int, Texture> _textures;
 		/// \brief shader programs

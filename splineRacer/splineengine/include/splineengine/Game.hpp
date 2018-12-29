@@ -34,11 +34,11 @@ class Game {
 
         // CONST GETTERS
 		/// \brief get the player as a const ref
-        const Player& player() const { return _player; }
+    const Player& player() const { return _player; }
 
-        // NON-CONST GETTERS (can be used as setters)
-        /// \brief get the player as a ref
-        Player& player() { return _player; }
+    // NON-CONST GETTERS (can be used as setters)
+    /// \brief get the player as a ref
+    Player& player() { return _player; }
 
 
 		//METHODS
@@ -52,13 +52,13 @@ class Game {
 
 		/// \brief renders the scene at each frame
 		void render();
-		
+
 		/// \brief rotate the camera in the horizontal direction by dx pixels
 		void moveCameraX(const float dx);
 		/// \brief rotate the camera in the vertical direction by dx pixels
 		void moveCameraY(const float dy);
-		/// \brief zoom the camera view  by a factor of dz  
-		void zoomCamera(const float dz); 
+		/// \brief zoom the camera view  by a factor of dz
+		void zoomCamera(const float dz);
 		/// \brief switch between the different available cameras
 		void changeCamera();
 
@@ -77,7 +77,7 @@ class Game {
 		/// \brief represents the player
 		Player _player;
 		/// \brief represents the spline
-	    Spline _spline;
+    Spline _spline;
 
 	    std::vector<GameObject> _decorations;
 	    std::vector<Obstacle> _obstacles;

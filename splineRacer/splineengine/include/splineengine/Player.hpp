@@ -22,6 +22,7 @@ const glm::vec3 defaultPlayerBounceFactor = glm::vec3(2.f, 4.f, 4.f); //careful 
 const float collisionCooldowd = 2.f *  Settings::instance().deltaTime();
 const float minPlayerUp = 1.f;
 const float maxPlayerUp = 20.f;
+const float propellerRotationSpeed = .3f;
 
 /// \brief Represents the player as a Gameobject but with more useful stuff
 class Player : public GameObject {
@@ -76,7 +77,7 @@ class Player : public GameObject {
         /// \brief Override draw method for the player
         void draw() const;
         /// \brief Override draw method for the player
-        void draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMatrix, const float dt) ;
+        void draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMatrix) ;
 
         /// \brief update the player status at each frame
         void update(const float dt);
@@ -108,8 +109,11 @@ class Player : public GameObject {
         glm::vec3 _sInput;
 
         float _collisionCooldownTimer = 0;
+
+        /// \brief Propeller rotation
+        float _propellerRotationAngle;
+        
         // CONSTANTS
-        float _propellerRotation;
 };
 }
 #endif

@@ -48,6 +48,8 @@ void Player::update(const float dt) {
 	
 	if (_collisionCooldownTimer > 0)
 		_collisionCooldownTimer -= dt;
+
+	_propellerRotationAngle+=propellerRotationSpeed;
 }
 
 void Player::doCollisionWith(GameObject& other) {
@@ -79,16 +81,10 @@ void Player::draw() const {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMatrix, const float dt) {
-	// glBindTexture(GL_TEXTURE_2D, _model.textureID());
-	// glBindVertexArray(_model.VAO());
-	// glDrawElements(GL_TRIANGLES, _model.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
-	// glBindVertexArray(0);
-	// glBindTexture(GL_TEXTURE_2D, 0);
-
+void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMatrix) {
 	glBindVertexArray(_model.VAO());
-
 	glBindTexture(GL_TEXTURE_2D, _model.textureID());
+
 	/* On boucle sur les meshs de l'object pour les afficher un par un et
 	   appliquer des textures ou des tranformations différentes pour chaque mesh. */
 	for (int i = 0; i < _model.geometry().getMeshCount(); ++i)
@@ -104,8 +100,7 @@ void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMat
 		
 		if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices
 		{
-			this->rotation().x += (_propellerRotation++)/4;
-			glm::mat4 MVMatrix = camMatrix * this->matrix();
+			glm::mat4 MVMatrix = camMatrix * glm::rotate(this->matrix(), _propellerRotationAngle, glm::vec3(0, 0, 1));
 			renderManager.updateMVMatrix(camera, MVMatrix);
 			renderManager.useProgram(DIRECTIONAL_LIGHT);
 			renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());

@@ -12,7 +12,7 @@ void GameManager::init() {
 }
 
 // function just used in this file
-// button can SDL_BUTTON_LEFT, SDL_BUTTON_RIGHT and SDL_BUTTON_MIDDLE
+// button can be SDL_BUTTON_LEFT, SDL_BUTTON_RIGHT and SDL_BUTTON_MIDDLE
 bool isMouseButtonPressed(uint32_t button) {
     return SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button);
 }

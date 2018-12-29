@@ -151,7 +151,7 @@ void Game::render() {
 
 	// Draw the player (hidden in Point Of View Camera)
 	if (_chosenCamera != POV_CAMERA) {
-		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix, Settings::instance().deltaTime());
+		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix);
 	}
 
 	// Draw obstacles

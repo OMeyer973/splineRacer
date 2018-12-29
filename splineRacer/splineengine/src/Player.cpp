@@ -71,16 +71,6 @@ void Player::doCollisionWith(Obstacle& other) {
 }
 
 
-
-
-void Player::draw() const {
-	glBindTexture(GL_TEXTURE_2D, _model.textureID());
-	glBindVertexArray(_model.VAO());
-	glDrawElements(GL_TRIANGLES, _model.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
-	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-}
-
 void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMatrix) {
 	glBindVertexArray(_model.VAO());
 	glBindTexture(GL_TEXTURE_2D, _model.textureID());
@@ -92,7 +82,6 @@ void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMat
 		glm::mat4 MVMatrix = camMatrix * this->matrix();
 		renderManager.updateMVMatrix(camera, MVMatrix);
 		renderManager.useProgram(DIRECTIONAL_LIGHT);
-		renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
 		
 		const glimac::Geometry::Mesh* currentMesh = (_model.geometry().getMeshBuffer()+i);
 		GLint indexCount = currentMesh->m_nIndexCount;
@@ -103,7 +92,6 @@ void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMat
 			glm::mat4 MVMatrix = camMatrix * glm::rotate(this->matrix(), _propellerRotationAngle, glm::vec3(0, 0, 1));
 			renderManager.updateMVMatrix(camera, MVMatrix);
 			renderManager.useProgram(DIRECTIONAL_LIGHT);
-			renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
 		} 
 
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (const GLvoid*) (indexOffset * sizeof(GLuint)));

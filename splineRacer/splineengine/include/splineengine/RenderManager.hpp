@@ -59,7 +59,7 @@ class RenderManager {
 		void useProgram(FS shader);
 
 		/// \brief Apply Transformations, Update Uniforms
-		void applyTransformations(FS shader, glm::mat4 matrix);
+		void applyTransformations(FS shader);
 
 	// MEMBERS
 	protected:

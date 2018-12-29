@@ -32,9 +32,10 @@ void RenderManager::useProgram(FS shader) {
             programList.normalProgram._program.use();
             break;
     }
+    applyTransformations(shader);
 }
 
-void RenderManager::applyTransformations(FS shader, glm::mat4 matrix)
+void RenderManager::applyTransformations(FS shader)
 {
     glm::vec3 lightVector(_MVMatrix * glm::vec4(1, 1, 1, 0));
 
@@ -44,13 +45,13 @@ void RenderManager::applyTransformations(FS shader, glm::mat4 matrix)
     {
         case NORMAL :
             glUniformMatrix4fv(programList.normalProgram.uMVPMatrix, 1, GL_FALSE, 
-                glm::value_ptr(_projMatrix * matrix));
+                glm::value_ptr(_projMatrix * _MVMatrix));
 
             glUniformMatrix4fv(programList.normalProgram.uMVMatrix, 1, GL_FALSE,
-                glm::value_ptr(matrix));
+                glm::value_ptr(_MVMatrix));
 
             glUniformMatrix4fv(programList.normalProgram.uNormalMatrix, 1, GL_FALSE,
-                glm::value_ptr(glm::transpose(glm::inverse(matrix))));
+                glm::value_ptr(_normalMatrix));
             break;
 
         case TEXTURE :
@@ -59,18 +60,17 @@ void RenderManager::applyTransformations(FS shader, glm::mat4 matrix)
             glUniform1f(programList.textureProgram.uTime, 0);
 
             glUniformMatrix4fv(programList.textureProgram.uMVPMatrix, 1, GL_FALSE,
-            glm::value_ptr(_projMatrix * matrix));
+                glm::value_ptr(_projMatrix * _MVMatrix));
 
             glUniformMatrix4fv(programList.textureProgram.uMVMatrix, 1, GL_FALSE,
-            glm::value_ptr(matrix));
+                glm::value_ptr(_MVMatrix));
 
             glUniformMatrix4fv(programList.textureProgram.uNormalMatrix, 1, GL_FALSE,
-            glm::value_ptr(glm::transpose(glm::inverse(matrix))));
+                glm::value_ptr(_normalMatrix));
             break;
 
         case DIRECTIONAL_LIGHT :
             glUniform1i(programList.directionalLightProgram.uTexture, 0);
-            // White Color to keep the correct color
             glUniform3f(programList.directionalLightProgram.uColor, 1.0, 1.0, 1.0);
 
             glUniform3fv(programList.directionalLightProgram.uLightDir_vs, 1, glm::value_ptr(lightVector));
@@ -80,11 +80,11 @@ void RenderManager::applyTransformations(FS shader, glm::mat4 matrix)
             glUniform1f(programList.directionalLightProgram.uShininess, 1);
 
             glUniformMatrix4fv(programList.directionalLightProgram.uMVPMatrix, 1, GL_FALSE,
-                glm::value_ptr(_projMatrix * matrix));
+                glm::value_ptr(_projMatrix * _MVMatrix));
             glUniformMatrix4fv(programList.directionalLightProgram.uMVMatrix, 1, GL_FALSE,
-                glm::value_ptr(matrix));
+                glm::value_ptr(_MVMatrix));
             glUniformMatrix4fv(programList.directionalLightProgram.uNormalMatrix, 1, GL_FALSE,
-                glm::value_ptr(glm::transpose(glm::inverse(matrix))));
+                glm::value_ptr(_normalMatrix));
             break;
 
         default :

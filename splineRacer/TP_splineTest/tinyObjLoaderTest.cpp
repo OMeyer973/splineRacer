@@ -140,7 +140,7 @@ int main(int argc, char** argv) {
 		renderManager.updateMVMatrix(*cameras[chosenCamera], planeObject.matrix());
 		// Send uniforms to shaders
 		renderManager.useProgram(DIRECTIONAL_LIGHT);
-		renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
+		// renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
 
 		// Texture binding
 		glBindTexture(GL_TEXTURE_2D, planeTex.getTextureID());
@@ -166,7 +166,6 @@ int main(int argc, char** argv) {
 		// glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 		// glDepthMask(GL_TRUE);
 
-		renderManager.useProgram(TEXTURE);
 
 		// Object transform
 		skyboxObject.scale() = 100.f*(fwdVec +upVec + leftVec); 
@@ -175,7 +174,8 @@ int main(int argc, char** argv) {
 		renderManager.updateMVMatrix(*cameras[chosenCamera], skyboxObject.matrix());
 
 		// Send uniforms to shaders
-		renderManager.applyTransformations(TEXTURE, renderManager.MVMatrix());
+		renderManager.useProgram(TEXTURE);
+		// renderManager.applyTransformations(TEXTURE, renderManager.MVMatrix());
 
 		// Texture binding
 		glBindTexture(GL_TEXTURE_2D, skyboxTex.getTextureID());

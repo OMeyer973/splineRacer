@@ -197,13 +197,7 @@ int main(int argc, char** argv) {
 		// get the transform matrix of the object
 		MVMatrix = camMatrix * player.matrix();
 
-		// Update MVMatrix according to the object's transformation
-		renderManager.updateMVMatrix(*cameras[chosenCamera], MVMatrix);
-		// Send uniforms to shaders
-		renderManager.useProgram(DIRECTIONAL_LIGHT);
-		renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
-
-		player.draw();
+		player.draw(renderManager, *cameras[chosenCamera], camMatrix);
 
 		// End player render
 		/////////////////////////////////////////
@@ -219,7 +213,7 @@ int main(int argc, char** argv) {
 			renderManager.updateMVMatrix(*cameras[chosenCamera], MVMatrix);
 			// Send uniforms to shaders
 			renderManager.useProgram(DIRECTIONAL_LIGHT);
-			renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
+			// renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
 
 			walls[i].draw();
 		}

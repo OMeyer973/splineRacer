@@ -144,11 +144,6 @@ void Game::render() {
 	glm::mat4 camMatrix = _spline.camMatrix(_player.sPosition());
 	glm::mat4 MVMatrix = camMatrix * _player.matrix();
 
-	// Update MVMatrix according to the object's transformation
-	// _renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
-	_renderManager.useProgram(DIRECTIONAL_LIGHT);
-	_renderManager.applyTransformations(DIRECTIONAL_LIGHT, _renderManager.MVMatrix());
-
 	// Draw the player (hidden in Point Of View Camera)
 	if (_chosenCamera != POV_CAMERA) {
 		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix);
@@ -162,7 +157,6 @@ void Game::render() {
 
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 		_renderManager.useProgram(DIRECTIONAL_LIGHT);
-		_renderManager.applyTransformations(DIRECTIONAL_LIGHT, _renderManager.MVMatrix());
 
 		_obstacles[i].draw();
 	}
@@ -175,7 +169,6 @@ void Game::render() {
 
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 		_renderManager.useProgram(DIRECTIONAL_LIGHT);
-		_renderManager.applyTransformations(DIRECTIONAL_LIGHT, _renderManager.MVMatrix());
 
 		_collectables[i].draw();
 	}

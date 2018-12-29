@@ -161,8 +161,8 @@ void Game::render() {
 		MVMatrix = camMatrix * _obstacles[i].matrix();
 
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
-		_renderManager.useProgram(TEXTURE);
-		_renderManager.applyTransformations(TEXTURE, _renderManager.MVMatrix());
+		_renderManager.useProgram(DIRECTIONAL_LIGHT);
+		_renderManager.applyTransformations(DIRECTIONAL_LIGHT, _renderManager.MVMatrix());
 
 		_obstacles[i].draw();
 	}
@@ -174,8 +174,8 @@ void Game::render() {
 		MVMatrix = camMatrix * _collectables[i].matrix();
 
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
-		_renderManager.useProgram(TEXTURE);
-		_renderManager.applyTransformations(TEXTURE, _renderManager.MVMatrix());
+		_renderManager.useProgram(DIRECTIONAL_LIGHT);
+		_renderManager.applyTransformations(DIRECTIONAL_LIGHT, _renderManager.MVMatrix());
 
 		_collectables[i].draw();
 	}

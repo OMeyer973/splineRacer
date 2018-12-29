@@ -95,8 +95,8 @@ void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMat
 	{
 		glm::mat4 MVMatrix = camMatrix * this->matrix();
 		renderManager.updateMVMatrix(camera, MVMatrix);
-		renderManager.useProgram(TEXTURE);
-		renderManager.applyTransformations(TEXTURE, renderManager.MVMatrix());
+		renderManager.useProgram(DIRECTIONAL_LIGHT);
+		renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
 		
 		const glimac::Geometry::Mesh* currentMesh = (_model.geometry().getMeshBuffer()+i);
 		GLint indexCount = currentMesh->m_nIndexCount;
@@ -104,11 +104,11 @@ void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMat
 		
 		if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices
 		{
-			this->rotation().x = (_propellerRotation++)/4;
+			this->rotation().x += (_propellerRotation++)/4;
 			glm::mat4 MVMatrix = camMatrix * this->matrix();
 			renderManager.updateMVMatrix(camera, MVMatrix);
-			renderManager.useProgram(TEXTURE);
-			renderManager.applyTransformations(TEXTURE, renderManager.MVMatrix());
+			renderManager.useProgram(DIRECTIONAL_LIGHT);
+			renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
 		} 
 
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (const GLvoid*) (indexOffset * sizeof(GLuint)));

@@ -90,7 +90,7 @@ glm::mat4 Spline::camMatrix(const glm::vec3& sPoint) const {
 	camMat = glm::rotate(camMat, sPoint[LEFT], fwdVec);
 	
 	// 1 moving the camera forward and have it face toward the spline derivate
-	float fwdPos = sPoint[FWD] + camLead;
+	float fwdPos = sPoint[FWD] - camLead;
 	camMat = camMat * glm::lookAt(point(fwdPos), point(fwdPos) + point(fwdPos+deltaSpline) - point(fwdPos-deltaSpline), upVec);
 
 	return camMat;

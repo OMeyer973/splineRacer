@@ -3,11 +3,15 @@
 #define __PLAYER__HPP
 
 #include "common.hpp"
+#include "RenderManager.hpp"
 #include "GameObject.hpp"
 #include "Obstacle.hpp"
 #include "Settings.hpp"
 
 namespace splineengine {
+
+// Forward Declaration
+class Obstacle;
 
 const glm::vec3 defaultPlayerPos          = glm::vec3(1.f, 0.f, 10.f);
 const float     defaultPlayerFwdSpeed     = 1.5f;
@@ -19,7 +23,6 @@ const float collisionCooldowd = 2.f *  Settings::instance().deltaTime();
 const float minPlayerUp = 1.f;
 const float maxPlayerUp = 20.f;
 
-
 /// \brief Represents the player as a Gameobject but with more useful stuff
 class Player : public GameObject {
     // METHODS
@@ -27,14 +30,14 @@ class Player : public GameObject {
         // CONSTRUCTORS - DESTRUCTORS
         /// \brief default player Constructor
         Player(
-            const GameObject& gameObject  = GameObject(Model(), Spline(), false, defaultPlayerPos),
+            const GameObject& gameObject   = GameObject(Model(), Spline(), false, defaultPlayerPos),
             const float       fwdSpeed     = defaultPlayerFwdSpeed,
             const glm::vec3   maxSpeed     = defaultPlayerMaxSpeed,
             const glm::vec3   acceleration = defaultPlayerAcceleration
         );
 
         /// \brief player Destructor
-        ~Player()
+        virtual ~Player()
         {};
 
         // Player& operator=(const Player& player) {
@@ -70,18 +73,19 @@ class Player : public GameObject {
 
 
         // METHODS
+        /// \brief Override draw method for the player
+        void draw() const;
+        /// \brief Override draw method for the player
+        void draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMatrix, const float dt) ;
 
         /// \brief update the player status at each frame
         void update(const float dt);
 
         /// \brief trigger collision behavior when colliding with another Gameobjects. 
-        void doCollisionWith(GameObject other);
+        void doCollisionWith(GameObject& other);
 
-        /// \brief trigger collision behavior when colliding with another Gameobjects. 
-        void doCollisionWith(Obstacle other);
-
-        /// \brief Overriden function to draw the plane
-        // void draw() const;
+        /// \brief trigger collision behavior when colliding with an Obstacle. 
+        void doCollisionWith(Obstacle& other);
 
     protected:
         // METHODS
@@ -99,11 +103,13 @@ class Player : public GameObject {
         /// \brief acceleration and decceleration of the player
         glm::vec3 _sAcceleration;
 
+
         /// \brief current input | [0] forward : no input | [1] left -> +1, straight -> 0, right -> -1 | [2] up -> +1, straight -> 0, down -> -1
         glm::vec3 _sInput;
 
         float _collisionCooldownTimer = 0;
         // CONSTANTS
+        float _propellerRotation;
 };
 }
 #endif

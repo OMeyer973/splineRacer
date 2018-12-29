@@ -25,7 +25,7 @@ const float lookDownAngle = 0.3f;
 // the higher the camera is, the lower it looks on the spline following this factor
 const float lookDownFactor = -0.02f;
 // camera focus point is a bit ahead of the plane
-const float camLead = 0.2f;
+const float camLead = 0.1f;
 
 
 /// \brief Represents the spline, its equation and transforms

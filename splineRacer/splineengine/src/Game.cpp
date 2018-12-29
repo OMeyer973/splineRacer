@@ -77,7 +77,6 @@ void Game::loadLevel() {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
 
-	// TODO : build list from class Obstacle instead of GameObject
 	for (float i=0; i<_spline.length(); i+=.3f) {
 		_obstacles.push_back(Obstacle(
 			GameObject(
@@ -103,9 +102,9 @@ void Game::loadLevel() {
 		for (float j = 0; j < 6.28; j+=.1f) {
 			_obstacles.push_back(Obstacle(
 				GameObject(
-					assetManager.models()["cloud"], _spline, true,
+					assetManager.models()["skybox"], _spline, true,
 					glm::vec3(i-5, j, 15), 
-					glm::vec3(3+(int)(30*j)%3),
+					glm::vec3(1+(int)(30*j)%3),
 					glm::vec3(j, -20*j, 3*j)
 				)
 			));
@@ -126,10 +125,15 @@ void Game::update() {
 		_collectables[i].update(Settings::instance().deltaTime(), i);
 	}
 
-	// Check for collisions with Obstacle
+	// Check for collisions with obstacles
 	for (float i=0; i<_obstacles.size(); ++i) {
 		_player.collideWith(_obstacles[i]);
 	}
+
+	// Check for collisions with collectables
+	// for (float i=0; i<_collectables.size(); ++i) {
+	// 	_player.collideWith(_collectables[i]);
+	// }
 }
 
 
@@ -141,13 +145,13 @@ void Game::render() {
 	glm::mat4 MVMatrix = camMatrix * _player.matrix();
 
 	// Update MVMatrix according to the object's transformation
-	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+	// _renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 	_renderManager.useProgram(DIRECTIONAL_LIGHT);
 	_renderManager.applyTransformations(DIRECTIONAL_LIGHT, _renderManager.MVMatrix());
 
 	// Draw the player (hidden in Point Of View Camera)
 	if (_chosenCamera != POV_CAMERA) {
-		_player.draw();
+		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix, Settings::instance().deltaTime());
 	}
 
 	// Draw obstacles
@@ -157,8 +161,8 @@ void Game::render() {
 		MVMatrix = camMatrix * _obstacles[i].matrix();
 
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
-		_renderManager.useProgram(DIRECTIONAL_LIGHT);
-		_renderManager.applyTransformations(DIRECTIONAL_LIGHT, _renderManager.MVMatrix());
+		_renderManager.useProgram(TEXTURE);
+		_renderManager.applyTransformations(TEXTURE, _renderManager.MVMatrix());
 
 		_obstacles[i].draw();
 	}

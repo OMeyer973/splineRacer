@@ -9,16 +9,28 @@ const float collectableRotationSpeed = 0.2f;
 
 namespace splineengine {
 
-/// \brief Represents a collectable Gameobject
+class Player;
+
+/// \brief Represents a Collectable Gameobject
 class Collectable : public GameObject {
     // METHODS
     public:
 
     	Collectable(const GameObject& gameObject = GameObject(Model(), Spline(), false));
 
+        /// \brief Collectable Destructor
+    	virtual ~Collectable() {
+    		// if (debug) std::cout << "Collectable Destructor called" << std::endl;
+    	};
+
         /// \brief trigger collision behavior when colliding with another Gameobjects. 
-        void doCollisionWith(GameObject other) {
-            if (debug) std::cout << "collectable doing collision " << std::endl;
+        void doCollisionWith(GameObject& other) {
+            if (debug) std::cout << "Collectable doing collision with GameObject" << std::endl;
+        };
+
+        /// \brief trigger collision behavior when colliding with another Gameobjects. 
+        void doCollisionWith(Player& other) {
+            if (debug) std::cout << "Collectable doing collision with Player" << std::endl;
         };
 
         void update(const float dt, const float pos) {

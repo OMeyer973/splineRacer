@@ -14,7 +14,7 @@ using namespace splineengine;
 
 int main(int argc, char** argv) {
 	// Initialize SDL and open a window
-    glimac::SDLWindowManager windowManager(800, 600, "splineRacer");
+    glimac::SDLWindowManager windowManager(800, 600, "Spline Racer");
 
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();

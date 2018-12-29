@@ -54,7 +54,7 @@ bool GameObject::intersect(GameObject& other) {
     return false;
 }
 
-void GameObject::collideWith(GameObject other) {
+void GameObject::collideWith(GameObject& other) {
     if (intersect(other)) {
         doCollisionWith(other);
         other.doCollisionWith(*this);

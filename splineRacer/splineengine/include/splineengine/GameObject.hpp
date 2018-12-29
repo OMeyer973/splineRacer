@@ -47,7 +47,7 @@ class GameObject {
 
 
 		/// \brief destructor
-		~GameObject()
+		virtual ~GameObject()
 		{};
 
 
@@ -63,10 +63,10 @@ class GameObject {
 
 		/// \brief [virtual function] trigger collision behavior when colliding with another Gameobjects. 
 		/// \brief needs to be implemented for classes inheriting from GameObject
-		virtual void doCollisionWith(GameObject other) {};
+		virtual void doCollisionWith(GameObject& other) {};
 		
 		/// \brief check if the gameobject intersects the other gameObject and trigger their collision behavior 
-		void collideWith(GameObject other);
+		void collideWith(GameObject& other);
 
 		//CONST GETTERS
 		/// \brief Get the position of the object (relative to the spline) as a const reference

@@ -142,7 +142,7 @@
  {
    "type": "collectable",
    "model": "coin",
-   "is_static": true,
+   "is_static": false,
    "pos_fwd": 2,
    "pos_left": 1,
    "pos_up": 3,
@@ -156,7 +156,7 @@
  {
    "type": "collectable",
    "model": "coin",
-   "is_static": true,
+   "is_static": false,
    "pos_fwd": 3,
    "pos_left": 2,
    "pos_up": 3,
@@ -170,7 +170,7 @@
  {
    "type": "collectable",
    "model": "coin",
-   "is_static": true,
+   "is_static": false,
    "pos_fwd": 4,
    "pos_left": 3,
    "pos_up": 3,
@@ -184,7 +184,7 @@
  {
    "type": "collectable",
    "model": "coin",
-   "is_static": true,
+   "is_static": false,
    "pos_fwd": 5,
    "pos_left": 4,
    "pos_up": 3,
@@ -198,7 +198,7 @@
  {
    "type": "collectable",
    "model": "coin",
-   "is_static": true,
+   "is_static": false,
    "pos_fwd": 6,
    "pos_left": 5,
    "pos_up": 3,
@@ -212,7 +212,7 @@
  {
    "type": "collectable",
    "model": "coin",
-   "is_static": true,
+   "is_static": false,
    "pos_fwd": 7,
    "pos_left": 6,
    "pos_up": 3,
@@ -226,7 +226,7 @@
  {
    "type": "collectable",
    "model": "coin",
-   "is_static": true,
+   "is_static": false,
    "pos_fwd": 8,
    "pos_left": 7,
    "pos_up": 3,
@@ -240,7 +240,7 @@
  {
    "type": "collectable",
    "model": "coin",
-   "is_static": true,
+   "is_static": false,
    "pos_fwd": 9,
    "pos_left": 8,
    "pos_up": 3,
@@ -254,7 +254,7 @@
  {
    "type": "collectable",
    "model": "coin",
-   "is_static": true,
+   "is_static": false,
    "pos_fwd": 10,
    "pos_left": 9,
    "pos_up": 3,
@@ -268,7 +268,7 @@
  {
    "type": "collectable",
    "model": "coin",
-   "is_static": true,
+   "is_static": false,
    "pos_fwd": 11,
    "pos_left": 10,
    "pos_up": 3,

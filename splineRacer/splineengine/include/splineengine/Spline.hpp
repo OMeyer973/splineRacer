@@ -11,8 +11,8 @@
 
 namespace splineengine {
 
-const int defaultAnchorsNb = 50;
-const float defaultSegmentLength = 1;
+const int defaultAnchorsNb = 20;
+const float defaultSegmentLength = 2;
 
 // delta position used to rotate the camera and the objects facing the curve
 // it is large in order to have smooth camera movements
@@ -21,9 +21,9 @@ const float deltaSpline = 0.2f;
 // camera distance to the plane (size of the plane on screen)
 const float camDistToPlane = 1.5f;
 // the camera always looks a bit down
-const float lookDownAngle = 0.1f;
+const float lookDownAngle = 0.3f;
 // the higher the camera is, the lower it looks on the spline following this factor
-const float lookDownFactor = 0.05f;
+const float lookDownFactor = -0.02f;
 // camera focus point is a bit ahead of the plane
 const float camLead = 0.2f;
 

@@ -31,11 +31,13 @@ void Player::updateSpeed(const float dt) {
 
 	glm::clamp(_sSpeed, -defaultPlayerMaxSpeed, defaultPlayerMaxSpeed);
 	// Rotate player when he moves
-	_rotation = glm::vec3(_sSpeed[LEFT]*.3, _sSpeed[UP]*.05, 0);
 }
 
 void Player::updatePosition(const float dt) {
 	_sPosition += _sSpeed * dt;
+	_sPosition[UP] = glm::clamp(_sPosition[UP], minPlayerUp, maxPlayerUp);
+
+	_rotation = glm::vec3(_sSpeed[LEFT] * 0.3f, _sSpeed[UP] * .05f, 0);
 }
 
 void Player::update(const float dt) {
@@ -43,16 +45,27 @@ void Player::update(const float dt) {
 	_sInput[UP] = glm::clamp(_sInput[UP], -1.f, 1.f);
 	updateSpeed(dt);
 	updatePosition(dt);
+	
+	if (_collisionCooldownTimer > 0)
+		_collisionCooldownTimer -= dt;
 }
 
 void Player::doCollisionWith(GameObject other) {
 	if (debug) std::cout << "doing player collision behaviour with GameObject" << std::endl;
-	_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
+	
+	if (_collisionCooldownTimer <= 0) {
+		_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
+		_collisionCooldownTimer = collisionCooldowd;
+	}
 }
 
 void Player::doCollisionWith(Obstacle other) {
 	if (debug) std::cout << "doing player collision behaviour with Obstacle" << std::endl;
-	_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
+	
+	if (_collisionCooldownTimer <= 0) {
+		_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
+		_collisionCooldownTimer = collisionCooldowd;
+	}
 }
 
 

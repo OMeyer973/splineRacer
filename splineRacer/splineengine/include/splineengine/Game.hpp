@@ -17,10 +17,6 @@
 
 namespace splineengine {
 
-//special level ID to identif the endless level
-const int LEVEL_ENDLESS = 0;
-//special number of levels (including the endless level)
-const uint NUMBER_OF_LEVELS = 2;
 
 /// \brief class wich represents the game scene , the player and their mechanics
 class Game {

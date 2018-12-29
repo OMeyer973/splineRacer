@@ -5,7 +5,7 @@
 #include "GameObject.hpp"
 #include "common.hpp"
 
-const float collectableRotationSpeed = .015f;
+const float collectableRotationSpeed = 0.2f;
 
 namespace splineengine {
 

@@ -5,16 +5,20 @@
 #include "common.hpp"
 #include "GameObject.hpp"
 #include "Obstacle.hpp"
+#include "Settings.hpp"
 
 namespace splineengine {
 
-
-const glm::vec3 defaultPlayerPos          = glm::vec3(1.f, 0.f, 2.f);
+const glm::vec3 defaultPlayerPos          = glm::vec3(1.f, 0.f, 10.f);
 const float     defaultPlayerFwdSpeed     = 1.5f;
 const glm::vec3 defaultPlayerMaxSpeed     = glm::vec3(1.5f, 10.f, 10.f);
 const glm::vec3 defaultPlayerAcceleration = glm::vec3(3.f, 7.f, 7.f);
 const glm::vec3 defaultPlayerBounceFactor = glm::vec3(2.f, 4.f, 4.f); //careful with these or you can go through walls or get launched to infinity. above 2 looks kinda safe
-  
+
+const float collisionCooldowd = 2.f *  Settings::instance().deltaTime();
+const float minPlayerUp = 1.f;
+const float maxPlayerUp = 20.f;
+
 
 /// \brief Represents the player as a Gameobject but with more useful stuff
 class Player : public GameObject {
@@ -98,6 +102,7 @@ class Player : public GameObject {
         /// \brief current input | [0] forward : no input | [1] left -> +1, straight -> 0, right -> -1 | [2] up -> +1, straight -> 0, down -> -1
         glm::vec3 _sInput;
 
+        float _collisionCooldownTimer = 0;
         // CONSTANTS
 };
 }

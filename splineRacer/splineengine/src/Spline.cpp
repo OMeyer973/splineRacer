@@ -7,34 +7,25 @@ namespace splineengine {
 // CONSTRUCTORS
 Spline::Spline()
 	:_segmentLength(defaultSegmentLength)		
-{
-	glm::vec3 tmpAnchor(1.f,1.f,1.f);
-	_anchors.push_back(tmpAnchor);
-    for (size_t i=1; i<defaultAnchorsNb; ++i) {
-    	tmpAnchor += 10.f*glm::normalize(
-    		glm::vec3(glm::sin(12.f*i/defaultAnchorsNb),0.4*glm::sin(-20.f*i/defaultAnchorsNb),glm::cos(12.f*i/defaultAnchorsNb)) * 
-    		glm::abs(glm::sphericalRand(1.f))
-    		+glm::vec3(0.03f*i,0,0)
-    	);
-    	_anchors.push_back(tmpAnchor);
-    }
-}
+{}
 
 
 Spline::Spline(int levelId)
 	:_segmentLength(defaultSegmentLength)		
 {
 	// TODO THIS IS PLACEHOLDER UNTIL WE CAN LOAD A SPLINE FROM FILE
-	glm::vec3 tmpAnchor(1.f,1.f,1.f);
-	_anchors.push_back(tmpAnchor);
-    for (size_t i=1; i<defaultAnchorsNb; ++i) {
-    	tmpAnchor += 10.f*glm::normalize(
-    		glm::vec3(glm::sin(12.f*i/defaultAnchorsNb),0.4*glm::sin(-20.f*i/defaultAnchorsNb),glm::cos(12.f*i/defaultAnchorsNb)) * 
-    		glm::abs(glm::sphericalRand(1.f))
-    		+glm::vec3(0.03f*i,0,0)
-    	);
-    	_anchors.push_back(tmpAnchor);
-    }
+	// if (levelId == LEVEL_ENDLESS) {
+		glm::vec3 tmpAnchor(1.f,1.f,1.f);
+		_anchors.push_back(tmpAnchor);
+	    for (size_t i=1; i<defaultAnchorsNb; ++i) {
+	    	tmpAnchor += 10.f*glm::normalize(
+	    		glm::vec3(glm::sin(12.f*i/defaultAnchorsNb),0.4*glm::sin(-20.f*i/defaultAnchorsNb),glm::cos(12.f*i/defaultAnchorsNb)) * 
+	    		glm::abs(glm::sphericalRand(1.f))
+	    		+glm::vec3(0.03f*i,0,0)
+	    	);
+	    	_anchors.push_back(tmpAnchor);
+	    }
+	//} else { loadfromfile()... }
 }
 
 

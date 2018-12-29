@@ -6,40 +6,27 @@ namespace splineengine {
 
 Game::Game()
 	:
-	_player(GameObject(
-		AssetManager::instance().models()["plane"], _spline, false,
-		glm::vec3(0, 0, 10),
-		glm::vec3(1.f, 1.f, 1.f),
-		glm::vec3(0.f, 0.f, 0.f)
-	)), 
-	_spline()
+	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)), 
+	_spline(LEVEL_ENDLESS)
 {
 	std::cout << "infinite game constructor called " << std::endl;
 	_cameras.emplace_back(new POVCamera());
 	_cameras.emplace_back(new TrackballCamera());
 	_chosenCamera = TRACKBALL_CAMERA;
-
 	RenderManager _renderManager(*_cameras[_chosenCamera]);
 }
 
 
 Game::Game(int levelId)
 	:
-	_player(GameObject(
-		AssetManager::instance().models()["plane"], _spline, false,
-		glm::vec3(0, 0, 10),
-		glm::vec3(1.f, 1.f, 1.f),
-		glm::vec3(0.f, 0.f, 0.f)
-	)), 
+	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)), 
  	_spline(levelId)
 {
 	// TODO - OK now ?
 	std::cout << "game from level constructor called " << std::endl;
-
 	_cameras.emplace_back(new POVCamera());
 	_cameras.emplace_back(new TrackballCamera());
 	_chosenCamera = TRACKBALL_CAMERA;
-
 	RenderManager _renderManager(*_cameras[_chosenCamera]);
 }
 
@@ -50,7 +37,6 @@ Game::~Game() {
 
 GameObject Game::gameObjFromJson(nlohmann::json j) {
 	AssetManager& assetManager = AssetManager::instance();
-
 	return GameObject(
 		assetManager.models()[ j["model"].get<std::string>() ], // model
 		_spline, // spline
@@ -96,9 +82,9 @@ void Game::loadLevel() {
 		_obstacles.push_back(Obstacle(
 			GameObject(
 				assetManager.models()["cloud"], _spline, true,
-				glm::vec3(i, 0, 0), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
-				glm::vec3(1.f, 1.f, 1.f),
-				glm::vec3(0.f, 0.f, 0.f)
+				glm::vec3(i, 0, 0), 
+				glm::vec3(4*glm::sin(i)+0.2f),
+				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
 		));
 	}
@@ -107,10 +93,20 @@ void Game::loadLevel() {
 		for (float j = 0; j < 2.5; j+=.5f) {
 			_collectables.push_back(Collectable(
 				GameObject(
-					assetManager.models()["coin"], _spline, true,
-					glm::vec3(i+j, 0, 10), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
-					glm::vec3(1.f, 1.f, 1.f),
-					glm::vec3(0.f, 0.f, 0.f)
+					assetManager.models()["coin"], _spline, false,
+					glm::vec3(i+j, 0, 10), 
+					glm::vec3(1.f),
+					glm::vec3(0.f)
+				)
+			));
+		}
+		for (float j = 0; j < 6.28; j+=.1f) {
+			_obstacles.push_back(Obstacle(
+				GameObject(
+					assetManager.models()["cloud"], _spline, true,
+					glm::vec3(i-5, j, 15), 
+					glm::vec3(3+(int)(30*j)%3),
+					glm::vec3(j, -20*j, 3*j)
 				)
 			));
 		}

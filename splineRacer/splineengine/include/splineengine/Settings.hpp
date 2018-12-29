@@ -35,6 +35,9 @@ class Settings {
 
 		/// \brief get the application path
 		const glimac::FilePath& appPath() const { return _appPath; };
+		
+		/// \brief get the frame rate
+		const Uint32 framerate() const { return _framerate_ms; };
 
 		// NON-CONST GETTERS (can be used as setters)
 		/// \brief set the application path

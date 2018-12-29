@@ -66,8 +66,11 @@ class Game {
 		/// \brief switch between the different available cameras
 		void changeCamera();
 
-	// MEMBERS
 	private:
+		GameObject gameObjFromJson(nlohmann::json j);
+
+
+		// MEMBERS
 		/// \brief manage the camera transformations
 		RenderManager _renderManager;
 		/// \brief vector of pointers on available cameras

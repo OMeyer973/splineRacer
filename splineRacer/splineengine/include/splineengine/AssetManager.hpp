@@ -9,14 +9,6 @@
 
 namespace splineengine {
 
-// IDs of models
-const int PLANEMODEL = 0;
-const int WHEELBARROWMODEL = 1; 
-const int SINGEMODEL = 2;
-const int SKYBOXMODEL = 3;
-const int CLOUDMODEL = 4;
-const int COINMODEL = 5;
-
 /// \brief singleton class wich manages the assets for everyone to access them 
 class AssetManager {
 	// SINGLETON CONSTRUCTORS - DESTRUCTORS
@@ -42,12 +34,12 @@ class AssetManager {
 
 	public:
 		// CONST GETTERS
-		const std::map<int, Model>& models() const { return _models; };
+		const std::map<std::string, Model>& models() const { return _models; };
 
 		const ProgramList& programList() { return _programList; };
 		
 		// NON-CONST GETTERS
-		std::map<int, Model>& models() { return _models; };
+		std::map<std::string, Model>& models() { return _models; };
 
 	private:
 		// METHODS
@@ -55,7 +47,7 @@ class AssetManager {
 
 		// MEMBERS
 		/// \brief 3D models assets
-		std::map<int, Model> _models;
+		std::map<std::string, Model> _models;
 
 		//TODO : add this stuff
 		

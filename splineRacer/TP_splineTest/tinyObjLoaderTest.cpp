@@ -46,14 +46,14 @@ int main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST); // Permet d'activer le test de profondeur du GPU
 
 	// Create the plane object
-	GameObject planeObject(assetManager.models()[PLANEMODEL], spline);
+	GameObject planeObject(assetManager.models()["plane"], spline);
 
 	// Create a texture and load texture
 	Texture planeTex("planetexture2.jpg");
 	planeTex.loadTexture();
 
 	// Create the skybox object
-	GameObject skyboxObject(assetManager.models()[SKYBOXMODEL], spline);
+	GameObject skyboxObject(assetManager.models()["skybox"], spline);
 
 	// Create a texture and load it
 	Texture skyboxTex("skurt.png");

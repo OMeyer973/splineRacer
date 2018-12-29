@@ -64,7 +64,7 @@ void Player::doCollisionWith(Obstacle other) {
 
 	// /* On boucle sur les meshs de l'object pour les afficher un par un et
 	//    appliquer des textures ou des tranformations différentes pour chaque mesh. */
-	// for (int i = 0; i < planeModel.geometry().getMeshCount(); ++i)
+	// for (int i = 0; i < "plane".geometry().getMeshCount(); ++i)
 	// {
 	// 	const Geometry::Mesh* currentMesh = (planeModel.geometry().getMeshBuffer()+i);
 	// 	GLint indexCount = currentMesh->m_nIndexCount;
@@ -86,7 +86,7 @@ void Player::doCollisionWith(Obstacle other) {
 	// 	// Cela indique à OpenGL qu'il doit utiliser l'IBO enregistré dans le VAO
 	// 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (const GLvoid*) (indexOffset * sizeof(GLuint)));
 	// }
-	// // glDrawElements(GL_TRIANGLES, planeModel.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
+	// // glDrawElements(GL_TRIANGLES, "plane".geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
 	// glBindVertexArray(0);
 // }
 

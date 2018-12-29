@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
 	glimac::Sphere sphere(2, 3, 2);
 	Spline spline;
 	Player player(GameObject(
-		assetManager.models()[PLANEMODEL], spline, false, 
+		assetManager.models()["plane"], spline, false, 
 		glm::vec3(0, 0, 5),
 		glm::vec3(1.f, 1.f, 1.f),
 		glm::vec3(0.0f, 0.0f, 0.f)
@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
 
 	for (float t=0; t<spline.length(); t+=.3f) {
 		walls.push_back(GameObject(
-			assetManager.models()[SINGEMODEL], spline, true,
+			assetManager.models()["singe"], spline, true,
 			glm::vec3(t, 5*t, (int)t%10),
 			glm::vec3(1.f, 1.f, 1.f),
 			glm::vec3(0.0f, 0.0f, 0.f)

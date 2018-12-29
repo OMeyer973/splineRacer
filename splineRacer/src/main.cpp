@@ -41,6 +41,7 @@ int main(int argc, char** argv) {
 
 	// Application loop:
 	while(!gameManager.exiting()) {
+		Uint32 startTime = SDL_GetTicks();
 
 		// Event loop:
 		SDL_Event e;
@@ -51,6 +52,13 @@ int main(int argc, char** argv) {
 		gameManager.update();
 
 		windowManager.swapBuffers();
+
+		//FPS regulator
+		Uint32 elapsedTime = SDL_GetTicks() - startTime;
+		if(elapsedTime < settings.framerate()) {
+			//std::cout << "not lagging" << std::endl;
+			SDL_Delay(settings.framerate() - elapsedTime);
+		}
 	}
 
 	return EXIT_SUCCESS;

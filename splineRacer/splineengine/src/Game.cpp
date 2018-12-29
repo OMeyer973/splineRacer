@@ -7,7 +7,7 @@ namespace splineengine {
 Game::Game()
 	:
 	_player(GameObject(
-		AssetManager::instance().models()[PLANEMODEL], _spline, false,
+		AssetManager::instance().models()["plane"], _spline, false,
 		glm::vec3(0, 0, 10),
 		glm::vec3(1.f, 1.f, 1.f),
 		glm::vec3(0.f, 0.f, 0.f)
@@ -22,11 +22,25 @@ Game::Game()
 	RenderManager _renderManager(*_cameras[_chosenCamera]);
 }
 
+
 Game::Game(int levelId)
-	:_player(), _spline(levelId)
+	:
+	_player(GameObject(
+		AssetManager::instance().models()["plane"], _spline, false,
+		glm::vec3(0, 0, 10),
+		glm::vec3(1.f, 1.f, 1.f),
+		glm::vec3(0.f, 0.f, 0.f)
+	)), 
+ 	_spline(levelId)
 {
-	// TODO
+	// TODO - OK now ?
 	std::cout << "game from level constructor called " << std::endl;
+
+	_cameras.emplace_back(new POVCamera());
+	_cameras.emplace_back(new TrackballCamera());
+	_chosenCamera = TRACKBALL_CAMERA;
+
+	RenderManager _renderManager(*_cameras[_chosenCamera]);
 }
 
 
@@ -34,22 +48,43 @@ Game::~Game() {
 	std::cout << "game destructor called " << std::endl;
 }
 
+GameObject Game::gameObjFromJson(nlohmann::json j) {
+	AssetManager& assetManager = AssetManager::instance();
+
+	return GameObject(
+		assetManager.models()[ j["model"].get<std::string>() ], // model
+		_spline, // spline
+		j["is_static"].get<bool>(), //isStatic
+		glm::vec3(j["pos_fwd"].get<float>(),   j["pos_left"].get<float>(),   j["pos_up"].get<float>()), // sPosition
+		glm::vec3(j["scale_fwd"].get<float>(), j["scale_left"].get<float>(), j["scale_up"].get<float>()), // scale
+		glm::vec3(j["rot_fwd"].get<float>(),   j["rot_left"].get<float>(),   j["rot_up"].get<float>()) // rotation
+	);
+}
+
 
 void Game::loadLevel(int levelId) {
-	// TODO : fix & finish
+	// TODO : finish & polish, add decoration. load spline from JSON
 	std::string mapPath = Settings::instance().appPath().dirPath()
 		+ ("../../splineRacer/assets/levels/level" + std::to_string(levelId) +".map");
 
-	std::cout << "loading level from file : " << mapPath << std::endl;
-	std::ifstream i(mapPath);
+	if (debug) std::cout << "loading level from file : " << mapPath << std::endl;
+	std::ifstream mapStream(mapPath);
 	
-	std::string line;
-
 	// cf https://github.com/nlohmann/json#examples
 	nlohmann::json map;
-	i >> map;
-	std::cout << "loaded json map : " << map << std::endl;
+	mapStream >> map;
 
+	for (nlohmann::json::iterator it = map.begin(); it != map.end(); ++it) {
+
+	    if ((*it)["type"].get<std::string>() == "obstacle") {	
+			_obstacles.push_back(Obstacle(gameObjFromJson(*it)));
+		}		
+	    if ((*it)["type"].get<std::string>() == "collectable") {	
+			_collectables.push_back(Collectable(gameObjFromJson(*it)));
+		}		
+	}
+
+	glEnable(GL_DEPTH_TEST);
 }
 
 void Game::loadLevel() {
@@ -60,7 +95,7 @@ void Game::loadLevel() {
 	for (float i=0; i<_spline.length(); i+=.3f) {
 		_obstacles.push_back(Obstacle(
 			GameObject(
-				assetManager.models()[CLOUDMODEL], _spline, true,
+				assetManager.models()["cloud"], _spline, true,
 				glm::vec3(i, 0, 0), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
 				glm::vec3(1.f, 1.f, 1.f),
 				glm::vec3(0.f, 0.f, 0.f)
@@ -72,7 +107,7 @@ void Game::loadLevel() {
 		for (float j = 0; j < 2.5; j+=.5f) {
 			_collectables.push_back(Collectable(
 				GameObject(
-					assetManager.models()[COINMODEL], _spline, true,
+					assetManager.models()["coin"], _spline, true,
 					glm::vec3(i+j, 0, 10), // glm::vec3(i/8,  i, (int)i%8), //glm::vec3(3+i/8, 0.f, 1.5f),
 					glm::vec3(1.f, 1.f, 1.f),
 					glm::vec3(0.f, 0.f, 0.f)

@@ -41,6 +41,8 @@ class Menu {
 
 		void moveToPannel(const float dx,const int incrementState);
 
+		std::string getState();
+
 		bool isRotating() { return _isRotating;}
 	// MEMBERS
 	private:

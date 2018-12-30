@@ -51,7 +51,7 @@ void Menu::render() {
 
 		glm::mat4 MVMatrix =  _skybox[0].staticMatrix();
 
-		std::cout<< _action[abs(_menuState%6)] << std::endl;
+		//std::cout<< getState() << std::endl;
 		//Draw _skybox
 		glDepthMask(GL_FALSE);
 		//MVMatrix = camMatrix *  _skybox[0].matrix();
@@ -84,5 +84,8 @@ void Menu::moveToPannel(const float dx, const int incrementState) {
 	_cameras[_chosenCamera]->rotateLeft(dx * 6);
 }
 
+	std::string Menu::getState(){
+		return _action[abs(_menuState%6)];
+	}
 
 }

@@ -40,7 +40,7 @@ void GameManager::doMenuEvent(SDL_Event e) {
 	switch (e.type) {
        case SDL_KEYDOWN:
 	        if(e.key.keysym.sym==SDLK_SPACE) {
-	            goToGame();
+	            std::cout << "Space " << std::endl;
 	        }
 	        if(e.key.keysym.sym==SDLK_UP) {
 	            _levelId = (_levelId + 1) % NUMBER_OF_LEVELS;
@@ -56,6 +56,12 @@ void GameManager::doMenuEvent(SDL_Event e) {
 				 if (e.key.keysym.sym==SDLK_d){//going right
 						 _menu.moveToPannel(-10.f,1);
 				 }
+				 if(e.key.keysym.sym == SDLK_RETURN && _menu.getState() == "Play"){
+					 goToGame();
+				 }
+				 if(e.key.keysym.sym == SDLK_RETURN && _menu.getState() == "Quit"){
+					_exiting = true;
+				}
 	        break;
 	}
 }

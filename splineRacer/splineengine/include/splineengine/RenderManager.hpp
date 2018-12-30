@@ -21,6 +21,12 @@ class RenderManager {
 		RenderManager()
 		{
 			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 200.f);
+			_skybox = new CubeMap("../../../assets/textures/posx.png",
+														"../../../assets/textures/negx.png",
+														"../../../assets/textures/posy.png",
+														"../../../assets/textures/negy.png",
+														"../../../assets/textures/posz.png",
+														"../../../assets/textures/negz.png");
 		};
 
 		RenderManager(Camera &camera) {

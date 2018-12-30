@@ -78,7 +78,7 @@ void Game::loadLevel() {
 	AssetManager& assetManager = AssetManager::instance();
 
 	_skybox.push_back(GameObject(
-			assetManager.models()["skybox"],_spline,true,
+			assetManager.models()["skybox"],_spline, false,
 			glm::vec3(1,0,0),
 			glm::vec3(100.f),
 			glm::vec3(0.f)
@@ -156,6 +156,7 @@ void Game::render() {
 		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix);
 	}
 
+	_skybox[0].setPosition(_player.sPosition());
 	//Draw _skybox
 	glDepthMask(GL_FALSE);
 	MVMatrix = camMatrix *  _skybox[0].matrix();

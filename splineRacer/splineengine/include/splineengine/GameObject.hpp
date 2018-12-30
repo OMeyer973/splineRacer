@@ -18,10 +18,10 @@ class GameObject {
 		/// \brief constructor from parameters
 		/// \param model 	: model of the obj
 		/// \param spline 	: Spline spline reference for the object position
-		/// \param isStatic : is the object unmovable ? 
+		/// \param isStatic : is the object unmovable ?
 		/// \param position : glm::vec3 position of the object (relative to the spline)
-		/// \param scale 	: glm::vec3 scale    of the object 
-		/// \param rotation : glm::vec3 rotation of the object 
+		/// \param scale 	: glm::vec3 scale    of the object
+		/// \param rotation : glm::vec3 rotation of the object
 		GameObject (
 			const Model& model,
 			const Spline& spline,
@@ -34,7 +34,7 @@ class GameObject {
 		/// \brief copy constructor
 		/// \param g : GameObject to copy from
 		GameObject(const GameObject& g);
-		
+
 		/// \brief operators
 		// GameObject& operator=(const GameObject& g) {
 		// 	_model	   = g._model;
@@ -58,15 +58,18 @@ class GameObject {
 		/// \brief Draw object
 		void draw() const;
 
-		/// \brief is the gameobject intersecting another gameobject ? 
+		/// \brief is the gameobject intersecting another gameobject ?
 		bool intersect(GameObject& other);
 
-		/// \brief [virtual function] trigger collision behavior when colliding with another Gameobjects. 
+		/// \brief [virtual function] trigger collision behavior when colliding with another Gameobjects.
 		/// \brief needs to be implemented for classes inheriting from GameObject
 		virtual void doCollisionWith(GameObject& other) {};
-		
-		/// \brief check if the gameobject intersects the other gameObject and trigger their collision behavior 
+
+		/// \brief check if the gameobject intersects the other gameObject and trigger their collision behavior
 		void collideWith(GameObject& other);
+
+		// SETTER
+		void setPosition(glm::vec3 position){_sPosition = position;}
 
 		//CONST GETTERS
 		/// \brief Get the position of the object (relative to the spline) as a const reference
@@ -103,11 +106,11 @@ class GameObject {
 		/// \brief 3D model of the object
 		//std::unique_ptr<Model> _model; // better to use ptr because you can't reassign refs ?
 		const Model& _model; // better to use refs because less mistakes ?
-		
-		/// \brief is the object unmovable ? 
+
+		/// \brief is the object unmovable ?
 		const bool _isStatic = false;
 		/// \brief spline reference for the object placement
-		const Spline& _spline; 
+		const Spline& _spline;
 
 		/// \brief position of the object relative to the spline
 		glm::vec3 _sPosition;
@@ -116,7 +119,7 @@ class GameObject {
 		/// \brief rotation of the object folowing the 3 spline-reference vectors (fwd, left, up) in trigonometric rotation direction
 		glm::vec3 _rotation;
 
-		/// \brief type of the gameObject : PLAYER, OBSTACLE, BONUS ... 
+		/// \brief type of the gameObject : PLAYER, OBSTACLE, BONUS ...
 		// (USELESS : just overload function that would need it with the class you want)
 		// int _type;
 

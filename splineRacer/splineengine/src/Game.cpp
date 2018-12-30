@@ -6,7 +6,7 @@ namespace splineengine {
 
 Game::Game()
 	:
-	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)), 
+	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
 	_spline(LEVEL_ENDLESS)
 {
 	std::cout << "infinite game constructor called " << std::endl;
@@ -19,7 +19,7 @@ Game::Game()
 
 Game::Game(int levelId)
 	:
-	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)), 
+	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
  	_spline(levelId)
 {
 	// TODO - OK now ?
@@ -55,19 +55,19 @@ void Game::loadLevel(int levelId) {
 
 	if (debug) std::cout << "loading level from file : " << mapPath << std::endl;
 	std::ifstream mapStream(mapPath);
-	
+
 	// cf https://github.com/nlohmann/json#examples
 	nlohmann::json map;
 	mapStream >> map;
 
 	for (nlohmann::json::iterator it = map.begin(); it != map.end(); ++it) {
 
-	    if ((*it)["type"].get<std::string>() == "obstacle") {	
+	    if ((*it)["type"].get<std::string>() == "obstacle") {
 			_obstacles.push_back(Obstacle(gameObjFromJson(*it)));
-		}		
-	    if ((*it)["type"].get<std::string>() == "collectable") {	
+		}
+	    if ((*it)["type"].get<std::string>() == "collectable") {
 			_collectables.push_back(Collectable(gameObjFromJson(*it)));
-		}		
+		}
 	}
 
 	glEnable(GL_DEPTH_TEST);
@@ -77,12 +77,18 @@ void Game::loadLevel() {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
 
+	_skybox.push_back(GameObject(
+			assetManager.models()["skybox"],_spline, false,
+			glm::vec3(1,0,0),
+			glm::vec3(100.f),
+			glm::vec3(0.f)
+	));
 
-	for (float i=-3; i<_spline.length()+3; i+=0.5f) {
+	for (float i=0; i<_spline.length(); i+=.3f) {
 		_obstacles.push_back(Obstacle(
 			GameObject(
 				assetManager.models()["cloud"], _spline, true,
-				glm::vec3(i, 0, 0), 
+				glm::vec3(i, 0, 0),
 				glm::vec3(4*glm::sin(i)+0.2f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
@@ -94,7 +100,7 @@ void Game::loadLevel() {
 			_collectables.push_back(Collectable(
 				GameObject(
 					assetManager.models()["coin"], _spline, false,
-					glm::vec3(i+j, 0, 10), 
+					glm::vec3(i+j, 0, 10),
 					glm::vec3(1.f),
 					glm::vec3(0.f)
 				)
@@ -120,7 +126,7 @@ void Game::update() {
 	// TODO
 	// Update player position and speed
 	_player.update(Settings::instance().deltaTime());
-	
+
 	// Collectables rotation
 	for (float i=0; i<_collectables.size(); ++i) {
 		_collectables[i].update(Settings::instance().deltaTime(), i);
@@ -149,6 +155,16 @@ void Game::render() {
 	if (_chosenCamera != POV_CAMERA) {
 		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix);
 	}
+
+	_skybox[0].setPosition(_player.sPosition());
+	//Draw _skybox
+	glDepthMask(GL_FALSE);
+	MVMatrix = camMatrix *  _skybox[0].matrix();
+	_renderManager.updateMVMatrix(*_cameras[_chosenCamera],MVMatrix);
+	_renderManager.useProgram(TEXTURE);
+	_skybox[0].draw();
+  glDepthMask(GL_TRUE);
+
 
 	// Draw obstacles
 	for (float i=0; i<_obstacles.size(); ++i) {
@@ -192,7 +208,7 @@ void Game::changeCamera() {
 void Game::zoomCamera(const float dz) {
 	if (_chosenCamera == TRACKBALL_CAMERA) {
 		_cameras[_chosenCamera]->moveFront(dz);
-	}			
+	}
 }
 
 

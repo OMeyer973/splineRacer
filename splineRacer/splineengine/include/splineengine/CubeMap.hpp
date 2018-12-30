@@ -22,6 +22,8 @@ private:
   std::string _cubeImgRight;
   std::string _cubeImgTop;
 
+  
+
 public:
 
   CubeMap(std::string cubeFront, std::string cubeLeft, std::string cubeBack,

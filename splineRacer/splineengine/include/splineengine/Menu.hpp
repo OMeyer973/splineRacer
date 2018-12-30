@@ -3,6 +3,7 @@
 #define __MENU__HPP
 
 #include <iostream>
+#include <string>
 #include "common.hpp"
 #include "AssetManager.hpp"
 #include "Player.hpp"
@@ -22,8 +23,7 @@ class Menu {
 	    Menu();
 
 		/// \brief destructor
-		~Menu()
-		{};
+		~Menu();
 
 
 		//METHODS
@@ -54,6 +54,7 @@ class Menu {
 		Player _player;
 
     std::vector<GameObject> _menuItems;
+		std::vector<GameObject> _skybox;
 
 		std::string _frontMenuModelName = "frontmenu";
 

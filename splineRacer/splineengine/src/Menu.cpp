@@ -61,6 +61,16 @@ void Menu::render() {
 		glDepthMask(GL_TRUE);
 
 		MVMatrix = _menuItems[0].staticMatrix();
+
+		if(isRotating() ){
+			_rotationAngle += (1 * _rotationDirection);
+			rotate( (6 * _rotationDirection) );
+			if( _rotationAngle % 10 == 0){
+				_rotationAngle = 0;
+				_isRotating = false;
+			}
+		}
+		//glDepthFunc(GL_LEQUAL);
 		// Update MVMatrix according to the object's transformation
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 		_renderManager.useProgram(TEXTURE);
@@ -75,17 +85,22 @@ void Menu::render() {
 		//}
 }
 
-void Menu::moveToPannel(const float dx, const int incrementState) {
+void Menu::moveToPannel(const int incrementState) {
+	_rotationDirection = -incrementState;
 	if( (_menuState + incrementState) <0 ){
 		_menuState +=5;
 	}else{
 		_menuState += incrementState;
 	}
-	_cameras[_chosenCamera]->rotateLeft(dx * 6);
+	_isRotating = true;
 }
 
 	std::string Menu::getState(){
 		return _action[abs(_menuState%6)];
 	}
+
+void Menu::rotate(const float dx){
+	_cameras[_chosenCamera]->rotateLeft(dx);
+}
 
 }

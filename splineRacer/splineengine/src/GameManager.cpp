@@ -51,10 +51,14 @@ void GameManager::doMenuEvent(SDL_Event e) {
 	            std::cout << "level id : " << _levelId << std::endl;
 	        }
 					if (e.key.keysym.sym==SDLK_q){ //going left
-						_menu.moveToPannel( 10.f,-1);
+						if(!_menu.isRotating() ){
+							_menu.moveToPannel(-1);
+						}
 				 }
 				 if (e.key.keysym.sym==SDLK_d){//going right
-						 _menu.moveToPannel(-10.f,1);
+					 if(!_menu.isRotating() ){
+						_menu.moveToPannel(1);	
+					}
 				 }
 				 if(e.key.keysym.sym == SDLK_RETURN && _menu.getState() == "Play"){
 					 goToGame();

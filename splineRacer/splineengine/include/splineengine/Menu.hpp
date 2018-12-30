@@ -39,7 +39,9 @@ class Menu {
 
 		void moveCameraX(const float dx);
 
-		void moveToPannel(const float dx,const int incrementState);
+		void moveToPannel(const int incrementState);
+
+		void rotate(const float dx);
 
 		std::string getState();
 
@@ -53,9 +55,11 @@ class Menu {
 		int _chosenCamera;
 
 		bool _isRotating;
-		Player _player;
+		int _rotationDirection;
+		int _rotationAngle;
 
-    	std::vector<GameObject> _menuItems;
+		Player _player;
+  	std::vector<GameObject> _menuItems;
 		std::vector<GameObject> _skybox;
 
 		std::string _frontMenuModelName = "frontmenu";

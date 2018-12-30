@@ -22,15 +22,16 @@ GameObject::GameObject(const GameObject& g)
 
 const glm::mat4 GameObject::matrix() {
     if (_isStatic && _hasMatrix) {
+        //std::cout << "#########################debug" << std::endl;
         return _transformMat;
     }
-    
+
     glm::mat4 objMatrix = _spline.matrix(_sPosition);
     objMatrix = glm::scale(objMatrix, _scale);
     objMatrix = glm::rotate(objMatrix, _rotation[FWD],  -fwdVec);
     objMatrix = glm::rotate(objMatrix, _rotation[LEFT], -leftVec);
     objMatrix = glm::rotate(objMatrix, _rotation[UP],   -upVec);
-    
+
     if (_isStatic) {
         _transformMat = objMatrix;
         _hasMatrix = true;
@@ -52,7 +53,7 @@ const glm::mat4 GameObject::staticMatrix() {
 bool GameObject::intersect(GameObject& other) {
     float selfScale = (glm::abs(_scale.x) + glm::abs(_scale.y) + glm::abs(_scale.z)) / 3.f;
     float otherScale = (glm::abs(other._scale.x) + glm::abs(other._scale.y) + glm::abs(other._scale.z)) / 3.f;
-    
+
     return (
         _model.collider().intersect(
             other._model.collider(), //other collider

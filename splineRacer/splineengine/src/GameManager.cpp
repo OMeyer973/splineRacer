@@ -51,11 +51,10 @@ void GameManager::doMenuEvent(SDL_Event e) {
 	            std::cout << "level id : " << _levelId << std::endl;
 	        }
 					if (e.key.keysym.sym==SDLK_q){ //going left
-						 
-						_menu.moveToPannel( 10.f);
+						_menu.moveToPannel( 10.f,-1);
 				 }
 				 if (e.key.keysym.sym==SDLK_d){//going right
-						 _menu.moveToPannel(-10.f);
+						 _menu.moveToPannel(-10.f,1);
 				 }
 	        break;
 	}
@@ -165,7 +164,7 @@ void GameManager::initGame() {
 	if (_game != nullptr) {
 		_game.reset();
 	}
-	
+
 	// TODO : add a parameter to loadLevel function in order to load a given level
 	// (but keep loadLevel() without parameter to load the infinite level)
 	if (_levelId == LEVEL_ENDLESS) {

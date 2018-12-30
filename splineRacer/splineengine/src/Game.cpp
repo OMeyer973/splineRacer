@@ -118,7 +118,7 @@ void Game::loadLevel() {
 			_obstacles.push_back(Obstacle(
 				GameObject(
 					assetManager.models()["skybox"], _spline, true,
-					glm::vec3(i-5, j, 15), 
+					glm::vec3(i-5, j, 15),
 					glm::vec3(3),
 					glm::vec3(j, -20*j, 3*j)
 				)

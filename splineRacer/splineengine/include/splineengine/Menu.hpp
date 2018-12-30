@@ -39,7 +39,7 @@ class Menu {
 
 		void moveCameraX(const float dx);
 
-		void moveToPannel(const float dx);
+		void moveToPannel(const float dx,const int incrementState);
 
 		bool isRotating() { return _isRotating;}
 	// MEMBERS
@@ -58,6 +58,8 @@ class Menu {
 
 		std::string _frontMenuModelName = "frontmenu";
 
+		int _menuState;
+		std::vector<std::string> _action = {"Play","Scores","Settings","Rules","Credits","Quit"};
 
 };
 }

@@ -1,4 +1,5 @@
 #include <splineengine/Menu.hpp>
+#include <cstdlib>
 
 
 namespace splineengine {
@@ -21,7 +22,7 @@ void Menu::init() {
 		assetManager.models()["frontmenu"], 0, true,
 		glm::vec3(0.f),
 		glm::vec3(2.f),
-		glm::vec3(0.f, 0.f, 0.f)
+		glm::vec3(0.f)
 	));
 	_skybox.push_back(GameObject(
 		assetManager.models()["skybox"], 0,  true,
@@ -38,6 +39,8 @@ Menu::~Menu(){
 }
 
 void Menu::update() {
+
+	_menuItems[0].scale() = glm::vec3(3.f);
 	// TODO
 }
 
@@ -46,9 +49,9 @@ void Menu::render() {
 	// TODO
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 camMatrix = glm::mat4(1);
-		glm::mat4 MVMatrix = camMatrix * _skybox[0].staticMatrix();
+		glm::mat4 MVMatrix =  _skybox[0].staticMatrix();
 
+		std::cout<< _action[abs(_menuState%6)] << std::endl;
 		//Draw _skybox
 		glDepthMask(GL_FALSE);
 		//MVMatrix = camMatrix *  _skybox[0].matrix();
@@ -57,10 +60,7 @@ void Menu::render() {
 		_skybox[0].draw();
 		glDepthMask(GL_TRUE);
 
-
-		//_menuItems[0].scale() = glm::vec3(5.8f);
-
-		MVMatrix = camMatrix * _menuItems[0].staticMatrix();
+		MVMatrix = _menuItems[0].staticMatrix();
 		// Update MVMatrix according to the object's transformation
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 		_renderManager.useProgram(TEXTURE);
@@ -75,7 +75,12 @@ void Menu::render() {
 		//}
 }
 
-void Menu::moveToPannel(const float dx) {
+void Menu::moveToPannel(const float dx, const int incrementState) {
+	if( (_menuState + incrementState) <0 ){
+		_menuState +=5;
+	}else{
+		_menuState += incrementState;
+	}
 	_cameras[_chosenCamera]->rotateLeft(dx * 6);
 }
 

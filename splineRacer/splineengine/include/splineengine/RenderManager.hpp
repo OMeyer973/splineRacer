@@ -21,12 +21,14 @@ class RenderManager {
 		RenderManager()
 		{
 			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 200.f);
-			_skybox = new CubeMap("../../../assets/textures/posx.png",
-														"../../../assets/textures/negx.png",
-														"../../../assets/textures/posy.png",
-														"../../../assets/textures/negy.png",
-														"../../../assets/textures/posz.png",
-														"../../../assets/textures/negz.png");
+			_skybox = new CubeMap(
+				"../../../assets/textures/posx.png",
+				"../../../assets/textures/negx.png",
+				"../../../assets/textures/posy.png",
+				"../../../assets/textures/negy.png",
+				"../../../assets/textures/posz.png",
+				"../../../assets/textures/negz.png"
+			);
 		};
 
 		RenderManager(Camera &camera) {
@@ -46,18 +48,21 @@ class RenderManager {
 		/// \brief Update _MVMatrix and _normalMatrix
 		void updateMVMatrix(Camera &camera, glm::mat4 transformMatrix);
 
+		/// \brief Update _globalMatrix
+		void updateGlobalMatrix(Camera &camera, glm::mat4 splineCamMatrix);
+
 		/// \brief get _MVMatrix
-		glm::mat4 MVMatrix() const {
+		const glm::mat4 MVMatrix() const {
 			return _MVMatrix;
 		}
 
 		/// \brief get _normalMatrix
-		glm::mat4 normalMatrix() const {
+		const glm::mat4 normalMatrix() const {
 			return _normalMatrix;
 		}
 
 		/// \brief get _projMatrix
-		glm::mat4 projMatrix() const {
+		const glm::mat4 projMatrix() const {
 			return _projMatrix;
 		}
 
@@ -75,6 +80,8 @@ class RenderManager {
 		glm::mat4 _MVMatrix;
 		/// \brief Model-View matrix
 		glm::mat4 _normalMatrix;
+		/// \brief Global matrix
+		glm::mat4 _globalMatrix;
 
 		CubeMap* _skybox;
 

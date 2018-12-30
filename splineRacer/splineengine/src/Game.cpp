@@ -85,11 +85,19 @@ void Game::loadLevel() {
 	));
 
 	for (float i=0; i<_spline.length(); i+=.3f) {
+		// _obstacles.push_back(Obstacle(
+		// 	GameObject(
+		// 		assetManager.models()["cloud"], _spline, true,
+		// 		glm::vec3(i, 0, 0),
+		// 		glm::vec3(4*glm::sin(i)+0.2f),
+		// 		glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
+		// 	)
+		// ));
 		_obstacles.push_back(Obstacle(
 			GameObject(
 				assetManager.models()["cloud"], _spline, true,
 				glm::vec3(i, 0, 0),
-				glm::vec3(4*glm::sin(i)+0.2f),
+				glm::vec3(1.f, 1.f, 1.f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
 		));
@@ -159,8 +167,9 @@ void Game::render() {
 	_skybox[0].setPosition(_player.sPosition());
 	//Draw _skybox
 	glDepthMask(GL_FALSE);
-	MVMatrix = camMatrix *  _skybox[0].matrix();
+	MVMatrix = camMatrix * _skybox[0].matrix();
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera],MVMatrix);
+	_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
 	_renderManager.useProgram(TEXTURE);
 	_skybox[0].draw();
   glDepthMask(GL_TRUE);
@@ -173,6 +182,7 @@ void Game::render() {
 		MVMatrix = camMatrix * _obstacles[i].matrix();
 
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+		_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
 		_renderManager.useProgram(DIRECTIONAL_LIGHT);
 
 		_obstacles[i].draw();
@@ -185,6 +195,7 @@ void Game::render() {
 		MVMatrix = camMatrix * _collectables[i].matrix();
 
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+		_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
 		_renderManager.useProgram(DIRECTIONAL_LIGHT);
 
 		_collectables[i].draw();

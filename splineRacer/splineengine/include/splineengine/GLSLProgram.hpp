@@ -22,7 +22,7 @@ struct NormalProgram {
         :_program(glimac::loadProgram(Settings::instance().appPath().dirPath() + "shaders/3D.vs.glsl",
                                      Settings::instance().appPath().dirPath() + "shaders/normals.fs.glsl"))
     {
-        if (debug) std::cout << "loading normal program" << std::endl;
+        if (debug) std::cout << "Loading normal program" << std::endl;
         uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
         uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
         uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
@@ -43,7 +43,7 @@ struct TextureProgram {
         :_program(loadProgram(Settings::instance().appPath().dirPath() + "shaders/3D.vs.glsl",
                              Settings::instance().appPath().dirPath() + "shaders/tex3D.fs.glsl"))
     {
-        std::cout << "loading texture program" << std::endl;
+        std::cout << "Loading texture program" << std::endl;
         uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
         uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
         uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
@@ -73,7 +73,7 @@ struct DirectionalLightProgram {
         :_program(loadProgram(Settings::instance().appPath().dirPath() + "shaders/3D.vs.glsl",
                               Settings::instance().appPath().dirPath() + "shaders/directionalLight.fs.glsl"))
     {
-        std::cout << "loading dir light program" << std::endl;
+        std::cout << "Loading dir light program" << std::endl;
         uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
         uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
         uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");

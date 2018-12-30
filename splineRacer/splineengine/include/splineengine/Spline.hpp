@@ -8,7 +8,6 @@
 #include <glimac/SDLWindowManager.hpp>
 #include "common.hpp"
 
-
 namespace splineengine {
 
 const int defaultAnchorsNb = 50;

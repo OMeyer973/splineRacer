@@ -38,6 +38,16 @@ const glm::mat4 GameObject::matrix() {
     return objMatrix;
 }
 
+const glm::mat4 GameObject::staticMatrix() {
+    glm::mat4 objMatrix = glm::mat4();
+    objMatrix = glm::translate(objMatrix, _sPosition);
+    objMatrix = glm::scale(objMatrix, _scale);
+    objMatrix = glm::rotate(objMatrix, _rotation[FWD],  -fwdVec);
+    objMatrix = glm::rotate(objMatrix, _rotation[LEFT], -leftVec);
+    objMatrix = glm::rotate(objMatrix, _rotation[UP],   -upVec);
+    return objMatrix;
+}
+
 
 bool GameObject::intersect(GameObject& other) {
     float selfScale = (glm::abs(_scale.x) + glm::abs(_scale.y) + glm::abs(_scale.z)) / 3.f;

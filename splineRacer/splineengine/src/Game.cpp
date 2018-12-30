@@ -78,7 +78,7 @@ void Game::loadLevel() {
 	AssetManager& assetManager = AssetManager::instance();
 
 	_skybox.push_back(GameObject(
-			assetManager.models()["skybox"],_spline, false,
+			assetManager.models()["skybox"], _spline, false,
 			glm::vec3(1,0,0),
 			glm::vec3(100.f),
 			glm::vec3(0.f)

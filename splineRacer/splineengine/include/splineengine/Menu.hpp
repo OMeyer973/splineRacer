@@ -53,7 +53,7 @@ class Menu {
 		bool _isRotating;
 		Player _player;
 
-    std::vector<GameObject> _menuItems;
+    	std::vector<GameObject> _menuItems;
 		std::vector<GameObject> _skybox;
 
 		std::string _frontMenuModelName = "frontmenu";

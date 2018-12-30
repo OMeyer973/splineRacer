@@ -39,13 +39,22 @@ class Menu {
 
 		void moveCameraX(const float dx);
 
-		void moveToPannel(const int incrementState);
+		void moveToPannel(const int pannelState);
 
-		void rotate(const float dx);
+		void moveToLevel(const int lvlState);
 
+		void rotateHorizontally(const float dx);
+
+		void rotateVertically(const float dx);
+
+		void setDisplayLevels(){_displayLevels = true;}
+
+		bool getDisplayLevels(){return _displayLevels;}
+		
 		std::string getState();
 
-		bool isRotating() { return _isRotating;}
+		bool isRotatingHorizontally() { return _isRotatingHorizontally;}
+		bool isRotatingVertically(){return _isRotatingVertically;};
 	// MEMBERS
 	private:
 		RenderManager _renderManager;
@@ -54,7 +63,11 @@ class Menu {
 		/// \brief id of the current camera
 		int _chosenCamera;
 
-		bool _isRotating;
+		bool _isRotatingHorizontally;
+		bool _isRotatingVertically;
+
+		bool _displayLevels;
+
 		int _rotationDirection;
 		int _rotationAngle;
 
@@ -67,6 +80,7 @@ class Menu {
 		int _menuState;
 		std::vector<std::string> _action = {"Play","Scores","Settings","Rules","Credits","Quit"};
 
+		int _levelState;
 };
 }
 #endif

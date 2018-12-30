@@ -47,7 +47,7 @@ void RenderManager::applyTransformations(FS shader)
     switch (shader)
     {
         case NORMAL :
-            glUniformMatrix4fv(programList.normalProgram.uMVPMatrix, 1, GL_FALSE, 
+            glUniformMatrix4fv(programList.normalProgram.uMVPMatrix, 1, GL_FALSE,
                 glm::value_ptr(_projMatrix * _MVMatrix));
 
             glUniformMatrix4fv(programList.normalProgram.uMVMatrix, 1, GL_FALSE,

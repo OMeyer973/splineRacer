@@ -41,28 +41,34 @@ void GameManager::doMenuEvent(SDL_Event e) {
        case SDL_KEYDOWN:
 	        if(e.key.keysym.sym==SDLK_SPACE) {
 	            std::cout << "Space " << std::endl;
+							goToGame();
 	        }
-	        if(e.key.keysym.sym==SDLK_UP) {
+	        if(e.key.keysym.sym==SDLK_z) {
 	            _levelId = (_levelId + 1) % NUMBER_OF_LEVELS;
 	            std::cout << "level id : " << _levelId << std::endl;
+							_menu.moveToLevel(1);
 	        }
-	        if(e.key.keysym.sym==SDLK_DOWN) {
+	        if(e.key.keysym.sym==SDLK_s) {
 	            _levelId = (_levelId - 1) % NUMBER_OF_LEVELS;
 	            std::cout << "level id : " << _levelId << std::endl;
+							_menu.moveToLevel(-1);
 	        }
 					if (e.key.keysym.sym==SDLK_q){ //going left
-						if(!_menu.isRotating() ){
+						if(!_menu.isRotatingHorizontally() ){
 							_menu.moveToPannel(-1);
 						}
 				 }
 				 if (e.key.keysym.sym==SDLK_d){//going right
-					 if(!_menu.isRotating() ){
-						_menu.moveToPannel(1);	
+					 if(!_menu.isRotatingHorizontally() ){
+						_menu.moveToPannel(1);
 					}
 				 }
 				 if(e.key.keysym.sym == SDLK_RETURN && _menu.getState() == "Play"){
-					 goToGame();
+					 _menu.setDisplayLevels();
 				 }
+				 // if(e.key.keysym.sym == SDLK_RETURN && _menu.getState()== "Play" && _menu.getDisplayLevels() ){
+					//  goToGame();
+				 // }
 				 if(e.key.keysym.sym == SDLK_RETURN && _menu.getState() == "Quit"){
 					_exiting = true;
 				}

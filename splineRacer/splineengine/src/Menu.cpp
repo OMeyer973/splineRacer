@@ -16,14 +16,25 @@ Menu::Menu()
 void Menu::init() {
 	std::cout << "menu init" << std::endl;
 	AssetManager& assetManager = AssetManager::instance();
-	_isRotating = false;
+	_isRotatingHorizontally = false;
+	_isRotatingVertically = false;
+	_displayLevels = false;
 
 	_menuItems.push_back(GameObject(
 		assetManager.models()["frontmenu"], 0, true,
 		glm::vec3(0.f),
-		glm::vec3(2.f),
+		glm::vec3(1.f),
 		glm::vec3(0.f)
 	));
+
+	for(int i =0; i<3; i++){
+		_menuItems.push_back(GameObject(
+					assetManager.models()["menu"],0,true,
+					glm::vec3(0.f,-2 + i*2.f,2.f),
+					glm::vec3(.2f),
+					glm::vec3(0.f,-(-10.f + i*10.f),0.f)
+		));
+	}
 	_skybox.push_back(GameObject(
 		assetManager.models()["skybox"], 0,  true,
 		glm::vec3(0.f),
@@ -40,7 +51,29 @@ Menu::~Menu(){
 
 void Menu::update() {
 
-	_menuItems[0].scale() = glm::vec3(3.f);
+	_menuItems[0].scale() = glm::vec3(1.5f);
+
+	// for(float i =1; i< _menuItems.size();i++){
+	// 	_menuItems[i].scale() = glm::vec3(.01f);
+	// }
+
+	if(isRotatingHorizontally() ){
+		_rotationAngle += (1 * _rotationDirection);
+		rotateHorizontally( (6 * _rotationDirection) );
+		if( _rotationAngle % 10 == 0){
+			_rotationAngle = 0;
+			_isRotatingHorizontally = false;
+		}
+	}
+	if(isRotatingVertically() ){
+		_rotationAngle += (1 * _rotationDirection);
+		rotateVertically( (6 * _rotationDirection) );
+		if( _rotationAngle % 10 == 0){
+			_rotationAngle = 0;
+			_isRotatingVertically = false;
+		}
+	}
+
 	// TODO
 }
 
@@ -62,19 +95,12 @@ void Menu::render() {
 
 		MVMatrix = _menuItems[0].staticMatrix();
 
-		if(isRotating() ){
-			_rotationAngle += (1 * _rotationDirection);
-			rotate( (6 * _rotationDirection) );
-			if( _rotationAngle % 10 == 0){
-				_rotationAngle = 0;
-				_isRotating = false;
-			}
-		}
+
 		//glDepthFunc(GL_LEQUAL);
 		// Update MVMatrix according to the object's transformation
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 		_renderManager.useProgram(TEXTURE);
-		// _renderManager.applyTransformations(TEXTURE);
+		//_renderManager.applyTransformations(TEXTURE);
 
 		// for (float i=0; i<_menuItems.size(); ++i) {
 		//    //MVMatrix = camMatrix * _menuItems[i].matrix();
@@ -83,24 +109,51 @@ void Menu::render() {
 		// 	_renderManager.applyTransformations(NORMAL, _renderManager.MVMatrix());
 			_menuItems[0].draw();
 		//}
+
+		//display levels
+		if(_displayLevels){
+			for(float i=1; i< _menuItems.size();i++){
+				  MVMatrix = _menuItems[i].staticMatrix();
+				  _renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+					_renderManager.useProgram(TEXTURE);
+					_renderManager.applyTransformations(TEXTURE);
+					_menuItems[i].draw();
+			}
+		}
 }
 
-void Menu::moveToPannel(const int incrementState) {
-	_rotationDirection = -incrementState;
-	if( (_menuState + incrementState) <0 ){
+void Menu::moveToPannel(const int pannelState) {
+	_rotationDirection = -pannelState;
+	if( (_menuState + pannelState) <0 ){
 		_menuState +=5;
 	}else{
-		_menuState += incrementState;
+		_menuState += pannelState;
 	}
-	_isRotating = true;
+	if(getState() == "Play"){
+		_displayLevels = true;
+	}
+		_displayLevels = false;
+
+	_isRotatingHorizontally = true;
 }
 
-	std::string Menu::getState(){
-		return _action[abs(_menuState%6)];
-	}
+std::string Menu::getState(){
+	return _action[abs(_menuState%6)];
+}
 
-void Menu::rotate(const float dx){
+void Menu::rotateHorizontally(const float dx){
 	_cameras[_chosenCamera]->rotateLeft(dx);
 }
+
+void Menu::moveToLevel(const int lvlState){
+	_rotationDirection = lvlState;
+	_isRotatingVertically = true;
+}
+
+
+void Menu::rotateVertically(const float dx){
+	_cameras[_chosenCamera]->rotateUp(dx);
+}
+
 
 }

@@ -82,7 +82,7 @@ class Game {
     std::vector<GameObject> _decorations;
     std::vector<Obstacle> _obstacles;
     std::vector<Collectable> _collectables;
-		std::vector<GameObject> _skybox; 
+		std::vector<GameObject> _skybox;
 		// CONSTANTS
 		std::string _playerModelName = "plane";
 

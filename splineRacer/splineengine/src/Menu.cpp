@@ -4,7 +4,6 @@
 namespace splineengine {
 
 Menu::Menu()
-:_player(GameObject(AssetManager::instance().models()["plane"], 0, false, defaultPlayerPos))
 {
 	std::cout << "front menu constructor called " << std::endl;
 	_cameras.emplace_back(new POVCamera());
@@ -24,10 +23,19 @@ void Menu::init() {
                       glm::vec3(1.f),
                       glm::vec3(0.f, 0.f, 0.f)
                       ));
+	_skybox.push_back(GameObject(
+			assetManager.models()["skybox"],0, true,
+			glm::vec3(1,0,0),
+			glm::vec3(100.f),
+			glm::vec3(0.f)
+	));
 
   glEnable(GL_DEPTH_TEST);
 }
 
+Menu::~Menu(){
+  std::cout << "menu desctructor called " << std::endl;
+}
 
 void Menu::update() {
 	// TODO
@@ -41,7 +49,16 @@ void Menu::render() {
     glm::mat4 camMatrix = glm::mat4(1);
     glm::mat4 MVMatrix = camMatrix;
 
-    _menuItems[0].scale() = glm::vec3(5.8f);
+    //Draw _skybox
+    glDepthMask(GL_FALSE);
+    //MVMatrix = camMatrix *  _skybox[0].matrix();
+    _renderManager.updateMVMatrix(*_cameras[_chosenCamera],MVMatrix);
+    _renderManager.useProgram(TEXTURE);
+    _skybox[0].draw();
+    glDepthMask(GL_TRUE);
+
+
+    //_menuItems[0].scale() = glm::vec3(5.8f);
 
   	// Update MVMatrix according to the object's transformation
   	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);

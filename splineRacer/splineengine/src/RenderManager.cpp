@@ -10,7 +10,7 @@ void RenderManager::updateMVMatrix(Camera &camera, glm::mat4 transformMatrix) {
 }
 
 void RenderManager::updateGlobalMatrix(Camera &camera, glm::mat4 splineCamMatrix) {
-    _globalMatrix =  camera.getViewMatrix() * splineCamMatrix;
+    _globalMatrix = camera.getViewMatrix() * splineCamMatrix;
 }
 
 void RenderManager::useProgram(FS shader) {
@@ -39,9 +39,8 @@ void RenderManager::useProgram(FS shader) {
 
 void RenderManager::applyTransformations(FS shader)
 {
-    // glm::mat4 lightMatrix = glm::rotate(_globalMatrix, 180.f, glm::vec3(1,1,1));
     glm::mat4 lightMatrix = _globalMatrix;
-    glm::vec4 lightVector = glm::normalize(glm::vec4(1,1,1,0)*lightMatrix);
+    glm::vec4 lightVector = glm::normalize(glm::vec4(1,1,1,0) * lightMatrix);
 
     const ProgramList& programList = AssetManager::instance().programList();
 
@@ -81,7 +80,7 @@ void RenderManager::applyTransformations(FS shader)
             glUniform3f(programList.directionalLightProgram.uLightIntensity, 1.f, 1.f, 1.f);
             glUniform3f(programList.directionalLightProgram.uKd, .5, .5, .5);
             glUniform3f(programList.directionalLightProgram.uKs, .5, .5, .5);
-            glUniform1f(programList.directionalLightProgram.uShininess, 4);
+            glUniform1f(programList.directionalLightProgram.uShininess, .5);
 
             glUniformMatrix4fv(programList.directionalLightProgram.uMVPMatrix, 1, GL_FALSE,
                 glm::value_ptr(_projMatrix * _MVMatrix));

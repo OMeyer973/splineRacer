@@ -20,7 +20,7 @@ Game::Game()
 Game::Game(int levelId)
 	:
 	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
- 	_spline(levelId)
+	_spline(levelId)
 {
 	// TODO - OK now ?
 	std::cout << "game from level constructor called " << std::endl;
@@ -62,10 +62,10 @@ void Game::loadLevel(int levelId) {
 
 	for (nlohmann::json::iterator it = map.begin(); it != map.end(); ++it) {
 
-	    if ((*it)["type"].get<std::string>() == "obstacle") {
+		if ((*it)["type"].get<std::string>() == "obstacle") {
 			_obstacles.push_back(Obstacle(gameObjFromJson(*it)));
 		}
-	    if ((*it)["type"].get<std::string>() == "collectable") {
+		if ((*it)["type"].get<std::string>() == "collectable") {
 			_collectables.push_back(Collectable(gameObjFromJson(*it)));
 		}
 	}
@@ -85,40 +85,42 @@ void Game::loadLevel() {
 	));
 
 	for (float i=0; i<_spline.length(); i+=.3f) {
+		_obstacles.push_back(Obstacle(
+			GameObject(
+				assetManager.models()["prism"], _spline, true,
+				glm::vec3(i, 0, 0),
+				glm::vec3(4*glm::sin(i)+0.2f),
+				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
+			)
+		));
 		// _obstacles.push_back(Obstacle(
 		// 	GameObject(
 		// 		assetManager.models()["cloud"], _spline, true,
 		// 		glm::vec3(i, 0, 0),
-		// 		glm::vec3(4*glm::sin(i)+0.2f),
+		// 		glm::vec3(1.f, 1.f, 1.f),
 		// 		glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 		// 	)
 		// ));
-		_obstacles.push_back(Obstacle(
-			GameObject(
-				assetManager.models()["cloud"], _spline, true,
-				glm::vec3(i, 0, 0),
-				glm::vec3(1.f, 1.f, 1.f),
-				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
-			)
-		));
 	}
 
 	for (float i=0; i<_spline.length(); i+=10.f) {
 		for (float j = 0; j < 2.5; j+=.5f) {
-			_collectables.push_back(Collectable(
-				GameObject(
-					assetManager.models()["coin"], _spline, false,
-					glm::vec3(i+j, 0, 10),
-					glm::vec3(1.f),
-					glm::vec3(0.f)
-				)
-			));
+			for (float k = 0; k <= .2f; k+=.2f) {
+				_collectables.push_back(Collectable(
+					GameObject(
+						assetManager.models()["coin"], _spline, false,
+						glm::vec3(i+j, i/2+k, 10),
+						glm::vec3(.5f),
+						glm::vec3(0)
+					)
+				));
+			}
 		}
 		for (float j = 0; j < 6.28; j+=.3f) {
 			_obstacles.push_back(Obstacle(
 				GameObject(
-					assetManager.models()["skybox"], _spline, true,
-					glm::vec3(i-5, j, 15),
+					assetManager.models()["prism"], _spline, true,
+					glm::vec3(i-5, j, 15), 
 					glm::vec3(3),
 					glm::vec3(j, -20*j, 3*j)
 				)
@@ -168,11 +170,11 @@ void Game::render() {
 	//Draw _skybox
 	glDepthMask(GL_FALSE);
 	MVMatrix = camMatrix * _skybox[0].matrix();
-	_renderManager.updateMVMatrix(*_cameras[_chosenCamera],MVMatrix);
+	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 	_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
 	_renderManager.useProgram(TEXTURE);
 	_skybox[0].draw();
-  glDepthMask(GL_TRUE);
+	glDepthMask(GL_TRUE);
 
 
 	// Draw obstacles

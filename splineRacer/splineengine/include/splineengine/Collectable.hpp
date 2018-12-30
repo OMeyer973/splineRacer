@@ -5,7 +5,7 @@
 #include "GameObject.hpp"
 #include "common.hpp"
 
-const float collectableRotationSpeed = 0.2f;
+const float collectableRotationSpeed = 2.f;
 
 namespace splineengine {
 
@@ -34,7 +34,7 @@ class Collectable : public GameObject {
         };
 
         void update(const float dt, const float pos) {
-			_rotation.z += dt + (pos*collectableRotationSpeed) * dt;
+			_rotation.z += collectableRotationSpeed*dt + pos/500;
 		}
 
 };

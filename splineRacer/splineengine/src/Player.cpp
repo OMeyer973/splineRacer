@@ -15,7 +15,8 @@ Player::Player(
     _sSpeed(defaultPlayerMaxSpeed[FWD], 0.f, 0.f), // initial speed is only forward
     _sMaxSpeed(maxSpeed),
     _sAcceleration(acceleration),
-    _sInput(1.f, 0.f, 0.f)
+    _sInput(1.f, 0.f, 0.f),
+    _score(0)
 {
 
 }
@@ -54,10 +55,10 @@ void Player::update(const float dt) {
 void Player::doCollisionWith(GameObject& other) {
 	if (debug) std::cout << "doing player collision behaviour with GameObject" << std::endl;
 	
-	if (_collisionCooldownTimer <= 0) {
-		_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
-		_collisionCooldownTimer = collisionCooldowd;
-	}
+	// if (_collisionCooldownTimer <= 0) {
+	// 	_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
+	// 	_collisionCooldownTimer = collisionCooldowd;
+	// }
 }
 
 void Player::doCollisionWith(Obstacle& other) {
@@ -66,6 +67,13 @@ void Player::doCollisionWith(Obstacle& other) {
 	if (_collisionCooldownTimer <= 0) {
 		_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
 		_collisionCooldownTimer = collisionCooldowd;
+	}
+}
+
+void Player::doCollisionWith(Collectable& collectable) {
+	if (!collectable.isTaken()) {
+		_score++;
+		if (debug) std::cout << "Score : " << _score << std::endl;
 	}
 }
 

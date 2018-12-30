@@ -4,7 +4,7 @@
 namespace splineengine {
 
 Collectable::Collectable(const GameObject& gameObject)
-	:GameObject(gameObject)
+	:GameObject(gameObject), _isTaken(false)
 {};
 
 }

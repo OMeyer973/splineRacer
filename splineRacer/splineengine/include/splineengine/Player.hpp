@@ -6,6 +6,7 @@
 #include "RenderManager.hpp"
 #include "GameObject.hpp"
 #include "Obstacle.hpp"
+#include "Collectable.hpp"
 #include "Settings.hpp"
 
 namespace splineengine {
@@ -72,7 +73,7 @@ class Player : public GameObject {
 
 
         // METHODS
-        /// \brief Override draw method for the player
+        /// \brief Overriden draw method for the player
         void draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMatrix) ;
 
         /// \brief update the player status at each frame
@@ -83,6 +84,9 @@ class Player : public GameObject {
 
         /// \brief trigger collision behavior when colliding with an Obstacle. 
         void doCollisionWith(Obstacle& other);
+
+        /// \brief Trigger collision behavior when colliding with a Collectable object.
+        void doCollisionWith(Collectable& other);
 
     protected:
         // METHODS
@@ -99,6 +103,8 @@ class Player : public GameObject {
         glm::vec3 _sMaxSpeed;
         /// \brief acceleration and decceleration of the player
         glm::vec3 _sAcceleration;
+        /// \brief Score of the player
+        unsigned int _score;
 
 
         /// \brief current input | [0] forward : no input | [1] left -> +1, straight -> 0, right -> -1 | [2] up -> +1, straight -> 0, down -> -1

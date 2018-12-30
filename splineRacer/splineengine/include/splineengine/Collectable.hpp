@@ -31,11 +31,19 @@ class Collectable : public GameObject {
         /// \brief trigger collision behavior when colliding with another Gameobjects. 
         void doCollisionWith(Player& other) {
             if (debug) std::cout << "Collectable doing collision with Player" << std::endl;
+            _isTaken = true;
         };
 
         void update(const float dt, const float pos) {
-			_rotation.z += collectableRotationSpeed*dt + pos/500;
+            _rotation.z += collectableRotationSpeed*dt + pos/500;
+        }
+
+        const bool isTaken() const {
+			return _isTaken;
 		}
+
+    private:
+        bool _isTaken;
 
 };
 

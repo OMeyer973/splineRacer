@@ -4,6 +4,17 @@
 
 namespace splineengine {
 
+template <typename T>
+T GetMax (T a, T b) {
+ return (a>b?a:b);
+}
+
+template <typename T, typename U>
+void handleCollision(T& object1, U& object2) {
+	object1.doCollisionWith(object2);
+	object2.doCollisionWith(object1);
+}
+
 Game::Game()
 	:
 	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
@@ -144,13 +155,21 @@ void Game::update() {
 
 	// Check for collisions with obstacles
 	for (float i=0; i<_obstacles.size(); ++i) {
-		_player.collideWith(_obstacles[i]);
+		// _player.collideWith(_obstacles[i]);
+		if (_player.intersect(_obstacles[i])) {
+			handleCollision(_player, _obstacles[i]);
+		    // doCollisionWith(_obstacles[i]);
+		    // _obstacles[i].doCollisionWith(_player);
+		}
 	}
 
 	// Check for collisions with collectables
-	// for (float i=0; i<_collectables.size(); ++i) {
-	// 	_player.collideWith(_collectables[i]);
-	// }
+	for (float i=0; i<_collectables.size(); ++i) {
+		// _player.collideWith(_collectables[i]);
+		if (_player.intersect(_collectables[i])) {
+			handleCollision(_player, _collectables[i]);
+		}
+	}
 }
 
 
@@ -192,17 +211,17 @@ void Game::render() {
 
 	// Draw Collectables
 	for (float i=0; i<_collectables.size(); ++i) {
+		if (!_collectables[i].isTaken()) {
+			// Get the transform matrix of the current obstacle
+			MVMatrix = camMatrix * _collectables[i].matrix();
 
-		// Get the transform matrix of the current obstacle
-		MVMatrix = camMatrix * _collectables[i].matrix();
+			_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+			_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
+			_renderManager.useProgram(DIRECTIONAL_LIGHT);
 
-		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
-		_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
-		_renderManager.useProgram(DIRECTIONAL_LIGHT);
-
-		_collectables[i].draw();
+			_collectables[i].draw();
+		}
 	}
-
 }
 
 

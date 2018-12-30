@@ -4,11 +4,6 @@
 
 namespace splineengine {
 
-template <typename T>
-T GetMax (T a, T b) {
- return (a>b?a:b);
-}
-
 template <typename T, typename U>
 void handleCollision(T& object1, U& object2) {
 	object1.doCollisionWith(object2);

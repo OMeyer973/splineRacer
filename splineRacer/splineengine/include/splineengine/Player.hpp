@@ -13,9 +13,8 @@ namespace splineengine {
 // Forward Declaration
 class Obstacle;
 
-const glm::vec3 defaultPlayerPos          = glm::vec3(1.f, 0.f, 10.f);
-const float     defaultPlayerFwdSpeed     = 1.5f;
-const glm::vec3 defaultPlayerMaxSpeed     = glm::vec3(1.5f, 10.f, 10.f);
+const glm::vec3 defaultPlayerPos          = glm::vec3(-5.f, 0.f, 10.f);
+const glm::vec3 defaultPlayerMaxSpeed     = glm::vec3(2.5f, 14.f, 12.f);
 const glm::vec3 defaultPlayerAcceleration = glm::vec3(3.f, 7.f, 7.f);
 const glm::vec3 defaultPlayerBounceFactor = glm::vec3(2.f, 4.f, 4.f); //careful with these or you can go through walls or get launched to infinity. above 2 looks kinda safe
 
@@ -32,7 +31,6 @@ class Player : public GameObject {
         /// \brief default player Constructor
         Player(
             const GameObject& gameObject   = GameObject(Model(), Spline(), false, defaultPlayerPos),
-            const float       fwdSpeed     = defaultPlayerFwdSpeed,
             const glm::vec3   maxSpeed     = defaultPlayerMaxSpeed,
             const glm::vec3   acceleration = defaultPlayerAcceleration
         );
@@ -106,6 +104,7 @@ class Player : public GameObject {
         /// \brief current input | [0] forward : no input | [1] left -> +1, straight -> 0, right -> -1 | [2] up -> +1, straight -> 0, down -> -1
         glm::vec3 _sInput;
 
+        /// \brief cool down timer between 2 collisions
         float _collisionCooldownTimer = 0;
 
         /// \brief Propeller rotation

@@ -77,7 +77,8 @@ void Game::loadLevel() {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
 
-	for (float i=0; i<_spline.length(); i+=.3f) {
+
+	for (float i=-3; i<_spline.length()+3; i+=0.5f) {
 		_obstacles.push_back(Obstacle(
 			GameObject(
 				assetManager.models()["cloud"], _spline, true,
@@ -99,12 +100,12 @@ void Game::loadLevel() {
 				)
 			));
 		}
-		for (float j = 0; j < 6.28; j+=.1f) {
+		for (float j = 0; j < 6.28; j+=.3f) {
 			_obstacles.push_back(Obstacle(
 				GameObject(
 					assetManager.models()["skybox"], _spline, true,
 					glm::vec3(i-5, j, 15), 
-					glm::vec3(1+(int)(30*j)%3),
+					glm::vec3(3),
 					glm::vec3(j, -20*j, 3*j)
 				)
 			));

@@ -11,12 +11,12 @@
 
 namespace splineengine {
 
-const int defaultAnchorsNb = 20;
-const float defaultSegmentLength = 2;
+const int defaultAnchorsNb = 50;
+const float defaultSegmentLength = 3;
 
 // delta position used to rotate the camera and the objects facing the curve
 // it is large in order to have smooth camera movements
-const float deltaSpline = 0.2f;
+const float deltaSpline = 0.1f;
 
 // camera distance to the plane (size of the plane on screen)
 const float camDistToPlane = 1.5f;
@@ -25,7 +25,7 @@ const float lookDownAngle = 0.3f;
 // the higher the camera is, the lower it looks on the spline following this factor
 const float lookDownFactor = -0.02f;
 // camera focus point is a bit ahead of the plane
-const float camLead = 0.1f;
+const float camLead = 0.3f;
 
 
 /// \brief Represents the spline, its equation and transforms
@@ -50,6 +50,7 @@ class Spline {
         
         // NON-CONST GETTERS (can be used as setters)
         // none for now
+        std::vector<glm::vec3> anchors() { return _anchors; };
 
         // METHODS
         /// \brief evaluate the spline at the forward coordinate t and returns the world-space vec3 point corresponding
@@ -65,10 +66,6 @@ class Spline {
         float length() const { return _segmentLength * _anchors.size(); }
 
     protected:
-        /// \brief wrap i between 0-loopSize.
-        /// \brief behaves like % for i>0 
-        int  loopInt(int i, int loopSize) const;
-
         /// \brief Returns a position between 4 Vector3 with Catmull-Rom spline algorithm
         /// \brief (when t goes between 0-1, position goes between p1-p2. p0, p3 are just control points)
         glm::vec3 getCatmullRomPosition(

@@ -7,7 +7,7 @@
 // declare global variables here
 
 // print debug messages ?
-const bool debug = true;
+const bool debug = false;
 
 // special level ID to identif the endless level
 const int LEVEL_ENDLESS = 0;

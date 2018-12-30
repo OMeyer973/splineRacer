@@ -32,14 +32,19 @@ Spline::Spline(int levelId)
 glm::vec3 Spline::point(const float t) const {
 	double pos = t/_segmentLength;
 
-	// id of the first point
-	int i = (int)pos;
+	int i = (int)glm::floor(pos);
 	float tmp = pos-(float)i;
 
-	const glm::vec3 p0 = _anchors[loopInt(i-1,_anchors.size())];
-	const glm::vec3 p1 = _anchors[loopInt(i  ,_anchors.size())];
-	const glm::vec3 p2 = _anchors[loopInt(i+1,_anchors.size())];
-	const glm::vec3 p3 = _anchors[loopInt(i+2,_anchors.size())];
+	if (pos <= 0)
+		return _segmentLength*glm::mix(_anchors[1], _anchors[2], pos);
+	
+	if (pos+3 >= _anchors.size()) 
+		return _segmentLength*glm::mix(_anchors[_anchors.size()-3], _anchors[_anchors.size()-2], pos-_anchors.size()+4);
+	
+	const glm::vec3 p0 = _anchors[i];
+	const glm::vec3 p1 = _anchors[i+1];
+	const glm::vec3 p2 = _anchors[i+2];
+	const glm::vec3 p3 = _anchors[i+3];
    
 	return _segmentLength*getCatmullRomPosition(tmp, p0, p1, p2, p3);
 }
@@ -63,16 +68,6 @@ glm::vec3 Spline::getCatmullRomPosition(
 
 	return pos;
 }
-
-
-int Spline::loopInt(int i, const int loopSize) const {
-	i = i%loopSize;
-	if (i<0) {
-		return loopSize+i;
-	}
-	return i;
-}
-
 
 glm::mat4 Spline::camMatrix(const glm::vec3& sPoint) const {
 

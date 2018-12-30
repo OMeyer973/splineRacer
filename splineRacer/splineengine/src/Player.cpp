@@ -8,12 +8,11 @@ namespace splineengine {
 
 Player::Player(
     const GameObject& gameObject,
-    const float       fwdSpeed,
     const glm::vec3   maxSpeed,
     const glm::vec3   acceleration
 )
     :GameObject(gameObject),
-    _sSpeed(fwdSpeed, 0.f, 0.f), // initial speed is only forward
+    _sSpeed(defaultPlayerMaxSpeed[FWD], 0.f, 0.f), // initial speed is only forward
     _sMaxSpeed(maxSpeed),
     _sAcceleration(acceleration),
     _sInput(1.f, 0.f, 0.f)

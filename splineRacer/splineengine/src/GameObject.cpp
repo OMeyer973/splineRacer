@@ -40,18 +40,18 @@ const glm::mat4 GameObject::matrix() {
 
 
 bool GameObject::intersect(GameObject& other) {
-    if (
+    float selfScale = (glm::abs(_scale.x) + glm::abs(_scale.y) + glm::abs(_scale.z)) / 3.f;
+    float otherScale = (glm::abs(other._scale.x) + glm::abs(other._scale.y) + glm::abs(other._scale.z)) / 3.f;
+    
+    return (
         _model.collider().intersect(
             other._model.collider(), //other collider
             matrix(),  //self transform matrix
-            (_scale.x + _scale.y + _scale.z) / 3.f, // self scale
+            selfScale, // self scale
             other.matrix(), //other transform matrix
-            (other._scale.x + other._scale.y + other._scale.z) / 3.f // other scale
+            otherScale // other scale
         )
-    ) {
-        return true;
-    }
-    return false;
+    );
 }
 
 void GameObject::collideWith(GameObject& other) {

@@ -43,15 +43,20 @@ void GameManager::doMenuEvent(SDL_Event e) {
 	            std::cout << "Space " << std::endl;
 							goToGame();
 	        }
-	        if(e.key.keysym.sym==SDLK_z) {
-	            _levelId = (_levelId + 1) % NUMBER_OF_LEVELS;
-	            std::cout << "level id : " << _levelId << std::endl;
+	        if(e.key.keysym.sym==SDLK_z ) {
+						if( !_menu.isRotatingHorizontally() && !_menu.isRotatingVertically() ){
 							_menu.moveToLevel(1);
+						}
+	            //_levelId = (_levelId + 1) % NUMBER_OF_LEVELS;
+	            //std::cout << "level id : " << _levelId << std::endl;
 	        }
-	        if(e.key.keysym.sym==SDLK_s) {
-	            _levelId = (_levelId - 1) % NUMBER_OF_LEVELS;
-	            std::cout << "level id : " << _levelId << std::endl;
+	        if(e.key.keysym.sym==SDLK_s  ) {
+						if( !_menu.isRotatingHorizontally() && !_menu.isRotatingVertically() ){
+							//_levelId = (_levelId - 1) % NUMBER_OF_LEVELS;
+	            //std::cout << "level id : " << _levelId << std::endl;
 							_menu.moveToLevel(-1);
+						}
+
 	        }
 					if (e.key.keysym.sym==SDLK_q){ //going left
 						if(!_menu.isRotatingHorizontally() ){
@@ -218,7 +223,7 @@ void GameManager::goToMenu() {
 
 	_activeScreen = MENU;
 
-	_menu.init();
+	//_menu.init();
 }
 
 }

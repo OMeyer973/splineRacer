@@ -41,7 +41,7 @@ class Menu {
 
 		void moveToPannel(const int pannelState);
 
-		void moveToLevel(const int lvlState);
+		void moveToLevel(const int lvlUpOrDown);
 
 		void rotateHorizontally(const float dx);
 
@@ -50,7 +50,7 @@ class Menu {
 		void setDisplayLevels(){_displayLevels = true;}
 
 		bool getDisplayLevels(){return _displayLevels;}
-		
+
 		std::string getState();
 
 		bool isRotatingHorizontally() { return _isRotatingHorizontally;}
@@ -70,17 +70,19 @@ class Menu {
 
 		int _rotationDirection;
 		int _rotationAngle;
+		int _tickVertical;
 
 		Player _player;
   	std::vector<GameObject> _menuItems;
 		std::vector<GameObject> _skybox;
-
 		std::string _frontMenuModelName = "frontmenu";
 
 		int _menuState;
-		std::vector<std::string> _action = {"Play","Scores","Settings","Rules","Credits","Quit"};
-
 		int _levelState;
+		std::vector<std::string> _action = {"Play","Scores","Settings","Rules","Credits","Quit"};
+		std::vector<std::string> _levels = {"Easy", "Normal","Hard","Infinite"};
+
+
 };
 }
 #endif

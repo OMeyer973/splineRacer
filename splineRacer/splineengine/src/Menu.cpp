@@ -19,6 +19,9 @@ void Menu::init() {
 	_isRotatingHorizontally = false;
 	_isRotatingVertically = false;
 	_displayLevels = false;
+	_tickVertical = 1;
+	//lvl normal selected by default
+	_levelState = 1;
 
 	_menuItems.push_back(GameObject(
 		assetManager.models()["frontmenu"], 0, true,
@@ -27,12 +30,14 @@ void Menu::init() {
 		glm::vec3(0.f)
 	));
 
-	for(int i =0; i<3; i++){
+	for(int i =0; i<4; i++){
 		_menuItems.push_back(GameObject(
-					assetManager.models()["menu"],0,true,
-					glm::vec3(0.f,-2 + i*2.f,2.f),
-					glm::vec3(.2f),
-					glm::vec3(0.f,-(-10.f + i*10.f),0.f)
+					assetManager.models()["menu"],0,false,
+					glm::vec3(0.f,-2 + i*1.f,2.5f),
+					glm::vec3(.15f),
+					glm::vec3(0.f)
+					//glm::vec3(0.f,-(0.5f + (i-1)*0.2f), 0.f)
+					//glm::vec3(0.f,-(-10.f + i*10.f),0.f)
 		));
 	}
 	_skybox.push_back(GameObject(
@@ -42,6 +47,14 @@ void Menu::init() {
 		glm::vec3(0.f)
 	));
 
+	_menuItems[0].scale() = glm::vec3(1.5f);
+
+	_menuItems[1].model().setTexture("Scores.png");
+	_menuItems[2].model().setTexture("QuitToMenu.png");
+	_menuItems[0].model().setTexture("Save.png");
+
+
+
 	glEnable(GL_DEPTH_TEST);
 }
 
@@ -50,8 +63,6 @@ Menu::~Menu(){
 }
 
 void Menu::update() {
-
-	_menuItems[0].scale() = glm::vec3(1.5f);
 
 	// for(float i =1; i< _menuItems.size();i++){
 	// 	_menuItems[i].scale() = glm::vec3(.01f);
@@ -65,13 +76,16 @@ void Menu::update() {
 			_isRotatingHorizontally = false;
 		}
 	}
-	if(isRotatingVertically() ){
-		_rotationAngle += (1 * _rotationDirection);
-		rotateVertically( (6 * _rotationDirection) );
-		if( _rotationAngle % 10 == 0){
-			_rotationAngle = 0;
-			_isRotatingVertically = false;
+	if(isRotatingVertically()){
+		for(int i = 0;i<_levels.size()+1;i++){
+			_menuItems[i+1].sPosition() += glm::vec3(0.f,(0.2f * _rotationDirection),0.f);
 		}
+		//std::cout << _menuItems[1].sPosition() << std::endl;
+		if(_tickVertical == 5){
+			_tickVertical=0;
+			_isRotatingVertically =false;
+		}
+		_tickVertical++;
 	}
 
 	// TODO
@@ -145,9 +159,22 @@ void Menu::rotateHorizontally(const float dx){
 	_cameras[_chosenCamera]->rotateLeft(dx);
 }
 
-void Menu::moveToLevel(const int lvlState){
-	_rotationDirection = lvlState;
-	_isRotatingVertically = true;
+void Menu::moveToLevel(const int lvlUpOrDown){
+
+	if( (_levelState  -lvlUpOrDown) < 0 ){
+		_levelState = 0;
+		_isRotatingVertically = false;
+	}else if( (_levelState -lvlUpOrDown > (_levels.size()-1) ) ){
+
+		_levelState = _levels.size()-1 ;
+		_isRotatingVertically = false;
+	}else{
+	 	_levelState+= -lvlUpOrDown;
+		std::cout << "Level : " << _levels[_levelState] << " Selected" <<  std::endl;
+		_rotationDirection = -lvlUpOrDown;
+		_isRotatingVertically = true;
+	}
+
 }
 
 

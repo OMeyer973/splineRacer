@@ -98,7 +98,9 @@ class GameObject {
 		glm::vec3& scale() { return _scale; }
 
 		/// \brief Get the model of the object as a reference
-		const Model& model() { return _model; }
+		Model model() { return _model;}
+
+
 
 	// MEMBERS
 	protected:

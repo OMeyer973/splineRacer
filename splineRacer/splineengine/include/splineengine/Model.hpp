@@ -5,7 +5,6 @@
 #include <iostream>
 #include <GL/glew.h>
 #include "Collider.hpp"
-#include <iostream>
 #include <glimac/Geometry.hpp>
 #include <glimac/FilePath.hpp>
 #include <glimac/SDLWindowManager.hpp>
@@ -68,6 +67,10 @@ class Model {
 		/// \brief set VAO based on the VBO and VAO
 		void setVAO();
 
+		void setTexture(const std::string textureName);
+
+
+
 		/// \brief collider non-const getter (to use as setter)
 		Collider& collider() { return _collider; };
 
@@ -84,6 +87,8 @@ class Model {
 		Collider _collider;
 		/// \brief Texture ID of the model
 		GLuint _textureID;
+		//Texture& _texture;
+		std::string _textureName;
 };
 
 }

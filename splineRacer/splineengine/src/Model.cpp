@@ -89,4 +89,14 @@ namespace splineengine {
 		_VAO = vao;
 	};
 
+void Model::setTexture(const std::string textureName){
+
+	std::cout << _textureID << std::endl;
+	//_textureName = textureName;
+	//Texture texture(textureName);
+	//_textureID = model.textureID();
+	std::cout << _textureID << std::endl;
+	if (debug) std::cout << "Texture ID: " <<  _textureID << std::endl;
+}
+
 }

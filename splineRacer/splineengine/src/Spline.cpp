@@ -74,7 +74,7 @@ glm::mat4 Spline::camMatrix(const glm::vec3& sPoint) const {
 	// 4 tilt camera forward (the higher the camera is, the lower it looks on the spline)
 	// TODO : this will probably go in the camera class
 
-	glm::mat4 camMat = glm::translate(glm::mat4(), camDistToPlane * fwdVec);
+	glm::mat4 camMat = glm::translate(glm::mat4(), fwdVec);
         
 	camMat = glm::rotate(camMat, -lookDownAngle -lookDownFactor * sPoint[UP], leftVec);
 

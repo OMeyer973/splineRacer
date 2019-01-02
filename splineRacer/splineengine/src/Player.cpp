@@ -50,7 +50,7 @@ void Player::update(const float dt) {
 	if (_collisionCooldownTimer > 0)
 		_collisionCooldownTimer -= dt;
 
-	_propellerRotationAngle += propellerRotationSpeed;
+	_propellerRotationAngle -= propellerRotationSpeed;
 }
 
 void Player::doCollisionWith(GameObject& other) {

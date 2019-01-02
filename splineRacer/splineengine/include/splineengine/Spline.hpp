@@ -17,8 +17,6 @@ const float defaultSegmentLength = 3;
 // it is large in order to have smooth camera movements
 const float deltaSpline = 0.1f;
 
-// camera distance to the plane (size of the plane on screen)
-const float camDistToPlane = 1.5f;
 // the camera always looks a bit down
 const float lookDownAngle = 0.3f;
 // the higher the camera is, the lower it looks on the spline following this factor

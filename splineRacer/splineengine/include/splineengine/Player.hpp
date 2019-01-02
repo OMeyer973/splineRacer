@@ -25,7 +25,7 @@ const glm::vec3 defaultPlayerBounceFactor = glm::vec3(2.f, 4.f, 4.f); //careful 
 const float collisionCooldowd = 2.f *  Settings::instance().deltaTime();
 const float minPlayerUp = 1.f;
 const float maxPlayerUp = 20.f;
-const float propellerRotationSpeed = 0.3f;
+const float propellerRotationSpeed = 0.5f;
 const float tiltFactor = 0.05f;
 
 /// \brief Represents the player as a Gameobject but with more useful stuff

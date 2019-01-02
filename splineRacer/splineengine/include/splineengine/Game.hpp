@@ -49,13 +49,13 @@ class Game {
 
         // CONST GETTERS
 		/// \brief get the player as a const ref
-    const Player& player() const { return _player; }
+	    const Player& player() const { return _player; }
 
-    const int gameState() const { return _gameState; }
+	    const int gameState() const { return _gameState; }
 
-    // NON-CONST GETTERS (can be used as setters)
-    /// \brief get the player as a ref
-    Player& player() { return _player; }
+	    // NON-CONST GETTERS (can be used as setters)
+	    /// \brief get the player as a ref
+	    Player& player() { return _player; }
 
 
 		//METHODS
@@ -78,6 +78,10 @@ class Game {
 		void zoomCamera(const float dz);
 		/// \brief switch between the different available cameras
 		void changeCamera();
+
+		/// \brief Handle collision between 2 GameObjects
+		template <typename T, typename U>
+		void handleCollision(T& firstObject, U& secondObject);
 
 	private:
 		/// \brief returns a single gameobject from it's json description

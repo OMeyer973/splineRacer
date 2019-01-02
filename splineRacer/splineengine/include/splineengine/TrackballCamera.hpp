@@ -7,6 +7,9 @@
 
 namespace splineengine {
 
+// camera distance to the plane (size of the plane on screen)
+const float camDistToPlayer = 10.f;
+
 class TrackballCamera : public Camera
 {
 	public:

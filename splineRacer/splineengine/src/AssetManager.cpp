@@ -20,7 +20,7 @@ void AssetManager::loadAssets() {
 	_models.insert(std::make_pair("coin", 			Model("coin",		"coin.png")));
 	_models.insert(std::make_pair("prism", 			Model("prism",		"cloud.jpg")));
 	_models.insert(std::make_pair("frontmenu",		Model("frontmenu",	"FrontMenu.png")));
-	_models.insert(std::make_pair("menu",		Model("menu",	"Continue.png")));
+	_models.insert(std::make_pair("menu",			Model("menu",		"Continue.png")));
 }
 
 

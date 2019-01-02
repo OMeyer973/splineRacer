@@ -5,11 +5,6 @@
 
 namespace splineengine {
 
-template <typename T, typename U>
-void handleCollision(T& object1, U& object2) {
-	object1.doCollisionWith(object2);
-	object2.doCollisionWith(object1);
-}
 
 Game::Game()
 	:
@@ -153,20 +148,12 @@ void Game::update() {
 
 	// Check for collisions with obstacles
 	for (float i=0; i<_obstacles.size(); ++i) {
-		// _player.collideWith(_obstacles[i]);
-		if (_player.intersect(_obstacles[i])) {
-			handleCollision(_player, _obstacles[i]);
-		    // doCollisionWith(_obstacles[i]);
-		    // _obstacles[i].doCollisionWith(_player);
-		}
+		handleCollision(_player, _obstacles[i]);
 	}
 
 	// Check for collisions with collectables
 	for (float i=0; i<_collectables.size(); ++i) {
-		// _player.collideWith(_collectables[i]);
-		if (_player.intersect(_collectables[i])) {
-			handleCollision(_player, _collectables[i]);
-		}
+		handleCollision(_player, _collectables[i]);
 	}
 
 	// END OF GAME LOGIC CHECKS
@@ -205,7 +192,7 @@ void Game::render() {
 		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix);
 	}
 
-	// draw the alien
+	// Draw the alien
 	MVMatrix = camMatrix * _alien.matrix();
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 	_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
@@ -217,11 +204,9 @@ void Game::render() {
 
 		// Get the transform matrix of the current obstacle
 		MVMatrix = camMatrix * _obstacles[i].matrix();
-
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 		_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
 		_renderManager.useProgram(DIRECTIONAL_LIGHT);
-
 		_obstacles[i].draw();
 	}
 
@@ -230,19 +215,14 @@ void Game::render() {
 		if (!_collectables[i].isHidden()) {
 			// Get the transform matrix of the current obstacle
 			MVMatrix = camMatrix * _collectables[i].matrix();
-
 			_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 			_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
-			if (_collectables[i].isTaken()) {
-				_renderManager.useProgram(DIRECTIONAL_LIGHT);
-			} else {
-				_renderManager.useProgram(DIRECTIONAL_LIGHT);
-			}
+			_renderManager.useProgram(DIRECTIONAL_LIGHT);
 			_collectables[i].draw();
 		}
 	}
 
-	//Draw _skybox
+	// Draw _skybox
 	glDepthMask(GL_FALSE);
 	MVMatrix = camMatrix;
 	MVMatrix = glm::translate(MVMatrix, _spline.point(_player.sPosition()[FWD]));
@@ -280,5 +260,12 @@ void Game::zoomCamera(const float dz) {
 	}
 }
 
+template <typename T, typename U>
+void Game::handleCollision(T& firstObject, U& secondObject) {
+	if (firstObject.intersect(secondObject)) {
+		firstObject.doCollisionWith(secondObject);
+		secondObject.doCollisionWith(firstObject);
+	}
+}
 
 }

@@ -90,7 +90,7 @@ void Game::loadLevel() {
 			GameObject(
 				assetManager.models()["prism"], _spline, true,
 				glm::vec3(i, 0, 0),
-				glm::vec3(4*glm::sin(i)+0.2f),
+				glm::vec3((2*glm::sin(i)+0.2f) + 4.f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
 		));

@@ -115,8 +115,8 @@ void Game::loadLevel() {
 				_collectables.push_back(Collectable(
 					GameObject(
 						assetManager.models()["coin"], _spline, false,
-						glm::vec3(i+j, i/2+k, 10),
-						glm::vec3(.5f),
+						glm::vec3(i+j, -(i+k), 10),
+						glm::vec3(3.f),
 						glm::vec3(0)
 					)
 				));
@@ -146,9 +146,9 @@ void Game::update() {
 	_player.update(dt);
 	_alien.update(dt);
 
-	// Collectables rotation
+	// Collectables animation
 	for (float i=0; i<_collectables.size(); ++i) {
-		_collectables[i].update(dt, i);
+		_collectables[i].update(dt, i, _player.sPosition());
 	}
 
 	// Check for collisions with obstacles
@@ -189,6 +189,7 @@ void Game::update() {
 		}
 		_endScreenTimer -= dt;
 	}
+
 }
 
 
@@ -226,14 +227,17 @@ void Game::render() {
 
 	// Draw Collectables
 	for (float i=0; i<_collectables.size(); ++i) {
-		if (!_collectables[i].isTaken()) {
+		if (!_collectables[i].isHidden()) {
 			// Get the transform matrix of the current obstacle
 			MVMatrix = camMatrix * _collectables[i].matrix();
 
 			_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
 			_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
-			_renderManager.useProgram(DIRECTIONAL_LIGHT);
-
+			if (_collectables[i].isTaken()) {
+				_renderManager.useProgram(DIRECTIONAL_LIGHT);
+			} else {
+				_renderManager.useProgram(DIRECTIONAL_LIGHT);
+			}
 			_collectables[i].draw();
 		}
 	}

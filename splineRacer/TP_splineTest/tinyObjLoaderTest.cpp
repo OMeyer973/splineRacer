@@ -18,7 +18,8 @@ using namespace glimac;
 using namespace splineengine;
 
 void print(std::string str) {
-	std::cout << "Debug : "<< str << std::endl;
+	if (debug)
+		std::cout << "Debug : "<< str << std::endl;
 }
 
 int main(int argc, char** argv) {
@@ -46,7 +47,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST); // Permet d'activer le test de profondeur du GPU
 
 	// Create the plane object
-	GameObject planeObject(assetManager.models()["plane"], spline);
+	GameObject player(assetManager.models()["plane"], spline);
 
 	// Create a texture and load texture
 	Texture planeTex("planetexture2.jpg");
@@ -132,21 +133,20 @@ int main(int argc, char** argv) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Object transform
-		planeObject.sPosition() = glm::vec3(0);
-		planeObject.scale() = glm::vec3(1);
-		planeObject.rotation() = glm::vec3(.25*cos(2*windowManager.getTime()), .25*cos(.5*windowManager.getTime()), 0);
+		player.sPosition() = glm::vec3(0);
+		player.scale() = glm::vec3(1);
+		player.rotation() = glm::vec3(.25*cos(2*windowManager.getTime()), .25*cos(.5*windowManager.getTime()), 0);
 
 		// Update MVMatrix according to the object's transformation
-		renderManager.updateMVMatrix(*cameras[chosenCamera], planeObject.matrix());
-		// Send uniforms to shaders
+		renderManager.updateMVMatrix(*cameras[chosenCamera], player.staticMatrix());
+		renderManager.updateGlobalMatrix(*cameras[chosenCamera], renderManager.MVMatrix());
 		renderManager.useProgram(DIRECTIONAL_LIGHT);
-		// renderManager.applyTransformations(DIRECTIONAL_LIGHT, renderManager.MVMatrix());
 
 		// Texture binding
 		glBindTexture(GL_TEXTURE_2D, planeTex.getTextureID());
 
 		// Draw object
-		planeObject.draw();
+		player.draw();
 
 
 		// TestSkybox
@@ -171,7 +171,7 @@ int main(int argc, char** argv) {
 		skyboxObject.scale() = 100.f*(fwdVec +upVec + leftVec); 
 
 		// Update MVMatrix according to the object's transformation
-		renderManager.updateMVMatrix(*cameras[chosenCamera], skyboxObject.matrix());
+		renderManager.updateMVMatrix(*cameras[chosenCamera], skyboxObject.staticMatrix());
 
 		// Send uniforms to shaders
 		renderManager.useProgram(TEXTURE);

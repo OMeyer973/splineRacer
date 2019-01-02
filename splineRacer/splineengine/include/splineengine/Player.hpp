@@ -3,18 +3,21 @@
 #define __PLAYER__HPP
 
 #include "common.hpp"
+#include "Settings.hpp"
 #include "RenderManager.hpp"
+
 #include "GameObject.hpp"
 #include "Obstacle.hpp"
 #include "Collectable.hpp"
-#include "Settings.hpp"
+#include "splineengine/Chaser.hpp"
 
 namespace splineengine {
 
-// Forward Declaration
+// Forward Declaration needed for collision behaviours
 class Obstacle;
+class Chaser;
 
-const glm::vec3 defaultPlayerPos          = glm::vec3(-5.f, 0.f, 10.f);
+const glm::vec3 defaultPlayerPos          = glm::vec3(0.f, 0.f, 10.f);
 const glm::vec3 defaultPlayerMaxSpeed     = glm::vec3(2.5f, 14.f, 12.f);
 const glm::vec3 defaultPlayerAcceleration = glm::vec3(3.f, 7.f, 7.f);
 const glm::vec3 defaultPlayerBounceFactor = glm::vec3(2.f, 4.f, 4.f); //careful with these or you can go through walls or get launched to infinity. above 2 looks kinda safe
@@ -22,7 +25,8 @@ const glm::vec3 defaultPlayerBounceFactor = glm::vec3(2.f, 4.f, 4.f); //careful 
 const float collisionCooldowd = 2.f *  Settings::instance().deltaTime();
 const float minPlayerUp = 1.f;
 const float maxPlayerUp = 20.f;
-const float propellerRotationSpeed = .3f;
+const float propellerRotationSpeed = 0.3f;
+const float tiltFactor = 0.05f;
 
 /// \brief Represents the player as a Gameobject but with more useful stuff
 class Player : public GameObject {
@@ -37,7 +41,7 @@ class Player : public GameObject {
         );
 
         /// \brief player Destructor
-        virtual ~Player()
+        ~Player()
         {};
 
         // Player& operator=(const Player& player) {
@@ -86,7 +90,10 @@ class Player : public GameObject {
         void doCollisionWith(Obstacle& other);
 
         /// \brief Trigger collision behavior when colliding with a Collectable object.
-        void doCollisionWith(Collectable& other);
+        void doCollisionWith(Collectable& collectable);
+
+        /// \brief Trigger collision behavior when colliding with it's chaser.
+        void doCollisionWith(Chaser& chaser);
 
     protected:
         // METHODS

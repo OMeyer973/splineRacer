@@ -165,6 +165,9 @@ void GameManager::update() {
 		case GAME :
 			_game->update();
 			_game->render();
+			if (_game->gameState() == EXITING) {
+				goToMenu();
+			}
             break;
 	 	case PAUSE :
 	 		_pause.update();

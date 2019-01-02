@@ -18,7 +18,7 @@ class Obstacle : public GameObject {
     	Obstacle(const GameObject& gameObject = GameObject(Model(), Spline(), false));
 
     	/// \brief Obstacle Destructor
-    	virtual ~Obstacle()
+    	~Obstacle()
     	{};
 
         /// \brief trigger collision behavior when colliding with another Gameobjects. 

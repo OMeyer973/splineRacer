@@ -1,11 +1,8 @@
 #pragma once
-#ifndef __BOUNDINGBOX__HPP
-#define __BOUNDINGBOX__HPP
+#ifndef __COLLIDER__HPP
+#define __COLLIDER__HPP
 
-#include <vector>
 #include <glimac/glm.hpp>
-#include <splineengine/common.hpp>
-#include <splineengine/BoundingBox.hpp>
 #include "common.hpp"
 
 namespace splineengine {

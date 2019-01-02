@@ -1,5 +1,6 @@
 #include <splineengine/Game.hpp>
 #include <fstream>
+#include <iostream>
 // #include <splineengine/CubeMap.hpp>
 
 namespace splineengine {
@@ -14,7 +15,9 @@ Game::Game()
 	:
 	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
 	_spline(LEVEL_ENDLESS),
-	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, false, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f)))
+	_gameMode(ENDLESS),
+	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, true, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f))),
+	_alien(GameObject(AssetManager::instance().models()["skybox"], _spline, false, defaultPlayerPos, glm::vec3(2.f)), _player)
 {
 	std::cout << "infinite game constructor called " << std::endl;
 	_cameras.emplace_back(new POVCamera());
@@ -28,7 +31,9 @@ Game::Game(int levelId)
 	:
 	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
 	_spline(levelId),
-	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, false, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f)))
+	_gameMode(CLASSIC),
+	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, true, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f))),
+	_alien(GameObject(AssetManager::instance().models()["skybox"], _spline, false, defaultPlayerPos, glm::vec3(2.f)), _player)
 {
 	// TODO - OK now ?
 	std::cout << "game from level constructor called " << std::endl;
@@ -135,12 +140,15 @@ void Game::loadLevel() {
 
 void Game::update() {
 	// TODO
+	//PHYSICS UPDATE
+	float dt = Settings::instance().deltaTime();
 	// Update player position and speed
-	_player.update(Settings::instance().deltaTime());
+	_player.update(dt);
+	_alien.update(dt);
 
 	// Collectables rotation
 	for (float i=0; i<_collectables.size(); ++i) {
-		_collectables[i].update(Settings::instance().deltaTime(), i);
+		_collectables[i].update(dt, i);
 	}
 
 	// Check for collisions with obstacles
@@ -160,6 +168,27 @@ void Game::update() {
 			handleCollision(_player, _collectables[i]);
 		}
 	}
+
+	// END OF GAME LOGIC CHECKS
+	if (_alien.sPosition()[FWD] > _player.sPosition()[FWD]) {
+		handleCollision(_player, _alien);
+		if (_gameMode == CLASSIC) {
+			if (debug) std::cout << "Level is over" << std::endl;
+			_gameState = LEVELLOSE;
+		} 
+		else if (_gameMode == ENDLESS) {
+			if (debug) std::cout << "endless mode is over" << std::endl;
+			_gameState = ENDLESSOVER;
+		}
+	}
+
+	if (_gameState == LEVELWIN || _gameState == LEVELLOSE || _gameState == ENDLESSOVER) {
+		if (_endScreenTimer <= 0) {
+			_gameState = EXITING;
+			if (debug) std::cout << "gameState : EXITING (going back to menu)" << std::endl;
+		}
+		_endScreenTimer -= dt;
+	}
 }
 
 
@@ -174,6 +203,13 @@ void Game::render() {
 	if (_chosenCamera != POV_CAMERA) {
 		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix);
 	}
+
+	// draw the alien
+	MVMatrix = camMatrix * _alien.matrix();
+	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+	_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
+	_renderManager.useProgram(DIRECTIONAL_LIGHT);
+	_alien.draw();
 
 	// Draw obstacles
 	for (float i=0; i<_obstacles.size(); ++i) {
@@ -202,10 +238,9 @@ void Game::render() {
 		}
 	}
 
-	//_skybox.sPosition() = _player.sPosition();
 	//Draw _skybox
 	glDepthMask(GL_FALSE);
-	MVMatrix = camMatrix;//* _skybox.matrix();
+	MVMatrix = camMatrix;
 	MVMatrix = glm::translate(MVMatrix, _spline.point(_player.sPosition()[FWD]));
 	MVMatrix = glm::scale(MVMatrix, _skybox.scale());
 
@@ -214,6 +249,11 @@ void Game::render() {
 	_renderManager.useProgram(TEXTURE);
 	_skybox.draw();
 	glDepthMask(GL_TRUE);
+
+	// TODO : display the end cards under these conditions
+	// if (_gameState == LEVELWIN)
+	// if (_gameState == LEVELLOSE)
+	// if (_gameState == ENDLESSOVER)
 
 }
 

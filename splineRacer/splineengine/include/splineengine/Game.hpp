@@ -2,21 +2,36 @@
 #ifndef __GAME__HPP
 #define __GAME__HPP
 
-#include <iostream>
 #include <string>
-#include "json.hpp"
 #include "common.hpp"
-#include "Player.hpp"
+#include "json.hpp"
+
 #include "AssetManager.hpp"
-#include "Camera.hpp"
-#include "POVCamera.hpp"
-#include "TrackballCamera.hpp"
-#include "RenderManager.hpp"
+#include "Player.hpp"
+#include "Chaser.hpp"
 #include "Obstacle.hpp"
 #include "Collectable.hpp"
 
+#include "RenderManager.hpp"
+#include "Camera.hpp"
+#include "POVCamera.hpp"
+#include "TrackballCamera.hpp"
+
 namespace splineengine {
 
+// ids of gamemodes
+const int CLASSIC = 0;
+const int ENDLESS = 1;
+
+// ids of gamestates
+const int RUNNING = 0;
+const int LEVELWIN = 1;
+const int LEVELLOSE = 2;
+const int ENDLESSOVER = 3;
+const int EXITING = 4;
+
+// how long is displayed the end screen before going back to the menu ?
+const float endScreenTime = 5.f;
 
 /// \brief class wich represents the game scene , the player and their mechanics
 class Game {
@@ -35,6 +50,8 @@ class Game {
         // CONST GETTERS
 		/// \brief get the player as a const ref
     const Player& player() const { return _player; }
+
+    const int gameState() const { return _gameState; }
 
     // NON-CONST GETTERS (can be used as setters)
     /// \brief get the player as a ref
@@ -63,10 +80,20 @@ class Game {
 		void changeCamera();
 
 	private:
+		/// \brief returns a single gameobject from it's json description
+		//TODO : throw exception when loading a bad file
 		GameObject gameObjFromJson(nlohmann::json j);
 
 
 		// MEMBERS
+		// gamemodes : CLASSIC, ENDLESS
+		int _gameMode;
+		// state of the game : RUNNING, LEVELWIN, LEVELLOSE, ENDLESSOVER, EXITING
+		int _gameState = RUNNING;
+		
+		// timer before going back to the menu when a end screen is reached
+		float _endScreenTimer = endScreenTime;
+
 		/// \brief manage the camera transformations
 		RenderManager _renderManager;
 		/// \brief vector of pointers on available cameras
@@ -78,11 +105,14 @@ class Game {
 		Player _player;
 		/// \brief represents the spline
 	    Spline _spline;
+		GameObject _skybox;
+
+		/// \brief the ennemy chasing the player !
+		Chaser _alien;
 
 	    std::vector<GameObject> _decorations;
 	    std::vector<Obstacle> _obstacles;
 	    std::vector<Collectable> _collectables;
-		GameObject _skybox;
 		// CONSTANTS
 		std::string _playerModelName = "plane";
 

@@ -37,7 +37,8 @@ void Player::updatePosition(const float dt) {
 	_sPosition += _sSpeed * dt;
 	_sPosition[UP] = glm::clamp(_sPosition[UP], minPlayerUp, maxPlayerUp);
 
-	_rotation = glm::vec3(_sSpeed[LEFT] * 0.3f, _sSpeed[UP] * .05f, 0);
+	// multiply by up position to counter the decrease in rotation speed
+	_rotation = glm::vec3(_sSpeed[LEFT] * _sPosition[UP] * tiltFactor, _sSpeed[UP] * tiltFactor, 0);
 }
 
 void Player::update(const float dt) {
@@ -45,6 +46,7 @@ void Player::update(const float dt) {
 	_sInput[UP] = glm::clamp(_sInput[UP], -1.f, 1.f);
 	updateSpeed(dt);
 	updatePosition(dt);
+
 	
 	if (_collisionCooldownTimer > 0)
 		_collisionCooldownTimer -= dt;
@@ -54,11 +56,6 @@ void Player::update(const float dt) {
 
 void Player::doCollisionWith(GameObject& other) {
 	if (debug) std::cout << "doing player collision behaviour with GameObject" << std::endl;
-	
-	// if (_collisionCooldownTimer <= 0) {
-	// 	_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
-	// 	_collisionCooldownTimer = collisionCooldowd;
-	// }
 }
 
 void Player::doCollisionWith(Obstacle& other) {
@@ -75,6 +72,10 @@ void Player::doCollisionWith(Collectable& collectable) {
 		_score++;
 		if (debug) std::cout << "Score : " << _score << std::endl;
 	}
+}
+
+void Player::doCollisionWith(Chaser& chaser) {
+	_sMaxSpeed = glm::vec3(0);
 }
 
 

@@ -22,7 +22,6 @@ GameObject::GameObject(const GameObject& g)
 
 const glm::mat4 GameObject::matrix() {
     if (_isStatic && _hasMatrix) {
-        //std::cout << "#########################debug" << std::endl;
         return _transformMat;
     }
 
@@ -40,12 +39,22 @@ const glm::mat4 GameObject::matrix() {
 }
 
 const glm::mat4 GameObject::staticMatrix() {
+    if (_isStatic && _hasMatrix) {
+        return _transformMat;
+    }
+
     glm::mat4 objMatrix = glm::mat4();
     objMatrix = glm::translate(objMatrix, _sPosition);
     objMatrix = glm::scale(objMatrix, _scale);
     objMatrix = glm::rotate(objMatrix, _rotation[FWD],  -fwdVec);
     objMatrix = glm::rotate(objMatrix, _rotation[LEFT], -leftVec);
     objMatrix = glm::rotate(objMatrix, _rotation[UP],   -upVec);
+
+    if (_isStatic) {
+        _transformMat = objMatrix;
+        _hasMatrix = true;
+    }
+
     return objMatrix;
 }
 

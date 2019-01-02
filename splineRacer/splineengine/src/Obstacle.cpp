@@ -1,7 +1,3 @@
-#include <cmath>
-#include <vector>
-#include <iostream>
-#include "glimac/common.hpp"
 #include "splineengine/Obstacle.hpp"
 
 namespace splineengine {

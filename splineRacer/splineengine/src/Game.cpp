@@ -13,7 +13,8 @@ void handleCollision(T& object1, U& object2) {
 Game::Game()
 	:
 	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
-	_spline(LEVEL_ENDLESS)
+	_spline(LEVEL_ENDLESS),
+	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, false, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f)))
 {
 	std::cout << "infinite game constructor called " << std::endl;
 	_cameras.emplace_back(new POVCamera());
@@ -26,7 +27,8 @@ Game::Game()
 Game::Game(int levelId)
 	:
 	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
-	_spline(levelId)
+	_spline(levelId),
+	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, false, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f)))
 {
 	// TODO - OK now ?
 	std::cout << "game from level constructor called " << std::endl;
@@ -82,13 +84,6 @@ void Game::loadLevel(int levelId) {
 void Game::loadLevel() {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
-
-	_skybox.push_back(GameObject(
-			assetManager.models()["skybox"], _spline, false,
-			glm::vec3(1,0,0),
-			glm::vec3(100.f),
-			glm::vec3(0.f)
-	));
 
 	for (float i=0; i<_spline.length(); i+=.3f) {
 		_obstacles.push_back(Obstacle(
@@ -180,17 +175,6 @@ void Game::render() {
 		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix);
 	}
 
-	_skybox[0].setPosition(_player.sPosition());
-	//Draw _skybox
-	glDepthMask(GL_FALSE);
-	MVMatrix = camMatrix * _skybox[0].matrix();
-	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
-	_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
-	_renderManager.useProgram(TEXTURE);
-	_skybox[0].draw();
-	glDepthMask(GL_TRUE);
-
-
 	// Draw obstacles
 	for (float i=0; i<_obstacles.size(); ++i) {
 
@@ -217,6 +201,20 @@ void Game::render() {
 			_collectables[i].draw();
 		}
 	}
+
+	//_skybox.sPosition() = _player.sPosition();
+	//Draw _skybox
+	glDepthMask(GL_FALSE);
+	MVMatrix = camMatrix;//* _skybox.matrix();
+	MVMatrix = glm::translate(MVMatrix, _spline.point(_player.sPosition()[FWD]));
+	MVMatrix = glm::scale(MVMatrix, _skybox.scale());
+
+	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+	_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
+	_renderManager.useProgram(TEXTURE);
+	_skybox.draw();
+	glDepthMask(GL_TRUE);
+
 }
 
 

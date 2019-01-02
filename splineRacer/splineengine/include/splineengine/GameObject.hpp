@@ -70,9 +70,6 @@ class GameObject {
 		/// \brief check if the gameobject intersects the other gameObject and trigger their collision behavior
 		void collideWith(GameObject& other);
 
-		// SETTER
-		void setPosition(glm::vec3 position){_sPosition = position;}
-
 		//CONST GETTERS
 		/// \brief Get the position of the object (relative to the spline) as a const reference
 		const glm::vec3& sPosition() const { return _sPosition; }

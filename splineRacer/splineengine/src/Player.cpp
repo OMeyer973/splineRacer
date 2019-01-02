@@ -30,7 +30,6 @@ void Player::updateSpeed(const float dt) {
 	_sSpeed[LEFT]  = glm::mix(_sSpeed[LEFT],  _sMaxSpeed[LEFT] *  _sInput[LEFT] / glm::max(_sPosition[UP],1.f),  _sAcceleration[LEFT] * dt);
 
 	glm::clamp(_sSpeed, -defaultPlayerMaxSpeed, defaultPlayerMaxSpeed);
-	// Rotate player when he moves
 }
 
 void Player::updatePosition(const float dt) {
@@ -49,7 +48,7 @@ void Player::update(const float dt) {
 	if (_collisionCooldownTimer > 0)
 		_collisionCooldownTimer -= dt;
 
-	_propellerRotationAngle+=propellerRotationSpeed;
+	_propellerRotationAngle += propellerRotationSpeed;
 }
 
 void Player::doCollisionWith(GameObject& other) {
@@ -62,8 +61,9 @@ void Player::doCollisionWith(GameObject& other) {
 }
 
 void Player::doCollisionWith(Obstacle& other) {
-	if (debug) std::cout << "doing player collision behaviour with Obstacle" << std::endl;
+	if (debug) std::cout << "doing player collision behaviour with Obstacle : Bounce" << std::endl;
 	
+	// Bounce
 	if (_collisionCooldownTimer <= 0) {
 		_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
 		_collisionCooldownTimer = collisionCooldowd;
@@ -73,7 +73,6 @@ void Player::doCollisionWith(Obstacle& other) {
 void Player::doCollisionWith(Collectable& collectable) {
 	if (!collectable.isTaken()) {
 		_score++;
-		if (debug) std::cout << "Score : " << _score << std::endl;
 	}
 }
 

@@ -34,16 +34,21 @@ class Collectable : public GameObject {
             _isTaken = true;
         };
 
-        void update(const float dt, const float pos) {
-            _rotation.z += collectableRotationSpeed*dt + pos/500;
+        /// \brief Animate collectable 
+        void update(const float dt, const float pos, const glm::vec3 playerPos);
+
+        /// brief
+        const bool isTaken() const {
+            return _isTaken;
         }
 
-        const bool isTaken() const {
-			return _isTaken;
+        const bool isHidden() const {
+			return _isHidden;
 		}
 
     private:
         bool _isTaken;
+        bool _isHidden;
 
 };
 

@@ -12,7 +12,7 @@ Game::Game()
 	_spline(LEVEL_ENDLESS),
 	_gameMode(ENDLESS),
 	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, true, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f))),
-	_alien(GameObject(AssetManager::instance().models()["skybox"], _spline, false, defaultPlayerPos, glm::vec3(2.f)), _player)
+	_alien(GameObject(AssetManager::instance().models()["alien"], _spline, false, defaultPlayerPos, glm::vec3(.3f)), _player)
 {
 	std::cout << "infinite game constructor called " << std::endl;
 	_cameras.emplace_back(new POVCamera());
@@ -158,7 +158,8 @@ void Game::update() {
 
 	// END OF GAME LOGIC CHECKS
 	if (_alien.sPosition()[FWD] > _player.sPosition()[FWD]) {
-		handleCollision(_player, _alien);
+		_player.doCollisionWith(_alien);
+		_alien.doCollisionWith(_player);
 		if (_gameMode == CLASSIC) {
 			if (debug) std::cout << "Level is over" << std::endl;
 			_gameState = LEVELLOSE;

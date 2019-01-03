@@ -20,7 +20,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.000000
 illum 6
-map_Kd 4_BaseColor.jpg
+map_Kd /4_BaseColor.jpg
 
 newmtl phong11SG
 Ns 17.647059
@@ -31,7 +31,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.000000
 illum 6
-map_Kd 5_BaseColor.jpg
+map_Kd /5_BaseColor.jpg
 
 newmtl phong12SG
 Ns 17.647059
@@ -42,7 +42,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd 6_BaseColor.jpg
+map_Kd /6_BaseColor.jpg
 
 newmtl phong7SG
 Ns 17.647059
@@ -53,7 +53,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.000000
 illum 6
-map_Kd 1_BaseColor.jpg
+map_Kd /1_BaseColor.jpg
 
 newmtl phong8SG
 Ns 17.647059
@@ -64,7 +64,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.000000
 illum 6
-map_Kd 2_BaseColor.jpg
+map_Kd /2_BaseColor.jpg
 
 newmtl phong9SG
 Ns 17.647059
@@ -75,4 +75,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.000000
 illum 6
-map_Kd 3_BaseColor.jpg
+map_Kd /3_BaseColor.jpg

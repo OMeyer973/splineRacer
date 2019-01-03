@@ -10,7 +10,7 @@
 
 namespace splineengine {
 
-const int defaultAnchorsNb = 50;
+const int defaultAnchorsNb = 5;
 const float defaultSegmentLength = 3;
 
 // delta position used to rotate the camera and the objects facing the curve

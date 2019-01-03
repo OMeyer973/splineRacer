@@ -45,6 +45,7 @@ Game::~Game() {
 	std::cout << "game destructor called " << std::endl;
 }
 
+
 GameObject Game::gameObjFromJson(nlohmann::json j) {
 	AssetManager& assetManager = AssetManager::instance();
 	return GameObject(
@@ -160,20 +161,12 @@ void Game::update() {
 		handleCollision(_player, _collectables[i]);
 	}
 
-	// END OF GAME LOGIC CHECKS
-	if (_alien.sPosition()[FWD] > _player.sPosition()[FWD]) {
-		_player.doCollisionWith(_alien);
-		_alien.doCollisionWith(_player);
-		if (_gameMode == CLASSIC) {
-			if (debug) std::cout << "Level is over" << std::endl;
-			_gameState = LEVELLOSE;
-		} 
-		else if (_gameMode == ENDLESS) {
-			if (debug) std::cout << "endless mode is over" << std::endl;
-			_gameState = ENDLESSOVER;
-		}
+	// Update camera
+	if (_chosenCamera == TRACKBALL_CAMERA) {
+		_cameras[_chosenCamera]->update();
 	}
 
+	// END OF GAME LOGIC CHECKS
 	if (_gameState == LEVELWIN || _gameState == LEVELLOSE || _gameState == ENDLESSOVER) {
 		if (_endScreenTimer <= 0) {
 			_gameState = EXITING;
@@ -181,13 +174,27 @@ void Game::update() {
 		}
 		_endScreenTimer -= dt;
 	}
+	else if (_player.sPosition()[FWD] > _finishLine.sPosition()[FWD]) {
+		if (_gameMode == CLASSIC) {
+			if (debug) std::cout << "Level is won" << std::endl;
+			_gameState = LEVELWIN;
+		} 
 
-
-	// Update camera
-	if (_chosenCamera == TRACKBALL_CAMERA) {
-		_cameras[_chosenCamera]->update();
 	}
+	else if (_alien.sPosition()[FWD] > _player.sPosition()[FWD]) {
+		_player.doCollisionWith(_alien);
+		_alien.doCollisionWith(_player);
 
+		if (_gameMode == CLASSIC) {
+			if (debug) std::cout << "Level is lost" << std::endl;
+			_gameState = LEVELLOSE;
+		} 
+		
+		else if (_gameMode == ENDLESS) {
+			if (debug) std::cout << "endless mode is over" << std::endl;
+			_gameState = ENDLESSOVER;
+		}
+	}
 }
 
 
@@ -203,13 +210,14 @@ void Game::render() {
 		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix);
 	}
 
-	// Draw the finish line
-	MVMatrix = camMatrix * _finishLine.matrix();
-	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
-	_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
-	_renderManager.useProgram(DIRECTIONAL_LIGHT);
-	_finishLine.draw();
-
+	if (_gameMode == CLASSIC) {
+		// Draw the finish line
+		MVMatrix = camMatrix * _finishLine.matrix();
+		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+		_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
+		_renderManager.useProgram(DIRECTIONAL_LIGHT);
+		_finishLine.draw();
+	}
 	// Draw the alien
 	MVMatrix = camMatrix * _alien.matrix();
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);

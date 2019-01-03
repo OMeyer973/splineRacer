@@ -182,6 +182,12 @@ void Game::update() {
 		_endScreenTimer -= dt;
 	}
 
+
+	// Update camera
+	if (_chosenCamera == TRACKBALL_CAMERA) {
+		_cameras[_chosenCamera]->update();
+	}
+
 }
 
 

@@ -32,6 +32,9 @@ class POVCamera : public Camera
 		/// \brief Get the camera view matrix
 		glm::mat4 getViewMatrix() const;
 
+		/// \brief Update camera zoom
+		void update() {};
+
 	private:
 		/// \brief Position of the camera
 		glm::vec3 _position;

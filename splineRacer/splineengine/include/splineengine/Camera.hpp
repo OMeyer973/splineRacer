@@ -17,7 +17,7 @@ class Camera
 {
 	public:
 		Camera();
-		~Camera();
+		virtual ~Camera();
 
 		/// \brief Zoom in and out (Trackball Camera only)
 		/// \param delta : float value of the zoom
@@ -33,6 +33,9 @@ class Camera
 
 		/// \brief Get the camera view matrix
 		virtual glm::mat4 getViewMatrix() const = 0;
+
+		/// \brief Update camera zoom
+		virtual void update() = 0;
 
 	private:
 		/// \brief Position of the camera

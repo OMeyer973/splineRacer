@@ -9,6 +9,9 @@ namespace splineengine {
 
 // camera distance to the plane (size of the plane on screen)
 const float camDistToPlayer = 10.f;
+// camera distance to the plane (size of the plane on screen)
+const float maxDistance = 0.f;
+const float minDistance = -15.f;
 
 class TrackballCamera : public Camera
 {
@@ -31,9 +34,14 @@ class TrackballCamera : public Camera
 		/// \brief Get the camera view matrix
 		glm::mat4 getViewMatrix() const;
 
+		/// \brief Update camera zoom
+		void update();
+
 	private:
 		/// \brief Distance of the camera
 		float _fDistance;
+		/// \brief Distance of the camera
+		float _zoom;
 		/// \brief Horizontal angle
 		float _fAngleX;
 		/// \brief Vertical angle

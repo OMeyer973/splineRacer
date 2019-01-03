@@ -88,7 +88,6 @@ void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMat
 	{
 		glm::mat4 MVMatrix = camMatrix * this->matrix();
 		renderManager.updateMVMatrix(camera, MVMatrix);
-		renderManager.updateGlobalMatrix(camera, camMatrix);
 		renderManager.useProgram(DIRECTIONAL_LIGHT);
 		
 		const glimac::Geometry::Mesh* currentMesh = (_model.geometry().getMeshBuffer()+i);

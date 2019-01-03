@@ -22,6 +22,7 @@ void AssetManager::loadAssets() {
 	_models.insert(std::make_pair("frontmenu",		Model("frontmenu",	"FrontMenu.png")));
 	_models.insert(std::make_pair("menu",			Model("menu",		"Continue.png")));
 	_models.insert(std::make_pair("alien",			Model("alien",		"alien.png")));
+	_models.insert(std::make_pair("finish_line",	Model("finish_line","finish_line2.jpg")));
 }
 
 

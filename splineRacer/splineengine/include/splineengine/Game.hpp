@@ -109,10 +109,14 @@ class Game {
 		Player _player;
 		/// \brief represents the spline
 	    Spline _spline;
+		/// \brief represents the skybox
 		GameObject _skybox;
 
 		/// \brief the ennemy chasing the player !
 		Chaser _alien;
+
+		/// \brief Represents the finish line
+		GameObject _finishLine;
 
 	    std::vector<GameObject> _decorations;
 	    std::vector<Obstacle> _obstacles;

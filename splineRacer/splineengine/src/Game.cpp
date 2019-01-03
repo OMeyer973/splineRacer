@@ -12,7 +12,8 @@ Game::Game()
 	_spline(LEVEL_ENDLESS),
 	_gameMode(ENDLESS),
 	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, true, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f))),
-	_alien(GameObject(AssetManager::instance().models()["alien"], _spline, false, defaultPlayerPos, glm::vec3(.3f)), _player)
+	_alien(GameObject(AssetManager::instance().models()["alien"], _spline, false, defaultPlayerPos, glm::vec3(.3f)), _player),
+	_finishLine(GameObject(AssetManager::instance().models()["finish_line"], _spline, true, glm::vec3(0.f), glm::vec3(6.f), glm::vec3(0.f)))
 {
 	std::cout << "infinite game constructor called " << std::endl;
 	_cameras.emplace_back(new POVCamera());
@@ -28,7 +29,8 @@ Game::Game(int levelId)
 	_spline(levelId),
 	_gameMode(CLASSIC),
 	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, true, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f))),
-	_alien(GameObject(AssetManager::instance().models()["skybox"], _spline, false, defaultPlayerPos, glm::vec3(2.f)), _player)
+	_alien(GameObject(AssetManager::instance().models()["skybox"], _spline, false, defaultPlayerPos, glm::vec3(2.f)), _player),
+	_finishLine(GameObject(AssetManager::instance().models()["finish_line"], _spline, false, glm::vec3(0.f), glm::vec3(1.f), glm::vec3(0.f)))
 {
 	// TODO - OK now ?
 	std::cout << "game from level constructor called " << std::endl;
@@ -85,6 +87,8 @@ void Game::loadLevel() {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
 
+	_finishLine.sPosition() = glm::vec3(_spline.length(), 0.f, 0.f);
+
 	for (float i=0; i<_spline.length(); i+=.3f) {
 		_obstacles.push_back(Obstacle(
 			GameObject(
@@ -140,7 +144,7 @@ void Game::update() {
 	// Update player position and speed
 	_player.update(dt);
 	_alien.update(dt);
-
+	
 	// Collectables animation
 	for (float i=0; i<_collectables.size(); ++i) {
 		_collectables[i].update(dt, i, _player.sPosition());
@@ -192,6 +196,13 @@ void Game::render() {
 	if (_chosenCamera != POV_CAMERA) {
 		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix);
 	}
+
+	// Draw the finish line
+	MVMatrix = camMatrix * _finishLine.matrix();
+	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+	_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
+	_renderManager.useProgram(DIRECTIONAL_LIGHT);
+	_finishLine.draw();
 
 	// Draw the alien
 	MVMatrix = camMatrix * _alien.matrix();

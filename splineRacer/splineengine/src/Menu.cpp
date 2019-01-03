@@ -32,12 +32,12 @@ void Menu::init() {
 
 	for(int i =0; i<4; i++){
 		_menuItems.push_back(GameObject(
-					assetManager.models()["menu"],0,false,
-					glm::vec3(0.f,-2 + i*1.f,2.5f),
-					glm::vec3(.15f),
-					glm::vec3(0.f)
-					//glm::vec3(0.f,-(0.5f + (i-1)*0.2f), 0.f)
-					//glm::vec3(0.f,-(-10.f + i*10.f),0.f)
+			assetManager.models()["menu"],0,false,
+			glm::vec3(0.f,-2 + i*1.f,2.5f),
+			glm::vec3(.15f),
+			glm::vec3(0.f)
+			//glm::vec3(0.f,-(0.5f + (i-1)*0.2f), 0.f)
+			//glm::vec3(0.f,-(-10.f + i*10.f),0.f)
 		));
 	}
 	_skybox.push_back(GameObject(
@@ -52,8 +52,6 @@ void Menu::init() {
 	_menuItems[1].model().setTexture("Scores.png");
 	_menuItems[2].model().setTexture("QuitToMenu.png");
 	_menuItems[0].model().setTexture("Save.png");
-
-
 
 	glEnable(GL_DEPTH_TEST);
 }
@@ -145,8 +143,9 @@ void Menu::moveToPannel(const int pannelState) {
 	}
 	if(getState() == "Play"){
 		_displayLevels = true;
-	}
+	} else {
 		_displayLevels = false;
+	}
 
 	_isRotatingHorizontally = true;
 }

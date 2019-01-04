@@ -10,8 +10,9 @@
 
 namespace splineengine {
 
-const int defaultAnchorsNb = 50;
-const float defaultSegmentLength = 3;
+const int defaultAnchorsNb = 20;
+const float defaultSegmentLength = 3.f;
+const float splineCuvature = 0.02f;
 
 // delta position used to rotate the camera and the objects facing the curve
 // it is large in order to have smooth camera movements
@@ -59,8 +60,13 @@ class Spline {
         /// \brief returns the transforma matrix for an object the given point
         glm::mat4 matrix(const glm::vec3& sPoint) const;
 
-        /// \brief length of the spline : _segmentLength * anchors.size();
+        /// \brief length of the actual spline
         float length() const { return _segmentLength * (_anchors.size() - 3); }
+        
+        /// \brief add a random anchor to the end of the spline
+        void addAnchor();
+        /// \brief add a given to the end of the spline
+        void addAnchor(const glm::vec3& anchor);
 
     protected:
         /// \brief Returns a position between 4 Vector3 with Catmull-Rom spline algorithm

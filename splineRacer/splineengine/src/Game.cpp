@@ -18,6 +18,8 @@ Game::Game()
 	_cameras.emplace_back(new TrackballCamera());
 	_chosenCamera = TRACKBALL_CAMERA;
 	RenderManager _renderManager(*_cameras[_chosenCamera]);
+
+	generateLevel(0.f, _spline.length());
 }
 
 
@@ -36,6 +38,8 @@ Game::Game(const std::string& levelName)
 	_cameras.emplace_back(new TrackballCamera());
 	_chosenCamera = TRACKBALL_CAMERA;
 	RenderManager _renderManager(*_cameras[_chosenCamera]);
+
+	loadLevel(levelName);
 }
 
 
@@ -98,12 +102,13 @@ void Game::loadLevel(const std::string& levelName) {
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Game::createLevel() {
+
+void Game::generateLevel(const float start, const float finish) {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
 
 
-	for (float i=0; i<_spline.length(); i+=.7f) {
+	for (float i=start; i<finish; i+=.7f) {
 		_obstacles.push_back(Obstacle(
 			GameObject(
 				assetManager.models()["prism"], _spline, true,
@@ -122,7 +127,7 @@ void Game::createLevel() {
 		// ));
 	}
 
-	for (float i=0; i<_spline.length(); i+=10.f) {
+	for (float i=start; i<finish; i+=10.f) {
 		for (float j = 0; j < 2.5; j+=.5f) {
 			for (float k = 0; k <= .2f; k+=.2f) {
 				_collectables.push_back(Collectable(
@@ -170,7 +175,6 @@ void Game::update() {
 
 	// Check for collisions with obstacles
 	checkPlayerCollisionWithObjList(_obstacles);
-
 	// Check for collisions with collectables
 	checkPlayerCollisionWithObjList(_collectables);
 
@@ -179,6 +183,16 @@ void Game::update() {
 		_cameras[_chosenCamera]->update();
 	}
 
+	// ADD LENGTH TO THE SPLINE IF NECESSARY
+	if (_gameMode == ENDLESS && _spline.length() - _player.sPosition()[FWD] < maxRenderDistance) {
+			float oldLength = _spline.length();
+			while (_spline.length() < oldLength + maxRenderDistance) {
+				_spline.addAnchor();
+			}
+			generateLevel(oldLength, _spline.length());
+	}
+
+
 	// END OF GAME LOGIC CHECKS
 	if (_gameState == LEVELWIN || _gameState == LEVELLOSE || _gameState == ENDLESSOVER) {
 		if (_endScreenTimer <= 0) {
@@ -186,13 +200,6 @@ void Game::update() {
 			if (debug) std::cout << "gameState : EXITING (going back to menu)" << std::endl;
 		}
 		_endScreenTimer -= dt;
-	}
-	else if (_player.sPosition()[FWD] > _finishLine.sPosition()[FWD]) {
-		if (_gameMode == CLASSIC) {
-			if (debug) std::cout << "Level is won" << std::endl;
-			_gameState = LEVELWIN;
-		} 
-
 	}
 	else if (_alien.sPosition()[FWD] > _player.sPosition()[FWD]) {
 		_player.doCollisionWith(_alien);
@@ -207,6 +214,10 @@ void Game::update() {
 			if (debug) std::cout << "endless mode is over" << std::endl;
 			_gameState = ENDLESSOVER;
 		}
+	}
+	else if (_player.sPosition()[FWD] > _finishLine.sPosition()[FWD] && _gameMode == CLASSIC) {
+		if (debug) std::cout << "Level is won" << std::endl;
+		_gameState = LEVELWIN; 
 	}
 }
 

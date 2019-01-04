@@ -18,14 +18,24 @@ Spline::Spline(const std::string levelName)
 		glm::vec3 tmpAnchor(1.f,1.f,1.f);
 		_anchors.push_back(tmpAnchor);
 	    for (size_t i=1; i<defaultAnchorsNb; ++i) {
-	    	tmpAnchor += 10.f*glm::normalize(
-	    		glm::vec3(glm::sin(12.f*i/defaultAnchorsNb),0.4*glm::sin(-20.f*i/defaultAnchorsNb),glm::cos(12.f*i/defaultAnchorsNb)) * 
-	    		glm::abs(glm::sphericalRand(1.f))
-	    		+glm::vec3(0.03f*i,0,0)
-	    	);
-	    	_anchors.push_back(tmpAnchor);
+	    	addAnchor();
 	    }
 	//} else { loadfromfile()... }
+}
+
+void Spline::addAnchor() {
+	float i = _anchors.size(); // id of the anchor we are going to add;
+	glm::vec3 tmpAnchor = _anchors.back();
+    	tmpAnchor += 10.f*glm::normalize(
+    		glm::vec3(glm::sin(12.f*i*splineCuvature),0.4*glm::sin(-20.f*i*splineCuvature),glm::cos(12.f*i*splineCuvature)) * 
+    		glm::abs(glm::sphericalRand(1.f))
+    		+glm::vec3(0.03f*i,0,0)
+    	);
+	_anchors.push_back(tmpAnchor);
+}
+
+void Spline::addAnchor(const glm::vec3& anchor) {
+	_anchors.push_back(anchor);
 }
 
 

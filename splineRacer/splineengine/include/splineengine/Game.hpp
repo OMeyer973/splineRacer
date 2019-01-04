@@ -67,10 +67,6 @@ class Game {
 
 
 		//METHODS
-		/// \brief creates a radom level
-		void createLevel();
-		/// \brief load the given level
-		void loadLevel(const std::string& levelName);
 
 		/// \brief update called at each frame (for the physics)
 		void update();
@@ -89,6 +85,11 @@ class Game {
 
 
 	private:
+		/// \brief creates a radom level
+		void generateLevel(const float start, const float finish);
+		/// \brief load the given level
+		void loadLevel(const std::string& levelName);
+
 		/// \brief returns a single gameobject from it's json description
 		//TODO : throw exception when loading a bad file
 		GameObject gameObjFromJson(nlohmann::json j);

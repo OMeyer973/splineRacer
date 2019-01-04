@@ -3,6 +3,7 @@
 #define __GAME__HPP
 
 #include <string>
+#include <list>
 #include "common.hpp"
 #include "json.hpp"
 
@@ -34,6 +35,11 @@ const int EXITING = 4;
 const std::string playerModelName = "plane";
 // how long is displayed the end screen before going back to the menu ?
 const float endScreenTime = 5.f;
+// maximum distance to the player (folowing the spline) at wich collision checks will happend
+const float maxCollideDistance = 50.f;
+// maximum distance to the player (folowing the spline) at wich objects will be rendered
+const float maxRenderDistance = 70.f;
+
 
 /// \brief class wich represents the game scene , the player and their mechanics
 class Game {
@@ -81,15 +87,33 @@ class Game {
 		/// \brief switch between the different available cameras
 		void changeCamera();
 
-		/// \brief Handle collision between 2 GameObjects
-		template <typename T, typename U>
-		void handleCollision(T& firstObject, U& secondObject);
 
 	private:
 		/// \brief returns a single gameobject from it's json description
 		//TODO : throw exception when loading a bad file
 		GameObject gameObjFromJson(nlohmann::json j);
 
+		/// \brief order a list of gameobject according to their FWD position coordinate
+		// TODO : replace template with gameobject polymorphism or check the type or idk ... 
+		template <typename T>
+		void orderObjListFwd(std::list<T>& objList);
+
+		/// \brief Handle collision between 2 GameObjects
+		// TODO : replace template with gameobject polymorphism or check the type or idk ... 
+		template <typename T, typename U>
+		void handleCollision(T& firstObject, U& secondObject);
+
+
+		/// \brief renders a list of gameObjects and remove those far behind the player  
+		// TODO : replace template with gameobject polymorphism or check the type or idk ... 
+		template <typename T>
+		void renderObjList(std::list<T>& objList);
+		
+		/// \brief check if the the given list has element colliding with the player 
+		///\brief and handle the collision behaviour  
+		// TODO : replace template with gameobject polymorphism or check the type or idk ... 
+		template <typename T>
+		void checkPlayerCollisionWithObjList(std::list<T>& objList);
 
 		// MEMBERS
 		// gamemodes : CLASSIC, ENDLESS
@@ -120,9 +144,10 @@ class Game {
 		/// \brief Represents the finish line
 		GameObject _finishLine;
 
-	    std::vector<GameObject> _decorations;
-	    std::vector<Obstacle> _obstacles;
-	    std::vector<Collectable> _collectables;
+		// game objects lists (ordered along the spline acording to their FWD coordinate)
+	    std::list<GameObject> _decorations;
+	    std::list<Obstacle> _obstacles;
+	    std::list<Collectable> _collectables;
 };
 
 }

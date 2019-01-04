@@ -79,6 +79,9 @@ void Game::loadLevel(const std::string& levelName) {
 		}
 	}
 
+	_finishLine.sPosition() = glm::vec3(_spline.length(), 0.f, 0.f);
+
+
 	glEnable(GL_DEPTH_TEST);
 }
 
@@ -86,7 +89,6 @@ void Game::createLevel() {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
 
-	_finishLine.sPosition() = glm::vec3(_spline.length(), 0.f, 0.f);
 
 	for (float i=0; i<_spline.length(); i+=.3f) {
 		_obstacles.push_back(Obstacle(
@@ -132,6 +134,10 @@ void Game::createLevel() {
 		}
 	}
 
+	orderObjListFwd(_obstacles);
+	orderObjListFwd(_collectables);
+	orderObjListFwd(_decorations);
+
 	glEnable(GL_DEPTH_TEST);
 }
 
@@ -145,19 +151,15 @@ void Game::update() {
 	_alien.update(dt);
 	
 	// Collectables animation
-	for (float i=0; i<_collectables.size(); ++i) {
-		_collectables[i].update(dt, i, _player.sPosition());
+	for (std::list<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
+		(*it).update(dt, 0, _player.sPosition());
 	}
 
 	// Check for collisions with obstacles
-	for (std::vector<Obstacle>::iterator it = _obstacles.begin(); it != _obstacles.end(); ++it) {
-		handleCollision(_player, *it);
-	}
+	checkPlayerCollisionWithObjList(_obstacles);
 
 	// Check for collisions with collectables
-	for (std::vector<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
-		handleCollision(_player, *it);
-	}
+	checkPlayerCollisionWithObjList(_collectables);
 
 	// Update camera
 	if (_chosenCamera == TRACKBALL_CAMERA) {
@@ -220,14 +222,18 @@ void Game::render() {
 	_renderManager.drawObject(_alien, *_cameras[_chosenCamera]);
 
 	// Draw obstacles
-	for (std::vector<Obstacle>::iterator it = _obstacles.begin(); it != _obstacles.end(); ++it) {
-		_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
+	for (std::list<Obstacle>::iterator it = _obstacles.begin(); it != _obstacles.end(); ++it) {
+		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxRenderDistance) {
+			_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
+		}
 	}
 
 	// Draw Collectables
-	for (std::vector<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
+	for (std::list<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
 		if (!(*it).isHidden()) {
-			_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
+			if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxRenderDistance) {
+				_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
+			}
 		}
 	}
 
@@ -267,6 +273,12 @@ void Game::zoomCamera(const float dz) {
 	}
 }
 
+template <typename T>
+void Game::orderObjListFwd (std::list<T>& objList) {
+	objList.sort([](T objA, T objB) {return objA.sPosition()[FWD] < objB.sPosition()[FWD];});
+}
+
+
 template <typename T, typename U>
 void Game::handleCollision(T& firstObject, U& secondObject) {
 	if (firstObject.intersect(secondObject)) {
@@ -274,5 +286,37 @@ void Game::handleCollision(T& firstObject, U& secondObject) {
 		secondObject.doCollisionWith(firstObject);
 	}
 }
+
+template <typename T>
+void Game::checkPlayerCollisionWithObjList (std::list<T>& objList) {
+	for (typename std::list<T>::iterator it = objList.begin(); it != objList.end(); ++it) {
+		// if the object is near enough to the player : check collision
+		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxCollideDistance) {
+			handleCollision(_player, *it);
+		// else, if the object is in front of the player, discard all the next objects (lists are ordered)
+		} else if (it->sPosition()[FWD] > _player.sPosition()[FWD]) { 
+			break;
+		} 
+	}
+}
+
+template <typename T>
+void Game::renderObjList(std::list<T>& objList) {
+	typename std::list<T>::iterator it = objList.begin();
+	while (it != objList.end()) {
+		// if the object is near enough to the player : render the object
+		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxRenderDistance) {
+			_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
+			++it;
+		// else, if the object is in behind the player, we can remove it
+		} else if (it->sPosition()[FWD] < _player.sPosition()[FWD]) {
+	        objList.erase(it++);
+		}
+	}
+}
+
+
+
+
 
 }

@@ -4,9 +4,10 @@
 
 namespace splineengine {
 
-void RenderManager::updateMVMatrix(Camera &camera, glm::mat4 transformMatrix) {
+void RenderManager::updateMVMatrix(Camera &camera, glm::mat4 transformMatrix, glm::vec3 scale) {
     _MVMatrix = camera.getViewMatrix() * transformMatrix;
     _normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
+    _MVMatrix = glm::scale(_MVMatrix, scale);
 }
 
 void RenderManager::updateGlobalMatrix(Camera &camera, glm::mat4 splineCamMatrix) {

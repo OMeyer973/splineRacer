@@ -100,7 +100,7 @@ void Menu::render() {
 		//Draw _skybox
 		glDepthMask(GL_FALSE);
 		//MVMatrix = camMatrix *  _skybox[0].matrix();
-		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _skybox[0].scale());
 		_renderManager.useProgram(TEXTURE);
 		_skybox[0].draw();
 		glDepthMask(GL_TRUE);
@@ -110,7 +110,7 @@ void Menu::render() {
 
 		//glDepthFunc(GL_LEQUAL);
 		// Update MVMatrix according to the object's transformation
-		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[0].scale());
 		_renderManager.useProgram(TEXTURE);
 		//_renderManager.applyTransformations(TEXTURE);
 
@@ -126,7 +126,7 @@ void Menu::render() {
 		if(_displayLevels){
 			for(float i=1; i< _menuItems.size();i++){
 				  MVMatrix = _menuItems[i].staticMatrix();
-				  _renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix);
+				  _renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[i].scale());
 					_renderManager.useProgram(TEXTURE);
 					_renderManager.applyTransformations(TEXTURE);
 					_menuItems[i].draw();

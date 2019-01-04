@@ -84,10 +84,12 @@ void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMat
 
 	/* On boucle sur les meshs de l'object pour les afficher un par un et
 	   appliquer des textures ou des tranformations différentes pour chaque mesh. */
+	glm::mat4 MVMatrix;
+	
 	for (int i = 0; i < _model.geometry().getMeshCount(); ++i)
 	{
-		glm::mat4 MVMatrix = camMatrix * this->matrix();
-		renderManager.updateMVMatrix(camera, MVMatrix);
+		MVMatrix = camMatrix * this->matrix();
+		renderManager.updateMVMatrix(camera, MVMatrix, _scale);
 		renderManager.updateGlobalMatrix(camera, camMatrix);
 		renderManager.useProgram(DIRECTIONAL_LIGHT);
 		
@@ -97,8 +99,9 @@ void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMat
 		
 		if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices
 		{
-			glm::mat4 MVMatrix = camMatrix * glm::rotate(this->matrix(), _propellerRotationAngle, glm::vec3(0, 0, 1));
-			renderManager.updateMVMatrix(camera, MVMatrix);
+			//TODO : fait des segfault chez olivier des fois (mais je crois que c'est des problèmes de compil local et de lib pt)
+			MVMatrix = camMatrix * glm::rotate(this->matrix(), _propellerRotationAngle, fwdVec);
+			renderManager.updateMVMatrix(camera, MVMatrix, _scale);
 			renderManager.useProgram(DIRECTIONAL_LIGHT);
 		} 
 

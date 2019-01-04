@@ -38,8 +38,8 @@ class RenderManager {
 		{};
 
 		/// \brief Update _MVMatrix and _normalMatrix
-		void updateMVMatrix(Camera &camera, glm::mat4 transformMatrix);
-
+		void updateMVMatrix(Camera &camera, glm::mat4 transformMatrix, glm::vec3 scale);
+		
 		/// \brief Update _globalMatrix
 		void updateGlobalMatrix(Camera &camera, glm::mat4 splineCamMatrix);
 

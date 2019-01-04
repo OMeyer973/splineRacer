@@ -60,7 +60,7 @@ class Spline {
         glm::mat4 matrix(const glm::vec3& sPoint) const;
 
         /// \brief length of the spline : _segmentLength * anchors.size();
-        float length() const { return _segmentLength * _anchors.size(); }
+        float length() const { return _segmentLength * (_anchors.size() - 3); }
 
     protected:
         /// \brief Returns a position between 4 Vector3 with Catmull-Rom spline algorithm

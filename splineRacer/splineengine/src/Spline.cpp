@@ -36,10 +36,10 @@ glm::vec3 Spline::point(const float t) const {
 	float tmp = pos-(float)i;
 
 	if (pos <= 0)
-		return _segmentLength*glm::mix(_anchors[1], _anchors[2], pos);
+		return _segmentLength*glm::mix(_anchors[0], _anchors[1], pos+1);
 	
 	if (pos+3 >= _anchors.size()) 
-		return _segmentLength*glm::mix(_anchors[_anchors.size()-3], _anchors[_anchors.size()-2], pos-_anchors.size()+4);
+		return _segmentLength*glm::mix(_anchors[_anchors.size()-2], _anchors[_anchors.size()-1], pos-_anchors.size()+3);
 	
 	const glm::vec3 p0 = _anchors[i];
 	const glm::vec3 p1 = _anchors[i+1];

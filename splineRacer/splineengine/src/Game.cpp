@@ -10,7 +10,7 @@ Game::Game()
 	_spline("Endless"),
 	_gameMode(ENDLESS),
 	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, true, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f))),
-	_alien(GameObject(AssetManager::instance().models()["alien"], _spline, false, defaultPlayerPos, glm::vec3(.3f)), _player),
+	_alien(GameObject(AssetManager::instance().models()["alien"], _spline, false, glm::vec3(0.f), glm::vec3(0.3f)), _player),
 	_finishLine(GameObject(AssetManager::instance().models()["finish_line"], _spline, true, glm::vec3(0.f), glm::vec3(6.f), glm::vec3(0.f)))
 {
 	std::cout << "infinite game constructor called " << std::endl;
@@ -27,7 +27,7 @@ Game::Game(const std::string& levelName)
 	_spline(levelName),
 	_gameMode(CLASSIC),
 	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, true, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f))),
-	_alien(GameObject(AssetManager::instance().models()["alien"], _spline, false, defaultPlayerPos, glm::vec3(2.f)), _player),
+	_alien(GameObject(AssetManager::instance().models()["alien"], _spline, false, glm::vec3(0.f), glm::vec3(0.3f)), _player),
 	_finishLine(GameObject(AssetManager::instance().models()["finish_line"], _spline, false, glm::vec3(0.f), glm::vec3(1.f), glm::vec3(0.f)))
 {
 	// TODO - OK now ?
@@ -79,6 +79,19 @@ void Game::loadLevel(const std::string& levelName) {
 		}
 	}
 
+	// tmp?
+	AssetManager& assetManager = AssetManager::instance();
+	for (float i=-1; i<_spline.length()+1; i+=.7f) {
+		_obstacles.push_back(Obstacle(
+			GameObject(
+				assetManager.models()["prism"], _spline, true,
+				glm::vec3(i, 0, 0),
+				glm::vec3((2.f*glm::sin(i)) + 4.f),
+				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
+			)
+		));
+	}
+
 	_finishLine.sPosition() = glm::vec3(_spline.length(), 0.f, 0.f);
 
 
@@ -90,12 +103,12 @@ void Game::createLevel() {
 	AssetManager& assetManager = AssetManager::instance();
 
 
-	for (float i=0; i<_spline.length(); i+=.3f) {
+	for (float i=0; i<_spline.length(); i+=.7f) {
 		_obstacles.push_back(Obstacle(
 			GameObject(
 				assetManager.models()["prism"], _spline, true,
 				glm::vec3(i, 0, 0),
-				glm::vec3((2*glm::sin(i)+0.2f) + 4.f),
+				glm::vec3((2.f*glm::sin(i)) + 4.f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
 		));

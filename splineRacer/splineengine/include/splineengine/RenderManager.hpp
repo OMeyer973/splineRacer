@@ -7,6 +7,7 @@
 #include <splineengine/Camera.hpp>
 #include <splineengine/Texture.hpp>
 #include <splineengine/CubeMap.hpp>
+#include <splineengine/GameObject.hpp>
 #include <splineengine/GLSLProgram.hpp>
 
 namespace splineengine {
@@ -44,18 +45,28 @@ class RenderManager {
 		void updateGlobalMatrix();
 
 		/// \brief get _MVMatrix
-		const glm::mat4 MVMatrix() const {
+		const glm::mat4& MVMatrix() const {
 			return _MVMatrix;
 		}
 
 		/// \brief get _normalMatrix
-		const glm::mat4 normalMatrix() const {
+		const glm::mat4& normalMatrix() const {
 			return _normalMatrix;
 		}
 
 		/// \brief get _projMatrix
-		const glm::mat4 projMatrix() const {
+		const glm::mat4& projMatrix() const {
 			return _projMatrix;
+		}
+
+		/// \brief get _projMatrix
+		const glm::mat4& splineCamMatrix() const {
+			return _splineCamMatrix;
+		}
+
+		/// \brief get _projMatrix
+		glm::mat4& splineCamMatrix() {
+			return _splineCamMatrix;
 		}
 
 		/// \brief Use the correct program associated to the shader
@@ -64,17 +75,27 @@ class RenderManager {
 		/// \brief Apply Transformations, Update Uniforms
 		void sendUniformsToShaders(FS shader);
 
+		/// \brief Calculate Matrix and draw object
+		void drawObject(GameObject& obj, Camera& camera);
+
 	// MEMBERS
 	protected:
 		/// \brief Projection matrix
 		glm::mat4 _projMatrix;
+
 		/// \brief Model-View matrix
 		glm::mat4 _MVMatrix;
+
 		/// \brief Model-View matrix
 		glm::mat4 _normalMatrix;
+
 		/// \brief Global matrix
 		glm::mat4 _globalMatrix;
 
+		/// \brief Spline cam matrix
+		glm::mat4 _splineCamMatrix;
+
+		/// \brief Skybox
 		CubeMap* _skybox;
 
 };

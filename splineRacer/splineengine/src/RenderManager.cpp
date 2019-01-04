@@ -97,4 +97,11 @@ void RenderManager::sendUniformsToShaders(FS shader)
     }
 }
 
+void RenderManager::drawObject(GameObject& obj, Camera& camera) {
+    glm::mat4 transformMatrix = splineCamMatrix() * obj.matrix();
+    updateMVMatrix(camera, transformMatrix, obj.scale());
+    useProgram(DIRECTIONAL_LIGHT);
+    obj.draw();
+}
+
 }

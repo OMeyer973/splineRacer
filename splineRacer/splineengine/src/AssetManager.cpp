@@ -12,7 +12,7 @@ void AssetManager::loadAssets() {
 	if (debug) std::cout << "AssetManager : Load assets" << std::endl;
 
 	// TODO : load actual assets for the game
-	_models.insert(std::make_pair("plane", 			Model("plane",		"planetexture.jpg")));
+	_models.insert(std::make_pair("plane", 			Model("plane",		"planetexture2.jpg")));
 	_models.insert(std::make_pair("wheelbarrow",	Model("wheelbarrow","planetexture2.jpg")));
 	_models.insert(std::make_pair("singe", 			Model("singe",		"planetexture.jpg")));
 	_models.insert(std::make_pair("skybox", 		Model("skybox",		"skybox_desert.png")));

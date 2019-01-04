@@ -1,10 +1,8 @@
 #include <splineengine/Game.hpp>
 #include <fstream>
 #include <iostream>
-// #include <splineengine/CubeMap.hpp>
 
 namespace splineengine {
-
 
 Game::Game()
 	:
@@ -152,13 +150,13 @@ void Game::update() {
 	}
 
 	// Check for collisions with obstacles
-	for (float i=0; i<_obstacles.size(); ++i) {
-		handleCollision(_player, _obstacles[i]);
+	for (std::vector<Obstacle>::iterator it = _obstacles.begin(); it != _obstacles.end(); ++it) {
+		handleCollision(_player, *it);
 	}
 
 	// Check for collisions with collectables
-	for (float i=0; i<_collectables.size(); ++i) {
-		handleCollision(_player, _collectables[i]);
+	for (std::vector<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
+		handleCollision(_player, *it);
 	}
 
 	// Update camera
@@ -202,55 +200,40 @@ void Game::render() {
 	// TODO
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glm::mat4 camMatrix = _spline.camMatrix(_player.sPosition());
-	glm::mat4 MVMatrix = camMatrix;
+	_renderManager.splineCamMatrix() = _spline.camMatrix(_player.sPosition());
+	glm::mat4 MVMatrix = _renderManager.splineCamMatrix();
 
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _player.scale());
 	_renderManager.updateGlobalMatrix(); // celui là est nécéssaire !
 
 	// Draw the player (hidden in Point Of View Camera)
 	if (_chosenCamera != POV_CAMERA) {
-		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix);
+		_player.draw(_renderManager, *_cameras[_chosenCamera]);
 	}
 
+	// Draw the finish line in classic mode
 	if (_gameMode == CLASSIC) {
-		// Draw the finish line
-		MVMatrix = camMatrix * _finishLine.matrix();
-		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _finishLine.scale());
-		_renderManager.useProgram(DIRECTIONAL_LIGHT);
-		_finishLine.draw();
+		_renderManager.drawObject(_finishLine, *_cameras[_chosenCamera]);
 	}
+
 	// Draw the alien
-	MVMatrix = camMatrix * _alien.matrix();
-	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix,_alien.scale());
-	_renderManager.useProgram(DIRECTIONAL_LIGHT);
-	_alien.draw();
+	_renderManager.drawObject(_alien, *_cameras[_chosenCamera]);
 
 	// Draw obstacles
-	for (float i=0; i<_obstacles.size(); ++i) {
-
-		// Get the transform matrix of the current obstacle
-		MVMatrix = camMatrix * _obstacles[i].matrix();
-		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _obstacles[i].scale());
-		// _renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
-		_renderManager.useProgram(DIRECTIONAL_LIGHT);
-		_obstacles[i].draw();
+	for (std::vector<Obstacle>::iterator it = _obstacles.begin(); it != _obstacles.end(); ++it) {
+		_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
 	}
 
 	// Draw Collectables
-	for (float i=0; i<_collectables.size(); ++i) {
-		if (!_collectables[i].isHidden()) {
-			// Get the transform matrix of the current obstacle
-			MVMatrix = camMatrix * _collectables[i].matrix();
-			_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _collectables[i].scale());
-			_renderManager.useProgram(DIRECTIONAL_LIGHT);
-			_collectables[i].draw();
+	for (std::vector<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
+		if (!(*it).isHidden()) {
+			_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
 		}
 	}
 
 	// Draw _skybox
 	glDepthMask(GL_FALSE);
-	MVMatrix = camMatrix;
+	MVMatrix = _renderManager.splineCamMatrix();
 	MVMatrix = glm::translate(MVMatrix, _spline.point(_player.sPosition()[FWD]));
 	
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _skybox.scale());

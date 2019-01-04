@@ -78,7 +78,7 @@ class Player : public GameObject {
 
         // METHODS
         /// \brief Overriden draw method for the player
-        void draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMatrix) ;
+        void draw(RenderManager &renderManager, Camera &camera) ;
 
         /// \brief update the player status at each frame
         void update(const float dt);

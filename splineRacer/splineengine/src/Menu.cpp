@@ -135,8 +135,8 @@ void Menu::render() {
 		//display levels
 		if(_displayLevels){
 			for(float i=1; i< _menuItems.size();i++){
-				  MVMatrix = _menuItems[i].staticMatrix();
-				  _renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[i].scale());
+					MVMatrix = _menuItems[i].staticMatrix();
+					_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[i].scale());
 					_renderManager.useProgram(TEXTURE);
 					_menuItems[i].draw();
 			}

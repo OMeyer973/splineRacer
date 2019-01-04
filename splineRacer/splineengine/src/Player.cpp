@@ -78,7 +78,7 @@ void Player::doCollisionWith(Chaser& chaser) {
 }
 
 
-void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMatrix) {
+void Player::draw(RenderManager &renderManager, Camera &camera) {
 	glBindVertexArray(_model.VAO());
 	glBindTexture(GL_TEXTURE_2D, _model.textureID());
 
@@ -88,9 +88,8 @@ void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMat
 	
 	for (int i = 0; i < _model.geometry().getMeshCount(); ++i)
 	{
-		MVMatrix = camMatrix * this->matrix();
+		MVMatrix = renderManager.splineCamMatrix() * this->matrix();
 		renderManager.updateMVMatrix(camera, MVMatrix, _scale);
-		//renderManager.updateGlobalMatrix(camera, camMatrix);
 		renderManager.useProgram(DIRECTIONAL_LIGHT);
 		
 		const glimac::Geometry::Mesh* currentMesh = (_model.geometry().getMeshBuffer()+i);
@@ -100,7 +99,7 @@ void Player::draw(RenderManager &renderManager, Camera &camera, glm::mat4 camMat
 		if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices
 		{
 			//TODO : fait des segfault chez olivier des fois (mais je crois que c'est des problèmes de compil local et de lib pt)
-			MVMatrix = camMatrix * glm::rotate(this->matrix(), _propellerRotationAngle, fwdVec);
+			MVMatrix = renderManager.splineCamMatrix() * glm::rotate(this->matrix(), _propellerRotationAngle, fwdVec);
 			renderManager.updateMVMatrix(camera, MVMatrix, _scale);
 			renderManager.useProgram(DIRECTIONAL_LIGHT);
 		} 

@@ -34,7 +34,7 @@ void POVCamera::computeDirectionVectors() {
 }
 
 void POVCamera::rotateLeft(float degrees) {
-	_fPhi += glm::radians(degrees);
+	_fPhi -= glm::radians(degrees);
 	if (fabs(_fPhi) > M_PI + POV_MAX_ANGLE_DOWN)
 		_fPhi = M_PI + POV_MAX_ANGLE_DOWN;
 	if (fabs(_fPhi) < M_PI - POV_MAX_ANGLE_DOWN)
@@ -43,7 +43,7 @@ void POVCamera::rotateLeft(float degrees) {
 }
 
 void POVCamera::rotateUp(float degrees) {
-	_fTheta += glm::radians(degrees);
+	_fTheta -= glm::radians(degrees);
 	if (fabs(_fTheta) > POV_MAX_ANGLE_UP)
 		_fTheta = POV_MAX_ANGLE_UP * _fTheta / fabs(_fTheta);
 	computeDirectionVectors();

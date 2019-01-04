@@ -3,6 +3,7 @@
 #define __GAMEMANAGER__HPP
 
 #include <iostream>
+#include <unordered_set> 
 #include <memory>
 #include <GL/glew.h>
 #include <glimac/SDLWindowManager.hpp>
@@ -15,6 +16,32 @@
 #include "Pause.hpp"
 
 namespace splineengine {
+
+
+struct keyGroup {
+	keyGroup(std::unordered_set<SDLKey> keys)
+		:_keys(keys)
+	{};
+	bool has(const SDLKey key) const { return _keys.find(key) != _keys.end(); }
+	std::unordered_set<SDLKey> _keys;
+};
+
+struct Input {
+	const keyGroup up = keyGroup(std::unordered_set<SDLKey> { SDLK_z, SDLK_UP } ); 
+	const keyGroup left = keyGroup(std::unordered_set<SDLKey> { SDLK_q, SDLK_LEFT } ); 
+	const keyGroup down = keyGroup(std::unordered_set<SDLKey> { SDLK_s, SDLK_DOWN } ); 
+	const keyGroup right = keyGroup(std::unordered_set<SDLKey> { SDLK_d, SDLK_RIGHT } );
+	const keyGroup select = keyGroup(std::unordered_set<SDLKey> { SDLK_RETURN, SDLK_SPACE } );
+	const keyGroup back = keyGroup(std::unordered_set<SDLKey> { SDLK_ESCAPE, SDLK_BACKSPACE } );
+	const keyGroup togglePause = keyGroup(std::unordered_set<SDLKey> { SDLK_ESCAPE, SDLK_p } );
+	const keyGroup cameraForward = keyGroup(std::unordered_set<SDLKey> { SDLK_KP_PLUS, SDLK_PLUS } );
+	const keyGroup cameraBackward = keyGroup(std::unordered_set<SDLKey> { SDLK_KP_MINUS, SDLK_MINUS } );
+	const keyGroup toggleCamera = keyGroup(std::unordered_set<SDLKey> { SDLK_c } );
+};
+
+const Input input;
+
+//const Input input;
 	
 // IDs of game screens
 const int MENU = 0;

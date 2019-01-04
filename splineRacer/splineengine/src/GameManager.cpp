@@ -39,52 +39,41 @@ void GameManager::doMenuEvent(SDL_Event e) {
 	// TODO
 	switch (e.type) {
        case SDL_KEYDOWN:
-	        if (e.key.keysym.sym==SDLK_SPACE) {
-	            std::cout << "Space " << std::endl;
-				goToGame();
-	        }
-	        if (e.key.keysym.sym==SDLK_z ) {
+	        if (input.up.has(e.key.keysym.sym)) {
 				if (!_menu.isRotatingHorizontally() && !_menu.isRotatingVertically()){
 					_menu.changeLevel(1);
 				}
-	            //_levelName = (_levelName + 1) % NUMBER_OF_LEVELS;
-	            //std::cout << "level id : " << _levelName << std::endl;
 	        }
-	        if (e.key.keysym.sym==SDLK_s) {
+	        if (input.down.has(e.key.keysym.sym)) {
 				if (!_menu.isRotatingHorizontally() && !_menu.isRotatingVertically()){
 					_menu.changeLevel(-1);
-					//_levelName = (_levelName - 1) % NUMBER_OF_LEVELS;
-		            //std::cout << "level id : " << _levelName << std::endl;
 				}
 	        }
-			if (e.key.keysym.sym==SDLK_q) { //going left
+			if (input.left.has(e.key.keysym.sym)) { //going left
 				if (!_menu.isRotatingHorizontally()) {
 					_menu.changePannel(-1);
 				}
 			}
-			if (e.key.keysym.sym==SDLK_d){//going right
+			if (input.right.has(e.key.keysym.sym)){//going right
 				if (!_menu.isRotatingHorizontally()){
 					_menu.changePannel(1);
 				}
 			}
 			if (_menu.selectedMenu() == "Play") {
 			 	
-			 	if (_menu.isDisplayingLevels() && e.key.keysym.sym == SDLK_RETURN) {
+			 	if (_menu.isDisplayingLevels() && input.select.has(e.key.keysym.sym)) {
 			 		_levelName = _menu.selectedLevel();
 			 		goToGame();
 			 	}
-			 	if (e.key.keysym.sym == SDLK_RETURN) {
+			 	if (input.select.has(e.key.keysym.sym)) {
 					_menu.displayLevels();
 				}
-			 	if (e.key.keysym.sym == SDLK_ESCAPE) {
+			 	if (input.back.has(e.key.keysym.sym)) {
 					_menu.hideLevels();
 			 	}
 			
 			}
-			 // if (e.key.keysym.sym == SDLK_RETURN && _menu.selectedMenu()== "Play" && _menu.selectedLevel()) {
-				//  goToGame();
-			 // }
-			if (e.key.keysym.sym == SDLK_RETURN && _menu.selectedMenu() == "Quit") {
+			if (input.select.has(e.key.keysym.sym) && _menu.selectedMenu() == "Quit") {
 				_exiting = true;
 			}
 	        break;
@@ -94,48 +83,48 @@ void GameManager::doMenuEvent(SDL_Event e) {
 void GameManager::doGameEvent(SDL_Event e) {
 	switch (e.type) {
        case SDL_KEYDOWN:
-	        if (e.key.keysym.sym==SDLK_q){ //going left
+	        if (input.left.has(e.key.keysym.sym)){ //going left
 	            _game->player().goingLeft() = 1.f;
 	        }
-	        if (e.key.keysym.sym==SDLK_d){//going right
+	        if (input.right.has(e.key.keysym.sym)){//going right
 	            _game->player().goingLeft() = -1.f;
 	        }
-	         if (e.key.keysym.sym==SDLK_z){//going up
+	         if (input.up.has(e.key.keysym.sym)){//going up
 	            _game->player().goingUp() = 1.f;
 	        }
-	        if (e.key.keysym.sym==SDLK_s){//going down
+	        if (input.down.has(e.key.keysym.sym)){//going down
 	            _game->player().goingUp() = -1.f;
 	        }
-	        if (e.key.keysym.sym==SDLK_ESCAPE) {
+	        if (input.togglePause.has(e.key.keysym.sym)) {
 				goToPause();
 	        }
-	        if (e.key.keysym.sym==SDLK_SPACE) {
+	        if (debug && e.key.keysym.sym==SDLK_SPACE) {
 	            goToMenu();
 	        }
 
 			// Camera handling
-			if (e.key.keysym.sym==SDLK_c){
+			if (input.toggleCamera.has(e.key.keysym.sym)){
 				_game->changeCamera();
 			}
-			if (e.key.keysym.sym==SDLK_UP){
+			if (input.cameraForward.has(e.key.keysym.sym)) {
 				_game->zoomCamera(cameraZoomSpeed);
 			}
-			if (e.key.keysym.sym==SDLK_DOWN){
+			if (input.cameraBackward.has(e.key.keysym.sym)) {
 				_game->zoomCamera(-cameraZoomSpeed);
 			}
 			break;
 
 	    case SDL_KEYUP:
-	        if (e.key.keysym.sym==SDLK_q && _game->player().goingLeft() > 0) {//stop going left
+	        if (input.left.has(e.key.keysym.sym) && _game->player().goingLeft() > 0) {//stop going left
 	            _game->player().goingLeft() = 0.f;
 	        }
-	        if (e.key.keysym.sym==SDLK_d && _game->player().goingLeft() < 0) {//stop going right
+	        if (input.right.has(e.key.keysym.sym) && _game->player().goingLeft() < 0) {//stop going right
 	            _game->player().goingLeft() = 0.f;
 	        }
-	        if (e.key.keysym.sym==SDLK_z && _game->player().goingUp() > 0) {//stop going up
+	        if (input.up.has(e.key.keysym.sym) && _game->player().goingUp() > 0) {//stop going up
 	            _game->player().goingUp() = 0.f;
 	        }
-	        if (e.key.keysym.sym==SDLK_s && _game->player().goingUp() < 0){//stop going down
+	        if (input.down.has(e.key.keysym.sym) && _game->player().goingUp() < 0){//stop going down
 	            _game->player().goingUp() = 0.f;
 	            ;
 	        }
@@ -158,10 +147,10 @@ void GameManager::doPauseEvent(SDL_Event e) {
 	// TODO
 	switch (e.type) {
        case SDL_KEYDOWN:
-	        if (e.key.keysym.sym==SDLK_ESCAPE) {
+	        if (input.togglePause.has(e.key.keysym.sym)) {
 				goToGame();
 			}
-	        if (e.key.keysym.sym==SDLK_SPACE) {
+	        if (debug && e.key.keysym.sym==SDLK_SPACE) {
 				goToMenu();
 			}
 			break;

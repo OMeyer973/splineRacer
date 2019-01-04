@@ -10,8 +10,8 @@ void RenderManager::updateMVMatrix(Camera &camera, glm::mat4 transformMatrix, gl
     _MVMatrix = glm::scale(_MVMatrix, scale);
 }
 
-void RenderManager::updateGlobalMatrix(Camera &camera, glm::mat4 splineCamMatrix) {
-    _globalMatrix = splineCamMatrix;
+void RenderManager::updateGlobalMatrix() {
+    _globalMatrix = _MVMatrix;
 }
 
 void RenderManager::useProgram(FS shader) {
@@ -40,8 +40,8 @@ void RenderManager::useProgram(FS shader) {
 
 void RenderManager::applyTransformations(FS shader)
 {
-    glm::mat4 lightMatrix = _globalMatrix;
-    glm::vec4 lightVector = glm::normalize(glm::vec4(1,0,0,0) * lightMatrix);
+    glm::mat4 lightMatrix = glm::transpose(_globalMatrix);
+    glm::vec4 lightVector = glm::normalize(glm::vec4(1, 1, 1, 0) * lightMatrix);
 
     const ProgramList& programList = AssetManager::instance().programList();
 

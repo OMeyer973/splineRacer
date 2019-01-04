@@ -56,19 +56,6 @@ int main(int argc, char** argv) {
 	// Create the skybox object
 	GameObject skyboxObject(assetManager.models()["skybox"], spline);
 
-	// Create a texture and load it
-	Texture skyboxTex("skurt.png");
-	skyboxTex.loadTexture();
-
-	// CubeMap skybox((settings.appPath().dirPath() + "../../splineRacer/assets/textures/posx.png").str() ,
-	// 				  (settings.appPath().dirPath() + "../../splineRacer/assets/textures/posy.png").str() ,
-	// 				  (settings.appPath().dirPath() + "../../splineRacer/assets/textures/posz.png").str() ,
-	// 				  (settings.appPath().dirPath() + "../../splineRacer/assets/textures/negx.png").str() ,
-	// 				  (settings.appPath().dirPath() + "../../splineRacer/assets/textures/negy.png").str() ,
-	// 				  (settings.appPath().dirPath() + "../../splineRacer/assets/textures/negz.png").str() );
-	//
-	// skybox.loadCubeMap();
-
 	// Create the Cameras
 	std::vector<std::unique_ptr<Camera>> cameras; // Contains two pointers on camera
 	cameras.emplace_back(new POVCamera());
@@ -132,14 +119,17 @@ int main(int argc, char** argv) {
 		 *********************************/
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		renderManager.updateGlobalMatrix();
+
+		/* Player */
 		// Object transform
 		player.sPosition() = glm::vec3(0);
 		player.scale() = glm::vec3(1);
-		player.rotation() = glm::vec3(.25*cos(2*windowManager.getTime()), .25*cos(.5*windowManager.getTime()), 0);
+		// player.rotation() = glm::vec3(.25*cos(2*windowManager.getTime()), .25*cos(.5*windowManager.getTime()), 0);
+		player.rotation() = glm::vec3(windowManager.getTime(), .5f*windowManager.getTime(), 0);
 
 		// Update MVMatrix according to the object's transformation
 		renderManager.updateMVMatrix(*cameras[chosenCamera], player.staticMatrix());
-		renderManager.updateGlobalMatrix(*cameras[chosenCamera], renderManager.MVMatrix());
 		renderManager.useProgram(DIRECTIONAL_LIGHT);
 
 		// Texture binding
@@ -148,25 +138,7 @@ int main(int argc, char** argv) {
 		// Draw object
 		player.draw();
 
-
-		// TestSkybox
-		// glBindTexture(GL_TEXTURE_2D,textures[1]);
-		// glUniform1i(textureLocation, 0);
-
-
-		// glDepthMask(GL_FALSE);
-		// //useProgram(CUBEMAP);
-		//
-		// glActiveTexture(GL_TEXTURE0);
-		// glBindTexture(GL_TEXTURE_CUBE_MAP, skybox.getID());
-		//
-		// //skyboxObject.draw();
-		//
-		// glActiveTexture(GL_TEXTURE0);
-		// glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-		// glDepthMask(GL_TRUE);
-
-
+		/* Skybox */
 		// Object transform
 		skyboxObject.scale() = 100.f*(fwdVec +upVec + leftVec); 
 
@@ -175,16 +147,9 @@ int main(int argc, char** argv) {
 
 		// Send uniforms to shaders
 		renderManager.useProgram(TEXTURE);
-		// renderManager.applyTransformations(TEXTURE, renderManager.MVMatrix());
-
-		// Texture binding
-		glBindTexture(GL_TEXTURE_2D, skyboxTex.getTextureID());
 
 		// Object drawing
 		skyboxObject.draw();
-
-		// Unbind texture
-		glBindTexture(GL_TEXTURE_2D, 0);
 
 		// Update the display
 		windowManager.swapBuffers();

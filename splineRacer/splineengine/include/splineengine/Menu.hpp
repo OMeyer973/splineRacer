@@ -55,6 +55,9 @@ class Menu {
 
 		bool isRotatingHorizontally() { return _isRotatingHorizontally;}
 		bool isRotatingVertically(){return _isRotatingVertically;};
+
+		std::string getSelectedMenu(){return _menus[_selectedMenu];};
+		std::string getSelectedLevel(){return _levels[_selectedLevel];};
 	// MEMBERS
 	private:
 		RenderManager _renderManager;
@@ -77,9 +80,9 @@ class Menu {
 		std::vector<GameObject> _skybox;
 		std::string _frontMenuModelName = "frontmenu";
 
-		int _menuState;
-		int _levelState;
-		std::vector<std::string> _action = {"Play","Scores","Settings","Rules","Credits","Quit"};
+		int _selectedMenu;
+		int _selectedLevel;
+		std::vector<std::string> _menus = {"Play","Scores","Settings","Rules","Credits","Quit"};
 		std::vector<std::string> _levels = {"Easy", "Normal","Hard","Infinite"};
 
 

@@ -150,8 +150,8 @@ int main(int argc, char** argv) {
 
     Model menuModel("menu", "Continue.png");
 
-    Model skyBox("skybox", "skurt.png");
-    Texture skyBoxTex("skurt.png");
+    Model skyBox("skybox", "skybox_desert.png");
+    Texture skyBoxTex("skybox_desert.png");
 
 
     glEnable(GL_DEPTH_TEST);

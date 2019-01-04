@@ -41,7 +41,7 @@ class RenderManager {
 		void updateMVMatrix(Camera &camera, glm::mat4 transformMatrix, glm::vec3 scale);
 		
 		/// \brief Update _globalMatrix
-		void updateGlobalMatrix(Camera &camera, glm::mat4 splineCamMatrix);
+		void updateGlobalMatrix();
 
 		/// \brief get _MVMatrix
 		const glm::mat4 MVMatrix() const {

@@ -203,8 +203,13 @@ void Game::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 camMatrix = _spline.camMatrix(_player.sPosition());
-	glm::mat4 MVMatrix = camMatrix * _player.matrix();
+	glm::mat4 MVMatrix = camMatrix;
 
+	camMatrix = _spline.camMatrix(_player.sPosition());
+	_renderManager.updateGlobalMatrix(); // celui là est nécéssaire !
+
+	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _player.scale());
+	
 	// Draw the player (hidden in Point Of View Camera)
 	if (_chosenCamera != POV_CAMERA) {
 		_player.draw(_renderManager, *_cameras[_chosenCamera], camMatrix);
@@ -214,14 +219,14 @@ void Game::render() {
 		// Draw the finish line
 		MVMatrix = camMatrix * _finishLine.matrix();
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _finishLine.scale());
-		_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
+		//_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
 		_renderManager.useProgram(DIRECTIONAL_LIGHT);
 		_finishLine.draw();
 	}
 	// Draw the alien
 	MVMatrix = camMatrix * _alien.matrix();
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix,_alien.scale());
-	_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
+	//_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
 	_renderManager.useProgram(DIRECTIONAL_LIGHT);
 	_alien.draw();
 
@@ -231,7 +236,7 @@ void Game::render() {
 		// Get the transform matrix of the current obstacle
 		MVMatrix = camMatrix * _obstacles[i].matrix();
 		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _obstacles[i].scale());
-		_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
+		// _renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
 		_renderManager.useProgram(DIRECTIONAL_LIGHT);
 		_obstacles[i].draw();
 	}
@@ -242,7 +247,7 @@ void Game::render() {
 			// Get the transform matrix of the current obstacle
 			MVMatrix = camMatrix * _collectables[i].matrix();
 			_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _collectables[i].scale());
-			_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
+			//_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
 			_renderManager.useProgram(DIRECTIONAL_LIGHT);
 			_collectables[i].draw();
 		}
@@ -254,7 +259,7 @@ void Game::render() {
 	MVMatrix = glm::translate(MVMatrix, _spline.point(_player.sPosition()[FWD]));
 	
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _skybox.scale());
-	_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
+	//_renderManager.updateGlobalMatrix(*_cameras[_chosenCamera], camMatrix);
 	_renderManager.useProgram(TEXTURE);
 	_skybox.draw();
 	glDepthMask(GL_TRUE);

@@ -62,7 +62,7 @@ class RenderManager {
 		void useProgram(FS shader);
 
 		/// \brief Apply Transformations, Update Uniforms
-		void applyTransformations(FS shader);
+		void sendUniformsToShaders(FS shader);
 
 	// MEMBERS
 	protected:

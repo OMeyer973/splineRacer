@@ -35,10 +35,10 @@ void RenderManager::useProgram(FS shader) {
             programList.normalProgram._program.use();
             break;
     }
-    applyTransformations(shader);
+    sendUniformsToShaders(shader);
 }
 
-void RenderManager::applyTransformations(FS shader)
+void RenderManager::sendUniformsToShaders(FS shader)
 {
     glm::mat4 lightMatrix = glm::transpose(_globalMatrix);
     glm::vec4 lightVector = glm::normalize(glm::vec4(1, 1, 1, 0) * lightMatrix);

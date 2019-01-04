@@ -138,7 +138,6 @@ void Menu::render() {
 				  MVMatrix = _menuItems[i].staticMatrix();
 				  _renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[i].scale());
 					_renderManager.useProgram(TEXTURE);
-					_renderManager.applyTransformations(TEXTURE);
 					_menuItems[i].draw();
 			}
 		}

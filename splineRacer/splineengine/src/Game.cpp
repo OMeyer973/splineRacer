@@ -7,7 +7,7 @@ namespace splineengine {
 Game::Game()
 	:
 	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
-	_spline(LEVEL_ENDLESS),
+	_spline("Endless"),
 	_gameMode(ENDLESS),
 	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, true, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f))),
 	_alien(GameObject(AssetManager::instance().models()["alien"], _spline, false, defaultPlayerPos, glm::vec3(.3f)), _player),
@@ -21,17 +21,17 @@ Game::Game()
 }
 
 
-Game::Game(int levelId)
+Game::Game(const std::string& levelName)
 	:
 	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
-	_spline(levelId),
+	_spline(levelName),
 	_gameMode(CLASSIC),
 	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, true, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f))),
-	_alien(GameObject(AssetManager::instance().models()["skybox"], _spline, false, defaultPlayerPos, glm::vec3(2.f)), _player),
+	_alien(GameObject(AssetManager::instance().models()["alien"], _spline, false, defaultPlayerPos, glm::vec3(2.f)), _player),
 	_finishLine(GameObject(AssetManager::instance().models()["finish_line"], _spline, false, glm::vec3(0.f), glm::vec3(1.f), glm::vec3(0.f)))
 {
 	// TODO - OK now ?
-	std::cout << "game from level constructor called " << std::endl;
+	std::cout << "game constructor from level caled : " << levelName << std::endl;
 	_cameras.emplace_back(new POVCamera());
 	_cameras.emplace_back(new TrackballCamera());
 	_chosenCamera = TRACKBALL_CAMERA;
@@ -57,10 +57,10 @@ GameObject Game::gameObjFromJson(nlohmann::json j) {
 }
 
 
-void Game::loadLevel(int levelId) {
+void Game::loadLevel(const std::string& levelName) {
 	// TODO : finish & polish, add decoration. load spline from JSON
 	std::string mapPath = Settings::instance().appPath().dirPath()
-		+ ("../../splineRacer/assets/levels/level" + std::to_string(levelId) +".map");
+		+ ("../../splineRacer/assets/levels/" + levelName + ".map");
 
 	if (debug) std::cout << "loading level from file : " << mapPath << std::endl;
 	std::ifstream mapStream(mapPath);
@@ -82,7 +82,7 @@ void Game::loadLevel(int levelId) {
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Game::loadLevel() {
+void Game::createLevel() {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
 

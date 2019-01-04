@@ -30,6 +30,8 @@ const int LEVELLOSE = 2;
 const int ENDLESSOVER = 3;
 const int EXITING = 4;
 
+// name of the 3D model of the player
+const std::string playerModelName = "plane";
 // how long is displayed the end screen before going back to the menu ?
 const float endScreenTime = 5.f;
 
@@ -42,7 +44,7 @@ class Game {
 	    Game();
 
 		/// \brief constructor with level name for loading level
-	    Game(int levelId);
+	    Game(const std::string& levelName);
 
 		/// \brief destructor
 		~Game();
@@ -60,9 +62,9 @@ class Game {
 
 		//METHODS
 		/// \brief creates a radom level
-		void loadLevel();
+		void createLevel();
 		/// \brief load the given level
-		void loadLevel(int levelId);
+		void loadLevel(const std::string& levelName);
 
 		/// \brief update called at each frame (for the physics)
 		void update();
@@ -121,9 +123,6 @@ class Game {
 	    std::vector<GameObject> _decorations;
 	    std::vector<Obstacle> _obstacles;
 	    std::vector<Collectable> _collectables;
-		// CONSTANTS
-		std::string _playerModelName = "plane";
-
 };
 
 }

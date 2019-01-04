@@ -35,8 +35,8 @@ class Spline {
 
         /// \brief random spline constructor with given number of anchors
 
-        /// \brief spline constructor from level name
-        Spline(int levelId);
+        /// \brief spline constructor from level name (loads json)
+        Spline(const std::string levelName);
 
         /// \brief spline Destructor
         ~Spline()

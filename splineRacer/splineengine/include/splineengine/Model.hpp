@@ -2,14 +2,15 @@
 #ifndef __MODEL__HPP
 #define __MODEL__HPP
 
-#include <iostream>
 #include <GL/glew.h>
-#include "Collider.hpp"
-#include <glimac/Geometry.hpp>
+
+#include <glimac/common.hpp>
 #include <glimac/FilePath.hpp>
 #include <glimac/SDLWindowManager.hpp>
-#include <glimac/common.hpp>
+#include <glimac/Geometry.hpp>
 #include <glimac/Program.hpp>
+
+#include <splineengine/Collider.hpp>
 #include <splineengine/Settings.hpp>
 #include <splineengine/common.hpp>
 #include <splineengine/Texture.hpp>

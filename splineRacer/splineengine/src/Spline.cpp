@@ -10,11 +10,11 @@ Spline::Spline()
 {}
 
 
-Spline::Spline(int levelId)
+Spline::Spline(const std::string levelName)
 	:_segmentLength(defaultSegmentLength)		
 {
 	// TODO THIS IS PLACEHOLDER UNTIL WE CAN LOAD A SPLINE FROM FILE
-	// if (levelId == LEVEL_ENDLESS) {
+	// if (levelId == "Endless") {
 		glm::vec3 tmpAnchor(1.f,1.f,1.f);
 		_anchors.push_back(tmpAnchor);
 	    for (size_t i=1; i<defaultAnchorsNb; ++i) {

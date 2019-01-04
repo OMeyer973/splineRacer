@@ -26,7 +26,7 @@ void Menu::init() {
 
 	//Pushing extruded hexagon
 	_menuItems.push_back(GameObject(
-		assetManager.models()["frontmenu"], 0, true,
+		assetManager.models()["frontmenu"],Spline(),true,
 		glm::vec3(0.f),
 		glm::vec3(3.5f),
 		glm::vec3(0.f)
@@ -35,9 +35,9 @@ void Menu::init() {
 	//pushing pannels to chose level -maybe change name of model to be more specific
 	for(int i =0; i<4; i++){
 		_menuItems.push_back(GameObject(
-			assetManager.models()["menu"],0,false,
+			assetManager.models()["menu"],Spline(),false,
 			glm::vec3(0.f,-4 + i*2.f,3.8f),
-			glm::vec3(.25f),
+			glm::vec3(0.25f),
 			glm::vec3(0.f)
 			//glm::vec3(0.f,-(0.5f + (i-1)*0.2f), 0.f)
 			//glm::vec3(0.f,-(-10.f + i*10.f),0.f)
@@ -45,7 +45,7 @@ void Menu::init() {
 	}
 	//pushing skybox
 	_skybox.push_back(GameObject(
-		assetManager.models()["skybox"], 0,  true,
+		assetManager.models()["skybox"], Spline(),  true,
 		glm::vec3(0.f),
 		glm::vec3(100.f),
 		glm::vec3(0.f)
@@ -66,14 +66,18 @@ Menu::~Menu(){
 }
 
 void Menu::update() {
+	float dt = Settings::instance().deltaTime();
+	// ^utilise ça pour cotrôler tes vitesses de ritation / déplacement
+
 
 	// for(float i =1; i< _menuItems.size();i++){
 	// 	_menuItems[i].scale() = glm::vec3(.01f);
 	// }
 
+
 	//if a move to a left or right pannel is detected, then smooth camera turn around
 	if(isRotatingHorizontally() ){
-		_rotationAngle += (1 * _rotationDirection);
+		_rotationAngle += (_rotationDirection);
 		rotateHorizontally( (6 * _rotationDirection) );
 		if( _rotationAngle % 10 == 0){
 			_rotationAngle = 0;
@@ -83,7 +87,7 @@ void Menu::update() {
 	//if a move to chose a different level is detected, then smooth transition to move pannels up or down
 	if(isRotatingVertically()){
 		for(int i = 0;i<_levels.size()+1;i++){
-			_menuItems[i+1].sPosition() += glm::vec3(0.f,(0.4f * _rotationDirection),0.f);
+			_menuItems[i+1].sPosition() += 0.4f * _rotationDirection * upVec;
 		}
 		//std::cout << _menuItems[1].sPosition() << std::endl;
 		//Used to stop the movement from up to down and down to up
@@ -113,7 +117,7 @@ void Menu::render() {
 
 		glm::mat4 MVMatrix =  _skybox[0].staticMatrix();
 
-		//std::cout<< getState() << std::endl;
+		//std::cout<< selectedMenu() << std::endl;
 		//Draw _skybox
 		glDepthMask(GL_FALSE);
 		//MVMatrix = camMatrix *  _skybox[0].matrix();
@@ -143,43 +147,37 @@ void Menu::render() {
 		}
 }
 
-void Menu::moveToPannel(const int pannelState) {
+void Menu::changePannel(const int pannelState) {
 	_rotationDirection = -pannelState;
 
-	if( (_selectedMenu + pannelState) <0 ){
+	if((_selectedMenu + pannelState) < 0) {
 		_selectedMenu +=5;
-	}else{
+	} else {
 		_selectedMenu += pannelState;
 	}
-	if(getState() == "Play"){
-		_displayLevels = true;
-	} else {
+	if(selectedMenu() != "Play") {
 		_displayLevels = false;
 	}
 
 	_isRotatingHorizontally = true;
 }
 
-std::string Menu::getState(){
-	return _menus[abs(_selectedMenu%6)];
-}
-
-void Menu::rotateHorizontally(const float dx){
+void Menu::rotateHorizontally(const float dx) {
 	_cameras[_chosenCamera]->rotateLeft(dx);
 }
 
-void Menu::moveToLevel(const int lvlUpOrDown){
+void Menu::changeLevel(const int lvlUpOrDown) {
 
-	if( (_selectedLevel  -lvlUpOrDown) < 0 ){
+	if((_selectedLevel  -lvlUpOrDown) < 0) {
 		_selectedLevel = 0;
 		_isRotatingVertically = false;
-	}else if( (_selectedLevel -lvlUpOrDown > (_levels.size()-1) ) ){
+	} else if ((_selectedLevel -lvlUpOrDown > (_levels.size()-1))) {
 
-		_selectedLevel = _levels.size()-1 ;
+		_selectedLevel = _levels.size() - 1;
 		_isRotatingVertically = false;
-	}else{
-	 	_selectedLevel+= -lvlUpOrDown;
-		std::cout << "Level : " << getSelectedLevel() << " Selected" <<  std::endl;
+	} else {
+	 	_selectedLevel += -lvlUpOrDown;
+		std::cout << "Level : " << selectedLevel() << " Selected" <<  std::endl;
 		_rotationDirection = -lvlUpOrDown;
 		_isRotatingVertically = true;
 	}

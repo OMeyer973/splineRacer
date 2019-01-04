@@ -9,11 +9,6 @@
 // print debug messages ?
 const bool debug = true;
 
-// special level ID to identif the endless level
-const int LEVEL_ENDLESS = 0;
-// number of levels (including the endless level)
-const uint NUMBER_OF_LEVELS = 2;
-
 // directions for spline-space vectors
 const int FWD = 0;
 const int LEFT = 1; 

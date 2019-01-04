@@ -1,3 +1,4 @@
+#include <iostream>
 #include "splineengine/Model.hpp"
 
 namespace splineengine {

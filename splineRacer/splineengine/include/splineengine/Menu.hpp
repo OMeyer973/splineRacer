@@ -39,25 +39,32 @@ class Menu {
 
 		void moveCameraX(const float dx);
 
-		void moveToPannel(const int pannelState);
+		void changePannel(const int pannelState);
 
-		void moveToLevel(const int lvlUpOrDown);
+		/// \brief select the next or previous level
+		/// \param lvlUpOrDown == + or - 1
+		void changeLevel(const int lvlUpOrDown);
 
 		void rotateHorizontally(const float dx);
 
 		void rotateVertically(const float dx);
 
-		void setDisplayLevels(){_displayLevels = true;}
+		/// \brief activate the display of the level
+		void displayLevels() { _displayLevels = true; }
+		/// \brief deactivate the display of the level
+		void hideLevels() { _displayLevels = false; }
 
-		bool getDisplayLevels(){return _displayLevels;}
+		bool isDisplayingLevels() { return _displayLevels; }
 
-		std::string getState();
+		/// \brief return the name of the currently selected menu
+		std::string selectedMenu() { return _menus[abs(_selectedMenu % 6)]; }
 
-		bool isRotatingHorizontally() { return _isRotatingHorizontally;}
-		bool isRotatingVertically(){return _isRotatingVertically;};
+		/// \brief return the name of the currently selected level
+		std::string selectedLevel() { return _levels[_selectedLevel]; }
 
-		std::string getSelectedMenu(){return _menus[_selectedMenu];};
-		std::string getSelectedLevel(){return _levels[_selectedLevel];};
+		bool isRotatingHorizontally() { return _isRotatingHorizontally; }
+		bool isRotatingVertically() { return _isRotatingVertically; }
+
 	// MEMBERS
 	private:
 		RenderManager _renderManager;
@@ -76,14 +83,14 @@ class Menu {
 		int _tickVertical;
 
 		Player _player;
-  	std::vector<GameObject> _menuItems;
+	  	std::vector<GameObject> _menuItems;
 		std::vector<GameObject> _skybox;
 		std::string _frontMenuModelName = "frontmenu";
 
 		int _selectedMenu;
 		int _selectedLevel;
-		std::vector<std::string> _menus = {"Play","Scores","Settings","Rules","Credits","Quit"};
-		std::vector<std::string> _levels = {"Easy", "Normal","Hard","Infinite"};
+		std::vector<std::string> _menus = { "Play","Scores","Settings","Rules","Credits","Quit"};
+		std::vector<std::string> _levels = { "Easy", "Normal","Hard","Endless" };
 
 
 };

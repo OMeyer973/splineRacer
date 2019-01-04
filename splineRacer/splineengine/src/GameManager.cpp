@@ -18,7 +18,7 @@ bool isMouseButtonPressed(uint32_t button) {
 }
 
 void GameManager::handleEvent(SDL_Event e) {
-	if(e.type == SDL_QUIT)
+	if (e.type == SDL_QUIT)
 		_exiting = true; // Leave the game loop after this iteration
 	else {
 		switch (_activeScreen) {
@@ -39,44 +39,54 @@ void GameManager::doMenuEvent(SDL_Event e) {
 	// TODO
 	switch (e.type) {
        case SDL_KEYDOWN:
-	        if(e.key.keysym.sym==SDLK_SPACE) {
+	        if (e.key.keysym.sym==SDLK_SPACE) {
 	            std::cout << "Space " << std::endl;
-							goToGame();
+				goToGame();
 	        }
-	        if(e.key.keysym.sym==SDLK_z ) {
-						if( !_menu.isRotatingHorizontally() && !_menu.isRotatingVertically() ){
-							_menu.moveToLevel(1);
-						}
-	            //_levelId = (_levelId + 1) % NUMBER_OF_LEVELS;
-	            //std::cout << "level id : " << _levelId << std::endl;
-	        }
-	        if(e.key.keysym.sym==SDLK_s  ) {
-						if( !_menu.isRotatingHorizontally() && !_menu.isRotatingVertically() ){
-							//_levelId = (_levelId - 1) % NUMBER_OF_LEVELS;
-	            //std::cout << "level id : " << _levelId << std::endl;
-							_menu.moveToLevel(-1);
-						}
-
-	        }
-					if (e.key.keysym.sym==SDLK_q){ //going left
-						if(!_menu.isRotatingHorizontally() ){
-							_menu.moveToPannel(-1);
-						}
-				 }
-				 if (e.key.keysym.sym==SDLK_d){//going right
-					 if(!_menu.isRotatingHorizontally() ){
-						_menu.moveToPannel(1);
-					}
-				 }
-				 if(e.key.keysym.sym == SDLK_RETURN && _menu.getState() == "Play"){
-					 _menu.setDisplayLevels();
-				 }
-				 // if(e.key.keysym.sym == SDLK_RETURN && _menu.getState()== "Play" && _menu.getDisplayLevels() ){
-					//  goToGame();
-				 // }
-				 if(e.key.keysym.sym == SDLK_RETURN && _menu.getState() == "Quit"){
-					_exiting = true;
+	        if (e.key.keysym.sym==SDLK_z ) {
+				if (!_menu.isRotatingHorizontally() && !_menu.isRotatingVertically()){
+					_menu.changeLevel(1);
 				}
+	            //_levelName = (_levelName + 1) % NUMBER_OF_LEVELS;
+	            //std::cout << "level id : " << _levelName << std::endl;
+	        }
+	        if (e.key.keysym.sym==SDLK_s) {
+				if (!_menu.isRotatingHorizontally() && !_menu.isRotatingVertically()){
+					_menu.changeLevel(-1);
+					//_levelName = (_levelName - 1) % NUMBER_OF_LEVELS;
+		            //std::cout << "level id : " << _levelName << std::endl;
+				}
+	        }
+			if (e.key.keysym.sym==SDLK_q) { //going left
+				if (!_menu.isRotatingHorizontally()) {
+					_menu.changePannel(-1);
+				}
+			}
+			if (e.key.keysym.sym==SDLK_d){//going right
+				if (!_menu.isRotatingHorizontally()){
+					_menu.changePannel(1);
+				}
+			}
+			if (_menu.selectedMenu() == "Play") {
+			 	
+			 	if (_menu.isDisplayingLevels() && e.key.keysym.sym == SDLK_RETURN) {
+			 		_levelName = _menu.selectedLevel();
+			 		goToGame();
+			 	}
+			 	if (e.key.keysym.sym == SDLK_RETURN) {
+					_menu.displayLevels();
+				}
+			 	if (e.key.keysym.sym == SDLK_ESCAPE) {
+					_menu.hideLevels();
+			 	}
+			
+			}
+			 // if (e.key.keysym.sym == SDLK_RETURN && _menu.selectedMenu()== "Play" && _menu.selectedLevel()) {
+				//  goToGame();
+			 // }
+			if (e.key.keysym.sym == SDLK_RETURN && _menu.selectedMenu() == "Quit") {
+				_exiting = true;
+			}
 	        break;
 	}
 }
@@ -96,10 +106,10 @@ void GameManager::doGameEvent(SDL_Event e) {
 	        if (e.key.keysym.sym==SDLK_s){//going down
 	            _game->player().goingUp() = -1.f;
 	        }
-	        if(e.key.keysym.sym==SDLK_ESCAPE) {
+	        if (e.key.keysym.sym==SDLK_ESCAPE) {
 				goToPause();
 	        }
-	        if(e.key.keysym.sym==SDLK_SPACE) {
+	        if (e.key.keysym.sym==SDLK_SPACE) {
 	            goToMenu();
 	        }
 
@@ -148,10 +158,10 @@ void GameManager::doPauseEvent(SDL_Event e) {
 	// TODO
 	switch (e.type) {
        case SDL_KEYDOWN:
-	        if(e.key.keysym.sym==SDLK_ESCAPE) {
+	        if (e.key.keysym.sym==SDLK_ESCAPE) {
 				goToGame();
 			}
-	        if(e.key.keysym.sym==SDLK_SPACE) {
+	        if (e.key.keysym.sym==SDLK_SPACE) {
 				goToMenu();
 			}
 			break;
@@ -191,12 +201,12 @@ void GameManager::initGame() {
 
 	// TODO : add a parameter to loadLevel function in order to load a given level
 	// (but keep loadLevel() without parameter to load the infinite level)
-	if (_levelId == LEVEL_ENDLESS) {
+	if (_levelName == "Endless") {
 		_game = std::unique_ptr<Game>(new Game());
-		_game->loadLevel();
+		_game->createLevel();
 	} else {
-		_game = std::unique_ptr<Game>(new Game(_levelId));
-		_game->loadLevel(_levelId);
+		_game = std::unique_ptr<Game>(new Game(_levelName));
+		_game->loadLevel(_levelName);
 	}
 }
 

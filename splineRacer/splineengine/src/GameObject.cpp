@@ -6,16 +6,30 @@
 namespace splineengine {
 
 GameObject::GameObject (
-    const Model& model, const Spline& spline, const bool isStatic, const Transform transform)
+    const Model& model, const Spline& spline, const bool isStatic, 
+    const Transform& transform, 
+    //const uint animId
+    const AnimationList& animations
+    )
     :_model(model), _spline(spline), _isStatic(isStatic),
-    _sPosition(transform._sPosition), _scale(transform._scale), _rotation(transform._rotation)
+    _sPosition(transform._sPosition), _scale(transform._scale), _rotation(transform._rotation),
+    _animations(std::move(animations))
 {
-    // std::cout << "GameObject constructor " << std::endl;
+    if (_animations.size() > 0 && _isStatic == true) {
+        std::cerr << "warning : object declared as static but constructor has been callen with animations ids" << std::endl;
+        std::cerr << "  -> object will not move." << std::endl;
+    }
 };
+
+
+void GameObject::addAnimation(uint animId) {
+    _animations.emplace_back(3);
+}
 
 GameObject::GameObject(const GameObject& g)
     :_model(g._model), _spline(g._spline), _isStatic(g._isStatic),
-    _sPosition(g._sPosition), _scale(g._scale), _rotation(g._rotation)
+    _sPosition(g._sPosition), _scale(g._scale), _rotation(g._rotation),
+    _animations(std::move(g._animations)) // list copy
 {};
 
 const glm::mat4 GameObject::matrix() {
@@ -56,6 +70,58 @@ const glm::mat4 GameObject::staticMatrix() {
     return objMatrix;
 }
 
+void GameObject::update() {
+    const float t = Settings::instance().time(); 
+    const float dt = Settings::instance().deltaTime();
+    if (_animations.size()>0)
+ 
+    // if (debug) std::cout << "animations size" << _animations.size() << std::endl; 
+    for (AnimationList::const_iterator it = _animations.begin(); it != _animations.end(); ++it) {
+        switch (*it) {
+            case ROT_CONST_FWD :
+                _rotation[FWD] += rotConstSpeed * dt;
+                break;
+            case ROT_CONST_LEFT :
+                _rotation[LEFT] += rotConstSpeed * dt;
+                break;
+            case ROT_CONST_UP :
+                _rotation[UP] += rotConstSpeed * dt;
+                break;
+            case MOVE_SIN_LEFT : //using += to take into acount the original position though Amplitude need to be adjusted (might be a bit off)
+                _sPosition[LEFT] += moveSinAdjustedAmp * dt * (glm::sin(t * moveSinFreq * 2.f*M_PI));
+                break;
+            case MOVE_SIN_UP : //using += to take into acount the original position though Amplitude need to be adjusted (might be a bit off)
+                _sPosition[UP] += moveSinAdjustedAmp * dt * (glm::sin(t * moveSinFreq * 2.f*M_PI));
+                break;
+            case MOVE_CONST_LEFT :
+                _sPosition[LEFT] += moveConstSpeed * dt;
+                break;
+            case MOVE_CONST_RIGHT :
+                _sPosition[LEFT] -= moveConstSpeed * dt;
+                break;
+            case MOVE_CONST_BACK :
+                _sPosition[FWD] -= moveConstSpeed * dt;
+                break;
+            case MOVE_CONST_FWD :
+                _sPosition[FWD] += moveConstSpeed * dt;
+                break;
+            case SCALE_SIN :
+                _scale += scaleSinAdjustedAmp * dt * (glm::sin(t * scaleSinFreq * 2.f * M_PI));
+                break;
+        };
+    }
+}
+
+
+void GameObject::draw() const {
+    glBindTexture(GL_TEXTURE_2D, _model.textureID());
+    glBindVertexArray(_model.VAO());
+    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _model.IBO());
+    glDrawElements(GL_TRIANGLES, _model.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 
 bool GameObject::intersect(GameObject& other) {
     float selfScale = (glm::abs(_scale.x) + glm::abs(_scale.y) + glm::abs(_scale.z)) / 3.f;
@@ -77,15 +143,6 @@ void GameObject::collideWith(GameObject& other) {
         doCollisionWith(other);
         other.doCollisionWith(*this);
     }
-}
-
-void GameObject::draw() const {
-    glBindTexture(GL_TEXTURE_2D, _model.textureID());
-    glBindVertexArray(_model.VAO());
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _model.IBO());
-    glDrawElements(GL_TRIANGLES, _model.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
-    glBindVertexArray(0);
-    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 }

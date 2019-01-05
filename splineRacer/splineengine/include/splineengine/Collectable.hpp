@@ -35,7 +35,7 @@ class Collectable : public GameObject {
         };
 
         /// \brief Animate collectable 
-        void update(const float dt, const float pos, const glm::vec3 playerPos);
+        void update(const glm::vec3 playerPos);
 
         /// brief
         const bool isTaken() const {

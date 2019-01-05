@@ -41,6 +41,7 @@ void Player::updatePosition(const float dt) {
 }
 
 void Player::update() {
+	GameObject::update();
 	const float dt = Settings::instance().deltaTime(); 
 	_sInput[LEFT] = glm::clamp(_sInput[LEFT], -1.f, 1.f);
 	_sInput[UP] = glm::clamp(_sInput[UP], -1.f, 1.f);
@@ -51,6 +52,7 @@ void Player::update() {
 	if (_collisionCooldownTimer > 0)
 		_collisionCooldownTimer -= dt;
 
+	std::cout << std::endl;
 	_propellerRotationAngle -= propellerRotationSpeed;
 }
 

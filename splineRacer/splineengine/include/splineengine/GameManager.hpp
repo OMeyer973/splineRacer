@@ -18,9 +18,9 @@
 namespace splineengine {
 
 // grouping keys by acion
-struct keyGroup {
+struct KeyGroup {
 	public:
-		keyGroup(std::unordered_set<SDLKey> keys)
+		KeyGroup(std::unordered_set<SDLKey> keys)
 			:_keys(keys)
 		{};
 		bool has(const SDLKey key) const { return _keys.find(key) != _keys.end(); }
@@ -30,18 +30,18 @@ struct keyGroup {
 
 // keys and the actions they trigger
 struct Input {
-	typedef std::unordered_set<SDLKey> keylist;
+	typedef std::unordered_set<SDLKey> Keylist;
 	public: // all public for ease of use but all const so no problem
-		const keyGroup up 				= keyGroup(keylist { SDLK_z, SDLK_UP } ); 
-		const keyGroup left 			= keyGroup(keylist { SDLK_q, SDLK_LEFT } ); 
-		const keyGroup down 			= keyGroup(keylist { SDLK_s, SDLK_DOWN } ); 
-		const keyGroup right 			= keyGroup(keylist { SDLK_d, SDLK_RIGHT } );
-		const keyGroup select 			= keyGroup(keylist { SDLK_RETURN, SDLK_SPACE } );
-		const keyGroup back 			= keyGroup(keylist { SDLK_ESCAPE, SDLK_BACKSPACE } );
-		const keyGroup togglePause 		= keyGroup(keylist { SDLK_ESCAPE, SDLK_p } );
-		const keyGroup cameraForward 	= keyGroup(keylist { SDLK_KP_PLUS, SDLK_PLUS } );
-		const keyGroup cameraBackward 	= keyGroup(keylist { SDLK_KP_MINUS, SDLK_MINUS } );
-		const keyGroup toggleCamera 	= keyGroup(keylist { SDLK_c } );
+		const KeyGroup up 				= KeyGroup(Keylist { SDLK_z, SDLK_UP } ); 
+		const KeyGroup left 			= KeyGroup(Keylist { SDLK_q, SDLK_LEFT } ); 
+		const KeyGroup down 			= KeyGroup(Keylist { SDLK_s, SDLK_DOWN } ); 
+		const KeyGroup right 			= KeyGroup(Keylist { SDLK_d, SDLK_RIGHT } );
+		const KeyGroup select 			= KeyGroup(Keylist { SDLK_RETURN, SDLK_SPACE } );
+		const KeyGroup back 			= KeyGroup(Keylist { SDLK_ESCAPE, SDLK_BACKSPACE } );
+		const KeyGroup togglePause 		= KeyGroup(Keylist { SDLK_ESCAPE, SDLK_p } );
+		const KeyGroup cameraForward 	= KeyGroup(Keylist { SDLK_KP_PLUS, SDLK_PLUS } );
+		const KeyGroup cameraBackward 	= KeyGroup(Keylist { SDLK_KP_MINUS, SDLK_MINUS } );
+		const KeyGroup toggleCamera 	= KeyGroup(Keylist { SDLK_c } );
 };
 
 const Input input;

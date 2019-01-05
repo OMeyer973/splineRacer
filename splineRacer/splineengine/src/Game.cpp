@@ -4,9 +4,9 @@
 
 namespace splineengine {
 
-///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CONSTRUCTORS
-///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Game::Game()
 	:
@@ -90,9 +90,9 @@ Game::~Game() {
 }
 
 
-///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // LEVEL LOADING & CONSTRUCTION STUFF
-///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 GameObject Game::gameObjFromJson(nlohmann::json j) {
 	AssetManager& assetManager = AssetManager::instance();
@@ -135,12 +135,13 @@ void Game::loadLevel(const std::string& levelName) {
 	AssetManager& assetManager = AssetManager::instance();
 	for (float i=-1; i<_spline.length()+1; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
-			assetManager.models()["prism"], _spline, true,
+			assetManager.models()["prism"], _spline, false,
 			Transform(
 				glm::vec3(i, 0, 0),
 				glm::vec3((2.f*glm::sin(i)) + 4.f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
-			)
+			),
+			{ROT_CONST_FWD, SCALE_SIN}
 		)));
 	}
 
@@ -183,18 +184,20 @@ void Game::generateLevel(const float start, const float finish) {
 						glm::vec3(i+j, -(i+k), 10),
 						glm::vec3(3.f),
 						glm::vec3(0)
-					)
+					),
+					{ ROT_CONST_UP }
 				)));
 			}
 		}
 		for (float j = 0; j < 6.28; j+=.3f) {
 			_obstacles.push_back(Obstacle(GameObject(
-				assetManager.models()["prism"], _spline, true,
+				assetManager.models()["prism"], _spline, false,
 				Transform(
 					glm::vec3(i-5, j, 15), 
 					glm::vec3(3),
 					glm::vec3(j, -20*j, 3*j)
-				)
+				),
+				{ MOVE_CONST_LEFT, ROT_CONST_LEFT, MOVE_SIN_UP }
 			)));
 		}
 	}
@@ -207,9 +210,9 @@ void Game::generateLevel(const float start, const float finish) {
 }
 
 
-///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // RENDER & UPDATE LOOPs
-///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Game::update() {
 	// TODO
@@ -224,9 +227,9 @@ void Game::update() {
 	// }
 
 	// Check for collisions with obstacles
-	checkPlayerCollisionWithObjList(_obstacles);
+	updateObstacleList(_obstacles);
 	// Check for collisions with collectables
-	checkPlayerCollisionWithObjList(_collectables);
+	updateCollectableList(_collectables);
 
 	// Update camera
 	if (_chosenCamera == TRACKBALL_CAMERA) {
@@ -329,9 +332,9 @@ void Game::render() {
 }
 
 
-///////////////////////////////////////
-// OTHER FUNCTIONS
-///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SMALL FUNCTIONS
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 void Game::moveCameraX(const float dx) {
@@ -366,16 +369,36 @@ void Game::handleCollision(T& firstObject, U& secondObject) {
 	}
 }
 
-template <typename T>
-void Game::checkPlayerCollisionWithObjList (std::list<T>& objList) {
-	for (typename std::list<T>::iterator it = objList.begin(); it != objList.end(); ++it) {
+void Game::updateObstacleList (std::list<Obstacle>& objList) {
+	for (typename std::list<Obstacle>::iterator it = objList.begin(); it != objList.end(); ++it) {
 		// if the object is near enough to the player : check collision
 		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxCollideDistance) {
+			it->update();
 			handleCollision(_player, *it);
 		// else, if the object is in front of the player, discard all the next objects (lists are ordered)
 		} else if (it->sPosition()[FWD] > _player.sPosition()[FWD]) { 
 			break;
 		} 
+	}
+}
+
+void Game::updateCollectableList (std::list<Collectable>& objList) {
+	typename std::list<Collectable>::iterator it = objList.begin();
+		while (it != objList.end()) {
+		// if the object is near enough to the player : check collision
+		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxCollideDistance) {
+			it->update(_player.sPosition());
+			handleCollision(_player, *it);
+		// else, if the object is in front of the player, discard all the next objects (lists are ordered)
+		} else if (it->sPosition()[FWD] > _player.sPosition()[FWD]) { 
+			break;
+		}
+
+		if (it->isHidden()) {
+			objList.erase(it++);
+		} else {
+			++it;
+		}
 	}
 }
 

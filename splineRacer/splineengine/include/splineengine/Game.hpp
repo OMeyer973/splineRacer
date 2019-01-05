@@ -110,11 +110,13 @@ class Game {
 		template <typename T>
 		void renderObjList(std::list<T>& objList);
 		
-		/// \brief check if the the given list has element colliding with the player 
+		/// \brief update the obstacles physics, check for collisions with player 
 		///\brief and handle the collision behaviour  
-		// TODO : replace template with gameobject polymorphism or check the type or idk ... 
-		template <typename T>
-		void checkPlayerCollisionWithObjList(std::list<T>& objList);
+		void updateObstacleList(std::list<Obstacle>&  objList);
+
+		/// \brief update the obstacles physics, check for collisions with player 
+		///\brief and handle the collision behaviour  
+		void updateCollectableList(std::list<Collectable>&  objList);
 
 		// MEMBERS
 		// gamemodes : CLASSIC, ENDLESS

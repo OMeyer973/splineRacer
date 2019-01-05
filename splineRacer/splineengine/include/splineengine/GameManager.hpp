@@ -7,6 +7,8 @@
 #include <memory>
 #include <GL/glew.h>
 #include <glimac/SDLWindowManager.hpp>
+#include <glimac/Plane.hpp>
+#include <splineengine/Text.hpp>
 
 
 #include "Settings.hpp"
@@ -48,10 +50,10 @@ const Input input;
 	
 // IDs of game screens
 const int MENU = 0;
-const int GAME = 1; 
+const int GAME = 1;
 const int PAUSE = 2;
 
-/// \brief class wich manages the whole program 
+/// \brief class wich manages the whole program
 class GameManager {
 	// SINGLETON CONSTRUCTORS - DESTRUCTORS
 	private:
@@ -91,7 +93,7 @@ class GameManager {
 
 		// handle an event for all the screens
 		void handleEvent(SDL_Event e);
-		
+
 	private:
 		/// \brief do the given event when in the MENU screen
 		void doMenuEvent(SDL_Event e);

@@ -2,18 +2,24 @@
 
 namespace splineengine {
 
-unsigned int Light::_lightsCount = 0;
-
-Light::Light(const bool isPoint,
+Light::Light(const unsigned int id,
+			 const bool isPoint,
 			 const glm::vec3 &posOrDir,
 			 const glm::vec3 &Kd,
 			 const glm::vec3 &Ks,
 			 const float &shininess, 
 			 const glm::vec3 &lightIntensity)
-	:_id(_lightsCount)
+	:_id(id)
 {
 	_properties = {isPoint, posOrDir, Kd, Ks, shininess, lightIntensity};
-	_lightsCount++;
+}
+
+Light::Light(const Light& light)
+	:_properties(light._properties),
+	_id(light._id)
+{
+	// if (debug) std::cout << "Light COPY Constructor" << std::endl;
+	// if (debug) std::cout << "ID: " << _id << std::endl;
 }
 
 Light::~Light()

@@ -1,4 +1,6 @@
 #pragma once
+#ifndef __PLANE__HPP
+#define __PLANE__HPP
 
 #include <vector>
 
@@ -9,12 +11,12 @@ namespace glimac {
 class Plane
 {
     // Allocates and constructs the data (implementation in the .cpp)
-    void build();
+
 
 public:
-    // Constructor: allocates the data array and builds the vertex attributes
     Plane() { build (); }
-
+    // Constructor: allocates the data array and builds the vertex attributes
+    void build();
     // Returns the pointer to the data
     const Vertex3D* getVertexBuffer() const {
         return &m_VertexBuffer[0];
@@ -51,3 +53,5 @@ private:
 };
 
 }
+
+#endif

@@ -147,6 +147,8 @@ void Game::loadLevel(const std::string& levelName) {
 
 	_finishLine.sPosition() = glm::vec3(_spline.length(), 0.f, 0.f);
 
+	_renderManager.initGameLights();
+
 	glEnable(GL_DEPTH_TEST);
 }
 
@@ -206,6 +208,8 @@ void Game::generateLevel(const float start, const float finish) {
 	orderObjListFwd(_collectables);
 	orderObjListFwd(_decorations);
 
+	_renderManager.initGameLights();
+
 	glEnable(GL_DEPTH_TEST);
 }
 
@@ -238,11 +242,11 @@ void Game::update() {
 
 	// ADD LENGTH TO THE SPLINE IF NECESSARY
 	if (_gameMode == ENDLESS && _spline.length() - _player.sPosition()[FWD] < maxRenderDistance) {
-			float oldLength = _spline.length();
-			while (_spline.length() < oldLength + maxRenderDistance) {
-				_spline.addAnchor();
-			}
-			generateLevel(oldLength, _spline.length());
+		float oldLength = _spline.length();
+		while (_spline.length() < oldLength + maxRenderDistance) {
+			_spline.addAnchor();
+		}
+		generateLevel(oldLength, _spline.length());
 	}
 
 
@@ -283,7 +287,9 @@ void Game::render() {
 	glm::mat4 MVMatrix = _renderManager.splineCamMatrix();
 
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _player.scale());
+
 	_renderManager.updateGlobalMatrix(); // celui là est nécéssaire !
+	_renderManager.updateGameLights();
 
 	// Draw the player (hidden in Point Of View Camera)
 	if (_chosenCamera != POV_CAMERA) {

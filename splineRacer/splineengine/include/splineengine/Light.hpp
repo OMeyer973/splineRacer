@@ -25,24 +25,34 @@ class Light {
 	public:
 		Light();
 
-		Light(const bool isPoint,
+		Light(const unsigned int id,
+			  const bool isPoint,
 			  const glm::vec3 &posOrDir,
 			  const glm::vec3 &Kd,
 			  const glm::vec3 &Ks,
 			  const float &shininess, 
 			  const glm::vec3 &lightIntensity);
 
+		Light(const Light& light);
+
 		~Light();
 
 		void sendLightShader(const MultiLightProgram &multiLightProgram, const std::string &uniformArrayName) const;
 		
-		// CONST GETTER
+		// CONST GETTERS
+
 		/// \brief get PosOrDir of light
 		const glm::vec3& posOrDir() const {
 			return _properties._posOrDir;
 		}
 
-		// NON CONST GETTER (setter)
+		/// \brief get id
+		const unsigned int& id() const {
+			return _id;
+		}
+
+		// NON CONST GETTERS (setter)
+		
 		/// \brief set PosOrDir of light
 		glm::vec3& posOrDir() {
 			return _properties._posOrDir;
@@ -51,7 +61,6 @@ class Light {
 	private	:
 		Properties _properties;
 		unsigned int _id;
-		static unsigned int _lightsCount;
 };
 
 }

@@ -41,7 +41,7 @@ void Menu::init() {
 		_menuItems.push_back(GameObject(
 			assetManager.models()["menu"],Spline(),false,
 			Transform(
-				glm::vec3(0.f,-4 + i*2.f,3.8f),
+				glm::vec3(0.f, -4 + i*2.f, 2.4f),
 				glm::vec3(0.25f),
 				glm::vec3(0.f)
 			)
@@ -65,6 +65,8 @@ void Menu::init() {
 	_menuItems[1].model().setTexture("Scores.png");
 	_menuItems[2].model().setTexture("QuitToMenu.png");
 	_menuItems[0].model().setTexture("Save.png");
+
+	_renderManager.initMenuLights();
 
 	glEnable(GL_DEPTH_TEST);
 }
@@ -118,17 +120,20 @@ void Menu::update() {
 	// TODO
 }
 
-
 void Menu::render() {
 	// TODO
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glm::mat4 MVMatrix =  _skybox[0].staticMatrix();
+	// _renderManager.updateMVMatrix(*_cameras[_chosenCamera], glm::mat4(1), glm::vec3());
+	_renderManager.updateGlobalMatrix();
+	_renderManager.updateMenuLights();
+
+	glm::mat4 MVMatrix = _skybox[0].staticMatrix();
 
 	//std::cout<< selectedMenu() << std::endl;
-	//Draw _skybox
+	// Draw _skybox
 	glDepthMask(GL_FALSE);
-	//MVMatrix = camMatrix *  _skybox[0].matrix();
+	// MVMatrix = camMatrix *  _skybox[0].matrix();
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _skybox[0].scale());
 	_renderManager.useProgram(TEXTURE);
 	_skybox[0].draw();
@@ -139,7 +144,7 @@ void Menu::render() {
 	//glDepthFunc(GL_LEQUAL);
 	// Update MVMatrix according to the object's transformation
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[0].scale());
-	_renderManager.useProgram(TEXTURE);
+	_renderManager.useProgram(MULTI_LIGHT);
 
 	_menuItems[0].draw();
 
@@ -148,7 +153,7 @@ void Menu::render() {
 		for(float i=1; i< _menuItems.size();i++){
 			MVMatrix = _menuItems[i].staticMatrix();
 			_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[i].scale());
-			_renderManager.useProgram(TEXTURE);
+			_renderManager.useProgram(MULTI_LIGHT);
 			_menuItems[i].draw();
 		}
 	}

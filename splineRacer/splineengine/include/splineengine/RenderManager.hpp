@@ -13,16 +13,16 @@
 
 namespace splineengine {
 
-/// \brief represents a object in the game, with a position and a set of colliders
+/// \brief This class is used to handle shader choice and matrices calculations
 class RenderManager {
 	// METHODS
 	public:
 		// CONSTRUCTORS - DESTRUCTORS
 
 		/// \brief Default constructor
-		RenderManager()
-		{
+		RenderManager() {
 			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 200.f);
+			_lightsCount = 0;
 		};
 
 		RenderManager(Camera &camera) {
@@ -32,6 +32,9 @@ class RenderManager {
 			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 200.f);
 			_MVMatrix = glm::translate(camera.getViewMatrix(), -5.f*fwdVec);
 			_normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
+			_globalMatrix = _MVMatrix;
+			
+			_lightsCount = 0;
 
 			if (debug) std::cout << "done." << std::endl;
 		};
@@ -46,6 +49,8 @@ class RenderManager {
 		/// \brief Update _globalMatrix
 		void updateGlobalMatrix();
 
+
+		// CONST GETTERS
 		/// \brief get _MVMatrix
 		const glm::mat4& MVMatrix() const {
 			return _MVMatrix;
@@ -67,6 +72,12 @@ class RenderManager {
 		}
 
 		/// \brief get _splineCamMatrix
+		const unsigned int& lightsCount() const {
+			return _lightsCount;
+		}
+
+		// NON CONST GETTERS (to use as setters)
+		/// \brief get _splineCamMatrix
 		glm::mat4& splineCamMatrix() {
 			return _splineCamMatrix;
 		}
@@ -80,11 +91,25 @@ class RenderManager {
 		/// \brief Calculate Matrix and draw object
 		void drawObject(GameObject& obj, Camera& camera);
 
-		/// \brief Init lights
-		void initLights();
+		/// \brief Init Menu lights
+		void initMenuLights();
 
-		/// \brief Update Light position and direction
-		void updateLights();
+		/// \brief Init Game lights
+		void initGameLights();
+
+		/// \brief Update menu lights position and direction
+		void updateMenuLights();
+
+		/// \brief Update ingame light position and direction
+		void updateGameLights();
+
+		/// \brief Add a light to the render manager
+		void addLight(const bool isPoint,
+					  const glm::vec3 &posOrDir,
+					  const glm::vec3 &Kd,
+					  const glm::vec3 &Ks,
+					  const float &shininess, 
+					  const glm::vec3 &lightIntensity) ;
 
 		/// \brief Update Light position and direction
 		void clearLights();
@@ -111,6 +136,8 @@ class RenderManager {
 
 		/// \brief Lights
 		std::vector<Light> _lights;
+		/// \brief Lights
+		unsigned int _lightsCount;
 
 };
 

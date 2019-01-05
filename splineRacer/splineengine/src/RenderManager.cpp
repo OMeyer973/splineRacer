@@ -13,12 +13,6 @@ void RenderManager::updateMVMatrix(Camera &camera, glm::mat4 transformMatrix, gl
 
 void RenderManager::updateGlobalMatrix() {
 	_globalMatrix = _MVMatrix;
-
-	// Light depends on globalMatrix
-	if (_lights.size() == 0) {
-		initLights();
-	}
-	updateLights();
 }
 
 void RenderManager::drawObject(GameObject& obj, Camera& camera) {
@@ -118,18 +112,13 @@ void RenderManager::sendUniformsToShaders(FS shader)
 			break;
 
 		case MULTI_LIGHT :
-			ambientLight = glm::vec3(0.2);
+			ambientLight = glm::vec3(.05);
 
-			// updateLights();
-
-			// lights.push_back(Light(true, glm::vec3(0.0, -3.0, -7.0), glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0), 64, glm::vec3(1.0)));
-			// lights.push_back(Light(true, glm::vec3(0.0, 0.0, -5.0), glm::vec3(0.0, 1.0, 0.0), glm::vec3(1.0), 64, glm::vec3(1.0)));
-			// lights.push_back(Light(true, glm::vec3(0.0, 0.0, -5.0), glm::vec3(0.0, 0.0, 1.0), glm::vec3(1.0), 64, glm::vec3(1.0)));
-			// lights.push_back(Light(false, glm::vec3(lightVector), glm::vec3(0.0, 0.4, 0.9), glm::vec3(1.0), 8, glm::vec3(1.0)));
-			// lights.push_back(Light(false, glm::vec3(lightVector), glm::vec3(0.8, 0.1, 0.4), glm::vec3(1.0), 8, glm::vec3(1.0)));
-
-			for (int i = 0; i < _lights.size(); ++i) {
-				_lights[i].sendLightShader(programList.multiLightProgram, refLight);
+			// for (int i = 0; i < _lightsCount; ++i) {
+			// 	_lights[i].sendLightShader(programList.multiLightProgram, refLight);
+			// }
+			for (std::vector<Light>::iterator it = _lights.begin(); it != _lights.end(); ++it) {
+				it->sendLightShader(programList.multiLightProgram, refLight);
 			}
 
 			glUniform3f(glGetUniformLocation(programList.multiLightProgram._program.getGLId(), "uAmbientLight"), ambientLight.x, ambientLight.y, ambientLight.z); 
@@ -151,44 +140,133 @@ void RenderManager::sendUniformsToShaders(FS shader)
 	}
 }
 
-void RenderManager::initLights() {
+void RenderManager::initGameLights() {
 	if (debug) std::cout << "init Lights" << std::endl;
+
+	clearLights();
+
 	glm::mat4 lightMatrix;
 	glm::vec4 lightVector;
-	glm::vec3 ambientLight = glm::vec3(0.2);
 
 	lightMatrix = glm::transpose(_globalMatrix);
 	lightVector = glm::normalize(glm::vec4(1, 1, 1, 0) * lightMatrix);
 
 	/* Orange Directional Light */
-	_lights.push_back(Light(false, glm::vec3(lightVector), glm::vec3(1.0), glm::vec3(1.0), 64, glm::vec3(1, 0.8, 0.5)));
-
-	lightMatrix = glm::rotate(lightMatrix, 180.f, glm::vec3(0, 1, 0));
-	lightVector = glm::normalize(glm::vec4(1, 1, 1, 0) * lightMatrix);
-
+	addLight(
+		false, 
+		glm::vec3(lightVector),
+		glm::vec3(1.0), 
+		glm::vec3(1.0), 
+		64, 
+		glm::vec3(1, 0.75, .35)
+	);
+	
 	/* Blue Directional Light */
-	_lights.push_back(Light(false, glm::vec3(lightVector), glm::vec3(.5), glm::vec3(.5), 8, glm::vec3(0.8, 0.5, 0.0)));
+	addLight(
+		false, 
+		glm::vec3(lightVector), 
+		glm::vec3(.2), 
+		glm::vec3(1), 
+		2, 
+		glm::vec3(0.0, 0.05, 0.1)
+	);
 
-
-	/* Points Lights */
-	_lights.push_back(Light(true, glm::vec3(0.0, -3.0, -7.0), glm::vec3(1.0, 0.0, 0.0), glm::vec3(1.0), 64, glm::vec3(1.0)));
-	_lights.push_back(Light(true, glm::vec3(0.0, 0.0, -5.0), glm::vec3(0.0, 1.0, 0.0), glm::vec3(1.0), 64, glm::vec3(1.0)));
-	_lights.push_back(Light(true, glm::vec3(0.0, 0.0, -5.0), glm::vec3(0.0, 0.0, 1.0), glm::vec3(1.0), 64, glm::vec3(1.0)));
+	/* Red Point Lights under the plane */
+	addLight(
+		true, 
+		glm::vec3(0.0, 0.0, -13.0), 
+		glm::vec3(1, .0,  0), 
+		glm::vec3(1, .8, .1), 
+		6, 
+		glm::vec3(2.0)
+	);
 }
 
-void RenderManager::updateLights() {
+void RenderManager::initMenuLights() {
+	if (debug) std::cout << "init Lights" << std::endl;
+
+	clearLights();
+
+	glm::mat4 lightMatrix;
+	glm::vec4 lightVector;
+
+	lightMatrix = glm::transpose(_globalMatrix);
+	lightVector = glm::normalize(glm::vec4(0, 0, 1, 0) * lightMatrix);
+
+	/* Orange Directional Light */
+	addLight(
+		false, 
+		glm::vec3(lightVector),
+		glm::vec3(1.f), 
+		glm::vec3(1.f), 
+		64, 
+		glm::vec3(1, 0.6, .2)
+	);
+
+	/* Blue Directional Light */
+	addLight(
+		false, 
+		glm::vec3(lightVector),
+		glm::vec3(1.f), 
+		glm::vec3(1.f), 
+		32, 
+		glm::vec3(.05, 0.05, .1)
+	);
+
+	/* White Point Lights in front of the menu */
+	addLight(
+		true, 
+		glm::vec3(0,  0.0, -5.0), 
+		glm::vec3(1.0), 
+		glm::vec3(1.0), 
+		16, 
+		glm::vec3(1.0, 1.0, 1.0)
+	);
+}
+
+void RenderManager::addLight(const bool isPoint,
+							 const glm::vec3 &posOrDir,
+							 const glm::vec3 &Kd,
+							 const glm::vec3 &Ks,
+							 const float &shininess, 
+							 const glm::vec3 &lightIntensity) 
+{
+	_lights.push_back( Light(_lightsCount, isPoint, posOrDir, Kd, Ks, shininess, lightIntensity) );
+	_lightsCount++;
+}
+
+void RenderManager::updateMenuLights() {
+	// Leave this method empty if you want the lights to follow the camera
 	glm::mat4 lightMatrix;
 	glm::vec4 lightVector;
 
 	lightMatrix = glm::transpose(_globalMatrix);
 	lightVector = glm::normalize(glm::vec4(1, 1, 1, 0) * lightMatrix);
 
-	_lights[0].posOrDir() = glm::vec3(lightVector);
-	_lights[1].posOrDir() = glm::vec3(-lightVector);
+	// TODO: throw exception
+	if (_lightsCount > 0) {
+		_lights[0].posOrDir() = glm::vec3(lightVector);
+		_lights[1].posOrDir() = glm::vec3(-lightVector);
+	}
+}
+
+void RenderManager::updateGameLights() {
+	glm::mat4 lightMatrix;
+	glm::vec4 lightVector;
+
+	lightMatrix = glm::transpose(_globalMatrix);
+	lightVector = glm::normalize(glm::vec4(1, 1, 1, 0) * lightMatrix);
+
+	// TODO: throw exception
+	if (_lightsCount > 0) {
+		_lights[0].posOrDir() = glm::vec3(lightVector);
+		_lights[1].posOrDir() = glm::vec3(-lightVector);
+	}
 }
 
 void RenderManager::clearLights() {
 	_lights.clear();
+	_lightsCount = 0;
 }
 
 }

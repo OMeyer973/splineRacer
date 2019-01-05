@@ -122,7 +122,7 @@ void RenderManager::sendUniformsToShaders(FS shader)
 			}
 
 			glUniform3f(glGetUniformLocation(programList.multiLightProgram._program.getGLId(), "uAmbientLight"), ambientLight.x, ambientLight.y, ambientLight.z); 
-			glUniform1i(glGetUniformLocation(programList.multiLightProgram._program.getGLId(), "uNbLights"), _lights.size());
+			glUniform1i(glGetUniformLocation(programList.multiLightProgram._program.getGLId(), "uNbLights"), _lightsCount);
 
 			glUniformMatrix4fv(programList.multiLightProgram.uMVPMatrix, 1, GL_FALSE,
 				glm::value_ptr(_projMatrix * _MVMatrix));
@@ -155,10 +155,10 @@ void RenderManager::initGameLights() {
 	addLight(
 		false, 
 		glm::vec3(lightVector),
-		glm::vec3(1.0), 
-		glm::vec3(1.0), 
+		glm::vec3(1, 0.8, 0.5), 
+		glm::vec3(1, 0.75, .35), 
 		64, 
-		glm::vec3(1, 0.75, .35)
+		glm::vec3(1.0)
 	);
 	
 	/* Blue Directional Light */
@@ -166,9 +166,9 @@ void RenderManager::initGameLights() {
 		false, 
 		glm::vec3(lightVector), 
 		glm::vec3(.2), 
-		glm::vec3(1), 
+		glm::vec3(0.0, 0.1, 0.2), 
 		2, 
-		glm::vec3(0.0, 0.05, 0.1)
+		glm::vec3(.25)
 	);
 
 	/* Red Point Lights under the plane */
@@ -196,31 +196,41 @@ void RenderManager::initMenuLights() {
 	/* Orange Directional Light */
 	addLight(
 		false, 
-		glm::vec3(lightVector),
-		glm::vec3(1.f), 
-		glm::vec3(1.f), 
+		glm::vec3(0, 0, 1),
+		glm::vec3(.3f), 
+		glm::vec3(.3f), 
 		64, 
 		glm::vec3(1, 0.6, .2)
 	);
 
 	/* Blue Directional Light */
+	// addLight(
+	// 	false, 
+	// 	glm::vec3(lightVector),
+	// 	glm::vec3(1.f), 
+	// 	glm::vec3(1.f), 
+	// 	32, 
+	// 	glm::vec3(.05, 0.05, .1)
+	// );
+
+	/* Orange Point Light on top */
 	addLight(
-		false, 
-		glm::vec3(lightVector),
-		glm::vec3(1.f), 
-		glm::vec3(1.f), 
-		32, 
-		glm::vec3(.05, 0.05, .1)
+		true,
+		glm::vec3(0.f, 2.6f, -5.f),
+		glm::vec3(1.f),
+		glm::vec3(1.f, .5f, .05f),
+		32,
+		glm::vec3(3.f)
 	);
 
-	/* White Point Lights in front of the menu */
+	/* Blue Point Lights in front of the menu */
 	addLight(
-		true, 
-		glm::vec3(0,  0.0, -5.0), 
-		glm::vec3(1.0), 
-		glm::vec3(1.0), 
-		16, 
-		glm::vec3(1.0, 1.0, 1.0)
+		true,
+		glm::vec3(0.f,  -2.6f, -5.f),
+		glm::vec3(.1f, .2f, .9f),
+		glm::vec3(1.f),
+		16,
+		glm::vec3(3.f)
 	);
 }
 
@@ -245,8 +255,16 @@ void RenderManager::updateMenuLights() {
 
 	// TODO: throw exception
 	if (_lightsCount > 0) {
-		_lights[0].posOrDir() = glm::vec3(lightVector);
-		_lights[1].posOrDir() = glm::vec3(-lightVector);
+		// _lights[0].posOrDir() = glm::vec3(lightVector);
+		// _lights[1].posOrDir() = glm::vec3(-lightVector);
+
+		// // lightMatrix = glm::translate(_MVMatrix, _lights[2].posOrDir());
+		// lightVector = _MVMatrix * glm::vec4(_lights[2].posOrDir(), 1);
+		// std::cout << "Debug" << std::endl;
+		// std::cout << lightVector << std::endl;
+		// std::cout << _globalMatrix << std::endl;
+		// std::cout << _MVMatrix << std::endl;
+		// // _lights[2].posOrDir() = glm::vec3(lightVector);
 	}
 }
 

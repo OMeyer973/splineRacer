@@ -85,7 +85,7 @@ void Menu::update() {
 	// }
 
 
-	//if a move to a left or right pannel is detected, then smooth camera turn around
+	// If a move to a left or right pannel is detected, then smooth camera turn around
 	if(isRotatingHorizontally() ){
 		_rotationAngle += (_rotationDirection);
 		rotateHorizontally( (6 * _rotationDirection) );
@@ -94,7 +94,7 @@ void Menu::update() {
 			_isRotatingHorizontally = false;
 		}
 	}
-	//if a move to chose a different level is detected, then smooth transition to move pannels up or down
+	// If a move to chose a different level is detected, then smooth transition to move pannels up or down
 	if(isRotatingVertically()){
 		for(int i = 0;i<_levels.size()+1;i++){
 			_menuItems[i+1].sPosition() += 0.4f * _rotationDirection * upVec;
@@ -108,7 +108,7 @@ void Menu::update() {
 		}
 		_tickVertical++;
 	}
-	//interaction with current selected
+	// Interaction with current selected
 	// for(int i = 0;i<_levels.size()+1;i++){
 	// 	if(i == _selectedLevel){;
 	// 		_menuItems[i+1].rotation() = glm::vec3(0.12f,0.f,0.f);

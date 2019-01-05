@@ -30,8 +30,8 @@ void Collectable::update(const glm::vec3 playerPos) {
 
 		_sPosition[FWD] = glm::mix(_sPosition[FWD], playerPos[FWD]+.25f, 4.f * dt);
 		_sPosition[UP] = glm::mix(_sPosition[UP], playerPos[UP], 0.8f * dt);
-		_sPosition[LEFT] = glm::mix(collectableAngle, playerAngle, 2.f * dt);
-		_scale = glm::mix(_scale, glm::vec3(.5f), 1/8.f);
+		_sPosition[LEFT] = glm::mix(collectableAngle, playerAngle, 4.f * dt);
+		_scale = glm::mix(_scale, glm::vec3(.5f), 0.2f);
 
 		if (_scale.x <= .6f)
 		{

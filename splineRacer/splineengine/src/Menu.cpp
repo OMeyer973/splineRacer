@@ -1,5 +1,4 @@
 #include <splineengine/Menu.hpp>
-#include <splineengine/Text.hpp>
 #include <cstdlib>
 
 
@@ -39,7 +38,7 @@ void Menu::init() {
 	//pushing pannels to chose level -maybe change name of model to be more specific
 	for(int i =0; i<4; i++){
 		_menuItems.push_back(GameObject(
-			assetManager.models()["menu"],Spline(),false,
+			assetManager.models()[_levels[3-i]],Spline(),false,
 			Transform(
 				glm::vec3(0.f, -4 + i*2.f, 2.4f),
 				glm::vec3(0.25f),

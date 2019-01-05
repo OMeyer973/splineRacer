@@ -90,7 +90,7 @@ class Menu {
 		int _selectedMenu;
 		int _selectedLevel;
 		std::vector<std::string> _menus = { "Play","Scores","Settings","Rules","Credits","Quit"};
-		std::vector<std::string> _levels = { "Easy", "Normal","Hard","Endless" };
+		std::vector<std::string> _levels = { "Easy", "Normal","Hard","Infinite" };
 
 
 };

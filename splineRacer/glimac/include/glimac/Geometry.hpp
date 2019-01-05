@@ -7,6 +7,7 @@
 #include "FilePath.hpp"
 #include "BBox.hpp"
 
+
 namespace glimac {
 
 class Geometry {

@@ -1,4 +1,5 @@
 #include <splineengine/Menu.hpp>
+#include <splineengine/Text.hpp>
 #include <cstdlib>
 
 
@@ -14,6 +15,7 @@ Menu::Menu()
 }
 
 void Menu::init() {
+	//Text skurt = Text();
 	std::cout << "menu init" << std::endl;
 	AssetManager& assetManager = AssetManager::instance();
 	//setting all the boolean used to determine the state of the menu

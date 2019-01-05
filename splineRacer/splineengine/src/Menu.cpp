@@ -113,38 +113,37 @@ void Menu::update() {
 
 void Menu::render() {
 	// TODO
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 MVMatrix =  _skybox[0].staticMatrix();
+	glm::mat4 MVMatrix =  _skybox[0].staticMatrix();
 
-		//std::cout<< selectedMenu() << std::endl;
-		//Draw _skybox
-		glDepthMask(GL_FALSE);
-		//MVMatrix = camMatrix *  _skybox[0].matrix();
-		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _skybox[0].scale());
-		_renderManager.useProgram(TEXTURE);
-		_skybox[0].draw();
-		glDepthMask(GL_TRUE);
+	//std::cout<< selectedMenu() << std::endl;
+	//Draw _skybox
+	glDepthMask(GL_FALSE);
+	//MVMatrix = camMatrix *  _skybox[0].matrix();
+	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _skybox[0].scale());
+	_renderManager.useProgram(TEXTURE);
+	_skybox[0].draw();
+	glDepthMask(GL_TRUE);
 
-		MVMatrix = _menuItems[0].staticMatrix();
+	MVMatrix = _menuItems[0].staticMatrix();
 
+	//glDepthFunc(GL_LEQUAL);
+	// Update MVMatrix according to the object's transformation
+	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[0].scale());
+	_renderManager.useProgram(TEXTURE);
 
-		//glDepthFunc(GL_LEQUAL);
-		// Update MVMatrix according to the object's transformation
-		_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[0].scale());
-		_renderManager.useProgram(TEXTURE);
+	_menuItems[0].draw();
 
-		_menuItems[0].draw();
-
-		//display levels
-		if(_displayLevels){
-			for(float i=1; i< _menuItems.size();i++){
-					MVMatrix = _menuItems[i].staticMatrix();
-					_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[i].scale());
-					_renderManager.useProgram(TEXTURE);
-					_menuItems[i].draw();
-			}
+	//display levels
+	if(_displayLevels){
+		for(float i=1; i< _menuItems.size();i++){
+			MVMatrix = _menuItems[i].staticMatrix();
+			_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[i].scale());
+			_renderManager.useProgram(TEXTURE);
+			_menuItems[i].draw();
 		}
+	}
 }
 
 void Menu::changePannel(const int pannelState) {

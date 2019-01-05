@@ -90,7 +90,7 @@ void Player::draw(RenderManager &renderManager, Camera &camera) {
 	{
 		MVMatrix = renderManager.splineCamMatrix() * this->matrix();
 		renderManager.updateMVMatrix(camera, MVMatrix, _scale);
-		renderManager.useProgram(DIRECTIONAL_LIGHT);
+		renderManager.useProgram(MULTI_LIGHT);
 		
 		const glimac::Geometry::Mesh* currentMesh = (_model.geometry().getMeshBuffer()+i);
 		GLint indexCount = currentMesh->m_nIndexCount;
@@ -101,7 +101,7 @@ void Player::draw(RenderManager &renderManager, Camera &camera) {
 			//TODO : fait des segfault chez olivier des fois (mais je crois que c'est des problèmes de compil local et de lib pt)
 			MVMatrix = renderManager.splineCamMatrix() * glm::rotate(this->matrix(), _propellerRotationAngle, fwdVec);
 			renderManager.updateMVMatrix(camera, MVMatrix, _scale);
-			renderManager.useProgram(DIRECTIONAL_LIGHT);
+			renderManager.useProgram(MULTI_LIGHT);
 		} 
 
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (const GLvoid*) (indexOffset * sizeof(GLuint)));

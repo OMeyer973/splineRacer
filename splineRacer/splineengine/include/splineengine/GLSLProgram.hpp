@@ -8,7 +8,7 @@
 namespace splineengine {
 
 // Every key player can use
-enum FS {NORMAL, TEXTURE, DIRECTIONAL_LIGHT, SKYBOX, MULTITEXTURE, POINT_LIGHT, BLACK_AND_WHITE};
+enum FS {NORMAL, TEXTURE, DIRECTIONAL_LIGHT, MULTI_LIGHT};
 
 // GLSL Program with the normal fragment shader
 struct NormalProgram {
@@ -91,10 +91,40 @@ struct DirectionalLightProgram {
     }
 };
 
+// GLSL Program with the Directional Light fragment shader
+struct MultiLightProgram {
+    glimac::Program _program;
+
+    GLint uMVPMatrix;
+    GLint uMVMatrix;
+    GLint uNormalMatrix;
+    GLint uTexture;
+
+    GLint uLights;
+    GLint uNbLights;
+    GLint uAmbientLight;
+
+    MultiLightProgram()
+        :_program(loadProgram(Settings::instance().appPath().dirPath() + "shaders/3D.vs.glsl",
+                              Settings::instance().appPath().dirPath() + "shaders/multiLight.fs.glsl"))
+    {
+        std::cout << "Loading MultiLight program" << std::endl;
+        uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
+        uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
+        uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
+        uTexture = glGetUniformLocation(_program.getGLId(), "uTexture");
+
+        uLights = glGetUniformLocation(_program.getGLId(), "uLights");
+        uNbLights = glGetUniformLocation(_program.getGLId(), "uNbLights");
+        uAmbientLight = glGetUniformLocation(_program.getGLId(), "uAmbientLight");
+    }
+};
+
 struct ProgramList {
     NormalProgram normalProgram;
     TextureProgram textureProgram;
     DirectionalLightProgram directionalLightProgram;
+    MultiLightProgram multiLightProgram;
 };
 
 }

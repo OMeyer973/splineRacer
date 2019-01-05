@@ -98,7 +98,6 @@ void Game::loadLevel(const std::string& levelName) {
 
 	_finishLine.sPosition() = glm::vec3(_spline.length(), 0.f, 0.f);
 
-
 	glEnable(GL_DEPTH_TEST);
 }
 

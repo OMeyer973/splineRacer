@@ -9,6 +9,7 @@
 #include <splineengine/CubeMap.hpp>
 #include <splineengine/GameObject.hpp>
 #include <splineengine/GLSLProgram.hpp>
+#include <splineengine/Light.hpp>
 
 namespace splineengine {
 
@@ -31,6 +32,7 @@ class RenderManager {
 			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 200.f);
 			_MVMatrix = glm::translate(camera.getViewMatrix(), -5.f*fwdVec);
 			_normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
+
 			if (debug) std::cout << "done." << std::endl;
 		};
 
@@ -59,12 +61,12 @@ class RenderManager {
 			return _projMatrix;
 		}
 
-		/// \brief get _projMatrix
+		/// \brief get _splineCamMatrix
 		const glm::mat4& splineCamMatrix() const {
 			return _splineCamMatrix;
 		}
 
-		/// \brief get _projMatrix
+		/// \brief get _splineCamMatrix
 		glm::mat4& splineCamMatrix() {
 			return _splineCamMatrix;
 		}
@@ -77,6 +79,15 @@ class RenderManager {
 
 		/// \brief Calculate Matrix and draw object
 		void drawObject(GameObject& obj, Camera& camera);
+
+		/// \brief Init lights
+		void initLights();
+
+		/// \brief Update Light position and direction
+		void updateLights();
+
+		/// \brief Update Light position and direction
+		void clearLights();
 
 	// MEMBERS
 	protected:
@@ -97,6 +108,9 @@ class RenderManager {
 
 		/// \brief Skybox
 		CubeMap* _skybox;
+
+		/// \brief Lights
+		std::vector<Light> _lights;
 
 };
 

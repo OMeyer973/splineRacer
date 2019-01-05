@@ -9,6 +9,32 @@
 
 namespace splineengine {
 
+const uint ANIM_ROT_CONST_FWD = 0;
+const uint ANIM_ROT_CONST_LEFT = 1;
+const uint ANIM_ROT_CONST_UP = 2;
+const uint ANIM_MOVE_SIN_LEFT = 3;
+const uint ANIM_MOVE_SIN_UP = 4;
+const uint ANIM_MOVE_CONST_LEFT = 5;
+const uint ANIM_MOVE_CONST_RIGHT = 6;
+const uint ANIM_MOVE_CONST_BACK = 7;
+const uint ANIM_MOVE_CONST_FWD = 8;
+const uint ANIM_SCALE_SIN = 9;
+
+
+/// \brief transformation of an object (only used to simplfy gameObject constructor)
+struct Transform {
+	public: //all public for ease of use but const so no problem
+		const glm::vec3& _sPosition = glm::vec3(0);
+		const glm::vec3& _scale = glm::vec3(1);
+		const glm::vec3& _rotation = glm::vec3(0);
+		Transform(
+			const glm::vec3& sPosition = glm::vec3(0),
+			const glm::vec3& scale = glm::vec3(1),
+			const glm::vec3& rotation = glm::vec3(0)
+		):_sPosition(sPosition), _scale(scale), _rotation(rotation)
+		{};
+};
+
 /// \brief represents a object in the game, with a position and a set of colliders
 class GameObject {
 	// METHODS
@@ -26,9 +52,7 @@ class GameObject {
 			const Model& model,
 			const Spline& spline,
 			const bool isStatic = false,
-			const glm::vec3& sPosition = glm::vec3(0),
-			const glm::vec3& scale = glm::vec3(1),
-			const glm::vec3& rotation = glm::vec3(0)
+			const Transform transform = Transform()
 		);
 
 		/// \brief copy constructor

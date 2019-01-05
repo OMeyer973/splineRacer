@@ -132,10 +132,10 @@ class Game {
 		/// \brief id of the current camera
 		int _chosenCamera;
 
-		/// \brief represents the player
-		Player _player;
 		/// \brief represents the spline
 	    Spline _spline;
+		/// \brief represents the player
+		Player _player;
 		/// \brief represents the skybox
 		GameObject _skybox;
 

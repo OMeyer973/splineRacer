@@ -10,13 +10,15 @@ Chaser::Chaser(const GameObject& gameObject, const Player& player, const float d
 };
 
 
-void Chaser::update(const float dt) {
+void Chaser::update() {
+	const float t = Settings::instance().time();
+	const float dt = Settings::instance().deltaTime();
     _sPosition[FWD] += glm::abs(_player.speed()[FWD]) * dt;
 	_sPosition[UP] =  glm::mix(_sPosition[UP], _player.sPosition()[UP], chaserLateralSpeed);
 	_sPosition[LEFT] = glm::mix(_sPosition[LEFT], _player.sPosition()[LEFT], chaserLateralSpeed); // TODO: this line create segfaults idk why ??
 
-	_rotation[UP] += chaserRotateSpeed;
-	_rotation[FWD] = chaserWiggleAmp * glm::sin(chaserWiggleFreq * _rotation[UP]);
+	_rotation[UP] += chaserRotateSpeed * dt;
+	_rotation[FWD] = chaserWiggleAmp * glm::sin(chaserWiggleFreq * t);
 
 
 // const float chaserRotateSpeed = 3.f;

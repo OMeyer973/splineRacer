@@ -35,7 +35,7 @@ class Player : public GameObject {
         // CONSTRUCTORS - DESTRUCTORS
         /// \brief default player Constructor
         Player(
-            const GameObject& gameObject   = GameObject(Model(), Spline(), false, defaultPlayerPos),
+            const GameObject& gameObject   = GameObject(Model(), Spline(), false, Transform(defaultPlayerPos)),
             const glm::vec3   maxSpeed     = defaultPlayerMaxSpeed,
             const glm::vec3   acceleration = defaultPlayerAcceleration
         );
@@ -81,7 +81,7 @@ class Player : public GameObject {
         void draw(RenderManager &renderManager, Camera &camera) ;
 
         /// \brief update the player status at each frame
-        void update(const float dt);
+        void update();
 
         /// \brief trigger collision behavior when colliding with another Gameobjects. 
         void doCollisionWith(GameObject& other);

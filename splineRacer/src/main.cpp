@@ -50,6 +50,7 @@ int main(int argc, char** argv) {
 		}
 
 		gameManager.update();
+		settings.updateTime();
 
 		windowManager.swapBuffers();
 

@@ -4,14 +4,37 @@
 
 namespace splineengine {
 
+///////////////////////////////////////
+// CONSTRUCTORS
+///////////////////////////////////////
+
 Game::Game()
 	:
-	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
-	_spline("Endless"),
 	_gameMode(ENDLESS),
-	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, true, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f))),
-	_alien(GameObject(AssetManager::instance().models()["alien"], _spline, false, glm::vec3(0.f), glm::vec3(0.3f)), _player),
-	_finishLine(GameObject(AssetManager::instance().models()["finish_line"], _spline, true, glm::vec3(0.f), glm::vec3(6.f), glm::vec3(0.f)))
+	_spline("Endless"),
+	_player(GameObject(
+		AssetManager::instance().models()["plane"],
+		_spline, false,
+		Transform(defaultPlayerPos)
+	)),
+	_skybox(GameObject(
+		AssetManager::instance().models()["skybox"],
+		_spline, true,
+		Transform(glm::vec3(0.f), glm::vec3(100.f))
+	)),
+	_alien(
+		GameObject(
+			AssetManager::instance().models()["alien"],
+			_spline, false,
+			Transform(glm::vec3(0.f), glm::vec3(0.3f))
+		),
+		_player
+	),
+	_finishLine(GameObject( // will not be displayed in Endless anyway
+		AssetManager::instance().models()["finish_line"],
+		_spline, true, 
+		Transform()
+	))
 {
 	std::cout << "infinite game constructor called " << std::endl;
 	_cameras.emplace_back(new POVCamera());
@@ -25,12 +48,31 @@ Game::Game()
 
 Game::Game(const std::string& levelName)
 	:
-	_player(GameObject(AssetManager::instance().models()["plane"], _spline, false, defaultPlayerPos)),
-	_spline(levelName),
 	_gameMode(CLASSIC),
-	_skybox(GameObject(AssetManager::instance().models()["skybox"], _spline, true, glm::vec3(0.f), glm::vec3(100.f), glm::vec3(0.f))),
-	_alien(GameObject(AssetManager::instance().models()["alien"], _spline, false, glm::vec3(0.f), glm::vec3(0.3f)), _player),
-	_finishLine(GameObject(AssetManager::instance().models()["finish_line"], _spline, false, glm::vec3(0.f), glm::vec3(1.f), glm::vec3(0.f)))
+	_spline(levelName),
+	_player(GameObject(
+		AssetManager::instance().models()["plane"],
+		_spline, false,
+		Transform(defaultPlayerPos)
+	)),
+	_skybox(GameObject(
+		AssetManager::instance().models()["skybox"],
+		_spline, true,
+		Transform(glm::vec3(0.f), glm::vec3(100.f))
+	)),
+	_alien(
+		GameObject(
+			AssetManager::instance().models()["alien"],
+			_spline, false,
+			Transform(glm::vec3(0.f), glm::vec3(0.3f))
+		),
+		_player
+	),
+	_finishLine(GameObject(
+		AssetManager::instance().models()["finish_line"],
+		_spline, false,
+		Transform(glm::vec3(0.f), glm::vec3(1.f))
+	))
 {
 	// TODO - OK now ?
 	std::cout << "game constructor from level caled : " << levelName << std::endl;
@@ -48,15 +90,21 @@ Game::~Game() {
 }
 
 
+///////////////////////////////////////
+// LEVEL LOADING & CONSTRUCTION STUFF
+///////////////////////////////////////
+
 GameObject Game::gameObjFromJson(nlohmann::json j) {
 	AssetManager& assetManager = AssetManager::instance();
 	return GameObject(
 		assetManager.models()[ j["model"].get<std::string>() ], // model
 		_spline, // spline
 		j["is_static"].get<bool>(), //isStatic
-		glm::vec3(j["pos_fwd"].get<float>(),   j["pos_left"].get<float>(),   j["pos_up"].get<float>()), // sPosition
-		glm::vec3(j["scale_fwd"].get<float>(), j["scale_left"].get<float>(), j["scale_up"].get<float>()), // scale
-		glm::vec3(j["rot_fwd"].get<float>(),   j["rot_left"].get<float>(),   j["rot_up"].get<float>()) // rotation
+		Transform(
+			glm::vec3(j["pos_fwd"].get<float>(),   j["pos_left"].get<float>(),   j["pos_up"].get<float>()), // sPosition
+			glm::vec3(j["scale_fwd"].get<float>(), j["scale_left"].get<float>(), j["scale_up"].get<float>()), // scale
+			glm::vec3(j["rot_fwd"].get<float>(),   j["rot_left"].get<float>(),   j["rot_up"].get<float>()) // rotation
+		)
 	);
 }
 
@@ -86,14 +134,14 @@ void Game::loadLevel(const std::string& levelName) {
 	// tmp?
 	AssetManager& assetManager = AssetManager::instance();
 	for (float i=-1; i<_spline.length()+1; i+=.7f) {
-		_obstacles.push_back(Obstacle(
-			GameObject(
-				assetManager.models()["prism"], _spline, true,
+		_obstacles.push_back(Obstacle(GameObject(
+			assetManager.models()["prism"], _spline, true,
+			Transform(
 				glm::vec3(i, 0, 0),
 				glm::vec3((2.f*glm::sin(i)) + 4.f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
-		));
+		)));
 	}
 
 	_finishLine.sPosition() = glm::vec3(_spline.length(), 0.f, 0.f);
@@ -108,46 +156,46 @@ void Game::generateLevel(const float start, const float finish) {
 
 
 	for (float i=start; i<finish; i+=.7f) {
-		_obstacles.push_back(Obstacle(
-			GameObject(
-				assetManager.models()["prism"], _spline, true,
+		_obstacles.push_back(Obstacle(GameObject(
+			assetManager.models()["prism"], _spline, true,
+			Transform(
 				glm::vec3(i, 0, 0),
 				glm::vec3((2.f*glm::sin(i)) + 4.f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
-		));
-		// _obstacles.push_back(Obstacle(
-		// 	GameObject(
-		// 		assetManager.models()["cloud"], _spline, true,
+		)));
+		// _obstacles.push_back(Obstacle(GameObject(
+		// 	assetManager.models()["cloud"], _spline, true,
+		// 	Transform (
 		// 		glm::vec3(i, 0, 0),
 		// 		glm::vec3(1.f, 1.f, 1.f),
 		// 		glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 		// 	)
-		// ));
+		// )));
 	}
 
 	for (float i=start; i<finish; i+=10.f) {
 		for (float j = 0; j < 2.5; j+=.5f) {
 			for (float k = 0; k <= .2f; k+=.2f) {
-				_collectables.push_back(Collectable(
-					GameObject(
-						assetManager.models()["coin"], _spline, false,
+				_collectables.push_back(Collectable(GameObject(
+					assetManager.models()["coin"], _spline, false,
+					Transform(
 						glm::vec3(i+j, -(i+k), 10),
 						glm::vec3(3.f),
 						glm::vec3(0)
 					)
-				));
+				)));
 			}
 		}
 		for (float j = 0; j < 6.28; j+=.3f) {
-			_obstacles.push_back(Obstacle(
-				GameObject(
-					assetManager.models()["prism"], _spline, true,
+			_obstacles.push_back(Obstacle(GameObject(
+				assetManager.models()["prism"], _spline, true,
+				Transform(
 					glm::vec3(i-5, j, 15), 
 					glm::vec3(3),
 					glm::vec3(j, -20*j, 3*j)
 				)
-			));
+			)));
 		}
 	}
 
@@ -159,18 +207,21 @@ void Game::generateLevel(const float start, const float finish) {
 }
 
 
+///////////////////////////////////////
+// RENDER & UPDATE LOOPs
+///////////////////////////////////////
+
 void Game::update() {
 	// TODO
 	//PHYSICS UPDATE
-	float dt = Settings::instance().deltaTime();
 	// Update player position and speed
-	_player.update(dt);
-	_alien.update(dt);
+	_player.update();
+	_alien.update();
 	
 	// Collectables animation
-	for (std::list<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
-		(*it).update(dt, 0, _player.sPosition());
-	}
+	// for (std::list<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
+	// 	(*it).update(dt, 0, _player.sPosition());
+	// }
 
 	// Check for collisions with obstacles
 	checkPlayerCollisionWithObjList(_obstacles);
@@ -198,7 +249,7 @@ void Game::update() {
 			_gameState = EXITING;
 			if (debug) std::cout << "gameState : EXITING (going back to menu)" << std::endl;
 		}
-		_endScreenTimer -= dt;
+		_endScreenTimer -= Settings::instance().deltaTime();
 	}
 	else if (_alien.sPosition()[FWD] > _player.sPosition()[FWD]) {
 		_player.doCollisionWith(_alien);
@@ -276,6 +327,11 @@ void Game::render() {
 	// if (_gameState == ENDLESSOVER)
 
 }
+
+
+///////////////////////////////////////
+// OTHER FUNCTIONS
+///////////////////////////////////////
 
 
 void Game::moveCameraX(const float dx) {

@@ -6,11 +6,9 @@
 namespace splineengine {
 
 GameObject::GameObject (
-    const Model& model, const Spline& spline, const bool isStatic,
-    const glm::vec3& sPosition, const glm::vec3& scale, const glm::vec3& rotation
-)
+    const Model& model, const Spline& spline, const bool isStatic, const Transform transform)
     :_model(model), _spline(spline), _isStatic(isStatic),
-    _sPosition(sPosition), _scale(scale), _rotation(rotation)
+    _sPosition(transform._sPosition), _scale(transform._scale), _rotation(transform._rotation)
 {
     // std::cout << "GameObject constructor " << std::endl;
 };

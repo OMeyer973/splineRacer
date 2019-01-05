@@ -27,18 +27,22 @@ void Menu::init() {
 	//Pushing extruded hexagon
 	_menuItems.push_back(GameObject(
 		assetManager.models()["frontmenu"],Spline(),true,
-		glm::vec3(0.f),
-		glm::vec3(3.5f),
-		glm::vec3(0.f)
+		Transform(
+			glm::vec3(0.f),
+			glm::vec3(3.5f),
+			glm::vec3(0.f)
+		)
 	));
 
 	//pushing pannels to chose level -maybe change name of model to be more specific
 	for(int i =0; i<4; i++){
 		_menuItems.push_back(GameObject(
 			assetManager.models()["menu"],Spline(),false,
-			glm::vec3(0.f,-4 + i*2.f,3.8f),
-			glm::vec3(0.25f),
-			glm::vec3(0.f)
+			Transform(
+				glm::vec3(0.f,-4 + i*2.f,3.8f),
+				glm::vec3(0.25f),
+				glm::vec3(0.f)
+			)
 			//glm::vec3(0.f,-(0.5f + (i-1)*0.2f), 0.f)
 			//glm::vec3(0.f,-(-10.f + i*10.f),0.f)
 		));
@@ -46,9 +50,11 @@ void Menu::init() {
 	//pushing skybox
 	_skybox.push_back(GameObject(
 		assetManager.models()["skybox"], Spline(),  true,
-		glm::vec3(0.f),
-		glm::vec3(100.f),
-		glm::vec3(0.f)
+		Transform(
+			glm::vec3(0.f),
+			glm::vec3(100.f),
+			glm::vec3(0.f)
+		)
 	));
 
 	// _menuItems[0].scale() = glm::vec3(1.5f);

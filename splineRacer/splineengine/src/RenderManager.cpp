@@ -161,13 +161,13 @@ void RenderManager::initLights() {
 	lightVector = glm::normalize(glm::vec4(1, 1, 1, 0) * lightMatrix);
 
 	/* Orange Directional Light */
-	_lights.push_back(Light(false, glm::vec3(lightVector), glm::vec3(1.0), glm::vec3(1.0), 64, glm::vec3(1, 0.5, 0)));
+	_lights.push_back(Light(false, glm::vec3(lightVector), glm::vec3(1.0), glm::vec3(1.0), 64, glm::vec3(1, 0.8, 0.5)));
 
 	lightMatrix = glm::rotate(lightMatrix, 180.f, glm::vec3(0, 1, 0));
 	lightVector = glm::normalize(glm::vec4(1, 1, 1, 0) * lightMatrix);
 
 	/* Blue Directional Light */
-	_lights.push_back(Light(false, glm::vec3(lightVector), glm::vec3(.5), glm::vec3(.5), 8, glm::vec3(0.0, 0.05, 0.1)));
+	_lights.push_back(Light(false, glm::vec3(lightVector), glm::vec3(.5), glm::vec3(.5), 8, glm::vec3(0.8, 0.5, 0.0)));
 
 
 	/* Points Lights */

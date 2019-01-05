@@ -59,22 +59,24 @@ void GameManager::doMenuEvent(SDL_Event e) {
 					_menu.changePannel(1);
 				}
 			}
+			if (input.select.has(e.key.keysym.sym) && _menu.selectedMenu() == "Quit") {
+				_exiting = true;
+			}
 			if (_menu.selectedMenu() == "Play") {
-			 	
-			 	if (_menu.isDisplayingLevels() && input.select.has(e.key.keysym.sym)) {
-			 		_levelName = _menu.selectedLevel();
-			 		goToGame();
+			 	if (_menu.isDisplayingLevels()) {
+				 	if (input.back.has(e.key.keysym.sym)) {
+						_menu.hideLevels();
+				 	}
+			 		if (input.select.has(e.key.keysym.sym)) {
+				 		_levelName = _menu.selectedLevel();
+				 		goToGame(); // warning after this call, not in menu anymore
+				 		break;
+				 	}
 			 	}
 			 	if (input.select.has(e.key.keysym.sym)) {
 					_menu.displayLevels();
 				}
-			 	if (input.back.has(e.key.keysym.sym)) {
-					_menu.hideLevels();
-			 	}
-			
-			}
-			if (input.select.has(e.key.keysym.sym) && _menu.selectedMenu() == "Quit") {
-				_exiting = true;
+
 			}
 	        break;
 	}

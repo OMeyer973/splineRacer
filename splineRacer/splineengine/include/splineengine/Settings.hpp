@@ -32,6 +32,8 @@ class Settings {
 		// CONST GETTERS
 		/// \brief get the time difference in seconds between the current frame and the previous (enforced)
 		float deltaTime() const { return _deltaTime; };
+		/// \brief get the current time since the application is running
+		float time() const { return _time; };
 
 		/// \brief get the application path
 		const glimac::FilePath& appPath() const { return _appPath; };
@@ -43,6 +45,10 @@ class Settings {
 		/// \brief set the application path
 		glimac::FilePath& appPath() { return _appPath; };
 		
+		// METHODS
+		/// \brief updates the current time at each frame
+		void updateTime() { _time += _deltaTime; };
+
 	// MEMBERS
 	private:
 		// CONSTANTS
@@ -54,6 +60,7 @@ class Settings {
 		const Uint32 _framerate_ms = 1000 / 30;
 		/// \brief time between 2 frames (seconds)
 		const float _deltaTime = 1.f/30.f;
+		float _time = 0.f;
 
 
 

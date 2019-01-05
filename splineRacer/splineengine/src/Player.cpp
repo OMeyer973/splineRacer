@@ -40,7 +40,8 @@ void Player::updatePosition(const float dt) {
 	_rotation = glm::vec3(_sSpeed[LEFT] * _sPosition[UP] * tiltFactor, _sSpeed[UP] * tiltFactor, 0);
 }
 
-void Player::update(const float dt) {
+void Player::update() {
+	const float dt = Settings::instance().deltaTime(); 
 	_sInput[LEFT] = glm::clamp(_sInput[LEFT], -1.f, 1.f);
 	_sInput[UP] = glm::clamp(_sInput[UP], -1.f, 1.f);
 	updateSpeed(dt);

@@ -11,9 +11,9 @@ namespace splineengine {
 
 const float defaultChaserDelay = 3.0f;
 const float chaserLateralSpeed = 0.1f; //0-1 how fast is the chaser to catch up with the player (left-right)
-const float chaserRotateSpeed = 0.1f;
+const float chaserRotateSpeed = 6.f;
 const float chaserWiggleAmp = 0.5f;
-const float chaserWiggleFreq = 1.f;
+const float chaserWiggleFreq = 2.5f;
 
 class Player;
 
@@ -33,7 +33,7 @@ class Chaser : public GameObject {
 
 
         /// \brief update the player status at each frame
-        void update(const float dt);
+        void update();
 
 
         /// \brief trigger collision behavior when colliding with the player. 

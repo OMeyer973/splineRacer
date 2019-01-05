@@ -17,31 +17,34 @@
 
 namespace splineengine {
 
-
+// grouping keys by acion
 struct keyGroup {
-	keyGroup(std::unordered_set<SDLKey> keys)
-		:_keys(keys)
-	{};
-	bool has(const SDLKey key) const { return _keys.find(key) != _keys.end(); }
-	std::unordered_set<SDLKey> _keys;
+	public:
+		keyGroup(std::unordered_set<SDLKey> keys)
+			:_keys(keys)
+		{};
+		bool has(const SDLKey key) const { return _keys.find(key) != _keys.end(); }
+	private: 
+		std::unordered_set<SDLKey> _keys;
 };
 
+// keys and the actions they trigger
 struct Input {
-	const keyGroup up = keyGroup(std::unordered_set<SDLKey> { SDLK_z, SDLK_UP } ); 
-	const keyGroup left = keyGroup(std::unordered_set<SDLKey> { SDLK_q, SDLK_LEFT } ); 
-	const keyGroup down = keyGroup(std::unordered_set<SDLKey> { SDLK_s, SDLK_DOWN } ); 
-	const keyGroup right = keyGroup(std::unordered_set<SDLKey> { SDLK_d, SDLK_RIGHT } );
-	const keyGroup select = keyGroup(std::unordered_set<SDLKey> { SDLK_RETURN, SDLK_SPACE } );
-	const keyGroup back = keyGroup(std::unordered_set<SDLKey> { SDLK_ESCAPE, SDLK_BACKSPACE } );
-	const keyGroup togglePause = keyGroup(std::unordered_set<SDLKey> { SDLK_ESCAPE, SDLK_p } );
-	const keyGroup cameraForward = keyGroup(std::unordered_set<SDLKey> { SDLK_KP_PLUS, SDLK_PLUS } );
-	const keyGroup cameraBackward = keyGroup(std::unordered_set<SDLKey> { SDLK_KP_MINUS, SDLK_MINUS } );
-	const keyGroup toggleCamera = keyGroup(std::unordered_set<SDLKey> { SDLK_c } );
+	typedef std::unordered_set<SDLKey> keylist;
+	public: // all public for ease of use but all const so no problem
+		const keyGroup up 				= keyGroup(keylist { SDLK_z, SDLK_UP } ); 
+		const keyGroup left 			= keyGroup(keylist { SDLK_q, SDLK_LEFT } ); 
+		const keyGroup down 			= keyGroup(keylist { SDLK_s, SDLK_DOWN } ); 
+		const keyGroup right 			= keyGroup(keylist { SDLK_d, SDLK_RIGHT } );
+		const keyGroup select 			= keyGroup(keylist { SDLK_RETURN, SDLK_SPACE } );
+		const keyGroup back 			= keyGroup(keylist { SDLK_ESCAPE, SDLK_BACKSPACE } );
+		const keyGroup togglePause 		= keyGroup(keylist { SDLK_ESCAPE, SDLK_p } );
+		const keyGroup cameraForward 	= keyGroup(keylist { SDLK_KP_PLUS, SDLK_PLUS } );
+		const keyGroup cameraBackward 	= keyGroup(keylist { SDLK_KP_MINUS, SDLK_MINUS } );
+		const keyGroup toggleCamera 	= keyGroup(keylist { SDLK_c } );
 };
 
 const Input input;
-
-//const Input input;
 	
 // IDs of game screens
 const int MENU = 0;

@@ -278,7 +278,6 @@ void Game::update() {
 		_player.increaseSpeed();
 	}
 
-
 	// END OF GAME LOGIC CHECKS
 	if (_gameState == LEVELWIN || _gameState == LEVELLOSE || _gameState == ENDLESSOVER) {
 		if (_endScreenTimer <= 0) {
@@ -363,6 +362,8 @@ void Game::render() {
 	// if (_gameState == LEVELWIN)
 	// if (_gameState == LEVELLOSE)
 	// if (_gameState == ENDLESSOVER)
+
+	drawDistanceToAlien();
 
 	_renderManager.useProgram(TEXT);
 	AssetManager::instance().textManager().renderText(
@@ -459,6 +460,22 @@ void Game::renderObjList(std::list<T>& objList) {
 	        objList.erase(it++);
 		}
 	}
+}
+
+void Game::drawDistanceToAlien() {
+	_renderManager.useProgram(TEXT);
+	int distanceToAlien = glm::clamp(static_cast<int>((_player.sPosition()[FWD] - _alien.sPosition()[FWD]) * 10), 0, 30);
+	std::string distanceToAlienText = "";
+	for (int i = 0; i < distanceToAlien; ++i) {
+		distanceToAlienText += "I";
+	}
+	AssetManager::instance().textManager().renderText(
+		distanceToAlienText,
+		Settings::instance().windowWidth() * .1f,
+		Settings::instance().windowHeight() - 40,
+		.4f,
+		glm::vec3(1.f, 1.f, 1.f)
+	);
 }
 
 

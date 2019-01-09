@@ -118,6 +118,9 @@ class Game {
 		///\brief and handle the collision behaviour  
 		void updateCollectableList(std::list<Collectable>&  objList);
 
+		/// \brief Draw Distance between Alien and Player 
+		void drawDistanceToAlien();
+
 		// MEMBERS
 		// gamemodes : CLASSIC, ENDLESS
 		int _gameMode;

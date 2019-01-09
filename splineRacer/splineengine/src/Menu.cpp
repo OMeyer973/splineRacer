@@ -106,7 +106,7 @@ void Menu::update() {
 		//std::cout << _menuItems[1].sPosition() << std::endl;
 		//Used to stop the movement from up to down and down to up
 
-		if(_tickVertical == 5){
+		if(_tickVertical == 5) {
 			_tickVertical=0;
 			_isRotatingVertically =false;
 		}

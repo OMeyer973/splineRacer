@@ -16,25 +16,25 @@ class Collectable : public GameObject {
     // METHODS
     public:
 
-    	Collectable(const GameObject& gameObject = GameObject(Model(), Spline(), false));
+    	Collectable(const GameObject& gameObject = GameObject(Model(), Spline(),"default.png",false));
 
         /// \brief Collectable Destructor
     	virtual ~Collectable() {
     		// if (debug) std::cout << "Collectable Destructor called" << std::endl;
     	};
 
-        /// \brief trigger collision behavior when colliding with another Gameobjects. 
+        /// \brief trigger collision behavior when colliding with another Gameobjects.
         void doCollisionWith(GameObject& other) {
             if (debug) std::cout << "Collectable doing collision with GameObject" << std::endl;
         };
 
-        /// \brief trigger collision behavior when colliding with another Gameobjects. 
+        /// \brief trigger collision behavior when colliding with another Gameobjects.
         void doCollisionWith(Player& other) {
             if (debug) std::cout << "Collectable doing collision with Player" << std::endl;
             _isTaken = true;
         };
 
-        /// \brief Animate collectable 
+        /// \brief Animate collectable
         void update(const glm::vec3 playerPos);
 
         /// brief

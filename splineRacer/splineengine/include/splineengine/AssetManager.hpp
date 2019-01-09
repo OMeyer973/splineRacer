@@ -4,13 +4,14 @@
 
 #include <iostream>
 #include <map>
-#include "Model.hpp"
 #include <splineengine/GLSLProgram.hpp>
 #include <splineengine/TextManager.hpp>
+#include <splineengine/Model.hpp>
+#include <splineengine/Texture.hpp>
 
 namespace splineengine {
 
-/// \brief singleton class wich manages the assets for everyone to access them 
+/// \brief singleton class wich manages the assets for everyone to access them
 class AssetManager {
 	// SINGLETON CONSTRUCTORS - DESTRUCTORS
 	private:
@@ -37,6 +38,10 @@ class AssetManager {
 		// CONST GETTERS
 		const std::map<std::string, Model>& models() const { return _models; };
 
+		const std::map<std::string, Texture>& textures() const { return _textures; };
+
+		//const std::map<std::string, Texture>& textures() const { return _textures; };
+
 		const ProgramList& programList() { return _programList; };
 
 		TextManager& textManager() { return _textManager; };
@@ -44,7 +49,12 @@ class AssetManager {
 		// NON-CONST GETTERS
 		std::map<std::string, Model>& models() { return _models; };
 
+		std::map<std::string, Texture>& textures(){return _textures;};
+
 		void setupText();
+
+
+
 
 	private:
 		// METHODS
@@ -54,6 +64,8 @@ class AssetManager {
 		// MEMBERS
 		/// \brief 3D models assets
 		std::map<std::string, Model> _models;
+
+		std::map<std::string, Texture> _textures;
 
 		//TODO : add this stuff
 

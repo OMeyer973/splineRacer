@@ -129,17 +129,16 @@ struct TextProgram {
     GLint uTexture;
 
 	GLint uTextColor;
+	GLint uProjection;
 
     TextProgram()
         :_program(loadProgram(Settings::instance().appPath().dirPath() + "shaders/text.vs.glsl",
                               Settings::instance().appPath().dirPath() + "shaders/text.fs.glsl"))
     {
         std::cout << "Loading Text program" << std::endl;
-        uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
-        uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
-        uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
         uTexture = glGetUniformLocation(_program.getGLId(), "uTexture");
 		uTextColor = glGetUniformLocation(_program.getGLId(), "uTextColor");
+		uProjection = glGetUniformLocation(_program.getGLId(),"uProjection");
     }
 };
 

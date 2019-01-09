@@ -42,7 +42,9 @@ void RenderManager::useProgram(FS shader) {
 		case MULTI_LIGHT:
 			programList.multiLightProgram._program.use();
 			break;
-
+		case TEXT:
+			programList.textProgram._program.use();
+			break;
 		default:
 			programList.normalProgram._program.use();
 			break;
@@ -121,7 +123,7 @@ void RenderManager::sendUniformsToShaders(FS shader)
 				it->sendLightShader(programList.multiLightProgram, refLight);
 			}
 
-			glUniform3f(glGetUniformLocation(programList.multiLightProgram._program.getGLId(), "uAmbientLight"), ambientLight.x, ambientLight.y, ambientLight.z); 
+			glUniform3f(glGetUniformLocation(programList.multiLightProgram._program.getGLId(), "uAmbientLight"), ambientLight.x, ambientLight.y, ambientLight.z);
 			glUniform1i(glGetUniformLocation(programList.multiLightProgram._program.getGLId(), "uNbLights"), _lightsCount);
 
 			glUniformMatrix4fv(programList.multiLightProgram.uMVPMatrix, 1, GL_FALSE,
@@ -134,6 +136,19 @@ void RenderManager::sendUniformsToShaders(FS shader)
 			glUniform1i(programList.multiLightProgram.uTexture, 0);
 
 			break;
+			case TEXT :
+
+				glUniformMatrix4fv(programList.textProgram.uMVPMatrix, 1, GL_FALSE,
+					glm::value_ptr(_projMatrix * _MVMatrix));
+				glUniformMatrix4fv(programList.textProgram.uMVMatrix, 1, GL_FALSE,
+					glm::value_ptr(_MVMatrix));
+				glUniformMatrix4fv(programList.textProgram.uNormalMatrix, 1, GL_FALSE,
+					glm::value_ptr(_normalMatrix));
+				
+
+				glUniform1i(programList.textProgram.uTexture, 0);
+
+				break;
 
 		default:
 			break;
@@ -153,31 +168,31 @@ void RenderManager::initGameLights() {
 
 	/* Orange Directional Light */
 	addLight(
-		false, 
+		false,
 		glm::vec3(lightVector),
-		glm::vec3(1, 0.8, 0.5), 
-		glm::vec3(1, 0.75, .35), 
-		64, 
+		glm::vec3(1, 0.8, 0.5),
+		glm::vec3(1, 0.75, .35),
+		64,
 		glm::vec3(1.0)
 	);
-	
+
 	/* Blue Directional Light */
 	addLight(
-		false, 
-		glm::vec3(lightVector), 
-		glm::vec3(.2), 
-		glm::vec3(0.0, 0.1, 0.2), 
-		2, 
+		false,
+		glm::vec3(lightVector),
+		glm::vec3(.2),
+		glm::vec3(0.0, 0.1, 0.2),
+		2,
 		glm::vec3(.25)
 	);
 
 	/* Red Point Lights under the plane */
 	addLight(
-		true, 
-		glm::vec3(0.0, 0.0, -13.0), 
-		glm::vec3(1, .0,  0), 
-		glm::vec3(1, .8, .1), 
-		6, 
+		true,
+		glm::vec3(0.0, 0.0, -13.0),
+		glm::vec3(1, .0,  0),
+		glm::vec3(1, .8, .1),
+		6,
 		glm::vec3(2.0)
 	);
 }
@@ -195,21 +210,21 @@ void RenderManager::initMenuLights() {
 
 	/* Orange Directional Light */
 	addLight(
-		false, 
+		false,
 		glm::vec3(0, 0, 1),
-		glm::vec3(.3f), 
-		glm::vec3(.3f), 
-		64, 
+		glm::vec3(.3f),
+		glm::vec3(.3f),
+		64,
 		glm::vec3(1, 0.6, .2)
 	);
 
 	/* Blue Directional Light */
 	// addLight(
-	// 	false, 
+	// 	false,
 	// 	glm::vec3(lightVector),
-	// 	glm::vec3(1.f), 
-	// 	glm::vec3(1.f), 
-	// 	32, 
+	// 	glm::vec3(1.f),
+	// 	glm::vec3(1.f),
+	// 	32,
 	// 	glm::vec3(.05, 0.05, .1)
 	// );
 
@@ -238,8 +253,8 @@ void RenderManager::addLight(const bool isPoint,
 							 const glm::vec3 &posOrDir,
 							 const glm::vec3 &Kd,
 							 const glm::vec3 &Ks,
-							 const float &shininess, 
-							 const glm::vec3 &lightIntensity) 
+							 const float &shininess,
+							 const glm::vec3 &lightIntensity)
 {
 	_lights.push_back( Light(_lightsCount, isPoint, posOrDir, Kd, Ks, shininess, lightIntensity) );
 	_lightsCount++;

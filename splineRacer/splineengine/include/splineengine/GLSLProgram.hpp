@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iostream> 
+#include <iostream>
 #include <glimac/Program.hpp>
 #include <glimac/FilePath.hpp>
 #include <splineengine/Settings.hpp>
@@ -8,7 +8,7 @@
 namespace splineengine {
 
 // Every key player can use
-enum FS {NORMAL, TEXTURE, DIRECTIONAL_LIGHT, MULTI_LIGHT};
+enum FS {NORMAL, TEXTURE, DIRECTIONAL_LIGHT, MULTI_LIGHT, TEXT};
 
 // GLSL Program with the normal fragment shader
 struct NormalProgram {
@@ -83,7 +83,7 @@ struct DirectionalLightProgram {
         uKd = glGetUniformLocation(_program.getGLId(), "uKd");
         uKs = glGetUniformLocation(_program.getGLId(), "uKs");
         uShininess = glGetUniformLocation(_program.getGLId(), "uShininess");
-        
+
         // Variables uniformes lumieres
         uLightDir_vs = glGetUniformLocation(_program.getGLId(), "uLightDir_vs");
         uLightIntensity = glGetUniformLocation(_program.getGLId(), "uLightIntensity");
@@ -119,12 +119,36 @@ struct MultiLightProgram {
         uAmbientLight = glGetUniformLocation(_program.getGLId(), "uAmbientLight");
     }
 };
+// GLSL Program with the Text fragment shader
+struct TextProgram {
+    glimac::Program _program;
+
+    GLint uMVPMatrix;
+    GLint uMVMatrix;
+    GLint uNormalMatrix;
+    GLint uTexture;
+
+	GLint uTextColor;
+
+    TextProgram()
+        :_program(loadProgram(Settings::instance().appPath().dirPath() + "shaders/text.vs.glsl",
+                              Settings::instance().appPath().dirPath() + "shaders/text.fs.glsl"))
+    {
+        std::cout << "Loading Text program" << std::endl;
+        uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
+        uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
+        uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
+        uTexture = glGetUniformLocation(_program.getGLId(), "uTexture");
+		uTextColor = glGetUniformLocation(_program.getGLId(), "uTextColor");
+    }
+};
 
 struct ProgramList {
     NormalProgram normalProgram;
     TextureProgram textureProgram;
     DirectionalLightProgram directionalLightProgram;
     MultiLightProgram multiLightProgram;
+	TextProgram textProgram;
 };
 
 }

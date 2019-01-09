@@ -192,7 +192,7 @@ void GameManager::initGame() {
 
 	// TODO : add a parameter to loadLevel function in order to load a given level
 	// (but keep loadLevel() without parameter to load the infinite level)
-	if (_levelName == "Endless") {
+	if (_levelName == "Infinite") {
 		_game = std::unique_ptr<Game>(new Game());
 	} else {
 		_game = std::unique_ptr<Game>(new Game(_levelName));

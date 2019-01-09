@@ -6,15 +6,15 @@ namespace splineengine {
 
 // CONSTRUCTORS
 Spline::Spline()
-	:_segmentLength(defaultSegmentLength)		
+	:_segmentLength(defaultSegmentLength)
 {}
 
 
 Spline::Spline(const std::string levelName)
-	:_segmentLength(defaultSegmentLength)		
+	:_segmentLength(defaultSegmentLength)
 {
 	// TODO THIS IS PLACEHOLDER UNTIL WE CAN LOAD A SPLINE FROM FILE
-	// if (levelId == "Endless") {
+	// if (levelId == "Infinite") {
 		glm::vec3 tmpAnchor(1.f,1.f,1.f);
 		_anchors.push_back(tmpAnchor);
 	    for (size_t i=1; i<defaultAnchorsNb; ++i) {
@@ -27,7 +27,7 @@ void Spline::addAnchor() {
 	float i = _anchors.size(); // id of the anchor we are going to add;
 	glm::vec3 tmpAnchor = _anchors.back();
     	tmpAnchor += 10.f*glm::normalize(
-    		glm::vec3(glm::sin(12.f*i*splineCuvature),0.4*glm::sin(-20.f*i*splineCuvature),glm::cos(12.f*i*splineCuvature)) * 
+    		glm::vec3(glm::sin(12.f*i*splineCuvature),0.4*glm::sin(-20.f*i*splineCuvature),glm::cos(12.f*i*splineCuvature)) *
     		glm::abs(glm::sphericalRand(1.f))
     		+glm::vec3(0.03f*i,0,0)
     	);
@@ -47,15 +47,15 @@ glm::vec3 Spline::point(const float t) const {
 
 	if (pos <= 0)
 		return _segmentLength*glm::mix(_anchors[0], _anchors[1], pos+1);
-	
-	if (pos+3 >= _anchors.size()) 
+
+	if (pos+3 >= _anchors.size())
 		return _segmentLength*glm::mix(_anchors[_anchors.size()-2], _anchors[_anchors.size()-1], pos-_anchors.size()+3);
-	
+
 	const glm::vec3 p0 = _anchors[i];
 	const glm::vec3 p1 = _anchors[i+1];
 	const glm::vec3 p2 = _anchors[i+2];
 	const glm::vec3 p3 = _anchors[i+3];
-   
+
 	return _segmentLength*getCatmullRomPosition(tmp, p0, p1, p2, p3);
 }
 
@@ -85,7 +85,7 @@ glm::mat4 Spline::camMatrix(const glm::vec3& sPoint) const {
 	// TODO : this will probably go in the camera class
 
 	glm::mat4 camMat = glm::translate(glm::mat4(), fwdVec);
-        
+
 	camMat = glm::rotate(camMat, -lookDownAngle -lookDownFactor * sPoint[UP], leftVec);
 
 	// 3 camera normal distance to the spline (up-down)
@@ -93,7 +93,7 @@ glm::mat4 Spline::camMatrix(const glm::vec3& sPoint) const {
 
 	// 2 camera rotation (left-right)
 	camMat = glm::rotate(camMat, sPoint[LEFT], fwdVec);
-	
+
 	// 1 moving the camera forward and have it face toward the spline derivate
 	float fwdPos = sPoint[FWD] - camLead;
 	camMat = camMat * glm::lookAt(point(fwdPos), point(fwdPos) + point(fwdPos+deltaSpline) - point(fwdPos-deltaSpline), upVec);
@@ -102,16 +102,16 @@ glm::mat4 Spline::camMatrix(const glm::vec3& sPoint) const {
 }
 
 glm::mat4 Spline::matrix(const glm::vec3& sPoint) const {
-	
+
 	// 1 moving the object forward and have it face toward the spline derivate
 	glm::mat4 objMat = glm::inverse(glm::lookAt(point(sPoint[FWD]), point(sPoint[FWD]+deltaSpline), upVec));
-		
+
 	// 2 object rotation (left-right)
 	objMat = glm::rotate(objMat, -sPoint[LEFT], fwdVec);
-	
+
 	// 3 object normal distance to the spline (up-down)
 	objMat = glm::translate(objMat, sPoint[UP] * upVec);
-	
+
 	return objMat;
 
 	// don't work good anymore since lookDownFactor was introduces
@@ -121,18 +121,18 @@ glm::mat4 Spline::matrix(const glm::vec3& sPoint) const {
 
 
 // glm::mat4 Spline::camMatrix(const glm::vec3 sPoint) {
-//     glm::mat4 transformMatrix;    
+//     glm::mat4 transformMatrix;
 //     //camera part
 //     //how far have we traveled on the spline ?
 
-//     //std::cout << playerUpSpeed << std::endl; 
+//     //std::cout << playerUpSpeed << std::endl;
 
 //     float delta = 0.3; //used to calculate a derivate
 
 //     //translation of the camera folowing the spline
 //     glm::vec3 worldPosition = point(sPoint[FWD]);
 
-    
+
 //     // calculating the 3 vectors of the spline reference
 //     // used to rotate the camera -> face the direction of the spline
 
@@ -140,7 +140,7 @@ glm::mat4 Spline::matrix(const glm::vec3& sPoint) const {
 //     glm::vec3 zS = glm::normalize(point(sPoint[FWD]-delta) - point(sPoint[FWD]+delta));
 //     glm::vec3 xS = glm::normalize(glm::cross(glm::vec3(0,1,0), zS));
 //     glm::vec3 yS = glm::normalize(glm::cross(-zS, xS));
-    
+
 //     //using the curvature of the spline  as the up direction --> makes buggy code
 //     // glm::vec3 zS = glm::normalize(spline.point(camProgress+delta) - spline.point(camProgress));
 //     // glm::vec3 xS = glm::normalize(glm::cross(spline.point(camProgress) - spline.point(camProgress-delta), zS));
@@ -174,5 +174,3 @@ glm::mat4 Spline::matrix(const glm::vec3& sPoint) const {
 
 
 }
-
-

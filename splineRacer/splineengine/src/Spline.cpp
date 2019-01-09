@@ -1,6 +1,8 @@
 #include "splineengine/Spline.hpp"
 
 #include <iostream>
+#include <glm/gtc/noise.hpp>
+
 namespace splineengine {
 
 
@@ -15,24 +17,34 @@ Spline::Spline(const std::string levelName)
 {
 	// TODO THIS IS PLACEHOLDER UNTIL WE CAN LOAD A SPLINE FROM FILE
 	// if (levelId == "Infinite") {
-		glm::vec3 tmpAnchor(1.f,1.f,1.f);
-		_anchors.push_back(tmpAnchor);
-	    for (size_t i=1; i<defaultAnchorsNb; ++i) {
-	    	addAnchor();
-	    }
+	// first point : gives the general direction of the spline (random with y = 0)
+	glm::vec3 tmpAnchor = glm::normalize(glm::abs(glm::sphericalRand(1.f)*glm::vec3(1.f,0.f,1.f)));
+	_anchors.push_back(tmpAnchor);
+    for (size_t i=1; i<defaultAnchorsNb; ++i) {
+    	addAnchor();
+    }
 	//} else { loadfromfile()... }
 }
 
 void Spline::addAnchor() {
 	float i = _anchors.size(); // id of the anchor we are going to add;
-	glm::vec3 tmpAnchor = _anchors.back();
+	glm::vec3 prevAnchor = _anchors.back();
 	
-	tmpAnchor += 10.f*glm::normalize(
-		glm::vec3(glm::sin(12.f*i*splineCuvature),0.4*glm::sin(-20.f*i*splineCuvature),glm::cos(12.f*i*splineCuvature)) *
+	// random vec with x,y,z in -0.5,0.5
+	glm::vec3 randomVec = glm::normalize(
 		glm::abs(glm::sphericalRand(1.f))
-		+glm::vec3(0.03f*i,0,0)
-	);
-	_anchors.push_back(tmpAnchor);
+	) - 0.5f * glm::vec3(1.f);
+
+	randomVec = glm::normalize(splineSmoothness * glm::normalize(prevAnchor) + randomVec);
+	//10 is the standard length between 2 anchors (can be changed with no effect on speed with defaultSegmentLength)
+	prevAnchor += 10.f * randomVec;
+
+	// glm::vec3 newVec = 100.f * (glm::vec3(
+	// 	glm::perlin(glm::vec3(1+i*0.1f,0.f,0.f)),
+	// 	glm::perlin(glm::vec3(0.f,i*0.1f,0.f)),
+	// 	glm::perlin(glm::vec3(0.f,0.f,1+i*0.1f))
+	// ));
+	_anchors.push_back(prevAnchor);
 }
 
 void Spline::addAnchor(const glm::vec3& anchor) {

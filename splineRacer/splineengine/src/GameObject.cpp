@@ -107,6 +107,7 @@ void GameObject::update() {
                 break;
             case SCALE_SIN :
                 _scale += scaleSinAdjustedAmp * dt * (glm::sin(t * scaleSinFreq * 2.f * M_PI));
+                _scale = glm::abs(_scale);
                 break;
         };
     }

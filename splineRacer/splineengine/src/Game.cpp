@@ -71,7 +71,7 @@ Game::Game(const std::string& levelName)
 	_finishLine(GameObject(
 		AssetManager::instance().models()["finish_line"],
 		_spline, false,
-		Transform(glm::vec3(0.f), glm::vec3(1.f))
+		Transform(glm::vec3(0.f), glm::vec3(6.f))
 	))
 {
 	// TODO - OK now ?
@@ -138,7 +138,7 @@ void Game::loadLevel(const std::string& levelName) {
 			assetManager.models()["prism"], _spline, false,
 			Transform(
 				glm::vec3(i, 0, 0),
-				glm::vec3((2.f*glm::sin(i)) + 4.f),
+				glm::vec3(1.f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			),
 			{ROT_CONST_FWD, SCALE_SIN}

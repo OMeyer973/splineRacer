@@ -3,6 +3,7 @@
 #define __RENDER__MANAGER__HPP
 
 #include <iostream>
+#include <glimac/Program.hpp>
 #include <glimac/SDLWindowManager.hpp>
 #include <splineengine/Camera.hpp>
 #include <splineengine/Texture.hpp>
@@ -10,8 +11,12 @@
 #include <splineengine/GameObject.hpp>
 #include <splineengine/GLSLProgram.hpp>
 #include <splineengine/Light.hpp>
+#include <splineengine/AssetManager.hpp>
 
 namespace splineengine {
+
+// forward declaration
+class GameObject;
 
 /// \brief This class is used to handle shader choice and matrices calculations
 class RenderManager {
@@ -33,8 +38,9 @@ class RenderManager {
 			_MVMatrix = glm::translate(camera.getViewMatrix(), -5.f*fwdVec);
 			_normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
 			_globalMatrix = _MVMatrix;
-			
+
 			_lightsCount = 0;
+			_textColor = glm::vec3(1.f, 1.f, 1.f);
 
 			if (debug) std::cout << "done." << std::endl;
 		};
@@ -45,7 +51,7 @@ class RenderManager {
 
 		/// \brief Update _MVMatrix and _normalMatrix
 		void updateMVMatrix(Camera &camera, glm::mat4 transformMatrix, glm::vec3 scale);
-		
+
 		/// \brief Update _globalMatrix
 		void updateGlobalMatrix();
 
@@ -108,11 +114,17 @@ class RenderManager {
 					  const glm::vec3 &posOrDir,
 					  const glm::vec3 &Kd,
 					  const glm::vec3 &Ks,
-					  const float &shininess, 
+					  const float &shininess,
 					  const glm::vec3 &lightIntensity);
 
 		/// \brief Update Light position and direction
 		void clearLights();
+
+		/// \brief Draw distance to alien
+		void drawDistanceToAlien(const float distance);
+
+		/// \brief Draw score
+		void drawScore(const unsigned int score);
 
 	// MEMBERS
 	protected:
@@ -136,8 +148,12 @@ class RenderManager {
 
 		/// \brief Lights
 		std::vector<Light> _lights;
-		/// \brief Lights
+
+		/// \brief Lights count
 		unsigned int _lightsCount;
+
+		/// \brief Text color
+		glm::vec3 _textColor;
 
 };
 

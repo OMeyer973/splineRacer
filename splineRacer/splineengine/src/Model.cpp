@@ -9,7 +9,7 @@ namespace splineengine {
 		if (debug) std::cout << "Model: Default constructor" << std::endl;
 	}
 
-	Model::Model(const std::string& modelName, const std::string& textureName) {
+	Model::Model(const std::string& modelName) {
 		if (debug) std::cout << "Model: Constructor by Model Name" << std::endl;
 		glimac::FilePath modelPath = Settings::instance().appPath().dirPath() + "../../splineRacer/assets/models/" + modelName + "/" + modelName;
 		glimac::FilePath objPath(modelPath.addExt(".obj")); // Constructeur par copie
@@ -23,24 +23,16 @@ namespace splineengine {
 		setVBO(_geometry);
 		setIBO(_geometry);
 		setVAO();
-
-		// Texture
-		_textureName = textureName;
-		setTexture(textureName);
 	};
 
 	Model::Model(const Model &model):
 		_geometry(model._geometry),
-		_collider(model._collider),
-		_textureID(model._textureID)
-		// _textureName(model._textureName)
+		_collider(model._collider)
 	{
 		if (debug) std::cout << "Model: Copy Constructor" << std::endl;
 		setVBO(_geometry);
 		setIBO(_geometry);
 		setVAO();
-		// setTexture(_textureName);
-		// setTexture("finish_line2.jpg");
 	};
 
 	/* Destructor */
@@ -92,13 +84,5 @@ namespace splineengine {
 		_VAO = vao;
 	};
 
-void Model::setTexture(const std::string textureName) {
-	if (debug) std::cout << "setTexture" << std::endl;
-	Texture texture(textureName);
-	_textureID = texture.getTextureID();
-	// _textureName = textureName;
-	if (debug) std::cout << "Texture ID: " << _textureID << std::endl;
-	if (debug) std::cout << "Texture Name: " << _textureName << std::endl;
-}
 
 }

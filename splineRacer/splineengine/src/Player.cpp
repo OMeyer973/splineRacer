@@ -42,13 +42,13 @@ void Player::updatePosition(const float dt) {
 
 void Player::update() {
 	GameObject::update();
-	const float dt = Settings::instance().deltaTime(); 
+	const float dt = Settings::instance().deltaTime();
 	_sInput[LEFT] = glm::clamp(_sInput[LEFT], -1.f, 1.f);
 	_sInput[UP] = glm::clamp(_sInput[UP], -1.f, 1.f);
 	updateSpeed(dt);
 	updatePosition(dt);
 
-	
+
 	if (_collisionCooldownTimer > 0)
 		_collisionCooldownTimer -= dt;
 
@@ -61,7 +61,7 @@ void Player::doCollisionWith(GameObject& other) {
 
 void Player::doCollisionWith(Obstacle& other) {
 	if (debug) std::cout << "doing player collision behaviour with Obstacle : Bounce" << std::endl;
-	
+
 	// Bounce
 	if (_collisionCooldownTimer <= 0) {
 		_sSpeed = -_sSpeed * defaultPlayerBounceFactor;
@@ -81,36 +81,36 @@ void Player::doCollisionWith(Chaser& chaser) {
 
 
 void Player::draw(RenderManager &renderManager, Camera &camera) {
+	glBindTexture(GL_TEXTURE_2D, _textureID);
 	glBindVertexArray(_model.VAO());
-	glBindTexture(GL_TEXTURE_2D, _model.textureID());
 
 	/* On boucle sur les meshs de l'object pour les afficher un par un et
 	   appliquer des textures ou des tranformations différentes pour chaque mesh. */
 	glm::mat4 MVMatrix;
-	
+
 	for (int i = 0; i < _model.geometry().getMeshCount(); ++i)
 	{
 		MVMatrix = renderManager.splineCamMatrix() * this->matrix();
 		renderManager.updateMVMatrix(camera, MVMatrix, _scale);
 		renderManager.useProgram(MULTI_LIGHT);
-		
+
 		const glimac::Geometry::Mesh* currentMesh = (_model.geometry().getMeshBuffer()+i);
 		GLint indexCount = currentMesh->m_nIndexCount;
 		GLint indexOffset = currentMesh->m_nIndexOffset;
-		
+
 		if (currentMesh->m_sName == "propeller") // Si le mesh courant correspond aux hélices
 		{
 			//TODO : fait des segfault chez olivier des fois (mais je crois que c'est des problèmes de compil local et de lib pt)
 			MVMatrix = renderManager.splineCamMatrix() * glm::rotate(this->matrix(), _propellerRotationAngle, fwdVec);
 			renderManager.updateMVMatrix(camera, MVMatrix, _scale);
 			renderManager.useProgram(MULTI_LIGHT);
-		} 
+		}
 
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (const GLvoid*) (indexOffset * sizeof(GLuint)));
 	}
 
-	glBindTexture(GL_TEXTURE_2D, _model.textureID());
 	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 }

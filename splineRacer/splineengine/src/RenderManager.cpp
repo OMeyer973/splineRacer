@@ -1,11 +1,8 @@
 #include <splineengine/RenderManager.hpp>
-#include <splineengine/Model.hpp>
-#include <splineengine/AssetManager.hpp>
-#include <glimac/Program.hpp>
 
 namespace splineengine {
 
-void RenderManager::updateMVMatrix(Camera &camera, glm::mat4 transformMatrix, glm::vec3 scale) {
+void RenderManager::updateMVMatrix(Camera &camera, 	glm::mat4 transformMatrix, glm::vec3 scale) {
 	_MVMatrix = camera.getViewMatrix() * transformMatrix;
 	_normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
 	_MVMatrix = glm::scale(_MVMatrix, scale);
@@ -23,7 +20,7 @@ void RenderManager::drawObject(GameObject& obj, Camera& camera) {
 }
 
 void RenderManager::useProgram(FS shader) {
-	
+
 	if (AssetManager::instance().models().size() != 0)
 	{
 		const ProgramList& programList = AssetManager::instance().programList();
@@ -56,7 +53,7 @@ void RenderManager::useProgram(FS shader) {
 		}
 		sendUniformsToShaders(shader);
 	}
-	
+
 }
 
 void RenderManager::sendUniformsToShaders(FS shader)
@@ -127,9 +124,6 @@ void RenderManager::sendUniformsToShaders(FS shader)
 		case MULTI_LIGHT :
 			ambientLight = glm::vec3(.05);
 
-			// for (int i = 0; i < _lightsCount; ++i) {
-			// 	_lights[i].sendLightShader(programList.multiLightProgram, refLight);
-			// }
 			for (std::vector<Light>::iterator it = _lights.begin(); it != _lights.end(); ++it) {
 				it->sendLightShader(programList.multiLightProgram, refLight);
 			}
@@ -147,21 +141,20 @@ void RenderManager::sendUniformsToShaders(FS shader)
 			glUniform1i(programList.multiLightProgram.uTexture, 0);
 
 			break;
-		
+
 		case TEXT :
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 			_uProjection = glm::ortho(0.0f, static_cast<GLfloat>(Settings::instance().windowWidth()), 0.0f, static_cast<GLfloat>(Settings::instance().windowHeight()));
-			
+
 			glUniformMatrix4fv(programList.textProgram.uProjection, 1, GL_FALSE,
 				glm::value_ptr(_uProjection));
 
 			glUniform1i(programList.textProgram.uTexture, 0);
 
-			glUniform3f(programList.textProgram.uTextColor, 1.f, 1.f, 1.f);
+			glUniform3fv(programList.textProgram.uTextColor, 1, glm::value_ptr(_textColor));
 
-			// glDisable(GL_BLEND);
 			break;
 
 		default:
@@ -314,6 +307,49 @@ void RenderManager::updateGameLights() {
 void RenderManager::clearLights() {
 	_lights.clear();
 	_lightsCount = 0;
+}
+
+void RenderManager::drawDistanceToAlien(const float distance) {
+	int maxWidth = 30;
+	int distanceToAlien = glm::clamp(static_cast<int>(distance * 10), 0, maxWidth);
+	std::string distanceToAlienText = "";
+	std::string distanceToAlienTextBackground = "";
+	for (int i = 0; i < distanceToAlien; ++i) {
+		distanceToAlienText += "I";
+	}
+	for (int i = 0; i < maxWidth; ++i) {
+		distanceToAlienTextBackground += "I";
+	}
+	_textColor = glm::vec3(1.f - distanceToAlien/(1.f*maxWidth), (.9f*distanceToAlien)/(1.f*maxWidth), (.4f*distanceToAlien)/(1.f*maxWidth));
+	useProgram(TEXT);
+	AssetManager::instance().textManager().renderText(
+		distanceToAlienText,
+		Settings::instance().windowWidth() * .1f,
+		Settings::instance().windowHeight() - 40,
+		.4f,
+		glm::vec3(1.f, 1.f, 1.f)
+	);
+	_textColor = glm::vec3(1.f, 1.f, 1.f);
+	useProgram(TEXT);
+	AssetManager::instance().textManager().renderText(
+		distanceToAlienTextBackground,
+		Settings::instance().windowWidth() * .1f,
+		Settings::instance().windowHeight() - 40,
+		.4f,
+		glm::vec3(1.f, 1.f, 1.f)
+	);
+}
+
+void RenderManager::drawScore(const unsigned int score) {
+	_textColor = glm::vec3(1.f, .5f, 0.3f);
+	useProgram(TEXT);
+	AssetManager::instance().textManager().renderText(
+		"Score : " + std::to_string(score),
+		Settings::instance().windowWidth() * .75f,
+		Settings::instance().windowHeight() - 40,
+		.4f,
+		glm::vec3(1.f, 1.f, 1.f)
+	);
 }
 
 }

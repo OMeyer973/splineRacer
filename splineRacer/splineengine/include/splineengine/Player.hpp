@@ -29,7 +29,7 @@ const float propellerRotationSpeed = 0.5f;
 const float tiltFactor = 0.05f;
 
 // factor by wich to miltiply the max speed each time speed is increased in endless mode
-const float endlessSpeedMultiplier = 1.2f; 
+const float endlessSpeedMultiplier = 1.2f;
 
 
 /// \brief Represents the player as a Gameobject but with more useful stuff
@@ -39,7 +39,7 @@ class Player : public GameObject {
         // CONSTRUCTORS - DESTRUCTORS
         /// \brief default player Constructor
         Player(
-            const GameObject& gameObject   = GameObject(Model(), Spline(), false, Transform(defaultPlayerPos)),
+            const GameObject& gameObject   = GameObject(Model(), Spline(), "default.png" , false, Transform(defaultPlayerPos)),
             const glm::vec3   maxSpeed     = defaultPlayerMaxSpeed,
             const glm::vec3   acceleration = defaultPlayerAcceleration
         );
@@ -50,7 +50,7 @@ class Player : public GameObject {
 
         // Player& operator=(const Player& player) {
         // };
-        
+
 
         // CONST GETTERS
         /// \brief get the speed of the player (relative to the spline) as a const reference
@@ -90,10 +90,10 @@ class Player : public GameObject {
         /// \brief update the player status at each frame
         void update();
 
-        /// \brief trigger collision behavior when colliding with another Gameobjects. 
+        /// \brief trigger collision behavior when colliding with another Gameobjects.
         void doCollisionWith(GameObject& other);
 
-        /// \brief trigger collision behavior when colliding with an Obstacle. 
+        /// \brief trigger collision behavior when colliding with an Obstacle.
         void doCollisionWith(Obstacle& other);
 
         /// \brief Trigger collision behavior when colliding with a Collectable object.
@@ -129,7 +129,7 @@ class Player : public GameObject {
 
         /// \brief Propeller rotation
         float _propellerRotationAngle;
-        
+
         // CONSTANTS
 };
 }

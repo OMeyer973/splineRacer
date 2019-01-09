@@ -363,16 +363,9 @@ void Game::render() {
 	// if (_gameState == LEVELLOSE)
 	// if (_gameState == ENDLESSOVER)
 
-	drawDistanceToAlien();
+	_renderManager.drawDistanceToAlien(_player.sPosition()[FWD] - _alien.sPosition()[FWD]);
 
-	_renderManager.useProgram(TEXT);
-	AssetManager::instance().textManager().renderText(
-		"Score: " + std::to_string(_player.score()),
-		Settings::instance().windowWidth() * .75f,
-		Settings::instance().windowHeight() - 40,
-		.4f,
-		glm::vec3(1.f, 1.f, 1.f)
-	);
+	_renderManager.drawScore(_player.score());
 
 }
 
@@ -461,23 +454,6 @@ void Game::renderObjList(std::list<T>& objList) {
 		}
 	}
 }
-
-void Game::drawDistanceToAlien() {
-	_renderManager.useProgram(TEXT);
-	int distanceToAlien = glm::clamp(static_cast<int>((_player.sPosition()[FWD] - _alien.sPosition()[FWD]) * 10), 0, 30);
-	std::string distanceToAlienText = "";
-	for (int i = 0; i < distanceToAlien; ++i) {
-		distanceToAlienText += "I";
-	}
-	AssetManager::instance().textManager().renderText(
-		distanceToAlienText,
-		Settings::instance().windowWidth() * .1f,
-		Settings::instance().windowHeight() - 40,
-		.4f,
-		glm::vec3(1.f, 1.f, 1.f)
-	);
-}
-
 
 
 

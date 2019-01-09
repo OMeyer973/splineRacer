@@ -40,6 +40,7 @@ class RenderManager {
 			_globalMatrix = _MVMatrix;
 
 			_lightsCount = 0;
+			_textColor = glm::vec3(1.f, 1.f, 1.f);
 
 			if (debug) std::cout << "done." << std::endl;
 		};
@@ -119,6 +120,12 @@ class RenderManager {
 		/// \brief Update Light position and direction
 		void clearLights();
 
+		/// \brief Draw distance to alien
+		void drawDistanceToAlien(const float distance);
+
+		/// \brief Draw score
+		void drawScore(const unsigned int score);
+
 	// MEMBERS
 	protected:
 		/// \brief Projection matrix
@@ -141,8 +148,12 @@ class RenderManager {
 
 		/// \brief Lights
 		std::vector<Light> _lights;
-		/// \brief Lights
+
+		/// \brief Lights count
 		unsigned int _lightsCount;
+
+		/// \brief Text color
+		glm::vec3 _textColor;
 
 };
 

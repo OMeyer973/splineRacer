@@ -153,9 +153,8 @@ void RenderManager::sendUniformsToShaders(FS shader)
 
 			glUniform1i(programList.textProgram.uTexture, 0);
 
-			glUniform3f(programList.textProgram.uTextColor, 1.f, 1.f, 1.f);
+			glUniform3fv(programList.textProgram.uTextColor, 1, glm::value_ptr(_textColor));
 
-			// glDisable(GL_BLEND);
 			break;
 
 		default:
@@ -308,6 +307,49 @@ void RenderManager::updateGameLights() {
 void RenderManager::clearLights() {
 	_lights.clear();
 	_lightsCount = 0;
+}
+
+void RenderManager::drawDistanceToAlien(const float distance) {
+	int maxWidth = 30;
+	int distanceToAlien = glm::clamp(static_cast<int>(distance * 10), 0, maxWidth);
+	std::string distanceToAlienText = "";
+	std::string distanceToAlienTextBackground = "";
+	for (int i = 0; i < distanceToAlien; ++i) {
+		distanceToAlienText += "I";
+	}
+	for (int i = 0; i < maxWidth; ++i) {
+		distanceToAlienTextBackground += "I";
+	}
+	_textColor = glm::vec3(1.f - distanceToAlien/(1.f*maxWidth), (.9f*distanceToAlien)/(1.f*maxWidth), (.4f*distanceToAlien)/(1.f*maxWidth));
+	useProgram(TEXT);
+	AssetManager::instance().textManager().renderText(
+		distanceToAlienText,
+		Settings::instance().windowWidth() * .1f,
+		Settings::instance().windowHeight() - 40,
+		.4f,
+		glm::vec3(1.f, 1.f, 1.f)
+	);
+	_textColor = glm::vec3(1.f, 1.f, 1.f);
+	useProgram(TEXT);
+	AssetManager::instance().textManager().renderText(
+		distanceToAlienTextBackground,
+		Settings::instance().windowWidth() * .1f,
+		Settings::instance().windowHeight() - 40,
+		.4f,
+		glm::vec3(1.f, 1.f, 1.f)
+	);
+}
+
+void RenderManager::drawScore(const unsigned int score) {
+	_textColor = glm::vec3(1.f, .5f, 0.3f);
+	useProgram(TEXT);
+	AssetManager::instance().textManager().renderText(
+		"Score : " + std::to_string(score),
+		Settings::instance().windowWidth() * .75f,
+		Settings::instance().windowHeight() - 40,
+		.4f,
+		glm::vec3(1.f, 1.f, 1.f)
+	);
 }
 
 }

@@ -52,7 +52,6 @@ void Player::update() {
 	if (_collisionCooldownTimer > 0)
 		_collisionCooldownTimer -= dt;
 
-	std::cout << std::endl;
 	_propellerRotationAngle -= propellerRotationSpeed;
 }
 

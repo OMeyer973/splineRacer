@@ -28,6 +28,10 @@ const float maxPlayerUp = 20.f;
 const float propellerRotationSpeed = 0.5f;
 const float tiltFactor = 0.05f;
 
+// factor by wich to miltiply the max speed each time speed is increased in endless mode
+const float endlessSpeedMultiplier = 1.2f; 
+
+
 /// \brief Represents the player as a Gameobject but with more useful stuff
 class Player : public GameObject {
     // METHODS
@@ -70,7 +74,7 @@ class Player : public GameObject {
         glm::vec3& speed() { return _sSpeed; }
 
         /// \brief get the maximum speed of the player (relative to the spline) as a reference
-        glm::vec3& maxSpeed() { return _sMaxSpeed; }
+        glm::vec3& increaseSpeed() { _sMaxSpeed *= endlessSpeedMultiplier; }
 
         /// \brief get the left-right input direction as a reference
         float& goingLeft() { return _sInput[LEFT]; }

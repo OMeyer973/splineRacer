@@ -10,7 +10,7 @@
 
 namespace splineengine {
 
-const int defaultAnchorsNb = 20;
+const int defaultAnchorsNb = 10;
 const float defaultSegmentLength = 3.f;
 const float splineCuvature = 0.02f;
 

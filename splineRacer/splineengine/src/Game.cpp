@@ -247,6 +247,8 @@ void Game::update() {
 			_spline.addAnchor();
 		}
 		generateLevel(oldLength, _spline.length());
+		if (debug) std::cout << "player speed increased" << std::endl;
+		_player.increaseSpeed();
 	}
 
 

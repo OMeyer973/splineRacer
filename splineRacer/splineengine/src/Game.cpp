@@ -33,7 +33,7 @@ Game::Game()
 	_finishLine(GameObject( // will not be displayed in Endless anyway
 		AssetManager::instance().models()["finish_line"],
 		_spline, true, 
-		Transform()
+		Transform(glm::vec3(0.f), glm::vec3(5.f))
 	))
 {
 	std::cout << "infinite game constructor called " << std::endl;
@@ -71,7 +71,7 @@ Game::Game(const std::string& levelName)
 	_finishLine(GameObject(
 		AssetManager::instance().models()["finish_line"],
 		_spline, false,
-		Transform(glm::vec3(0.f), glm::vec3(1.f))
+		Transform(glm::vec3(0.f), glm::vec3(8.f))
 	))
 {
 	// TODO - OK now ?
@@ -157,6 +157,7 @@ void Game::generateLevel(const float start, const float finish) {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
 
+	
 
 	for (float i=start; i<finish; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
@@ -223,12 +224,8 @@ void Game::update() {
 	//PHYSICS UPDATE
 	// Update player position and speed
 	_player.update();
+	// Update alien position and speed
 	_alien.update();
-	
-	// Collectables animation
-	// for (std::list<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
-	// 	(*it).update(dt, 0, _player.sPosition());
-	// }
 
 	// Check for collisions with obstacles
 	updateObstacleList(_obstacles);
@@ -400,7 +397,7 @@ void Game::updateObstacleList (std::list<Obstacle>& objList) {
 
 void Game::updateCollectableList (std::list<Collectable>& objList) {
 	typename std::list<Collectable>::iterator it = objList.begin();
-		while (it != objList.end()) {
+	while (it != objList.end()) {
 		// if the object is near enough to the player : check collision
 		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxCollideDistance) {
 			it->update(_player.sPosition());

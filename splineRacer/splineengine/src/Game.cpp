@@ -15,7 +15,7 @@ Game::Game()
 	_player(GameObject(
 		AssetManager::instance().models()["plane"],
 		_spline,
-		"plane.png",
+		"planetexture2.jpg",
 		 false,
 		Transform(defaultPlayerPos)
 	)),
@@ -39,7 +39,7 @@ Game::Game()
 	_finishLine(GameObject( // will not be displayed in Endless anyway
 		AssetManager::instance().models()["finish_line"],
 		_spline,
-		"finish_line2.png",
+		"finish_line2.jpg",
 		 true,
 		Transform()
 	))
@@ -61,7 +61,7 @@ Game::Game(const std::string& levelName)
 	_player(GameObject(
 		AssetManager::instance().models()["plane"],
 		_spline,
-		"plane.png",
+		"planetexture2.jpg",
 		 false,
 		Transform(defaultPlayerPos)
 	)),
@@ -85,7 +85,7 @@ Game::Game(const std::string& levelName)
 	_finishLine(GameObject(
 		AssetManager::instance().models()["finish_line"],
 		_spline,
-		"finish_line2.png",
+		"finish_line2.jpg",
 		 false,
 		Transform(glm::vec3(0.f), glm::vec3(8.f))
 	))
@@ -153,7 +153,7 @@ void Game::loadLevel(const std::string& levelName) {
 	for (float i=-1; i<_spline.length()+1; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
 			assetManager.models()["prism"], _spline,
-			"prism.png",
+			"cloud.jpg",
 			 false,
 			Transform(
 				glm::vec3(i, 0, 0),
@@ -181,7 +181,7 @@ void Game::generateLevel(const float start, const float finish) {
 	for (float i=start; i<finish; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
 			assetManager.models()["prism"], _spline,
-			"prism.png",
+			"cloud.jpg",
 			true,
 			Transform(
 				glm::vec3(i, 0, 0),
@@ -218,7 +218,7 @@ void Game::generateLevel(const float start, const float finish) {
 		for (float j = 0; j < 6.28; j+=.3f) {
 			_obstacles.push_back(Obstacle(GameObject(
 				assetManager.models()["prism"], _spline,
-				"prism.png",
+				"cloud.jpg",
 				 false,
 				Transform(
 					glm::vec3(i-5, j, 15),
@@ -364,6 +364,7 @@ void Game::render() {
 	// if (_gameState == LEVELLOSE)
 	// if (_gameState == ENDLESSOVER)
 
+	_renderManager.useProgram(TEXT);
 	AssetManager::instance().textManager().renderText(
 		"Score: " + std::to_string(_player.score()),
 		Settings::instance().windowWidth() * .75f,

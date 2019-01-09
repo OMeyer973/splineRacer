@@ -1,20 +1,18 @@
-#include <glimac/SDLWindowManager.hpp>
-#include <glimac/Geometry.hpp>
 #include <splineengine/GameObject.hpp>
 
 
 namespace splineengine {
 
 GameObject::GameObject (
-    const Model& model,
-    const Spline& spline,
-    const std::string& textureName,
-    const bool isStatic,
-    const Transform& transform,
-    //const uint animId
-    const AnimationList& animations
+        const Model& model,
+        const Spline& spline,
+        const std::string& textureName,
+        const bool isStatic,
+        const Transform& transform,
+        //const uint animId
+        const AnimationList& animations
     )
-    :_model(model), _spline(spline),_textureName(textureName), _isStatic(isStatic),
+    :_model(model), _spline(spline),_isStatic(isStatic),
     _sPosition(transform._sPosition), _scale(transform._scale), _rotation(transform._rotation),
     _animations(std::move(animations))
 {
@@ -32,10 +30,16 @@ void GameObject::addAnimation(uint animId) {
 }
 
 GameObject::GameObject(const GameObject& g)
-    :_model(g._model), _spline(g._spline),_textureID(g._textureID), _isStatic(g._isStatic),
-    _sPosition(g._sPosition), _scale(g._scale), _rotation(g._rotation),
+    :_model(g._model),
+    _spline(g._spline),
+    _textureID(g._textureID),
+    _isStatic(g._isStatic),
+    _sPosition(g._sPosition),
+    _scale(g._scale),
+    _rotation(g._rotation),
     _animations(std::move(g._animations)) // list copy
-{};
+{
+};
 
 const glm::mat4 GameObject::matrix() {
     if (_isStatic && _hasMatrix) {
@@ -43,7 +47,7 @@ const glm::mat4 GameObject::matrix() {
     }
 
     glm::mat4 objMatrix = _spline.matrix(_sPosition);
-    //objMatrix = glm::scale(objMatrix, _scale);
+    // objMatrix = glm::scale(objMatrix, _scale);
     objMatrix = glm::rotate(objMatrix, _rotation[FWD],  -fwdVec);
     objMatrix = glm::rotate(objMatrix, _rotation[LEFT], -leftVec);
     objMatrix = glm::rotate(objMatrix, _rotation[UP],   -upVec);
@@ -151,24 +155,18 @@ void GameObject::collideWith(GameObject& other) {
 }
 
 void GameObject::setTexture(const std::string textureName) {
-
 	AssetManager& assetManager = AssetManager::instance();
-	//parcours de la map
     std::map<std::string, Texture>::iterator itTexMap = assetManager.textures().find(textureName);
-	// s'il est différent de la fin c'est qu'il existe
-	if(itTexMap !=  assetManager.textures().end() ){
-		//il existe donc on le récup dans l'asset manager
+	// If texture already exists
+	if (itTexMap !=  assetManager.textures().end()) {
+		// Get it from AssetManager
 		_textureID = itTexMap->second.getTextureID();
-	}else{ // on créé une texture et on la push à la fin de la map
+	} else { 
+		// Create a new texture and add it to AssetManager
 		Texture texture(textureName);
 		_textureID = texture.getTextureID();
+        assetManager.textures().insert(std::make_pair(textureName, texture));
 	}
-
-
-	// _textureID = texture.getTextureID();
-	// _textureName = textureName;
-	if (debug) std::cout << "Texture ID: " << _textureID << std::endl;
-	if (debug) std::cout << "Texture Name: " << _textureName << std::endl;
 }
 
 }

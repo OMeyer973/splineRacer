@@ -9,7 +9,7 @@
 #include <GL/gl.h>
 #include <map>
 #include <splineengine/common.hpp>
-#include <splineengine/RenderManager.hpp>
+#include <splineengine/Settings.hpp>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H

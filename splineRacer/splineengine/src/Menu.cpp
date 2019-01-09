@@ -44,9 +44,10 @@ void Menu::init() {
 
 	//pushing pannels to chose level -maybe change name of model to be more specific
 	for(int i =0; i<4; i++){
+		// std::cout << "Nom texture : " << _levels[3-i] + std::string(".png") << std::endl;
 		_menuItems.push_back(GameObject(
-			assetManager.models()[_levels[3-i]],Spline(),
-			_levels[3-i],
+			assetManager.models()["menu"],Spline(),
+			_levels[3-i] + std::string(".png"),
 			false,
 			Transform(
 				glm::vec3(0.f, -4 + i*2.f, 2.4f),
@@ -60,7 +61,7 @@ void Menu::init() {
 	//pushing skybox
 	_skybox.push_back(GameObject(
 		assetManager.models()["skybox"], Spline(),
-		"skybox_desert",
+		"skybox_desert.png",
 		true,
 		Transform(
 			glm::vec3(0.f),
@@ -68,13 +69,6 @@ void Menu::init() {
 			glm::vec3(0.f)
 		)
 	));
-
-	// _menuItems[0].scale() = glm::vec3(1.5f);
-
-	//Trying to change texture from a same object
-	_menuItems[1].setTexture("Scores.png");
-	// _menuItems[2].model().setTexture("QuitToMenu.png");
-	// _menuItems[0].model().setTexture("Save.png");
 
 	_renderManager.initMenuLights();
 

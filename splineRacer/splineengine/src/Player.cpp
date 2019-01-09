@@ -81,8 +81,8 @@ void Player::doCollisionWith(Chaser& chaser) {
 
 
 void Player::draw(RenderManager &renderManager, Camera &camera) {
-	glBindVertexArray(_model.VAO());
 	glBindTexture(GL_TEXTURE_2D, _textureID);
+	glBindVertexArray(_model.VAO());
 
 	/* On boucle sur les meshs de l'object pour les afficher un par un et
 	   appliquer des textures ou des tranformations différentes pour chaque mesh. */
@@ -109,8 +109,8 @@ void Player::draw(RenderManager &renderManager, Camera &camera) {
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (const GLvoid*) (indexOffset * sizeof(GLuint)));
 	}
 
-	glBindTexture(GL_TEXTURE_2D, _textureID);
 	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 }

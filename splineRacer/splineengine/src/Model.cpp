@@ -23,20 +23,16 @@ namespace splineengine {
 		setVBO(_geometry);
 		setIBO(_geometry);
 		setVAO();
-
 	};
 
 	Model::Model(const Model &model):
 		_geometry(model._geometry),
 		_collider(model._collider)
-		// _textureName(model._textureName)
 	{
 		if (debug) std::cout << "Model: Copy Constructor" << std::endl;
 		setVBO(_geometry);
 		setIBO(_geometry);
 		setVAO();
-		// setTexture(_textureName);
-		// setTexture("finish_line2.jpg");
 	};
 
 	/* Destructor */

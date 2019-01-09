@@ -124,9 +124,6 @@ void RenderManager::sendUniformsToShaders(FS shader)
 		case MULTI_LIGHT :
 			ambientLight = glm::vec3(.05);
 
-			// for (int i = 0; i < _lightsCount; ++i) {
-			// 	_lights[i].sendLightShader(programList.multiLightProgram, refLight);
-			// }
 			for (std::vector<Light>::iterator it = _lights.begin(); it != _lights.end(); ++it) {
 				it->sendLightShader(programList.multiLightProgram, refLight);
 			}

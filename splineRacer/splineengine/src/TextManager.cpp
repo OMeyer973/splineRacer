@@ -5,17 +5,17 @@ namespace splineengine {
 void TextManager::setupTTF() {
 	FT_Library ft;
 	if (FT_Init_FreeType(&ft))
-	std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+		std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
 
 	FT_Face face;
 
 	if (FT_New_Face(ft, (Settings::instance().appPath().dirPath() + "../../splineRacer/assets/fonts/Roboto-Bold.ttf").c_str(), 0, &face))
-	std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+		std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 
 	FT_Set_Pixel_Sizes(face, 0, 48);
 
 	if (FT_Load_Char(face, 'X', FT_LOAD_RENDER))
-	std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+		std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
 
 	// Load the 128 first characters
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
@@ -80,14 +80,14 @@ void TextManager::setupTTF() {
 	// Send the projection
 	// glCheckError();
 
-	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(Settings::instance().windowWidth()), 0.0f, static_cast<GLfloat>(Settings::instance().windowHeight()));
+	// glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(Settings::instance().windowWidth()), 0.0f, static_cast<GLfloat>(Settings::instance().windowHeight()));
 	// glCheckError();
 
 	// AssetManager::Get()->glyphProgram()._Program.use();
 	// glUniformMatrix4fv(AssetManager::Get()->glyphProgram()._uProjection, 1, GL_FALSE, glm::value_ptr(projection));
 
-	RenderManager renderManager;
-	renderManager.useProgram(TEXT);
+	// RenderManager renderManager;
+	// renderManager.useProgram(TEXT);
 
 	// glCheckError();
 }
@@ -97,8 +97,8 @@ void TextManager::renderText(const std::string &text, const GLfloat &x, const GL
 	// Setup the program
 	// const GlyphProgram &gp = AssetManager::Get()->glyphProgram();
 	// gp._Program.use();
-	RenderManager renderManager;
-	renderManager.useProgram(TEXT);
+	// RenderManager renderManager;
+	// renderManager.useProgram(TEXT);
 
 	// Send the color
 	// glUniform3fv(gp._uTextColor, 1, glm::value_ptr(color));

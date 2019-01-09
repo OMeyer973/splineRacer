@@ -11,7 +11,6 @@
 #include <splineengine/GameObject.hpp>
 #include <splineengine/GLSLProgram.hpp>
 #include <splineengine/Light.hpp>
-#include <splineengine/Model.hpp>
 #include <splineengine/AssetManager.hpp>
 
 namespace splineengine {

@@ -184,9 +184,6 @@ class GameObject {
 		/// \brief Texture ID of the model
 		GLuint _textureID;
 
-		/// \brief TextureName
-		std::string _textureName;
-
 };
 
 }

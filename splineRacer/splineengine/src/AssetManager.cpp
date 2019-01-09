@@ -29,5 +29,9 @@ void AssetManager::loadAssets() {
 	_models.insert(std::make_pair("finish_line",Model("finish_line","finish_line2.jpg")));
 }
 
+void AssetManager::setupText() {
+	_textManager.setupTTF();
+}
+
 
 }

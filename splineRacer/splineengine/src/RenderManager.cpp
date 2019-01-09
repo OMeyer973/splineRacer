@@ -23,44 +23,55 @@ void RenderManager::drawObject(GameObject& obj, Camera& camera) {
 }
 
 void RenderManager::useProgram(FS shader) {
-	const ProgramList& programList = AssetManager::instance().programList();
-
-	switch (shader)
+	
+	if (AssetManager::instance().models().size() != 0)
 	{
-		case NORMAL:
-			programList.normalProgram._program.use();
-			break;
+		const ProgramList& programList = AssetManager::instance().programList();
 
-		case TEXTURE:
-			programList.textureProgram._program.use();
-			break;
+		switch (shader)
+		{
+			case NORMAL:
+				programList.normalProgram._program.use();
+				break;
 
-		case DIRECTIONAL_LIGHT:
-			programList.directionalLightProgram._program.use();
-			break;
+			case TEXTURE:
+				programList.textureProgram._program.use();
+				break;
 
-		case MULTI_LIGHT:
-			programList.multiLightProgram._program.use();
-			break;
-		case TEXT:
-			programList.textProgram._program.use();
-			break;
-		default:
-			programList.normalProgram._program.use();
-			break;
+			case DIRECTIONAL_LIGHT:
+				programList.directionalLightProgram._program.use();
+				break;
+
+			case MULTI_LIGHT:
+				programList.multiLightProgram._program.use();
+				break;
+
+			case TEXT:
+				programList.textProgram._program.use();
+				break;
+
+			default:
+				programList.normalProgram._program.use();
+				break;
+		}
+		sendUniformsToShaders(shader);
 	}
-	sendUniformsToShaders(shader);
+	
 }
 
 void RenderManager::sendUniformsToShaders(FS shader)
 {
 	glm::mat4 lightMatrix;
 	glm::vec4 lightVector;
+	glm::mat4 _uProjection;
 
 	const std::string refLight = "uLights";
 	glm::vec3 ambientLight;
 
 	const ProgramList& programList = AssetManager::instance().programList();
+
+	glDisable(GL_BLEND);
+	// // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	switch (shader)
 	{
@@ -136,19 +147,22 @@ void RenderManager::sendUniformsToShaders(FS shader)
 			glUniform1i(programList.multiLightProgram.uTexture, 0);
 
 			break;
-			case TEXT :
+		
+		case TEXT :
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-				glUniformMatrix4fv(programList.textProgram.uMVPMatrix, 1, GL_FALSE,
-					glm::value_ptr(_projMatrix * _MVMatrix));
-				glUniformMatrix4fv(programList.textProgram.uMVMatrix, 1, GL_FALSE,
-					glm::value_ptr(_MVMatrix));
-				glUniformMatrix4fv(programList.textProgram.uNormalMatrix, 1, GL_FALSE,
-					glm::value_ptr(_normalMatrix));
-				
+			_uProjection = glm::ortho(0.0f, static_cast<GLfloat>(Settings::instance().windowWidth()), 0.0f, static_cast<GLfloat>(Settings::instance().windowHeight()));
+			
+			glUniformMatrix4fv(programList.textProgram.uProjection, 1, GL_FALSE,
+				glm::value_ptr(_uProjection));
 
-				glUniform1i(programList.textProgram.uTexture, 0);
+			glUniform1i(programList.textProgram.uTexture, 0);
 
-				break;
+			glUniform3f(programList.textProgram.uTextColor, 1.f, 1.f, 1.f);
+
+			// glDisable(GL_BLEND);
+			break;
 
 		default:
 			break;

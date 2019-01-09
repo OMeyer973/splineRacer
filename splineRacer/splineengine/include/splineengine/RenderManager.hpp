@@ -109,7 +109,7 @@ class RenderManager {
 					  const glm::vec3 &Kd,
 					  const glm::vec3 &Ks,
 					  const float &shininess, 
-					  const glm::vec3 &lightIntensity) ;
+					  const glm::vec3 &lightIntensity);
 
 		/// \brief Update Light position and direction
 		void clearLights();

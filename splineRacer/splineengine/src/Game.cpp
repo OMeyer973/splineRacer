@@ -335,6 +335,14 @@ void Game::render() {
 	// if (_gameState == LEVELLOSE)
 	// if (_gameState == ENDLESSOVER)
 
+	AssetManager::instance().textManager().renderText(
+		"Score: " + std::to_string(_player.score()), 
+		Settings::instance().windowWidth() * .75f, 
+		Settings::instance().windowHeight() - 40, 
+		.4f, 
+		glm::vec3(1.f, 1.f, 1.f)
+	);
+
 }
 
 

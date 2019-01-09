@@ -32,8 +32,15 @@ class Settings {
 		// CONST GETTERS
 		/// \brief get the time difference in seconds between the current frame and the previous (enforced)
 		float deltaTime() const { return _deltaTime; };
+		
 		/// \brief get the current time since the application is running
 		float time() const { return _time; };
+
+		/// \brief get the window width
+		float windowWidth() const { return _windowWidth; };
+
+		/// \brief get the window height
+		float windowHeight() const { return _windowHeight; };
 
 		/// \brief get the application path
 		const glimac::FilePath& appPath() const { return _appPath; };
@@ -62,8 +69,8 @@ class Settings {
 		const float _deltaTime = 1.f/30.f;
 		float _time = 0.f;
 
-
-
 };
+
 }
+
 #endif

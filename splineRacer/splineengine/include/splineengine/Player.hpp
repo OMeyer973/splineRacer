@@ -61,6 +61,9 @@ class Player : public GameObject {
         /// \brief get the up_down input direction as a const
         const float& goingUp() const { return _sInput[UP]; }
 
+        /// \brief get the up_down input direction as a const
+        const unsigned int& score() const { return _score; }
+
 
         // NON-CONST GETTERS (can be used as setters)
         /// \brief get the speed of the player (relative to the spline) as a reference

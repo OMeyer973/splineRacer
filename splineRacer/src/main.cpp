@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
     Settings& settings = Settings::instance();
 	settings.appPath() = glimac::FilePath(argv[0]);
 	GameManager& gameManager = GameManager::instance();
-	
+
 	try {
 		gameManager.init();
 	} 

@@ -8,8 +8,6 @@
 #include <GL/glew.h>
 #include <glimac/SDLWindowManager.hpp>
 #include <glimac/Plane.hpp>
-#include <splineengine/Text.hpp>
-
 
 #include "Settings.hpp"
 #include "common.hpp"

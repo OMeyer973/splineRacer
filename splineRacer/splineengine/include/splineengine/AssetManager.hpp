@@ -6,6 +6,7 @@
 #include <map>
 #include "Model.hpp"
 #include <splineengine/GLSLProgram.hpp>
+#include <splineengine/TextManager.hpp>
 
 namespace splineengine {
 
@@ -28,9 +29,9 @@ class AssetManager {
 		}
 		// prevent copy
 		AssetManager(const AssetManager&) = delete;
-	    AssetManager(AssetManager&&) = delete;
-	    AssetManager& operator=(const AssetManager&) = delete;
-	    AssetManager& operator=(AssetManager&&) = delete;
+		AssetManager(AssetManager&&) = delete;
+		AssetManager& operator=(const AssetManager&) = delete;
+		AssetManager& operator=(AssetManager&&) = delete;
 
 	public:
 		// CONST GETTERS
@@ -38,12 +39,17 @@ class AssetManager {
 
 		const ProgramList& programList() { return _programList; };
 
+		TextManager& textManager() { return _textManager; };
+
 		// NON-CONST GETTERS
 		std::map<std::string, Model>& models() { return _models; };
+
+		void setupText();
 
 	private:
 		// METHODS
 		void loadAssets();
+
 
 		// MEMBERS
 		/// \brief 3D models assets
@@ -58,6 +64,9 @@ class AssetManager {
 
 		/// \brief Program List
 		const ProgramList _programList;
+
+		/// \brief Text Manager
+		TextManager _textManager;
 };
 
 }

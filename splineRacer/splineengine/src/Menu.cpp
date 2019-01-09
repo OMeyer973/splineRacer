@@ -17,6 +17,9 @@ void Menu::init() {
 	//Text skurt = Text();
 	std::cout << "menu init" << std::endl;
 	AssetManager& assetManager = AssetManager::instance();
+
+	assetManager.setupText();
+
 	//setting all the boolean used to determine the state of the menu
 	_isRotatingHorizontally = false;
 	_isRotatingVertically = false;

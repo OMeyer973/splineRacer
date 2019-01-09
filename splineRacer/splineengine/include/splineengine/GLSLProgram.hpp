@@ -123,11 +123,7 @@ struct MultiLightProgram {
 struct TextProgram {
     glimac::Program _program;
 
-    GLint uMVPMatrix;
-    GLint uMVMatrix;
-    GLint uNormalMatrix;
     GLint uTexture;
-
 	GLint uTextColor;
 	GLint uProjection;
 

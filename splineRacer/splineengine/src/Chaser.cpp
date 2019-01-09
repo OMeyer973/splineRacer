@@ -13,7 +13,7 @@ Chaser::Chaser(const GameObject& gameObject, const Player& player, const float d
 void Chaser::update() {
 	const float t = Settings::instance().time();
 	const float dt = Settings::instance().deltaTime();
-    _sPosition[FWD] += glm::abs(_player.speed()[FWD]) * dt;
+  _sPosition[FWD] += glm::abs(_player.speed()[FWD]) * dt;
 	_sPosition[UP] =  glm::mix(_sPosition[UP], _player.sPosition()[UP], chaserLateralSpeed);
 	_sPosition[LEFT] = glm::mix(_sPosition[LEFT], _player.sPosition()[LEFT], chaserLateralSpeed); // TODO: this line create segfaults idk why ??
 
@@ -26,7 +26,7 @@ void Chaser::update() {
 // const float chaserWiggleFreq = 3.f;
 }
 
-/// \brief trigger collision behavior when colliding with another Gameobjects. 
+/// \brief trigger collision behavior when colliding with another Gameobjects.
 void Chaser::doCollisionWith(Player& other) {
 };
 

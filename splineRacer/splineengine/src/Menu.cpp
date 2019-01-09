@@ -1,4 +1,5 @@
 #include <splineengine/Menu.hpp>
+#include <splineengine/Model.hpp>
 #include <cstdlib>
 
 
@@ -30,7 +31,10 @@ void Menu::init() {
 
 	//Pushing extruded hexagon
 	_menuItems.push_back(GameObject(
-		assetManager.models()["frontmenu"],Spline(),true,
+		assetManager.models()["frontmenu"],
+		Spline(),
+		"frontMenuText.png",
+		true,
 		Transform(
 			glm::vec3(0.f),
 			glm::vec3(3.5f),
@@ -41,7 +45,9 @@ void Menu::init() {
 	//pushing pannels to chose level -maybe change name of model to be more specific
 	for(int i =0; i<4; i++){
 		_menuItems.push_back(GameObject(
-			assetManager.models()[_levels[3-i]],Spline(),false,
+			assetManager.models()[_levels[3-i]],Spline(),
+			_levels[3-i],
+			false,
 			Transform(
 				glm::vec3(0.f, -4 + i*2.f, 2.4f),
 				glm::vec3(0.25f),
@@ -53,7 +59,9 @@ void Menu::init() {
 	}
 	//pushing skybox
 	_skybox.push_back(GameObject(
-		assetManager.models()["skybox"], Spline(),  true,
+		assetManager.models()["skybox"], Spline(),
+		"skybox_desert",
+		true,
 		Transform(
 			glm::vec3(0.f),
 			glm::vec3(100.f),
@@ -64,9 +72,9 @@ void Menu::init() {
 	// _menuItems[0].scale() = glm::vec3(1.5f);
 
 	//Trying to change texture from a same object
-	_menuItems[1].model().setTexture("Scores.png");
-	_menuItems[2].model().setTexture("QuitToMenu.png");
-	_menuItems[0].model().setTexture("Save.png");
+	_menuItems[1].setTexture("Scores.png");
+	// _menuItems[2].model().setTexture("QuitToMenu.png");
+	// _menuItems[0].model().setTexture("Save.png");
 
 	_renderManager.initMenuLights();
 

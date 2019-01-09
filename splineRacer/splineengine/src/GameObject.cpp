@@ -6,12 +6,15 @@
 namespace splineengine {
 
 GameObject::GameObject (
-    const Model& model, const Spline& spline, const bool isStatic, 
-    const Transform& transform, 
+    const Model& model,
+    const Spline& spline,
+    const std::string& textureName,
+    const bool isStatic,
+    const Transform& transform,
     //const uint animId
     const AnimationList& animations
     )
-    :_model(model), _spline(spline), _isStatic(isStatic),
+    :_model(model), _spline(spline),_textureName(textureName), _isStatic(isStatic),
     _sPosition(transform._sPosition), _scale(transform._scale), _rotation(transform._rotation),
     _animations(std::move(animations))
 {
@@ -19,6 +22,8 @@ GameObject::GameObject (
         std::cerr << "warning : object declared as static but constructor has been callen with animations ids" << std::endl;
         std::cerr << "  -> object will not move." << std::endl;
     }
+    // Texture
+    setTexture(textureName);
 };
 
 
@@ -27,7 +32,7 @@ void GameObject::addAnimation(uint animId) {
 }
 
 GameObject::GameObject(const GameObject& g)
-    :_model(g._model), _spline(g._spline), _isStatic(g._isStatic),
+    :_model(g._model), _spline(g._spline),_textureID(g._textureID), _isStatic(g._isStatic),
     _sPosition(g._sPosition), _scale(g._scale), _rotation(g._rotation),
     _animations(std::move(g._animations)) // list copy
 {};
@@ -71,11 +76,11 @@ const glm::mat4 GameObject::staticMatrix() {
 }
 
 void GameObject::update() {
-    const float t = Settings::instance().time(); 
+    const float t = Settings::instance().time();
     const float dt = Settings::instance().deltaTime();
     if (_animations.size()>0)
- 
-    // if (debug) std::cout << "animations size" << _animations.size() << std::endl; 
+
+    // if (debug) std::cout << "animations size" << _animations.size() << std::endl;
     for (AnimationList::const_iterator it = _animations.begin(); it != _animations.end(); ++it) {
         switch (*it) {
             case ROT_CONST_FWD :
@@ -114,7 +119,7 @@ void GameObject::update() {
 
 
 void GameObject::draw() const {
-    glBindTexture(GL_TEXTURE_2D, _model.textureID());
+    glBindTexture(GL_TEXTURE_2D, _textureID);
     glBindVertexArray(_model.VAO());
     // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _model.IBO());
     glDrawElements(GL_TRIANGLES, _model.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
@@ -143,6 +148,27 @@ void GameObject::collideWith(GameObject& other) {
         doCollisionWith(other);
         other.doCollisionWith(*this);
     }
+}
+
+void GameObject::setTexture(const std::string textureName) {
+
+	AssetManager& assetManager = AssetManager::instance();
+	//parcours de la map
+    std::map<std::string, Texture>::iterator itTexMap = assetManager.textures().find(textureName);
+	// s'il est différent de la fin c'est qu'il existe
+	if(itTexMap !=  assetManager.textures().end() ){
+		//il existe donc on le récup dans l'asset manager
+		_textureID = itTexMap->second.getTextureID();
+	}else{ // on créé une texture et on la push à la fin de la map
+		Texture texture(textureName);
+		_textureID = texture.getTextureID();
+	}
+
+
+	// _textureID = texture.getTextureID();
+	// _textureName = textureName;
+	if (debug) std::cout << "Texture ID: " << _textureID << std::endl;
+	if (debug) std::cout << "Texture Name: " << _textureName << std::endl;
 }
 
 }

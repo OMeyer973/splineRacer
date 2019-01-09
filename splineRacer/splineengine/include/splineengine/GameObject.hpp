@@ -4,8 +4,10 @@
 
 #include <iostream>
 #include "common.hpp"
-#include "Model.hpp"
-#include "Spline.hpp"
+#include <splineengine/Spline.hpp>
+#include <splineengine/Model.hpp>
+#include <splineengine/common.hpp>
+#include <splineengine/AssetManager.hpp>
 
 namespace splineengine {
 
@@ -66,6 +68,7 @@ class GameObject {
 		GameObject (
 			const Model& model,
 			const Spline& spline,
+			const std::string& textureName = "default.png",
 			const bool isStatic = false,
 			const Transform& transform = Transform(),
 			//const uint animId = 0
@@ -144,7 +147,10 @@ class GameObject {
 		/// \brief Get the model of the object as a reference
 		Model model() { return _model;}
 
+		void setTexture(const std::string textureName);
 
+		/// \brief get Texture ID
+		const GLuint textureID() const { return _textureID; };
 
 	// MEMBERS
 	protected:
@@ -174,6 +180,12 @@ class GameObject {
 		/// \brief stored transformation matrix of the object in case the object is static
 		bool _hasMatrix = false;
 		glm::mat4 _transformMat;
+
+		/// \brief Texture ID of the model
+		GLuint _textureID;
+
+		/// \brief TextureName
+		std::string _textureName;
 
 };
 

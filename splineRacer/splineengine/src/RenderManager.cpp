@@ -1,11 +1,8 @@
 #include <splineengine/RenderManager.hpp>
-#include <splineengine/Model.hpp>
-#include <splineengine/AssetManager.hpp>
-#include <glimac/Program.hpp>
 
 namespace splineengine {
 
-void RenderManager::updateMVMatrix(Camera &camera, glm::mat4 transformMatrix, glm::vec3 scale) {
+void RenderManager::updateMVMatrix(Camera &camera, 	glm::mat4 transformMatrix, glm::vec3 scale) {
 	_MVMatrix = camera.getViewMatrix() * transformMatrix;
 	_normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
 	_MVMatrix = glm::scale(_MVMatrix, scale);
@@ -23,7 +20,7 @@ void RenderManager::drawObject(GameObject& obj, Camera& camera) {
 }
 
 void RenderManager::useProgram(FS shader) {
-	
+
 	if (AssetManager::instance().models().size() != 0)
 	{
 		const ProgramList& programList = AssetManager::instance().programList();
@@ -56,7 +53,7 @@ void RenderManager::useProgram(FS shader) {
 		}
 		sendUniformsToShaders(shader);
 	}
-	
+
 }
 
 void RenderManager::sendUniformsToShaders(FS shader)
@@ -147,13 +144,13 @@ void RenderManager::sendUniformsToShaders(FS shader)
 			glUniform1i(programList.multiLightProgram.uTexture, 0);
 
 			break;
-		
+
 		case TEXT :
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 			_uProjection = glm::ortho(0.0f, static_cast<GLfloat>(Settings::instance().windowWidth()), 0.0f, static_cast<GLfloat>(Settings::instance().windowHeight()));
-			
+
 			glUniformMatrix4fv(programList.textProgram.uProjection, 1, GL_FALSE,
 				glm::value_ptr(_uProjection));
 

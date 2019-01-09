@@ -14,26 +14,34 @@ Game::Game()
 	_spline("Endless"),
 	_player(GameObject(
 		AssetManager::instance().models()["plane"],
-		_spline, false,
+		_spline,
+		"plane.png",
+		 false,
 		Transform(defaultPlayerPos)
 	)),
 	_skybox(GameObject(
 		AssetManager::instance().models()["skybox"],
-		_spline, true,
+		_spline,
+		"skybox_desert.png",
+		 true,
 		Transform(glm::vec3(0.f), glm::vec3(100.f))
 	)),
 	_alien(
 		GameObject(
 			AssetManager::instance().models()["alien"],
-			_spline, false,
+			_spline,
+			"alien.png",
+			false,
 			Transform(glm::vec3(0.f), glm::vec3(0.3f))
 		),
 		_player
 	),
 	_finishLine(GameObject( // will not be displayed in Endless anyway
 		AssetManager::instance().models()["finish_line"],
-		_spline, true, 
-		Transform(glm::vec3(0.f), glm::vec3(5.f))
+		_spline,
+		"finish_line2.png",
+		 true,
+		Transform()
 	))
 {
 	std::cout << "infinite game constructor called " << std::endl;
@@ -52,25 +60,33 @@ Game::Game(const std::string& levelName)
 	_spline(levelName),
 	_player(GameObject(
 		AssetManager::instance().models()["plane"],
-		_spline, false,
+		_spline,
+		"plane.png",
+		 false,
 		Transform(defaultPlayerPos)
 	)),
 	_skybox(GameObject(
 		AssetManager::instance().models()["skybox"],
-		_spline, true,
+		_spline,
+		"skybox_desert.png",
+		true,
 		Transform(glm::vec3(0.f), glm::vec3(100.f))
 	)),
 	_alien(
 		GameObject(
 			AssetManager::instance().models()["alien"],
-			_spline, false,
+			_spline,
+			"alien.png",
+			false,
 			Transform(glm::vec3(0.f), glm::vec3(0.3f))
 		),
 		_player
 	),
 	_finishLine(GameObject(
 		AssetManager::instance().models()["finish_line"],
-		_spline, false,
+		_spline,
+		"finish_line2.png",
+		 false,
 		Transform(glm::vec3(0.f), glm::vec3(8.f))
 	))
 {
@@ -99,6 +115,7 @@ GameObject Game::gameObjFromJson(nlohmann::json j) {
 	return GameObject(
 		assetManager.models()[ j["model"].get<std::string>() ], // model
 		_spline, // spline
+		"default.png",
 		j["is_static"].get<bool>(), //isStatic
 		Transform(
 			glm::vec3(j["pos_fwd"].get<float>(),   j["pos_left"].get<float>(),   j["pos_up"].get<float>()), // sPosition
@@ -135,7 +152,9 @@ void Game::loadLevel(const std::string& levelName) {
 	AssetManager& assetManager = AssetManager::instance();
 	for (float i=-1; i<_spline.length()+1; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
-			assetManager.models()["prism"], _spline, false,
+			assetManager.models()["prism"], _spline,
+			"prism.png",
+			 false,
 			Transform(
 				glm::vec3(i, 0, 0),
 				glm::vec3((2.f*glm::sin(i)) + 4.f),
@@ -157,11 +176,13 @@ void Game::generateLevel(const float start, const float finish) {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
 
-	
+
 
 	for (float i=start; i<finish; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
-			assetManager.models()["prism"], _spline, true,
+			assetManager.models()["prism"], _spline,
+			"prism.png",
+			true,
 			Transform(
 				glm::vec3(i, 0, 0),
 				glm::vec3((2.f*glm::sin(i)) + 4.f),
@@ -182,7 +203,9 @@ void Game::generateLevel(const float start, const float finish) {
 		for (float j = 0; j < 2.5; j+=.5f) {
 			for (float k = 0; k <= .2f; k+=.2f) {
 				_collectables.push_back(Collectable(GameObject(
-					assetManager.models()["coin"], _spline, false,
+					assetManager.models()["coin"], _spline,
+					"coin.png",
+					false,
 					Transform(
 						glm::vec3(i+j, -(i+k), 10),
 						glm::vec3(3.f),
@@ -194,9 +217,11 @@ void Game::generateLevel(const float start, const float finish) {
 		}
 		for (float j = 0; j < 6.28; j+=.3f) {
 			_obstacles.push_back(Obstacle(GameObject(
-				assetManager.models()["prism"], _spline, false,
+				assetManager.models()["prism"], _spline,
+				"prism.png",
+				 false,
 				Transform(
-					glm::vec3(i-5, j, 15), 
+					glm::vec3(i-5, j, 15),
 					glm::vec3(3),
 					glm::vec3(j, -20*j, 3*j)
 				),
@@ -226,6 +251,11 @@ void Game::update() {
 	_player.update();
 	// Update alien position and speed
 	_alien.update();
+
+	// Collectables animation
+	// for (std::list<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
+	// 	(*it).update(dt, 0, _player.sPosition());
+	// }
 
 	// Check for collisions with obstacles
 	updateObstacleList(_obstacles);
@@ -264,8 +294,8 @@ void Game::update() {
 		if (_gameMode == CLASSIC) {
 			if (debug) std::cout << "Level is lost" << std::endl;
 			_gameState = LEVELLOSE;
-		} 
-		
+		}
+
 		else if (_gameMode == ENDLESS) {
 			if (debug) std::cout << "endless mode is over" << std::endl;
 			_gameState = ENDLESSOVER;
@@ -273,7 +303,7 @@ void Game::update() {
 	}
 	else if (_player.sPosition()[FWD] > _finishLine.sPosition()[FWD] && _gameMode == CLASSIC) {
 		if (debug) std::cout << "Level is won" << std::endl;
-		_gameState = LEVELWIN; 
+		_gameState = LEVELWIN;
 	}
 }
 
@@ -323,7 +353,7 @@ void Game::render() {
 	glDepthMask(GL_FALSE);
 	MVMatrix = _renderManager.splineCamMatrix();
 	MVMatrix = glm::translate(MVMatrix, _spline.point(_player.sPosition()[FWD]));
-	
+
 	_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _skybox.scale());
 	_renderManager.useProgram(TEXTURE);
 	_skybox.draw();
@@ -335,10 +365,10 @@ void Game::render() {
 	// if (_gameState == ENDLESSOVER)
 
 	AssetManager::instance().textManager().renderText(
-		"Score: " + std::to_string(_player.score()), 
-		Settings::instance().windowWidth() * .75f, 
-		Settings::instance().windowHeight() - 40, 
-		.4f, 
+		"Score: " + std::to_string(_player.score()),
+		Settings::instance().windowWidth() * .75f,
+		Settings::instance().windowHeight() - 40,
+		.4f,
 		glm::vec3(1.f, 1.f, 1.f)
 	);
 
@@ -389,9 +419,9 @@ void Game::updateObstacleList (std::list<Obstacle>& objList) {
 			it->update();
 			handleCollision(_player, *it);
 		// else, if the object is in front of the player, discard all the next objects (lists are ordered)
-		} else if (it->sPosition()[FWD] > _player.sPosition()[FWD]) { 
+		} else if (it->sPosition()[FWD] > _player.sPosition()[FWD]) {
 			break;
-		} 
+		}
 	}
 }
 
@@ -403,7 +433,7 @@ void Game::updateCollectableList (std::list<Collectable>& objList) {
 			it->update(_player.sPosition());
 			handleCollision(_player, *it);
 		// else, if the object is in front of the player, discard all the next objects (lists are ordered)
-		} else if (it->sPosition()[FWD] > _player.sPosition()[FWD]) { 
+		} else if (it->sPosition()[FWD] > _player.sPosition()[FWD]) {
 			break;
 		}
 

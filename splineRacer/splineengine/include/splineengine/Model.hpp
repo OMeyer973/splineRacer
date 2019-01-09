@@ -9,6 +9,7 @@
 #include <glimac/SDLWindowManager.hpp>
 #include <glimac/Geometry.hpp>
 #include <glimac/Program.hpp>
+#include <map>
 
 #include <splineengine/Collider.hpp>
 #include <splineengine/Settings.hpp>
@@ -27,7 +28,7 @@ class Model {
 
 		/// \brief Model Constructor by model name
 		/// \param modelName : std::string& name of the model
-		Model(const std::string& modelName, const std::string& textureName);
+		Model(const std::string& modelName);
 
 		/// \brief Model Copy constructor
 		/// \param model : Model Model to copy
@@ -49,11 +50,10 @@ class Model {
 		/// \brief get Geometry
 		const glimac::Geometry geometry() const { return _geometry; };
 
-		/// \brief get Texture ID
-		const GLuint textureID() const { return _textureID; };
-
 		/// \brief collider const getter
 		const Collider& collider() const { return _collider; };
+
+		const Texture& texture() const {return _texture;};
 
 		// SETTERS // TODO : change for non-const getters ?
 		// NON-CONST GETTERS (can be used as setters)
@@ -68,9 +68,7 @@ class Model {
 		/// \brief set VAO based on the VBO and VAO
 		void setVAO();
 
-		void setTexture(const std::string textureName);
-
-
+		Texture& texture() {return _texture;};
 
 		/// \brief collider non-const getter (to use as setter)
 		Collider& collider() { return _collider; };
@@ -86,10 +84,12 @@ class Model {
 		GLuint _VAO;
 		/// \brief Collider of the model
 		Collider _collider;
-		/// \brief Texture ID of the model
-		GLuint _textureID;
+
 		//Texture& _texture;
 		std::string _textureName;
+
+		/// \brief Texture array
+		Texture _texture;
 };
 
 }

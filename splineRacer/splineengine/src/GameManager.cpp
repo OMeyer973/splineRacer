@@ -158,17 +158,25 @@ void GameManager::doGameEvent(SDL_Event e) {
 			if (e.jaxis.axis == 0)	// LT
 			{
 				// if(debug) std::cout << "MOVE LEFT" << std::endl;
-				if (debug) std::cout << "VALUE X : " << -e.jaxis.value/maxJoystickValue << std::endl;
+				// if (debug) std::cout << "VALUE X : " << -e.jaxis.value/maxJoystickValue << std::endl;
 				if (e.jaxis.value > tresholdJoystick || e.jaxis.value < -tresholdJoystick) {
-					_game->player().goingLeft() = -e.jaxis.value/maxJoystickValue;
+					if (abs(-e.jaxis.value/maxJoystickValue) < 0.5f) {
+						_game->player().goingLeft() = 0.f;
+					} else {
+						_game->player().goingLeft() = -e.jaxis.value/maxJoystickValue;
+					}
 				}
 			}
 			if (e.jaxis.axis == 1)	// RT
 			{
-				//if(debug) std::cout << "MOVE UP" << std::endl;
-				if(debug) std::cout << "VALUE Y : " << -e.jaxis.value/maxJoystickValue << std::endl;
-				if(e.jaxis.value > tresholdJoystick || e.jaxis.value < -tresholdJoystick){
-					_game->player().goingUp() = -e.jaxis.value/maxJoystickValue;
+				// if(debug) std::cout << "MOVE UP" << std::endl;
+				// if (debug) std::cout << "VALUE Y : " << -e.jaxis.value/maxJoystickValue << std::endl;
+				if (e.jaxis.value > tresholdJoystick || e.jaxis.value < -tresholdJoystick) {
+					if (abs(-e.jaxis.value/maxJoystickValue) < 0.4f) {
+						_game->player().goingUp() = 0.f;
+					} else {
+						_game->player().goingUp() = -e.jaxis.value/maxJoystickValue;
+					}
 				}
 			}
 			break;

@@ -83,24 +83,23 @@ void Menu::update() {
 	float dt = Settings::instance().deltaTime();
 	// ^utilise ça pour cotrôler tes vitesses de ritation / déplacement
 
-
 	// for(float i =1; i< _menuItems.size();i++){
 	// 	_menuItems[i].scale() = glm::vec3(.01f);
 	// }
 
-
 	// If a move to a left or right pannel is detected, then smooth camera turn around
-	if(isRotatingHorizontally() ){
-		_rotationAngle += (_rotationDirection);
-		rotateHorizontally( (6 * _rotationDirection) );
-		if( _rotationAngle % 10 == 0){
+	if (isRotatingHorizontally()) {
+		_rotationAngle += _rotationDirection;
+		rotateHorizontally( 6 * _rotationDirection );
+		if( _rotationAngle % 10 == 0) {
 			_rotationAngle = 0;
 			_isRotatingHorizontally = false;
 		}
 	}
+
 	// If a move to chose a different level is detected, then smooth transition to move pannels up or down
 	if(isRotatingVertically()){
-		for(int i = 0;i<_levels.size()+1;i++){
+		for(int i = 0;i<_levels.size()+1;i++) {
 			_menuItems[i+1].sPosition() += 0.4f * _rotationDirection * upVec;
 		}
 		//std::cout << _menuItems[1].sPosition() << std::endl;
@@ -112,14 +111,17 @@ void Menu::update() {
 		}
 		_tickVertical++;
 	}
+
 	// Interaction with current selected
-	// for(int i = 0;i<_levels.size()+1;i++){
-	// 	if(i == _selectedLevel){;
-	// 		_menuItems[i+1].rotation() = glm::vec3(0.12f,0.f,0.f);
-	// 	}else{
-	// 		_menuItems[i+1].rotation() = glm::vec3(0.f);
-	// 	}
-	// }
+	for (int i = 0; i < _levels.size(); i++) {
+		if (i == _selectedLevel) {
+			_menuItems[4-i].scale() = glm::mix(_menuItems[4-i].scale(), glm::vec3(.35f), .45f);
+			_menuItems[4-i].rotation() = glm::mix(_menuItems[4-i].rotation(), glm::vec3(.15f, 0.f, 0.f), .35f);
+		} else {
+			_menuItems[4-i].scale() = glm::mix(_menuItems[4-i].scale(), glm::vec3(.25f), .45f);
+			_menuItems[4-i].rotation() = glm::mix(_menuItems[4-i].rotation(), glm::vec3(0.f, 0.f, 0.f), .35f);
+		}
+	}
 
 	// TODO
 }
@@ -154,7 +156,7 @@ void Menu::render() {
 
 	//display levels
 	if(_displayLevels){
-		for(float i=1; i< _menuItems.size();i++){
+		for(float i=1; i< _menuItems.size(); i++) {
 			MVMatrix = _menuItems[i].staticMatrix();
 			_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[i].scale());
 			_renderManager.useProgram(MULTI_LIGHT);
@@ -184,16 +186,15 @@ void Menu::rotateHorizontally(const float dx) {
 
 void Menu::changeLevel(const int lvlUpOrDown) {
 
-	if((_selectedLevel  -lvlUpOrDown) < 0) {
+	if ((_selectedLevel - lvlUpOrDown) < 0) {
 		_selectedLevel = 0;
 		_isRotatingVertically = false;
-	} else if ((_selectedLevel -lvlUpOrDown > (_levels.size()-1))) {
-
+	} else if (_selectedLevel -lvlUpOrDown > (_levels.size()-1)) {
 		_selectedLevel = _levels.size() - 1;
 		_isRotatingVertically = false;
 	} else {
 	 	_selectedLevel += -lvlUpOrDown;
-		std::cout << "Level : " << selectedLevel() << " Selected" <<  std::endl;
+		if (debug) std::cout << "Level : " << selectedLevel() << " Selected" <<  std::endl;
 		_rotationDirection = -lvlUpOrDown;
 		_isRotatingVertically = true;
 	}

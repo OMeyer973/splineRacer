@@ -13,21 +13,24 @@ Chaser::Chaser(const GameObject& gameObject, const Player& player, const float d
 void Chaser::update() {
 	const float t = Settings::instance().time();
 	const float dt = Settings::instance().deltaTime();
-  _sPosition[FWD] += glm::abs(_player.speed()[FWD]) * dt;
-	_sPosition[UP] =  glm::mix(_sPosition[UP], _player.sPosition()[UP], chaserLateralSpeed);
-	_sPosition[LEFT] = glm::mix(_sPosition[LEFT], _player.sPosition()[LEFT], chaserLateralSpeed); // TODO: this line create segfaults idk why ??
 
-	_rotation[UP] += chaserRotateSpeed * dt;
-	_rotation[FWD] = chaserWiggleAmp * glm::sin(chaserWiggleFreq * t);
+    if (_chatchedPlayer) {
+		_sPosition =  glm::mix(_sPosition, _player.sPosition(), chaserLateralSpeed);
+    }
 
+    else if (_chasingPlayer) {
+	  	_sPosition[FWD] += glm::abs(_player.speed()[FWD]) * dt;
+		_sPosition[UP] =  glm::mix(_sPosition[UP], _player.sPosition()[UP], chaserLateralSpeed);
+		_sPosition[LEFT] = glm::mix(_sPosition[LEFT], _player.sPosition()[LEFT], chaserLateralSpeed); // TODO: this line create segfaults idk why ??
 
-// const float chaserRotateSpeed = 3.f;
-// const float chaserWiggleAmp = 3.f;
-// const float chaserWiggleFreq = 3.f;
+		_rotation[UP] += chaserRotateSpeed * dt;
+		_rotation[FWD] = chaserWiggleAmp * glm::sin(chaserWiggleFreq * t);    	
+    }
 }
 
 /// \brief trigger collision behavior when colliding with another Gameobjects.
 void Chaser::doCollisionWith(Player& other) {
+	_chatchedPlayer = true;
 };
 
 

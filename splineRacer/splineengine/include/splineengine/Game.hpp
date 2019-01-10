@@ -36,9 +36,11 @@ const std::string playerModelName = "plane";
 // how long is displayed the end screen before going back to the menu ?
 const float endScreenTime = 5.f;
 // maximum distance to the player (folowing the spline) at wich collision checks will happend
-const float maxCollideDistance = 30.f;
+const float endlessMaxCollideDistance = 30.f;
+const float levelMaxCollideDistance = 60.f;
 // maximum distance to the player (folowing the spline) at wich objects will be rendered
-const float maxRenderDistance = 40.f;
+const float endlessMaxRenderDistance = 50.f;
+const float levelMaxRenderDistance = 100.f;
 
 // max number of anim per object described in json
 const uint nbAnimInJson = 4;
@@ -141,6 +143,11 @@ class Game {
 
 		/// \brief represents the spline
 	    Spline _spline;
+	    // maximum distance to the player (folowing the spline) at wich collision checks will happend
+		const float _maxCollideDistance;
+		// maximum distance to the player (folowing the spline) at wich objects will be rendered
+		const float _maxRenderDistance;
+		
 		/// \brief represents the player
 		Player _player;
 		/// \brief represents the skybox

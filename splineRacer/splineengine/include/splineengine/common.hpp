@@ -5,7 +5,14 @@
 #include <glm/gtc/random.hpp>
 #include <splineengine/Error.hpp>
 
-// declare global variables here
+/*!
+@brief namespace of Spline Racer
+@see https://github.com/OMeyer973/splineRacer
+@since version 1.0.0
+*/
+namespace splineengine {
+
+// Declare global variables here
 
 // print debug messages ?
 const bool debug = false;
@@ -25,7 +32,6 @@ const glm::vec3 fwdVec  ( 0.f, 0.f,-1.f);
 const glm::vec3 leftVec (-1.f, 0.f, 0.f);
 const glm::vec3 upVec   ( 0.f, 1.f, 0.f);
 
-
-
+}
 
 #endif

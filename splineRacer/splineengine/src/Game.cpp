@@ -28,6 +28,8 @@ Game::Game()
 		 true,
 		Transform(glm::vec3(0.f), glm::vec3(100.f))
 	)),
+	_maxCollideDistance(endlessMaxCollideDistance),
+	_maxRenderDistance(endlessMaxRenderDistance),
 	_alien(
 		GameObject(
 			AssetManager::instance().models()["alien"],
@@ -74,6 +76,8 @@ Game::Game(const std::string& levelName)
 		true,
 		Transform(glm::vec3(0.f), glm::vec3(100.f))
 	)),
+	_maxCollideDistance(levelMaxCollideDistance),
+	_maxRenderDistance(levelMaxRenderDistance),
 	_alien(
 		GameObject(
 			AssetManager::instance().models()["alien"],
@@ -178,7 +182,7 @@ void Game::loadLevel(const std::string& levelName) {
 		_obstacles.push_back(Obstacle(GameObject(
 			assetManager.models()["prism"], _spline,
 			"cloud.jpg",
-			false,
+			true,
 			Transform(
 				glm::vec3(i, 0, 0),
 				glm::vec3(1.5f),
@@ -190,6 +194,11 @@ void Game::loadLevel(const std::string& levelName) {
 	_finishLine.sPosition() = glm::vec3(_spline.length(), 0.f, 0.f);
 
 	_renderManager.initGameLights();
+
+	// sort game object lists
+	orderObjListFwd(_obstacles);
+	orderObjListFwd(_collectables);
+	orderObjListFwd(_decorations);
 
 	glEnable(GL_DEPTH_TEST);
 }
@@ -345,9 +354,9 @@ void Game::update() {
 	}
 
 	// ADD LENGTH TO THE SPLINE IF NECESSARY
-	if (_gameMode == ENDLESS && _spline.length() - _player.sPosition()[FWD] < maxRenderDistance) {
+	if (_gameMode == ENDLESS && _spline.length() - _player.sPosition()[FWD] < _maxRenderDistance) {
 		float oldLength = _spline.length();
-		while (_spline.length() < oldLength + maxRenderDistance) {
+		while (_spline.length() < oldLength + _maxRenderDistance) {
 			_spline.addAnchor();
 		}
 		generateLevel(oldLength, _spline.length(), rand()%nbOfRandomCHunks);
@@ -380,6 +389,7 @@ void Game::update() {
 	else if (_player.sPosition()[FWD] > _finishLine.sPosition()[FWD] && _gameMode == CLASSIC) {
 		if (debug) std::cout << "Level is won" << std::endl;
 		_gameState = LEVELWIN;
+		_alien.chasingPlayer() = false;
 	}
 }
 
@@ -411,7 +421,7 @@ void Game::render() {
 
 	// Draw obstacles
 	for (std::list<Obstacle>::iterator it = _obstacles.begin(); it != _obstacles.end(); ++it) {
-		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxRenderDistance) {
+		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxRenderDistance) {
 			_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
 		}
 	}
@@ -419,7 +429,7 @@ void Game::render() {
 	// Draw Collectables
 	for (std::list<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
 		if (!(*it).isHidden()) {
-			if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxRenderDistance) {
+			if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxRenderDistance) {
 				_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
 			}
 		}
@@ -492,7 +502,7 @@ void Game::handleCollision(T& firstObject, U& secondObject) {
 void Game::updateObstacleList (std::list<Obstacle>& objList) {
 	for (typename std::list<Obstacle>::iterator it = objList.begin(); it != objList.end(); ++it) {
 		// if the object is near enough to the player : check collision
-		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxCollideDistance) {
+		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxCollideDistance) {
 			it->update();
 			handleCollision(_player, *it);
 		// else, if the object is in front of the player, discard all the next objects (lists are ordered)
@@ -506,7 +516,7 @@ void Game::updateCollectableList (std::list<Collectable>& objList) {
 	typename std::list<Collectable>::iterator it = objList.begin();
 	while (it != objList.end()) {
 		// if the object is near enough to the player : check collision
-		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxCollideDistance) {
+		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxCollideDistance) {
 			it->update(_player.sPosition());
 			handleCollision(_player, *it);
 		// else, if the object is in front of the player, discard all the next objects (lists are ordered)
@@ -527,7 +537,7 @@ void Game::renderObjList(std::list<T>& objList) {
 	typename std::list<T>::iterator it = objList.begin();
 	while (it != objList.end()) {
 		// if the object is near enough to the player : render the object
-		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < maxRenderDistance) {
+		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxRenderDistance) {
 			_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
 			++it;
 		// else, if the object is in behind the player, we can remove it

@@ -6,6 +6,25 @@ AssetManager::AssetManager()
 {
 	if (debug) std::cout << "AssetManager constructor " << std::endl;
 	loadAssets();
+	std::cout << "Number of joysticks : " << SDL_NumJoysticks() << std::endl;
+	SDL_InitSubSystem(SDL_INIT_JOYSTICK);
+
+	if (SDL_NumJoysticks() > 0) {
+    // Open joystick
+    _joystick = SDL_JoystickOpen(0);
+
+    if (_joystick) {
+			std::cout << "wolah" << std::endl;
+        // printf("Opened Joystick 0\n");
+        // printf("Name: %s\n", SDL_JoystickIndex(0));
+        // printf("Number of Axes: %d\n", SDL_JoystickNumAxes(_joystick));
+        // printf("Number of Buttons: %d\n", SDL_JoystickNumButtons(_joystick));
+        // printf("Number of Balls: %d\n", SDL_JoystickNumBalls(_joystick));
+    } else {
+        printf("Couldn't open Joystick 0\n");
+    }
+}
+
 }
 
 void AssetManager::loadAssets() {

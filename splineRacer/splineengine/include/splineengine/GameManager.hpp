@@ -3,7 +3,7 @@
 #define __GAMEMANAGER__HPP
 
 #include <iostream>
-#include <unordered_set> 
+#include <unordered_set>
 #include <memory>
 #include <GL/glew.h>
 #include <glimac/SDLWindowManager.hpp>
@@ -17,6 +17,11 @@
 
 namespace splineengine {
 
+// const treshold joystick
+
+const float tresholdJoystick = 2000.f;
+const float maxJoystickValue = 32760.f;
+
 // grouping keys by acion
 struct KeyGroup {
 	public:
@@ -24,7 +29,7 @@ struct KeyGroup {
 			:_keys(keys)
 		{};
 		bool has(const SDLKey key) const { return _keys.find(key) != _keys.end(); }
-	private: 
+	private:
 		std::unordered_set<SDLKey> _keys;
 };
 
@@ -32,9 +37,9 @@ struct KeyGroup {
 struct Input {
 	typedef std::unordered_set<SDLKey> Keylist;
 	public: // all public for ease of use but all const so no problem
-		const KeyGroup up 				= KeyGroup(Keylist { SDLK_z, SDLK_UP } ); 
-		const KeyGroup left 			= KeyGroup(Keylist { SDLK_q, SDLK_LEFT } ); 
-		const KeyGroup down 			= KeyGroup(Keylist { SDLK_s, SDLK_DOWN } ); 
+		const KeyGroup up 				= KeyGroup(Keylist { SDLK_z, SDLK_UP } );
+		const KeyGroup left 			= KeyGroup(Keylist { SDLK_q, SDLK_LEFT } );
+		const KeyGroup down 			= KeyGroup(Keylist { SDLK_s, SDLK_DOWN } );
 		const KeyGroup right 			= KeyGroup(Keylist { SDLK_d, SDLK_RIGHT } );
 		const KeyGroup select 			= KeyGroup(Keylist { SDLK_RETURN, SDLK_SPACE } );
 		const KeyGroup back 			= KeyGroup(Keylist { SDLK_ESCAPE, SDLK_BACKSPACE } );
@@ -45,7 +50,7 @@ struct Input {
 };
 
 const Input input;
-	
+
 // IDs of game screens
 const int MENU = 0;
 const int GAME = 1;

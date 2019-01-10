@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <map>
+#include <SDL/SDL.h>
 #include <splineengine/GLSLProgram.hpp>
 #include <splineengine/TextManager.hpp>
 #include <splineengine/Model.hpp>
@@ -79,6 +80,7 @@ class AssetManager {
 
 		/// \brief Text Manager
 		TextManager _textManager;
+		SDL_Joystick *_joystick;
 };
 
 }

@@ -68,13 +68,6 @@ class AssetManager {
 
 		std::map<std::string, Texture> _textures;
 
-		//TODO : add this stuff
-
-		/// \brief textures assets
-		// std::map<int, Texture> _textures;
-		/// \brief shader programs
-		// std::map<int, Program> _programs;
-
 		/// \brief Program List
 		const ProgramList _programList;
 

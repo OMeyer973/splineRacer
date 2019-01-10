@@ -37,9 +37,6 @@ class Collider {
 	protected:
 		glm::vec3 _position;
 		float _radius;
-		//std::vector<BoundingBox> _boxes;		
-		//TODO : add single big bounding box to collider
-		// -> aborted ?
 };
 
 }

@@ -10,7 +10,8 @@
 namespace splineengine {
 
 const float defaultChaserDelay = 3.0f;
-const float chaserLateralSpeed = 0.1f; //0-1 how fast is the chaser to catch up with the player (left-right)
+const float ChaserLagFactor = 0.002f; // how fast the chaser is going back to his initial delayed position
+const float chaserLateralSpeed = 0.1f; // 0-1 how fast is the chaser to catch up with the player (left-right)
 const float chaserRotateSpeed = 6.f;
 const float chaserWiggleAmp = 0.5f;
 const float chaserWiggleFreq = 2.5f;
@@ -48,6 +49,8 @@ class Chaser : public GameObject {
     	const Player& _player;
         bool _chasingPlayer = true;
         bool _chatchedPlayer = false;
+        // how far behind the player the chaser is ? (max value)
+        float _delay;
 };
 
 }

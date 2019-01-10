@@ -4,7 +4,7 @@
 namespace splineengine {
 
 Chaser::Chaser(const GameObject& gameObject, const Player& player, const float delay)
-	:GameObject(gameObject), _player(player)
+	:GameObject(gameObject), _player(player), _delay(delay)
 {
 	_sPosition[FWD] -= delay;
 };
@@ -19,7 +19,11 @@ void Chaser::update() {
     }
 
     else if (_chasingPlayer) {
+    	//follow the player
 	  	_sPosition[FWD] += glm::abs(_player.speed()[FWD]) * dt;
+	  	//lag a bit behind
+	  	_sPosition[FWD] = glm::mix(_sPosition[FWD], _player.sPosition()[FWD] - _delay, ChaserLagFactor);
+
 		_sPosition[UP] =  glm::mix(_sPosition[UP], _player.sPosition()[UP], chaserLateralSpeed);
 		_sPosition[LEFT] = glm::mix(_sPosition[LEFT], _player.sPosition()[LEFT], chaserLateralSpeed); // TODO: this line create segfaults idk why ??
 

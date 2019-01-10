@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <glm/gtc/noise.hpp>
+#include <fstream>
+#include "splineengine/Error.hpp"
 
 namespace splineengine {
 
@@ -12,18 +14,48 @@ Spline::Spline()
 {}
 
 
-Spline::Spline(const std::string levelName)
+Spline::Spline(const std::string& levelName)
 	:_segmentLength(defaultSegmentLength)
 {
 	// TODO THIS IS PLACEHOLDER UNTIL WE CAN LOAD A SPLINE FROM FILE
-	// if (levelId == "Infinite") {
-	// first point : gives the general direction of the spline (random with y = 0)
-	glm::vec3 tmpAnchor = glm::normalize(glm::abs(glm::sphericalRand(1.f)*glm::vec3(1.f,0.f,1.f)));
-	_anchors.push_back(tmpAnchor);
-    for (size_t i=1; i<defaultAnchorsNb; ++i) {
-    	addAnchor();
-    }
-	//} else { loadfromfile()... }
+	 if (levelName == "Infinite") {
+		// first point : gives the general direction of the spline (random with y = 0)
+		glm::vec3 tmpAnchor = glm::normalize(glm::abs(glm::sphericalRand(1.f)*glm::vec3(1.f,0.f,1.f)));
+		_anchors.push_back(tmpAnchor);
+	    for (size_t i=1; i<defaultAnchorsNb; ++i) {
+	    	addAnchor();
+	    }
+
+	} else { 
+		loadFromLevel(levelName);
+	}
+}
+
+void Spline::loadFromLevel(const std::string& levelName) {
+			std::string splinePath = Settings::instance().appPath().dirPath()
+		+ ("../../splineRacer/assets/levels/" + levelName + ".spline");
+
+	if (debug) std::cout << "loading spline from file : " << splinePath << std::endl;
+	
+	// TODO : check for exception
+	std::ifstream splineStream(splinePath);
+
+	if (splineStream.fail()) {
+		throw(Error("tried to read invalid spline json file",__FILE__, __LINE__));
+	}
+	
+	// cf https://github.com/nlohmann/json#examples
+	nlohmann::json jsonSpline;
+	splineStream >> jsonSpline;
+
+	for (nlohmann::json::iterator it = jsonSpline.begin(); it != jsonSpline.end(); ++it) {
+		_anchors.push_back(glm::vec3(
+			(*it)["anchor_x"].get<float>(),
+			(*it)["anchor_y"].get<float>(),
+			(*it)["anchor_z"].get<float>()
+		));
+	}
+
 }
 
 void Spline::addAnchor() {
@@ -53,6 +85,11 @@ void Spline::addAnchor(const glm::vec3& anchor) {
 
 
 glm::vec3 Spline::point(const float t) const {
+
+	if (_anchors.size() < 4) {
+		throw(Error("spline must have at least 4 anchors to call spline.point()",__FILE__, __LINE__));
+	}
+
 	double pos = t/_segmentLength;
 
 	int i = (int)glm::floor(pos);

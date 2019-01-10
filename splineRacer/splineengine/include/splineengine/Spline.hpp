@@ -7,6 +7,8 @@
 #include <string>
 #include <glimac/SDLWindowManager.hpp>
 #include "common.hpp"
+#include "Settings.hpp"
+#include "json.hpp"
 
 namespace splineengine {
 
@@ -40,7 +42,7 @@ class Spline {
         /// \brief random spline constructor with given number of anchors
 
         /// \brief spline constructor from level name (loads json)
-        Spline(const std::string levelName);
+        Spline(const std::string& levelName);
 
         /// \brief spline Destructor
         ~Spline()
@@ -72,6 +74,7 @@ class Spline {
         void addAnchor(const glm::vec3& anchor);
 
     protected:
+        void loadFromLevel(const std::string& levelName);
         /// \brief Returns a position between 4 Vector3 with Catmull-Rom spline algorithm
         /// \brief (when t goes between 0-1, position goes between p1-p2. p0, p3 are just control points)
         glm::vec3 getCatmullRomPosition(

@@ -29,10 +29,12 @@ typedef std::vector<uint> AnimationList;
 const float rotConstSpeed = 3.f;
 const float moveSinFreq = 0.5f;
 const float moveSinAmp = 5.f;
+const float moveSinLeftAmp = M_PI;
 const float moveConstSpeed = 1.f;
 const float scaleSinAmp = 2.f;
 const float scaleSinFreq = 0.5f;
 const float moveSinAdjustedAmp = moveSinAmp / moveSinFreq;
+const float moveSinLeftAdjustedAmp = moveSinLeftAmp / moveSinFreq;
 const float scaleSinAdjustedAmp = scaleSinAmp / scaleSinFreq;
 // factor taken into account when creating the animation seed from objecr fwd position
 const float animationSeedFactor = 0.5f;

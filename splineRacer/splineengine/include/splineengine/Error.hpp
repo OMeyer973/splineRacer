@@ -11,11 +11,7 @@ class Error : public std::exception {
 
 public:
 	///\brief constructor
-	Error(
-		const std::string& message = "no exception message",
-		const char* file = __FILE__,
-		const int line = __LINE__
-	);
+	Error(const std::string& message, const char* file, const int line);
 
 	///\brief destructor
 	~Error();

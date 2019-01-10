@@ -32,10 +32,10 @@ int main(int argc, char** argv) {
 
 	try {
 		gameManager.init();
-	} 
-	catch(...) {
+	}
+	catch(const Error &e) {
 		// TODO : catch with a cool exception class
-		std::cerr << "GameManager initialisation error" << std::endl;
+		e.what();
 		return EXIT_FAILURE;
 	}
 

@@ -30,7 +30,7 @@ class Pause {
 
 		//METHODS
 		/// \brief init menu when launching the game
-		void init();
+		int init();
 
 		/// \brief update called at each frame
 		void update();

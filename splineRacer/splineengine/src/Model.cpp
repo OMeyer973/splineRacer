@@ -15,8 +15,13 @@ namespace splineengine {
 		glimac::FilePath objPath(modelPath.addExt(".obj")); // Constructeur par copie
 		glimac::FilePath mtlPath(modelPath.addExt(".mtl")); // Constructeur par copie
 		bool ret = _geometry.loadOBJ(objPath, mtlPath, true);
-		if (!ret) {
-			exit(1); // Throw Exception : OBJ loading failed
+		try {
+			if (!ret) {
+				throw Error("OBJ loading failed", __FILE__, __LINE__);
+			}
+		}
+		catch (const Error &e) {
+			std::cerr << e.what() << std::endl;
 		}
 
 		// OBJ is correctly loaded

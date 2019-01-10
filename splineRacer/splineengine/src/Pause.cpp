@@ -5,7 +5,7 @@ namespace splineengine {
 
 Pause::Pause()
 {
-	std::cout << "pause constructor called " << std::endl;
+	if (debug) std::cout << "pause constructor called " << std::endl;
 	_cameras.emplace_back(new POVCamera());
 	_cameras.emplace_back(new TrackballCamera());
 	_chosenCamera = TRACKBALL_CAMERA;
@@ -13,29 +13,29 @@ Pause::Pause()
 
 }
 
-void Pause::init() {
+int Pause::init() {
 	// TODO
-  std::cout << "pause init " << std::endl;
+	if (debug) std::cout << "pause init " << std::endl;
 
-  AssetManager& assetManager = AssetManager::instance();
+	AssetManager& assetManager = AssetManager::instance();
 
 	_selectedMenu = 1;
-	_tickVertical=0;
+	_tickVertical = 0;
 
 	_isMoving = false;
 
-	for(int i =0; i<_pauseArray.size();i++){
-	  _pauseItems.push_back(GameObject(
-	    assetManager.models()["menu"],
-	    Spline(),
-			_pauseArray[i]+ std::string(".png"),
-	    true,
-	    Transform(
-	      glm::vec3(0.f,-2.f + i*4.f,2.f),
-	      glm::vec3(0.30f),
-	      glm::vec3(0.f)
-	    )
-  	));
+	for(int i=0; i<_pauseArray.size(); i++){
+		_pauseItems.push_back(GameObject(
+		assetManager.models()["menu"],
+		Spline(),
+		_pauseArray[i]+ std::string(".png"),
+		true,
+		Transform(
+			glm::vec3(0.f,-2.f + i*4.f,2.f),
+			glm::vec3(0.30f),
+			glm::vec3(0.f)
+		)
+	));
 	}
 
 	// for(int i =0; i<2;i++){
@@ -51,6 +51,7 @@ void Pause::init() {
 	// 		)
 	// 	));
 	// }
+	return 0;
 }
 
 
@@ -64,14 +65,14 @@ void Pause::update() {
 	// 		_pauseItems[i].setTexture( _pauseArray[i]+ std::string(".png"));
 	// 	}
 	// }
-	if(_selectedMenu == 1 ){
+	if (_selectedMenu == 1) {
 		_pauseItems[1].setTexture("ContinueSelected.png");
-	}else{
+	} else {
 		_pauseItems[1].setTexture("Continue.png");
 	}
-	if(_selectedMenu == 0 ){
+	if (_selectedMenu == 0) {
 		_pauseItems[0].setTexture("QuitToMenuSelected.png");
-	}else{
+	} else {
 		_pauseItems[0].setTexture("QuitToMenu.png");
 	}
 	// if(_isMoving){
@@ -114,17 +115,17 @@ void Pause::render() {
 }
 
 
-void Pause::moveSelectors(float dy){
-	if(	(_selectedMenu + dy)>1 ){
+void Pause::moveSelectors(float dy) {
+	if((_selectedMenu + dy) > 1) {
 		_selectedMenu = 1;
-	}else if( (_selectedMenu +dy) <0  ){
+	} else if ((_selectedMenu +dy) < 0) {
 		_selectedMenu = 0;
-	}else{
+	} else {
 		_isMoving = true;
 		_selectedMenu += dy;
 	}
-	_movementDirection =dy;
-	if(debug) std::cout << _pauseArray[_selectedMenu] << std::endl;
+	_movementDirection = dy;
+	if (debug) std::cout << _pauseArray[_selectedMenu] << std::endl;
 }
 
 

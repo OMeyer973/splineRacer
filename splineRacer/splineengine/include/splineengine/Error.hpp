@@ -3,20 +3,20 @@
 #include <string>
 #include <iostream>
 
-#ifndef __ERROR_HPP__
-#define __ERROR_HPP__
+#ifndef __ERROR__HPP
+#define __ERROR__HPP
 
-//more simple exception class available in TP8
+///\brief Handle Exceptions
 class Error : public std::exception {
 
 public:
-	///\brief constructor
+	///\brief Constructor
 	Error(const std::string& message, const char* file, const int line);
 
-	///\brief destructor
+	///\brief Destructor
 	~Error();
 	/// \brief return error infos
-	const void what();
+	const char* what() const noexcept;
 
 private:
 	std::string _message;

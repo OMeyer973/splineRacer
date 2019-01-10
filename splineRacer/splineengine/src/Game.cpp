@@ -169,17 +169,17 @@ void Game::loadLevel(const std::string& levelName) {
 	for (nlohmann::json::iterator it = map.begin(); it != map.end(); ++it) {
 
 		if ((*it)["type"].get<std::string>() == "obstacle") {
-			_obstacles.push_back(Obstacle(gameObjFromJson(*it)));
+			_obstacles.push_back(std::unique_ptr<GameObject>(new Obstacle(gameObjFromJson(*it))));
 		}
 		if ((*it)["type"].get<std::string>() == "collectable") {
-			_collectables.push_back(Collectable(gameObjFromJson(*it)));
+			_collectables.push_back(std::unique_ptr<GameObject>(new Collectable(gameObjFromJson(*it))));
 		}
 	}
 
 	// tmp?
 	AssetManager& assetManager = AssetManager::instance();
 	for (float i=-1; i<_spline.length()+1; i+=1.f) {
-		_obstacles.push_back(Obstacle(GameObject(
+		_obstacles.push_back(std::unique_ptr<GameObject>(new Obstacle(GameObject(
 			assetManager.models()["prism"], _spline,
 			"cloud.jpg",
 			true,
@@ -188,20 +188,20 @@ void Game::loadLevel(const std::string& levelName) {
 				glm::vec3(1.5f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
-		)));
+		))));
 	}
 	for (float i=-1; i<_spline.length()+1; i+=10.f) {
 		//place the tower left or right to the spline ?
 		int sign = (rand()%2) * 2 -1;
-		_decorations.push_back(Decoration(GameObject(
+		_decorations.push_back(std::unique_ptr<GameObject>(new Decoration(GameObject(
 			assetManager.models()["tower"], _spline,
-			"coin.png",
+			"default.png",
 			false,
 			Transform(
 				glm::vec3(i, sign * glm::linearRand(M_PI/2-0.5f,M_PI/2+0.5f), glm::linearRand(40.f,80.f)),
 				glm::vec3(glm::linearRand(1.f,3.f))
 			)
-		)));	
+		))));	
 	}
 	
 
@@ -226,7 +226,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 
 	// base clouds
 	for (float i=start; i<finish; i+=.7f) {
-		_obstacles.push_back(Obstacle(GameObject(
+		_obstacles.push_back(std::unique_ptr<GameObject>(new Obstacle(GameObject(
 			assetManager.models()["prism"], _spline,
 			"splineTextureBlue.png",
 			true,
@@ -235,7 +235,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 				glm::vec3((2.f*glm::sin(i)) + 4.f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
-		)));
+		))));
 	}
 
 	// base coins
@@ -243,7 +243,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 		for (float j = 0; j < 2.5; j+=.5f) {
 			for (float k = 0; k <= .2f; k+=.2f) {
 				if (i+j < finish) {
-					_collectables.push_back(Collectable(GameObject(
+					_collectables.push_back(std::unique_ptr<GameObject>(new Collectable(GameObject(
 						assetManager.models()["coin"], _spline,
 						"coin.png",
 						false,
@@ -253,7 +253,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 							glm::vec3(0)
 						),
 						{ ROT_CONST_UP }
-					)));
+					))));
 				}
 			}
 		}
@@ -263,15 +263,15 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 	for (float i=start; i<finish; i+=10.f) {
 		std::cout << (rand()%2)  << "   ";
 		int sign = (rand()%2) * 2 -1;
-		_decorations.push_back(Decoration(GameObject(
+		_decorations.push_back(std::unique_ptr<GameObject>(new Decoration(GameObject(
 			assetManager.models()["tower"], _spline,
-			"coin.png",
+			"default.png",
 			false,
 			Transform(
 				glm::vec3(i, sign * glm::linearRand(M_PI/2-0.5f,M_PI/2+0.5f), glm::linearRand(40.f,80.f)),
 				glm::vec3(glm::linearRand(1.f,3.f))
 			)
-		)));	
+		))));	
 	}
 
 	float chunkStart = start + 5.f;
@@ -280,7 +280,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 		case 0 : //moving rings
 			for (float i=chunkStart; i< chunkFinish; i+=10.f) { // full rings on the chunk
 				for (float j = 0; j < 2.f * M_PI; j+=.3f) { // ring perimeter
-					_obstacles.push_back(Obstacle(GameObject(
+					_obstacles.push_back(std::unique_ptr<GameObject>(new Obstacle(GameObject(
 						assetManager.models()["prism"], _spline,
 						"cloud.jpg",
 						 false,
@@ -290,7 +290,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 							j * leftVec
 						),
 						{ MOVE_CONST_LEFT, ROT_CONST_LEFT, MOVE_SIN_UP }
-					)));
+					))));
 				}
 			}
 			break;
@@ -299,7 +299,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 				for (float j = 0; j < 2.f * M_PI; j+=.4f) { // spiral parts - length
 					float fwdPos = i+4.f*j;
 					if (fwdPos < chunkFinish) {
-						_obstacles.push_back(Obstacle(GameObject(
+						_obstacles.push_back(std::unique_ptr<GameObject>(new Obstacle(GameObject(
 							assetManager.models()["prism"], _spline,
 							"cloud.jpg",
 							 true,
@@ -308,7 +308,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 								glm::vec3((maxPlayerUp - minPlayerUp)),
 								glm::vec3(0.f)
 							)
-						)));
+						))));
 					}
 				}
 			}
@@ -317,7 +317,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 			for (float i=chunkStart; i<finish; i+=1.5f) {// full tower
 				float towerLeft = glm::linearRand(0.f,2.f*float(M_PI));
 				for (float h = minPlayerUp; h < maxPlayerUp+4; h+=6) { // height
-					_obstacles.push_back(Obstacle(GameObject(
+					_obstacles.push_back(std::unique_ptr<GameObject>(new Obstacle(GameObject(
 						assetManager.models()["prism"], _spline,
 						"cloud.jpg",
 						 true,
@@ -326,13 +326,13 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 							glm::vec3(4),
 							glm::vec3(0,i,i)
 						)
-					)));
+					))));
 				}
 			}
 			break;
 		case 3 : //full random objects
 			for (float i=chunkStart; i<finish; i+=1.f) {// random object
-				_obstacles.push_back(Obstacle(GameObject(
+				_obstacles.push_back(std::unique_ptr<GameObject>(new Obstacle(GameObject(
 					assetManager.models()["prism"], _spline,
 					"cloud.jpg",
 					 false,
@@ -342,7 +342,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 						glm::vec3(i, 0 , -i)
 					),
 					{ ROT_CONST_UP }
-				)));
+				))));
 			}
 
 			break;
@@ -369,11 +369,6 @@ void Game::update() {
 	_player.update();
 	// Update alien position and speed
 	_alien.update();
-
-	// Collectables animation
-	// for (std::list<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
-	// 	(*it).update(dt, 0, _player.sPosition());
-	// }
 
 	// Check for collisions with obstacles
 	updateObstacleList(_obstacles);
@@ -453,28 +448,9 @@ void Game::render() {
 
 	// TODO : polymorphism this shit !
 	// Draw obstacles
-	//Game::renderObjList<Obstacle>(_obstacles);
-	for (std::list<Obstacle>::iterator it = _obstacles.begin(); it != _obstacles.end(); ++it) {
-		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxRenderDistance) {
-			_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
-		}
-	}
-
-	// Draw decorations
-	for (std::list<Decoration>::iterator it = _decorations.begin(); it != _decorations.end(); ++it) {
-		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxRenderDistance) {
-			_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
-		}
-	}
-
-	// Draw Collectables
-	for (std::list<Collectable>::iterator it = _collectables.begin(); it != _collectables.end(); ++it) {
-		if (!(*it).isHidden()) {
-			if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxRenderDistance) {
-				_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
-			}
-		}
-	}
+	drawGameObjList(_obstacles);
+	drawGameObjList(_collectables);
+	drawGameObjList(_decorations);
 
 	// Draw _skybox
 	glDepthMask(GL_FALSE);
@@ -503,6 +479,22 @@ void Game::render() {
 }
 
 
+void Game::drawGameObjList (std::list<std::unique_ptr<GameObject>>& objList) {
+	typename std::list<std::unique_ptr<GameObject>>::iterator it = objList.begin();
+	while (it != objList.end()) {
+	
+		if (glm::abs((*it)->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxRenderDistance) {
+			_renderManager.drawObject(**it, *_cameras[_chosenCamera]);
+			++it;
+		} else if ((*it)->sPosition()[FWD] < _player.sPosition()[FWD]) {
+			objList.erase(it++);
+			std::cout << "erasing object far behind" << std::endl;
+		} else {
+			++it;
+		}
+	}
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SMALL FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -526,9 +518,8 @@ void Game::zoomCamera(const float dz) {
 	}
 }
 
-template <typename T>
-void Game::orderObjListFwd (std::list<T>& objList) {
-	objList.sort([](T objA, T objB) {return objA.sPosition()[FWD] < objB.sPosition()[FWD];});
+void Game::orderObjListFwd (std::list<std::unique_ptr<GameObject>>& objList) {
+	objList.sort([](std::unique_ptr<GameObject>& objA, std::unique_ptr<GameObject>& objB) {return objA->sPosition()[FWD] < objB->sPosition()[FWD];});
 }
 
 
@@ -540,35 +531,46 @@ void Game::handleCollision(T& firstObject, U& secondObject) {
 	}
 }
 
-void Game::updateObstacleList (std::list<Obstacle>& objList) {
-	for (typename std::list<Obstacle>::iterator it = objList.begin(); it != objList.end(); ++it) {
-		// if the object is near enough to the player : check collision
-		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxCollideDistance) {
-			it->update();
-			handleCollision(_player, *it);
-		// else, if the object is in front of the player, discard all the next objects (lists are ordered)
-		} else if (it->sPosition()[FWD] > _player.sPosition()[FWD]) {
-			break;
+void Game::updateObstacleList(std::list<std::unique_ptr<GameObject>>& objList) {
+	for (typename std::list<std::unique_ptr<GameObject>>::iterator it = objList.begin(); it != objList.end(); ++it) {
+		try {
+			Obstacle& currObstacle(dynamic_cast<Obstacle&>(**it));
+			// if the object is near enough to the player : check collision
+			if (glm::abs(currObstacle.sPosition()[FWD] - _player.sPosition()[FWD]) < _maxCollideDistance) {
+				currObstacle.update();
+				handleCollision(_player, currObstacle);
+			// else, if the object is in front of the player, discard all the next objects (lists are ordered)
+			} else if ((*it)->sPosition()[FWD] > _player.sPosition()[FWD]) {
+				break;
+			}
+		} catch(const std::bad_cast& e) {
+			 throw(Error("bad cast : obstacle list contains not obstacle GameObjects",__FILE__,__LINE__));
 		}
 	}
 }
 
-void Game::updateCollectableList (std::list<Collectable>& objList) {
-	typename std::list<Collectable>::iterator it = objList.begin();
+void Game::updateCollectableList(std::list<std::unique_ptr<GameObject>>& objList) {
+	typename std::list<std::unique_ptr<GameObject>>::iterator it = objList.begin();
 	while (it != objList.end()) {
-		// if the object is near enough to the player : check collision
-		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxCollideDistance) {
-			it->update(_player.sPosition());
-			handleCollision(_player, *it);
-		// else, if the object is in front of the player, discard all the next objects (lists are ordered)
-		} else if (it->sPosition()[FWD] > _player.sPosition()[FWD]) {
-			break;
-		}
+		try {
+			Collectable& currCollectable(dynamic_cast<Collectable&>(**it));
 
-		if (it->isHidden()) {
-			objList.erase(it++);
-		} else {
-			++it;
+			// if the object is near enough to the player : check collision
+			if (glm::abs(currCollectable.sPosition()[FWD] - _player.sPosition()[FWD]) < _maxCollideDistance) {
+				currCollectable.update(_player.sPosition());
+				handleCollision(_player, currCollectable);
+			// else, if the object is in front of the player, discard all the next objects (lists are ordered)
+			} else if (currCollectable.sPosition()[FWD] > _player.sPosition()[FWD]) {
+				break;
+			}
+
+			if (currCollectable.isHidden()) {
+				objList.erase(it++);
+			} else {
+				++it;
+			}
+		} catch(const std::bad_cast& e) {
+			 throw(Error("bad cast : collectable list contains not collectable GameObjects",__FILE__,__LINE__));
 		}
 	}
 }

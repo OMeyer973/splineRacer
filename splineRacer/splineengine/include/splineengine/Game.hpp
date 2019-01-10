@@ -37,10 +37,10 @@ const std::string playerModelName = "plane";
 // how long is displayed the end screen before going back to the menu ?
 const float endScreenTime = 5.f;
 // maximum distance to the player (folowing the spline) at wich collision checks will happend
-const float endlessMaxCollideDistance = 30.f;
+const float endlessMaxCollideDistance = 20.f;
 const float levelMaxCollideDistance = 60.f;
 // maximum distance to the player (folowing the spline) at wich objects will be rendered
-const float endlessMaxRenderDistance = 50.f;
+const float endlessMaxRenderDistance = 30.f;
 const float levelMaxRenderDistance = 100.f;
 
 // max number of anim per object described in json
@@ -99,13 +99,10 @@ class Game {
 		void loadLevel(const std::string& levelName);
 
 		/// \brief returns a single gameobject from it's json description
-		//TODO : throw exception when loading a bad file
 		GameObject gameObjFromJson(nlohmann::json j);
 
 		/// \brief order a list of gameobject according to their FWD position coordinate
-		// TODO : replace template with gameobject polymorphism or check the type or idk ... 
-		template <typename T>
-		void orderObjListFwd(std::list<T>& objList);
+		void orderObjListFwd(std::list<std::unique_ptr<GameObject>>& objList);
 
 		/// \brief Handle collision between 2 GameObjects
 		// TODO : replace template with gameobject polymorphism or check the type or idk ... 
@@ -114,17 +111,15 @@ class Game {
 
 
 		/// \brief renders a list of gameObjects and remove those far behind the player  
-		// TODO : replace template with gameobject polymorphism or check the type or idk ... 
-		template <typename T>
-		void renderObjList(std::list<T>& objList);
-		
-		/// \brief update the obstacles physics, check for collisions with player 
-		///\brief and handle the collision behaviour  
-		void updateObstacleList(std::list<Obstacle>&  objList);
+		void drawGameObjList(std::list<std::unique_ptr<GameObject>>& objList);
 
 		/// \brief update the obstacles physics, check for collisions with player 
 		///\brief and handle the collision behaviour  
-		void updateCollectableList(std::list<Collectable>&  objList);
+		void updateObstacleList(std::list<std::unique_ptr<GameObject>>&  objList);
+
+		/// \brief update the obstacles physics, check for collisions with player 
+		///\brief and handle the collision behaviour  
+		void updateCollectableList(std::list<std::unique_ptr<GameObject>>&  objList);
 
 		// MEMBERS
 		// gamemodes : CLASSIC, ENDLESS
@@ -161,9 +156,9 @@ class Game {
 		GameObject _finishLine;
 
 		// game objects lists (ordered along the spline acording to their FWD coordinate)
-	    std::list<Decoration> _decorations;
-	    std::list<Obstacle> _obstacles;
-	    std::list<Collectable> _collectables;
+	    std::list<std::unique_ptr<GameObject>> _decorations;
+	    std::list<std::unique_ptr<GameObject>> _obstacles;
+	    std::list<std::unique_ptr<GameObject>> _collectables;
 };
 
 }

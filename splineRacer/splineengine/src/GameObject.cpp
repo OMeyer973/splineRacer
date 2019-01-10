@@ -3,6 +3,9 @@
 
 namespace splineengine {
 
+GLuint GameObject::_lastVao = 0;
+bool GameObject::_firstVaoBound = false;
+
 GameObject::GameObject (
         const Model& model,
         const Spline& spline,
@@ -122,14 +125,23 @@ void GameObject::update() {
     }
 }
 
-
 void GameObject::draw() const {
     glBindTexture(GL_TEXTURE_2D, _textureID);
-    glBindVertexArray(_model.VAO());
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _model.IBO());
+
+    if (!GameObject::_firstVaoBound) {
+        glBindVertexArray(_model.VAO());
+        GameObject::_firstVaoBound = true;
+    }
+
+    if (GameObject::_lastVao != _model.VAO()) {
+        glBindVertexArray(0);
+        glBindVertexArray(_model.VAO());
+    }
+
     glDrawElements(GL_TRIANGLES, _model.geometry().getIndexCount(), GL_UNSIGNED_INT, 0); // Draw all meshes
-    glBindVertexArray(0);
+
     glBindTexture(GL_TEXTURE_2D, 0);
+    GameObject::_lastVao = _model.VAO();
 }
 
 
@@ -168,6 +180,11 @@ void GameObject::setTexture(const std::string textureName) {
 		_textureID = texture.getTextureID();
         assetManager.textures().insert(std::make_pair(textureName, texture));
 	}
+}
+
+void GameObject::resetDrawing() {
+    glBindVertexArray(0);
+    GameObject::_firstVaoBound = false;
 }
 
 }

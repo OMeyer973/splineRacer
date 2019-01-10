@@ -93,7 +93,7 @@ class GameObject {
 
 
 		/// \brief destructor
-		virtual ~GameObject()
+		~GameObject()
 		{};
 
 
@@ -154,6 +154,8 @@ class GameObject {
 		/// \brief get Texture ID
 		const GLuint textureID() const { return _textureID; };
 
+		static void resetDrawing();
+
 	// MEMBERS
 	protected:
 		/// \brief 3D model of the object
@@ -185,6 +187,14 @@ class GameObject {
 
 		/// \brief Texture ID of the model
 		GLuint _textureID;
+
+
+		// STATIC MEMBERS
+		/// \brief Last VAO drawn
+		static GLuint _lastVao;
+
+		/// \brief Is the first VAO bound ?
+		static bool _firstVaoBound;
 
 };
 

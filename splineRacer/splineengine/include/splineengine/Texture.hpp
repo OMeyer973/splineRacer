@@ -27,15 +27,17 @@ public:
 	// Copy
 	Texture(const Texture& tex);
 
-	//getter
+	// Destructor
+	~Texture()
+	{};
+	
+	// Getter
 	GLuint getTextureID() const{ return _texID ; };
 
 	//setter
 	//void setTexture(const std::string &texture){ _texName = texture;  };
 
-	//destructor
-	~Texture()
-	{};
+	
 
 	bool loadTexture();
 

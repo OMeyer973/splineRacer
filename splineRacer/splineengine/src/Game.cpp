@@ -105,6 +105,7 @@ Game::Game(const std::string& levelName)
 
 Game::~Game() {
 	std::cout << "game destructor called " << std::endl;
+	GameObject::resetDrawing();
 }
 
 

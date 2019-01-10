@@ -125,6 +125,9 @@ void GameManager::doMenuEvent(SDL_Event e) {
 							_menu.displayLevels();
 						}
 					}
+					if (_menu.selectedMenu() == "Quit") {
+						_exiting = true;
+					}
 					break;
 				case 1 :	// HIDE MENU
 					if(_menu.isDisplayingLevels()){

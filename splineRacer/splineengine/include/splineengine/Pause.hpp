@@ -2,9 +2,16 @@
 #ifndef __PAUSE__HPP
 #define __PAUSE__HPP
 
-#include "common.hpp"
+
+#include <splineengine/common.hpp>
 #include <splineengine/Texture.hpp>
 #include <splineengine/Model.hpp>
+#include <splineengine/AssetManager.hpp>
+#include <splineengine/Camera.hpp>
+#include <splineengine/POVCamera.hpp>
+#include <splineengine/TrackballCamera.hpp>
+#include <splineengine/Player.hpp>
+
 
 namespace splineengine {
 
@@ -30,11 +37,30 @@ class Pause {
 
 		/// \brief  render the pause screen at each frame
 		void render();
+		/// \brief move selectors
+		void moveSelectors(float dy);
+
+		/// \brief get current selected MENU
+		std::string getPauseMenu(){return _pauseArray[_selectedMenu];};
 
 	// MEMBERS
 	private:
+		RenderManager _renderManager;
+		/// \brief vector of pointers on available cameras
+		std::vector<std::unique_ptr<Camera>> _cameras;
+		/// \brief id of the current camera
+		int _chosenCamera;
 
+		int _selectedMenu;
+		float _movementDirection;
 
+		bool _isMoving;
+
+		int _tickVertical;
+
+		std::vector<GameObject> _pauseItems;
+		std::vector<GameObject> _selectors;
+		std::vector<std::string> _pauseArray = {"QuitToMenu","Continue"};
 
 };
 }

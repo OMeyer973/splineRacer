@@ -12,11 +12,11 @@
 
 namespace splineengine {
 
-const int defaultAnchorsNb = 20;
-const float defaultSegmentLength = 3.f;
+const int defaultAnchorsNb = 5;
+const float defaultSegmentLength = 5.f;
 
 //how much unexpected turns there are in the spline ? 0: a lot, +infinity : none 
-const float splineSmoothness = 1.5f;
+const float splineSmoothness = 1.2f;
 
 // delta position used to rotate the camera and the objects facing the curve
 // it is large in order to have smooth camera movements

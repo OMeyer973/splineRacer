@@ -20,7 +20,7 @@ Game::Game()
 		"planetexture2.jpg",
 		 false,
 		Transform(defaultPlayerPos)
-	), defaultPlayerMaxSpeed * 0.8f), // creation of the firs map part will increase the speed back to 1
+	), defaultPlayerMaxSpeed * (1.f-endlessSpeedMultiplier)), // creation of the firs map part will increase the speed back to 1
 	_skybox(GameObject(
 		AssetManager::instance().models()["skybox"],
 		_spline,
@@ -198,7 +198,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 	// base clouds
 	for (float i=start; i<finish; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
-			assetManager.models()["cloud"], _spline,
+			assetManager.models()["prism"], _spline,
 			"cloud.jpg",
 			true,
 			Transform(
@@ -213,33 +213,36 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 	for (float i=start; i<finish; i+=10.f) {
 		for (float j = 0; j < 2.5; j+=.5f) {
 			for (float k = 0; k <= .2f; k+=.2f) {
-				_collectables.push_back(Collectable(GameObject(
-					assetManager.models()["coin"], _spline,
-					"coin.png",
-					false,
-					Transform(
-						glm::vec3(i+j, -(i+k), 10),
-						glm::vec3(3.f),
-						glm::vec3(0)
-					),
-					{ ROT_CONST_UP }
-				)));
+				if (i+j < finish) {
+					_collectables.push_back(Collectable(GameObject(
+						assetManager.models()["coin"], _spline,
+						"coin.png",
+						false,
+						Transform(
+							glm::vec3(i+j, -(i+k), 10),
+							glm::vec3(3.f),
+							glm::vec3(0)
+						),
+						{ ROT_CONST_UP }
+					)));
+				}
 			}
 		}
 	}	
-
+	float chunkStart = start + 5.f;
+	float chunkFinish = finish - 5.f;
 	switch (partToGenerate) {
 		case 0 : //moving rings
-			for (float i=start; i<finish; i+=10.f) { // full rings on the chunk
+			for (float i=chunkStart; i< chunkFinish; i+=10.f) { // full rings on the chunk
 				for (float j = 0; j < 2.f * M_PI; j+=.3f) { // ring perimeter
 					_obstacles.push_back(Obstacle(GameObject(
-						assetManager.models()["cloud"], _spline,
+						assetManager.models()["prism"], _spline,
 						"cloud.jpg",
 						 false,
 						Transform(
-							glm::vec3(i-5, j, 15),
+							glm::vec3(i, j, 15),
 							glm::vec3(3),
-							glm::vec3(j, -20*j, 3*j)
+							j * leftVec
 						),
 						{ MOVE_CONST_LEFT, ROT_CONST_LEFT, MOVE_SIN_UP }
 					)));
@@ -247,21 +250,53 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 			}
 			break;
 		case 1 : //spiral
-			for (float i=start; i<finish; i+=20.f) {// full spirals on the chunk
-				for (float h = minPlayerUp+4; h <= maxPlayerUp; h+=6) { // spiral parts - height
-					for (float j = 0; j < 2.f * M_PI; j+=.4f) { // spiral parts - length
+			for (float i=chunkStart; i<chunkFinish; i+=30.f) {// full spirals on the chunk
+				for (float j = 0; j < 2.f * M_PI; j+=.4f) { // spiral parts - length
+					float fwdPos = i+4.f*j;
+					if (fwdPos < chunkFinish) {
 						_obstacles.push_back(Obstacle(GameObject(
 							assetManager.models()["prism"], _spline,
 							"cloud.jpg",
 							 true,
 							Transform(
-								glm::vec3(i-5+2.f*j, j, h),
-								glm::vec3(5),
-								glm::vec3(j, -20*j, 3*j)
+								glm::vec3(fwdPos, j, maxPlayerUp - minPlayerUp),
+								glm::vec3((maxPlayerUp - minPlayerUp)),
+								glm::vec3(0.f)
 							)
 						)));
 					}
 				}
+			}
+			break;
+		case 2 : //random towers
+			for (float i=chunkStart; i<finish; i+=1.5f) {// full tower
+				float towerLeft = glm::linearRand(0.f,2.f*float(M_PI));
+				for (float h = minPlayerUp; h < maxPlayerUp+4; h+=6) { // height
+					_obstacles.push_back(Obstacle(GameObject(
+						assetManager.models()["prism"], _spline,
+						"cloud.jpg",
+						 true,
+						Transform(
+							glm::vec3(i, towerLeft, h),
+							glm::vec3(4),
+							glm::vec3(0,i,i)
+						)
+					)));
+				}
+			}
+			break;
+		case 3 : //full random objects
+			for (float i=chunkStart; i<finish; i+=1.f) {// random object
+				_obstacles.push_back(Obstacle(GameObject(
+					assetManager.models()["prism"], _spline,
+					"cloud.jpg",
+					 true,
+					Transform(
+						glm::vec3(i, glm::linearRand(0.f,2.f*float(M_PI)), glm::linearRand(minPlayerUp, maxPlayerUp)),
+						glm::vec3(4),
+						glm::vec3(i, 0 , -i)
+					)
+				)));
 			}
 			break;
 	}

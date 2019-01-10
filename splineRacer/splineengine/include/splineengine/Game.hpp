@@ -38,13 +38,13 @@ const float endScreenTime = 5.f;
 // maximum distance to the player (folowing the spline) at wich collision checks will happend
 const float maxCollideDistance = 30.f;
 // maximum distance to the player (folowing the spline) at wich objects will be rendered
-const float maxRenderDistance = 50.f;
+const float maxRenderDistance = 40.f;
 
 // max number of anim per object described in json
 const uint nbAnimInJson = 4;
 
 // number of random parts that can be generated in an infinite level
-const uint nbOfRandomCHunks = 2;
+const uint nbOfRandomCHunks = 4;
 
 /// \brief class wich represents the game scene , the player and their mechanics
 class Game {

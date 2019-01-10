@@ -36,12 +36,15 @@ const std::string playerModelName = "plane";
 // how long is displayed the end screen before going back to the menu ?
 const float endScreenTime = 5.f;
 // maximum distance to the player (folowing the spline) at wich collision checks will happend
-const float maxCollideDistance = 50.f;
+const float maxCollideDistance = 30.f;
 // maximum distance to the player (folowing the spline) at wich objects will be rendered
-const float maxRenderDistance = 70.f;
+const float maxRenderDistance = 50.f;
 
 // max number of anim per object described in json
 const uint nbAnimInJson = 4;
+
+// number of random parts that can be generated in an infinite level
+const uint nbOfRandomCHunks = 2;
 
 /// \brief class wich represents the game scene , the player and their mechanics
 class Game {
@@ -87,8 +90,8 @@ class Game {
 
 
 	private:
-		/// \brief creates a radom level
-		void generateLevel(const float start, const float finish);
+		/// \brief creates a radom level chunk between start & finish
+		void generateLevel(const float start, const float finish, const int partToGenerate);
 		/// \brief load the given level
 		void loadLevel(const std::string& levelName);
 

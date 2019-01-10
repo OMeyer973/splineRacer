@@ -40,6 +40,8 @@ const float maxCollideDistance = 50.f;
 // maximum distance to the player (folowing the spline) at wich objects will be rendered
 const float maxRenderDistance = 70.f;
 
+// max number of anim per object described in json
+const uint nbAnimInJson = 4;
 
 /// \brief class wich represents the game scene , the player and their mechanics
 class Game {

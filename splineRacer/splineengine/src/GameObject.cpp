@@ -97,7 +97,7 @@ void GameObject::update() {
                 _rotation[UP] += rotConstSpeed * dt;
                 break;
             case MOVE_SIN_LEFT : //using += to take into acount the original position though Amplitude need to be adjusted (might be a bit off)
-                _sPosition[LEFT] += moveSinAdjustedAmp * dt * (glm::sin(t * moveSinFreq * 2.f*M_PI));
+                _sPosition[LEFT] += moveSinLeftAdjustedAmp * dt * (glm::sin(t * moveSinFreq * 2.f*M_PI));
                 break;
             case MOVE_SIN_UP : //using += to take into acount the original position though Amplitude need to be adjusted (might be a bit off)
                 _sPosition[UP] += moveSinAdjustedAmp * dt * (glm::sin(t * moveSinFreq * 2.f*M_PI));

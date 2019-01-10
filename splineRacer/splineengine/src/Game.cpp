@@ -1,6 +1,7 @@
 #include <splineengine/Game.hpp>
 #include <fstream>
 #include <iostream>
+#include "splineengine/Error.hpp"
 
 namespace splineengine {
 
@@ -112,6 +113,16 @@ Game::~Game() {
 
 GameObject Game::gameObjFromJson(nlohmann::json j) {
 	AssetManager& assetManager = AssetManager::instance();
+	
+	AnimationList animList;
+	for (uint i=1; i<=nbAnimInJson; i++) {
+		// if to clean bad values in unregistered fields
+		if (j["anim" + std::to_string(i)].is_number()) {
+			std::cout << j["anim" + std::to_string(i)].get<int>() << std::endl;
+			animList.emplace_back(j["anim" + std::to_string(i)].get<int>()); 
+		}
+	}
+
 	return GameObject(
 		assetManager.models()[ j["model"].get<std::string>() ], // model
 		_spline, // spline
@@ -121,7 +132,8 @@ GameObject Game::gameObjFromJson(nlohmann::json j) {
 			glm::vec3(j["pos_fwd"].get<float>(),   j["pos_left"].get<float>(),   j["pos_up"].get<float>()), // sPosition
 			glm::vec3(j["scale_fwd"].get<float>(), j["scale_left"].get<float>(), j["scale_up"].get<float>()), // scale
 			glm::vec3(j["rot_fwd"].get<float>(),   j["rot_left"].get<float>(),   j["rot_up"].get<float>()) // rotation
-		)
+		),
+		animList
 	);
 }
 
@@ -132,7 +144,12 @@ void Game::loadLevel(const std::string& levelName) {
 		+ ("../../splineRacer/assets/levels/" + levelName + ".map");
 
 	if (debug) std::cout << "loading level from file : " << mapPath << std::endl;
+	
+	// TODO : check for exception
 	std::ifstream mapStream(mapPath);
+	if (mapStream.fail()) {
+		throw(Error("tried to read invalid map json file",__FILE__, __LINE__));
+	}
 
 	// cf https://github.com/nlohmann/json#examples
 	nlohmann::json map;
@@ -159,8 +176,7 @@ void Game::loadLevel(const std::string& levelName) {
 				glm::vec3(i, 0, 0),
 				glm::vec3(1.f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
-			),
-			{ROT_CONST_FWD, SCALE_SIN}
+			)
 		)));
 	}
 

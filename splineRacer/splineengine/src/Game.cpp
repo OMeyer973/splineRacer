@@ -395,8 +395,13 @@ void Game::render() {
 	glDepthMask(GL_TRUE);
 
 	// TODO : display the end cards under these conditions
-	// if (_gameState == LEVELWIN)
-	// if (_gameState == LEVELLOSE)
+	if (_gameState == LEVELWIN) {
+		_renderManager.drawWinCard();
+	}
+
+	if (_gameState == LEVELLOSE) {
+		_renderManager.drawLoseCard();
+	}
 	// if (_gameState == ENDLESSOVER)
 
 	_renderManager.drawDistanceToAlien(_player.sPosition()[FWD] - _alien.sPosition()[FWD]);

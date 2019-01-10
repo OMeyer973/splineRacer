@@ -351,4 +351,28 @@ void RenderManager::drawScore(const unsigned int score) {
 	);
 }
 
+void RenderManager::drawWinCard() {
+	_textColor = glm::vec3(.3f, 1.f, 0.5f);
+	_enableGlBlend = true;
+	useProgram(TEXT);
+	AssetManager::instance().textManager().renderText(
+		"Bravo !",
+		Settings::instance().windowWidth() * .5f - 105.f,
+		Settings::instance().windowHeight() * .7f,
+		1.5f
+	);
+}
+
+void RenderManager::drawLoseCard() {
+	_textColor = glm::vec3(.9f, .1f, .2f);
+	_enableGlBlend = true;
+	useProgram(TEXT);
+	AssetManager::instance().textManager().renderText(
+		"Dommage !",
+		Settings::instance().windowWidth() * .5f - 180.f,
+		Settings::instance().windowHeight() * .7f,
+		1.5f
+	);
+}
+
 }

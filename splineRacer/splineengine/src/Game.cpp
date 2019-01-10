@@ -195,7 +195,7 @@ void Game::loadLevel(const std::string& levelName) {
 		int sign = (rand()%2) * 2 -1;
 		_decorations.push_back(Decoration(GameObject(
 			assetManager.models()["tower"], _spline,
-			"coin.png",
+			"tower.jpg",
 			false,
 			Transform(
 				glm::vec3(i, sign * glm::linearRand(M_PI/2-0.5f,M_PI/2+0.5f), glm::linearRand(40.f,80.f)),
@@ -265,7 +265,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 		int sign = (rand()%2) * 2 -1;
 		_decorations.push_back(Decoration(GameObject(
 			assetManager.models()["tower"], _spline,
-			"coin.png",
+			"tower.jpg",
 			false,
 			Transform(
 				glm::vec3(i, sign * glm::linearRand(M_PI/2-0.5f,M_PI/2+0.5f), glm::linearRand(40.f,80.f)),

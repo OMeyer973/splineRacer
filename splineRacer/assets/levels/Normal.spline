@@ -5,43 +5,148 @@
    "anchor_z": 0
  },
  {
-   "anchor_x": 10,
-   "anchor_y": 0,
-   "anchor_z": 0
+   "anchor_x": 8,
+   "anchor_y": -2,
+   "anchor_z": 2
  },
  {
-   "anchor_x": 20,
-   "anchor_y": 0,
-   "anchor_z": 0
+   "anchor_x": 16,
+   "anchor_y": -1,
+   "anchor_z": -1
  },
  {
-   "anchor_x": 20,
-   "anchor_y": 0,
-   "anchor_z": 10
+   "anchor_x": 24,
+   "anchor_y": 3,
+   "anchor_z": 1
  },
  {
-   "anchor_x": 20,
-   "anchor_y": 0,
-   "anchor_z": 20
- },
- {
-   "anchor_x": 30,
-   "anchor_y": 0,
-   "anchor_z": 20
- },
- {
-   "anchor_x": 30,
-   "anchor_y": 0,
-   "anchor_z": 30
+   "anchor_x": 32,
+   "anchor_y": -2,
+   "anchor_z": 4
  },
  {
    "anchor_x": 40,
-   "anchor_y": 0,
-   "anchor_z": 30
+   "anchor_y": -3,
+   "anchor_z": 5
  },
  {
-   "anchor_x": 40,
+   "anchor_x": 38,
+   "anchor_y": 3,
+   "anchor_z": 13
+ },
+ {
+   "anchor_x": 35,
+   "anchor_y": -3,
+   "anchor_z": 21
+ },
+ {
+   "anchor_x": 27,
+   "anchor_y": 1,
+   "anchor_z": 23
+ },
+ {
+   "anchor_x": 19,
+   "anchor_y": -2,
+   "anchor_z": 23
+ },
+ {
+   "anchor_x": 16,
+   "anchor_y": -2,
+   "anchor_z": 15
+ },
+ {
+   "anchor_x": 13,
+   "anchor_y": 2,
+   "anchor_z": 7
+ },
+ {
+   "anchor_x": 14,
+   "anchor_y": 2,
+   "anchor_z": -1
+ },
+ {
+   "anchor_x": 14,
+   "anchor_y": -2,
+   "anchor_z": -9
+ },
+ {
+   "anchor_x": 11,
+   "anchor_y": -2,
+   "anchor_z": -17
+ },
+ {
+   "anchor_x": 14,
    "anchor_y": 0,
-   "anchor_z": 40
+   "anchor_z": -25
+ },
+ {
+   "anchor_x": 11,
+   "anchor_y": -3,
+   "anchor_z": -33
+ },
+ {
+   "anchor_x": 11,
+   "anchor_y": 3,
+   "anchor_z": -41
+ },
+ {
+   "anchor_x": 9,
+   "anchor_y": 3,
+   "anchor_z": -49
+ },
+ {
+   "anchor_x": 11,
+   "anchor_y": -2,
+   "anchor_z": -57
+ },
+ {
+   "anchor_x": 11,
+   "anchor_y": -1,
+   "anchor_z": -65
+ },
+ {
+   "anchor_x": 19,
+   "anchor_y": 2,
+   "anchor_z": -64
+ },
+ {
+   "anchor_x": 27,
+   "anchor_y": -1,
+   "anchor_z": -65
+ },
+ {
+   "anchor_x": 28,
+   "anchor_y": -3,
+   "anchor_z": -57
+ },
+ {
+   "anchor_x": 20,
+   "anchor_y": 0,
+   "anchor_z": -56
+ },
+ {
+   "anchor_x": 20,
+   "anchor_y": 2,
+   "anchor_z": -64
+ },
+ {
+   "anchor_x": 17,
+   "anchor_y": 0,
+   "anchor_z": -72
+ },
+ {
+   "anchor_x": 14,
+   "anchor_y": -1,
+   "anchor_z": -80
+ },
+ {
+   "anchor_x": 14,
+   "anchor_y": -3,
+   "anchor_z": -88
+ },
+ {
+   "anchor_x": 12,
+   "anchor_y": -3,
+   "anchor_z": -96
  }
 ]

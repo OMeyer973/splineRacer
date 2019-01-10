@@ -24,17 +24,21 @@ class Chaser : public GameObject {
     	/// \brief Chaser Constructor
     	Chaser(const GameObject& gameObject, const Player& player, float delay = defaultChaserDelay);
 
-    	/// \brief Chaser Destructor
-    	~Chaser()
-    	{};
+        /// \brief Chaser Destructor
+        ~Chaser()
+        {};
 
-		/// \brief initialize the chaser in function of the given player
-		// void init(Player* player, const float delay = defaultChaserDelay);
+        // CONST GETTER
+        /// \brief is the chaser chasing the player ?
+         const bool& chasingPlayer() const { return _chasingPlayer; }
 
+        // NON CONST GETTER
+    	/// \brief is the chaser chasing the player ?
+         bool& chasingPlayer() { return _chasingPlayer; }
 
-        /// \brief update the player status at each frame
+        
+        /// \brief update the chaser status at each frame
         void update();
-
 
         /// \brief trigger collision behavior when colliding with the player. 
         void doCollisionWith(Player& other);
@@ -42,6 +46,8 @@ class Chaser : public GameObject {
     //MEMBERS
     private:
     	const Player& _player;
+        bool _chasingPlayer = true;
+        bool _chatchedPlayer = false;
 };
 
 }

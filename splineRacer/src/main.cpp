@@ -28,10 +28,9 @@ int main(int argc, char** argv) {
 
 	if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
         std::cout << Mix_GetError() << std::endl;
+
   Mix_Music *music; //creation of musique
-
-
-  music = Mix_LoadMUS("../splineRacer/assets/musics/menu.mp3");
+  music = Mix_LoadMUS("../splineRacer/assets/musics/instru_imac:.mp3");
   Mix_PlayMusic(music, -1);
 	Mix_VolumeMusic(MIX_MAX_VOLUME);
 

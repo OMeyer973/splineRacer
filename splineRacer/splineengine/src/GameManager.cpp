@@ -78,14 +78,103 @@ void GameManager::doMenuEvent(SDL_Event e) {
 			 	if (input.select.has(e.key.keysym.sym)) {
 					_menu.displayLevels();
 				}
-
 			}
       break;
+		case SDL_JOYHATMOTION:
+			if (e.jhat.hat == 0){
+					switch(e.jhat.value)
+					{
+						case SDL_HAT_UP:
+							if (!_menu.isRotatingHorizontally() && !_menu.isRotatingVertically()){
+								_menu.changeLevel(1);
+							}
+							if(debug) std::cout << "UP"<< std::endl;
+							break;
+						case SDL_HAT_DOWN:
+							if (!_menu.isRotatingHorizontally() && !_menu.isRotatingVertically()){
+								_menu.changeLevel(-1);
+							}
+							if(debug) std::cout << "DOWN"<< std::endl;
+							break;
+						case SDL_HAT_LEFT:
+							if (!_menu.isRotatingHorizontally()) {
+								_menu.changePannel(-1);
+							}
+							if(debug) std::cout << "LEFT"<< std::endl;
+							break;
+						case SDL_HAT_RIGHT:
+							if (!_menu.isRotatingHorizontally()){
+								_menu.changePannel(1);
+							}
+							if(debug) std::cout << "RIGHT"<< std::endl;
+							break;
+						default:
+							break;
+					}
+			}
+			break;
+		case SDL_JOYBUTTONDOWN:
+			switch(e.jbutton.button){
+				case 0 :	// ENTER
+					if(debug) std::cout <<"A" << std::endl;
+					if (_menu.selectedMenu() == "Play") {
+						if (_menu.isDisplayingLevels()) {
+							_levelName = _menu.selectedLevel();
+							goToGame(); // warning after this call, not in menu anymore
+							break;
+						}else{
+							_menu.displayLevels();
+						}
+					}
+					break;
+				case 1 :	// HIDE MENU
+					if(_menu.isDisplayingLevels()){
+						_menu.hideLevels();
+						break;
+					}
+					if(debug) std::cout <<"B" << std::endl;
+					break;
+				case 2 :	// CAMERA SWITCH
+					if(debug) std::cout <<"X"<< std::endl;
+					break;
+				case 3 :	// PAUSE
+					if(debug) std::cout <<"Y" << std::endl;
+					break;
+				case 7 :	// INFOS
+					if(debug) std::cout <<"Start" << std::endl;
+					break;
+				default:
+					break;
+			}
+			break;
 	}
 }
 
 void GameManager::doGameEvent(SDL_Event e) {
 	switch (e.type) {
+		case SDL_JOYHATMOTION:
+
+			std::cout << "INPUT MANETTE FRATE" << std::endl;
+			// if (e.jaxis.axis == 5)	// LT
+			// {
+			//
+			// 	std::cout << "INPUT MANETTE FRATE" << std::endl;
+			// 	// if (e.jaxis.value > -20000)
+			// 	// {
+			// 	// 	cameraAction = UP;
+			// 	// 	return;
+			// 	// }
+			// }
+			// if (e.jaxis.axis == 2)	// RT
+			// {
+			// 	std::cout << "INPUT MANETTE FRATE" << std::endl;
+			// 	// if (e.jaxis.value > -20000)
+			// 	// {
+			// 	// 	cameraAction = DOWN;
+			// 	// 	return;
+			// 	// }
+			// }
+			break;
     case SDL_KEYDOWN:
         if (input.left.has(e.key.keysym.sym)){ //going left
             _game->player().goingLeft() = 1.f;
@@ -141,8 +230,31 @@ void GameManager::doGameEvent(SDL_Event e) {
 				if (e.motion.yrel != 0) {
 					_game->moveCameraY(e.motion.yrel);
 				}
-				break;
 			}
+			break;
+		case SDL_JOYBUTTONDOWN:
+			switch(e.jbutton.button){
+				case 0 :	// ENTER
+					if(debug) std::cout <<"A" << std::endl;
+					break;
+				case 1 :	// HIDE MENU
+					if(debug) std::cout <<"B" << std::endl;
+					break;
+				case 2 :	// CAMERA SWITCH
+					if(debug) std::cout <<"X"<< std::endl;
+					_game->changeCamera();
+					break;
+				case 3 :	// PAUSE
+					if(debug) std::cout <<"Y" << std::endl;
+					break;
+				case 7 :	// INFOS
+					if(debug) std::cout <<"Start" << std::endl;
+					goToPause();
+					break;
+				default:
+					break;
+			}
+			break;
     }
 }
 
@@ -170,6 +282,51 @@ void GameManager::doPauseEvent(SDL_Event e) {
 					goToMenu();
 				}
 			break;
+		case SDL_JOYHATMOTION:
+			if (e.jhat.hat == 0){
+				switch(e.jhat.value)
+				{
+					case SDL_HAT_UP:
+						_pause.moveSelectors(1);
+						if(debug) std::cout << "UP"<< std::endl;
+						break;
+					case SDL_HAT_DOWN:
+						_pause.moveSelectors(-1);
+						if(debug) std::cout << "DOWN"<< std::endl;
+						break;
+					default:
+						break;
+				}
+			}
+			break;
+			case SDL_JOYBUTTONDOWN:
+				switch(e.jbutton.button){
+					case 0 :	// ENTER
+						if(debug) std::cout <<"A" << std::endl;
+						if(_pause.getPauseMenu() == "Continue"){
+							goToGame();
+						}else{
+							goToMenu();
+						}
+						break;
+					case 1 :	// HIDE MENU
+						if(debug) std::cout <<"B" << std::endl;
+						break;
+					case 2 :	// CAMERA SWITCH
+						if(debug) std::cout <<"X"<< std::endl;
+						_game->changeCamera();
+						break;
+					case 3 :	// PAUSE
+						if(debug) std::cout <<"Y" << std::endl;
+						break;
+					case 7 :	// INFOS
+						if(debug) std::cout <<"Start" << std::endl;
+						goToGame();
+						break;
+					default:
+						break;
+				}
+				break;
 	}
 }
 

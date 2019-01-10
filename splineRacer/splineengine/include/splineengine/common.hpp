@@ -2,7 +2,7 @@
 #ifndef __COMMON__HPP
 #define __COMMON__HPP
 
-#include<glm/gtc/random.hpp>
+#include <glm/gtc/random.hpp>
 
 // declare global variables here
 

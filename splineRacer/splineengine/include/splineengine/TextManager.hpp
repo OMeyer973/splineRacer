@@ -33,7 +33,7 @@ class TextManager
 public:
 	// ================ METHODS ================
 	void setupTTF();
-	void renderText(const std::string &text, const GLfloat &x, const GLfloat &y, const GLfloat &scale, const glm::vec3 &color);
+	void renderText(const std::string &text, const GLfloat &x, const GLfloat &y, const GLfloat &scale, bool stickLetters = false);
 
 private:
 	std::map<GLchar, Glyph> _glyphes;

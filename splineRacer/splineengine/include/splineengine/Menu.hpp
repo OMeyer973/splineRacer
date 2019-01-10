@@ -4,13 +4,13 @@
 
 #include <iostream>
 #include <string>
-#include "common.hpp"
-#include "AssetManager.hpp"
-#include "Player.hpp"
-#include "RenderManager.hpp"
-#include "Camera.hpp"
-#include "POVCamera.hpp"
-#include "TrackballCamera.hpp"
+#include <splineengine/common.hpp>
+#include <splineengine/AssetManager.hpp>
+#include <splineengine/Player.hpp>
+#include <splineengine/RenderManager.hpp>
+#include <splineengine/Camera.hpp>
+#include <splineengine/POVCamera.hpp>
+#include <splineengine/TrackballCamera.hpp>
 
 namespace splineengine {
 
@@ -73,23 +73,34 @@ class Menu {
 		/// \brief id of the current camera
 		int _chosenCamera;
 
+		/// \brief Boolean used to know if the camera is rotating horizontally
 		bool _isRotatingHorizontally;
+				/// \brief Boolean used to know if the levels needs to move vertically
 		bool _isRotatingVertically;
-
+		/// \brief Boolean used to determine whether we display levels or not
 		bool _displayLevels;
 
+		/// \brief int giving movement direction
 		int _rotationDirection;
+		/// \brief determine the rotation angle
 		int _rotationAngle;
+		/// \brief  int used to stop the levels movements
 		int _tickVertical;
 
 		Player _player;
-	  	std::vector<GameObject> _menuItems;
+		/// \brief  vector containing menu items
+  	std::vector<GameObject> _menuItems;
+		/// \brief  vector containing skybox
 		std::vector<GameObject> _skybox;
 		std::string _frontMenuModelName = "frontmenu";
 
+		/// \brief  integer telling which menu is selected, used in _menus
 		int _selectedMenu;
+		/// \brief  integer telling which level is selected, used in _levels
 		int _selectedLevel;
+		/// \brief  array of pannels
 		std::vector<std::string> _menus = { "Play", "Scores", "Settings", "Rules", "Credits" ,"Quit" };
+		/// \brief array of levels 
 		std::vector<std::string> _levels = { "Easy", "Normal", "Hard", "Infinite" };
 
 

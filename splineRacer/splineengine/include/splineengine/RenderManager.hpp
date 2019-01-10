@@ -41,6 +41,7 @@ class RenderManager {
 
 			_lightsCount = 0;
 			_textColor = glm::vec3(1.f, 1.f, 1.f);
+			_enableGlBlend = false;
 
 			if (debug) std::cout << "done." << std::endl;
 		};
@@ -154,6 +155,9 @@ class RenderManager {
 
 		/// \brief Text color
 		glm::vec3 _textColor;
+
+		/// \brief Enable GL_BLEND ?
+		bool _enableGlBlend;
 
 };
 

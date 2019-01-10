@@ -26,11 +26,12 @@ int main(int argc, char** argv) {
   std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
   std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 
-	if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
+	if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
+				Mix_AllocateChannels(2);
         std::cout << Mix_GetError() << std::endl;
 
   Mix_Music *music; //creation of musique
-  music = Mix_LoadMUS("../splineRacer/assets/musics/instru_imac:.mp3");
+  music = Mix_LoadMUS("../splineRacer/assets/musics/menu:.mp3");
   Mix_PlayMusic(music, -1);
 	Mix_VolumeMusic(MIX_MAX_VOLUME);
 

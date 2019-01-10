@@ -18,7 +18,7 @@ Player::Player(
     _sInput(1.f, 0.f, 0.f),
     _score(0)
 {
-
+	_music = Mix_LoadMUS("../splineRacer/assets/musics/coin.mp3");
 }
 
 void Player::updateSpeed(const float dt) {
@@ -71,7 +71,10 @@ void Player::doCollisionWith(Obstacle& other) {
 
 void Player::doCollisionWith(Collectable& collectable) {
 	if (!collectable.isTaken()) {
-		_score++;
+		Mix_PauseMusic();
+		_score+=100;
+		Mix_PlayMusic(_music,1);
+		Mix_VolumeMusic(MIX_MAX_VOLUME/2);
 	}
 }
 

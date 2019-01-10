@@ -10,6 +10,7 @@
 #include "Obstacle.hpp"
 #include "Collectable.hpp"
 #include "splineengine/Chaser.hpp"
+#include <SDL/SDL_mixer.h>
 
 namespace splineengine {
 
@@ -120,6 +121,8 @@ class Player : public GameObject {
         /// \brief Score of the player
         unsigned int _score;
 
+        /// \ Sound played
+        Mix_Music *_music; //creation of musique
 
         /// \brief current input | [0] forward : no input | [1] left -> +1, straight -> 0, right -> -1 | [2] up -> +1, straight -> 0, down -> -1
         glm::vec3 _sInput;

@@ -15,7 +15,7 @@ namespace splineengine {
 // Declare global variables here
 
 // print debug messages ?
-const bool debug = true;
+const bool debug = false;
 
 // directions for spline-space vectors
 const int FWD = 0;

@@ -42,6 +42,7 @@ void AssetManager::loadAssets() {
 	_models.insert(std::make_pair("alien",		Model("alien")));
 	_models.insert(std::make_pair("finish_line",Model("finish_line")));
 	_models.insert(std::make_pair("clouds",Model("clouds")));
+	_models.insert(std::make_pair("tower",Model("tower")));
 }
 
 void AssetManager::setupText() {

@@ -213,7 +213,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 	for (float i=start; i<finish; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
 			assetManager.models()["prism"], _spline,
-			"planetexture2.png",
+			"splineTextureBlue.png",
 			true,
 			Transform(
 				glm::vec3(i, 0, 0),
@@ -243,6 +243,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 			}
 		}
 	}
+
 	float chunkStart = start + 5.f;
 	float chunkFinish = finish - 5.f;
 	switch (partToGenerate) {
@@ -313,6 +314,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 					{ ROT_CONST_UP }
 				)));
 			}
+
 			break;
 	}
 

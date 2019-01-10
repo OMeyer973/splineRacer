@@ -119,13 +119,13 @@ Game::~Game() {
 
 GameObject Game::gameObjFromJson(nlohmann::json j) {
 	AssetManager& assetManager = AssetManager::instance();
-	
+
 	AnimationList animList;
 	for (uint i=1; i<=nbAnimInJson; i++) {
 		// if to clean bad values in unregistered fields
 		if (j["anim" + std::to_string(i)].is_number()) {
 			std::cout << j["anim" + std::to_string(i)].get<int>() << std::endl;
-			animList.emplace_back(j["anim" + std::to_string(i)].get<int>()); 
+			animList.emplace_back(j["anim" + std::to_string(i)].get<int>());
 		}
 	}
 
@@ -155,7 +155,7 @@ void Game::loadLevel(const std::string& levelName) {
 		+ ("../../splineRacer/assets/levels/" + levelName + ".map");
 
 	if (debug) std::cout << "loading level from file : " << mapPath << std::endl;
-	
+
 	// TODO : check for exception
 	std::ifstream mapStream(mapPath);
 	if (mapStream.fail()) {
@@ -213,7 +213,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 	for (float i=start; i<finish; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
 			assetManager.models()["prism"], _spline,
-			"cloud.jpg",
+			"planetexture.jpg",
 			true,
 			Transform(
 				glm::vec3(i, 0, 0),
@@ -242,7 +242,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 				}
 			}
 		}
-	}	
+	}
 	float chunkStart = start + 5.f;
 	float chunkFinish = finish - 5.f;
 	switch (partToGenerate) {
@@ -449,7 +449,7 @@ void Game::render() {
 	if (_gameState == LEVELWIN)
 		_renderManager.drawWinCard();
 
-	if (_gameState == LEVELLOSE) 
+	if (_gameState == LEVELLOSE)
 		_renderManager.drawLoseCard();
 
 	if (_gameState == ENDLESSOVER)

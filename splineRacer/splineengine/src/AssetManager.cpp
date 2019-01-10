@@ -14,7 +14,6 @@ AssetManager::AssetManager()
     _joystick = SDL_JoystickOpen(0);
 
     if (_joystick) {
-			std::cout << "wolah" << std::endl;
         // printf("Opened Joystick 0\n");
         // printf("Name: %s\n", SDL_JoystickIndex(0));
         // printf("Number of Axes: %d\n", SDL_JoystickNumAxes(_joystick));
@@ -42,6 +41,7 @@ void AssetManager::loadAssets() {
 	_models.insert(std::make_pair("menu",		Model("menu")));
 	_models.insert(std::make_pair("alien",		Model("alien")));
 	_models.insert(std::make_pair("finish_line",Model("finish_line")));
+	_models.insert(std::make_pair("clouds",Model("clouds")));
 }
 
 void AssetManager::setupText() {

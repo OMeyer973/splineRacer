@@ -125,10 +125,15 @@ GameObject Game::gameObjFromJson(nlohmann::json j) {
 		}
 	}
 
+	std::string textureName = "default.png";
+	if(j["texture"].is_string()) {
+		textureName = j["texture"].get<std::string>();
+	}
+
 	return GameObject(
 		assetManager.models()[ j["model"].get<std::string>() ], // model
 		_spline, // spline
-		"default.png",
+		textureName,
 		j["is_static"].get<bool>(), //isStatic
 		Transform(
 			glm::vec3(j["pos_fwd"].get<float>(),   j["pos_left"].get<float>(),   j["pos_up"].get<float>()), // sPosition
@@ -169,14 +174,14 @@ void Game::loadLevel(const std::string& levelName) {
 
 	// tmp?
 	AssetManager& assetManager = AssetManager::instance();
-	for (float i=-1; i<_spline.length()+1; i+=.7f) {
+	for (float i=-1; i<_spline.length()+1; i+=1.f) {
 		_obstacles.push_back(Obstacle(GameObject(
 			assetManager.models()["prism"], _spline,
 			"cloud.jpg",
 			false,
 			Transform(
 				glm::vec3(i, 0, 0),
-				glm::vec3(1.f),
+				glm::vec3(1.5f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
 		)));
@@ -290,12 +295,13 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 				_obstacles.push_back(Obstacle(GameObject(
 					assetManager.models()["prism"], _spline,
 					"cloud.jpg",
-					 true,
+					 false,
 					Transform(
 						glm::vec3(i, glm::linearRand(0.f,2.f*float(M_PI)), glm::linearRand(minPlayerUp, maxPlayerUp)),
 						glm::vec3(4),
 						glm::vec3(i, 0 , -i)
-					)
+					),
+					{ ROT_CONST_UP }
 				)));
 			}
 			break;

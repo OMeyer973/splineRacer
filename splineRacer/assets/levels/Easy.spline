@@ -15,33 +15,138 @@
    "anchor_z": 0
  },
  {
-   "anchor_x": 20,
+   "anchor_x": 30,
+   "anchor_y": 0,
+   "anchor_z": 0
+ },
+ {
+   "anchor_x": 40,
+   "anchor_y": 0,
+   "anchor_z": 0
+ },
+ {
+   "anchor_x": 50,
+   "anchor_y": 0,
+   "anchor_z": 0
+ },
+ {
+   "anchor_x": 60,
+   "anchor_y": 0,
+   "anchor_z": 0
+ },
+ {
+   "anchor_x": 70,
+   "anchor_y": 0,
+   "anchor_z": 0
+ },
+ {
+   "anchor_x": 70,
    "anchor_y": 0,
    "anchor_z": 10
  },
  {
-   "anchor_x": 20,
+   "anchor_x": 70,
    "anchor_y": 0,
    "anchor_z": 20
  },
  {
-   "anchor_x": 30,
-   "anchor_y": 0,
-   "anchor_z": 20
- },
- {
-   "anchor_x": 30,
+   "anchor_x": 70,
    "anchor_y": 0,
    "anchor_z": 30
  },
  {
-   "anchor_x": 40,
-   "anchor_y": 0,
-   "anchor_z": 30
- },
- {
-   "anchor_x": 40,
+   "anchor_x": 70,
    "anchor_y": 0,
    "anchor_z": 40
+ },
+ {
+   "anchor_x": 70,
+   "anchor_y": 0,
+   "anchor_z": 50
+ },
+ {
+   "anchor_x": 70,
+   "anchor_y": 0,
+   "anchor_z": 60
+ },
+ {
+   "anchor_x": 70,
+   "anchor_y": 0,
+   "anchor_z": 70
+ },
+ {
+   "anchor_x": 78,
+   "anchor_y": 0,
+   "anchor_z": 70
+ },
+ {
+   "anchor_x": 86,
+   "anchor_y": 3,
+   "anchor_z": 67
+ },
+ {
+   "anchor_x": 94,
+   "anchor_y": 2,
+   "anchor_z": 68
+ },
+ {
+   "anchor_x": 102,
+   "anchor_y": 2,
+   "anchor_z": 70
+ },
+ {
+   "anchor_x": 110,
+   "anchor_y": 5,
+   "anchor_z": 73
+ },
+ {
+   "anchor_x": 118,
+   "anchor_y": 7,
+   "anchor_z": 70
+ },
+ {
+   "anchor_x": 126,
+   "anchor_y": 7,
+   "anchor_z": 72
+ },
+ {
+   "anchor_x": 134,
+   "anchor_y": 6,
+   "anchor_z": 70
+ },
+ {
+   "anchor_x": 142,
+   "anchor_y": 3,
+   "anchor_z": 67
+ },
+ {
+   "anchor_x": 150,
+   "anchor_y": 1,
+   "anchor_z": 70
+ },
+ {
+   "anchor_x": 158,
+   "anchor_y": 1,
+   "anchor_z": 73
+ },
+ {
+   "anchor_x": 166,
+   "anchor_y": 2,
+   "anchor_z": 70
+ },
+ {
+   "anchor_x": 174,
+   "anchor_y": 0,
+   "anchor_z": 72
+ },
+ {
+   "anchor_x": 182,
+   "anchor_y": 0,
+   "anchor_z": 70
+ },
+ {
+   "anchor_x": 190,
+   "anchor_y": -3,
+   "anchor_z": 69
  }
 ]

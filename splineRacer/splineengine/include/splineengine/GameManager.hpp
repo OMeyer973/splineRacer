@@ -8,6 +8,7 @@
 #include <GL/glew.h>
 #include <glimac/SDLWindowManager.hpp>
 #include <glimac/Plane.hpp>
+#include <SDL/SDL_mixer.h>
 
 #include "Settings.hpp"
 #include "common.hpp"

@@ -195,7 +195,7 @@ void RenderManager::initGameLights() {
 	addLight(
 		true,
 		glm::vec3(0.0, 0.0, -13.0),
-		glm::vec3(1, .0,  0),
+		glm::vec3(0.f, .0,  1.f),
 		glm::vec3(1, .8, .1),
 		6,
 		glm::vec3(2.0)

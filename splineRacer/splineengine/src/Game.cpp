@@ -17,7 +17,7 @@ Game::Game()
 	_player(GameObject(
 		AssetManager::instance().models()["plane"],
 		_spline,
-		"planetexture2.jpg",
+		"planetexture2.png",
 		 false,
 		Transform(defaultPlayerPos)
 	), defaultPlayerMaxSpeed * (1.f-endlessSpeedMultiplier)), // creation of the firs map part will increase the speed back to 1
@@ -65,7 +65,7 @@ Game::Game(const std::string& levelName)
 	_player(GameObject(
 		AssetManager::instance().models()["plane"],
 		_spline,
-		"planetexture2.jpg",
+		"planetexture2.png",
 		 false,
 		Transform(defaultPlayerPos)
 	)),
@@ -213,7 +213,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 	for (float i=start; i<finish; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
 			assetManager.models()["prism"], _spline,
-			"planetexture.jpg",
+			"planetexture2.png",
 			true,
 			Transform(
 				glm::vec3(i, 0, 0),

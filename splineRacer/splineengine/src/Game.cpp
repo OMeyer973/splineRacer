@@ -190,6 +190,21 @@ void Game::loadLevel(const std::string& levelName) {
 			)
 		)));
 	}
+	for (float i=-1; i<_spline.length()+1; i+=10.f) {
+		//place the tower left or right to the spline ?
+		int sign = (rand()%2) * 2 -1;
+		_decorations.push_back(Decoration(GameObject(
+			assetManager.models()["tower"], _spline,
+			"coin.png",
+			false,
+			Transform(
+				glm::vec3(i, sign * glm::linearRand(M_PI/2-0.5f,M_PI/2+0.5f), glm::linearRand(40.f,80.f)),
+				glm::vec3(glm::linearRand(1.f,3.f))
+			)
+		)));	
+	}
+	
+
 
 	_finishLine.sPosition() = glm::vec3(_spline.length(), 0.f, 0.f);
 
@@ -242,6 +257,21 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 				}
 			}
 		}
+	}
+
+	//base towers
+	for (float i=start; i<finish; i+=10.f) {
+		std::cout << (rand()%2)  << "   ";
+		int sign = (rand()%2) * 2 -1;
+		_decorations.push_back(Decoration(GameObject(
+			assetManager.models()["tower"], _spline,
+			"coin.png",
+			false,
+			Transform(
+				glm::vec3(i, sign * glm::linearRand(M_PI/2-0.5f,M_PI/2+0.5f), glm::linearRand(40.f,80.f)),
+				glm::vec3(glm::linearRand(1.f,3.f))
+			)
+		)));	
 	}
 
 	float chunkStart = start + 5.f;
@@ -421,8 +451,17 @@ void Game::render() {
 	// Draw the alien
 	_renderManager.drawObject(_alien, *_cameras[_chosenCamera]);
 
+	// TODO : polymorphism this shit !
 	// Draw obstacles
+	//Game::renderObjList<Obstacle>(_obstacles);
 	for (std::list<Obstacle>::iterator it = _obstacles.begin(); it != _obstacles.end(); ++it) {
+		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxRenderDistance) {
+			_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
+		}
+	}
+
+	// Draw decorations
+	for (std::list<Decoration>::iterator it = _decorations.begin(); it != _decorations.end(); ++it) {
 		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxRenderDistance) {
 			_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
 		}
@@ -530,21 +569,6 @@ void Game::updateCollectableList (std::list<Collectable>& objList) {
 			objList.erase(it++);
 		} else {
 			++it;
-		}
-	}
-}
-
-template <typename T>
-void Game::renderObjList(std::list<T>& objList) {
-	typename std::list<T>::iterator it = objList.begin();
-	while (it != objList.end()) {
-		// if the object is near enough to the player : render the object
-		if (glm::abs(it->sPosition()[FWD] - _player.sPosition()[FWD]) < _maxRenderDistance) {
-			_renderManager.drawObject(*it, *_cameras[_chosenCamera]);
-			++it;
-		// else, if the object is in behind the player, we can remove it
-		} else if (it->sPosition()[FWD] < _player.sPosition()[FWD]) {
-	        objList.erase(it++);
 		}
 	}
 }

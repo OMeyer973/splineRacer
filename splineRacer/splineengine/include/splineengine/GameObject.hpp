@@ -99,8 +99,8 @@ class GameObject {
 
         // METHODS
 		/// \brief returns the transform matrix of the object in it's spline reference
-		const glm::mat4 matrix();
-		/// \brief returns the transform matrix of the object reference
+		virtual const glm::mat4 matrix();
+		/// \brief returns the transform matrix of the object in world space (for menu)
 		const glm::mat4 staticMatrix();
 
 		/// \brief update the object physics for the current frame
@@ -163,7 +163,7 @@ class GameObject {
 		const Model& _model; // better to use refs because less mistakes ?
 
 		/// \brief is the object unmovable ?
-		const bool _isStatic = false;
+		bool _isStatic = false;
 		/// \brief spline reference for the object placement
 		const Spline& _spline;
 

@@ -12,6 +12,7 @@
 #include "Chaser.hpp"
 #include "Obstacle.hpp"
 #include "Collectable.hpp"
+#include "Decoration.hpp"
 
 #include "RenderManager.hpp"
 #include "Camera.hpp"
@@ -160,7 +161,7 @@ class Game {
 		GameObject _finishLine;
 
 		// game objects lists (ordered along the spline acording to their FWD coordinate)
-	    std::list<GameObject> _decorations;
+	    std::list<Decoration> _decorations;
 	    std::list<Obstacle> _obstacles;
 	    std::list<Collectable> _collectables;
 };

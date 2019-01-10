@@ -1,0 +1,7 @@
+PROJECT_NAME = "Spline Racer"
+
+OUTPUT_DIRECTORY       = @CMAKE_CURRENT_BINARY_DIR@/doc_doxygen/
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../splineengine/include/splineengine @CMAKE_CURRENT_SOURCE_DIR@/../doc
+
+GENERATE_LATEX         = NO
+WARN_IF_UNDOCUMENTED   = NO

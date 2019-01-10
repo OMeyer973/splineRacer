@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
 
 		//FPS regulator
 		Uint32 elapsedTime = SDL_GetTicks() - startTime;
-		if(elapsedTime < settings.framerate()) {
+		if (elapsedTime < settings.framerate()) {
 			//std::cout << "not lagging" << std::endl;
 			SDL_Delay(settings.framerate() - elapsedTime);
 		}

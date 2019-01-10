@@ -6,7 +6,6 @@ add_definitions(-std=c++11)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake)
 
-
 # set the module path for "findLib.cmake"
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/")
 
@@ -33,14 +32,12 @@ set(ALL_LIBRARIES splineengine glimac ${GLEW_LIBRARY} ${OPENGL_LIBRARIES} ${SDL_
 add_subdirectory(glimac)
 add_subdirectory(splineengine)
 
-
-
-# Compiler les tests
-file(GLOB TP_DIRECTORIES "TP*")
-foreach(TP ${TP_DIRECTORIES})
-    add_subdirectory(${TP})
-endforeach()
+# call the CMakeLists.txt to make the documentation (Doxygen)
+# > 'make html' to generate the documentation
+# > the documentation is located in : [CMAKE ROOT]/splineRacer-build/doc/doc-doxygen/html
+add_subdirectory(doc)
 
 # Compiler le main global
 file(GLOB MAIN "src")
 add_subdirectory(${MAIN})
+

@@ -185,7 +185,7 @@ void Game::loadLevel(const std::string& levelName) {
 			true,
 			Transform(
 				glm::vec3(i, 0, 0),
-				glm::vec3(4.f),
+				glm::vec3(1.5f),
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
 		)));

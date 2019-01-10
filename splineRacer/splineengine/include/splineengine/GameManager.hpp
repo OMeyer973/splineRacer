@@ -17,6 +17,11 @@
 
 namespace splineengine {
 
+// const treshold joystick
+
+const float tresholdJoystick = 2000.f;
+const float maxJoystickValue = 32760.f;
+
 // grouping keys by acion
 struct KeyGroup {
 	public:

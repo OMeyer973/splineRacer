@@ -151,29 +151,28 @@ void GameManager::doMenuEvent(SDL_Event e) {
 }
 
 void GameManager::doGameEvent(SDL_Event e) {
+	// _game->player().goingLeft() =0.f;
+	// _game->player().goingUp() =0.f;
 	switch (e.type) {
-		case SDL_JOYHATMOTION:
 
-			std::cout << "INPUT MANETTE FRATE" << std::endl;
-			// if (e.jaxis.axis == 5)	// LT
-			// {
-			//
-			// 	std::cout << "INPUT MANETTE FRATE" << std::endl;
-			// 	// if (e.jaxis.value > -20000)
-			// 	// {
-			// 	// 	cameraAction = UP;
-			// 	// 	return;
-			// 	// }
-			// }
-			// if (e.jaxis.axis == 2)	// RT
-			// {
-			// 	std::cout << "INPUT MANETTE FRATE" << std::endl;
-			// 	// if (e.jaxis.value > -20000)
-			// 	// {
-			// 	// 	cameraAction = DOWN;
-			// 	// 	return;
-			// 	// }
-			// }
+		case SDL_JOYAXISMOTION:
+
+			if (e.jaxis.axis == 0)	// LT
+			{
+				//if(debug) std::cout << "MOVE LEFT" << std::endl;
+				if(debug) std::cout << "VALUE X : " << -e.jaxis.value/maxJoystickValue << std::endl;
+				if( e.jaxis.value > tresholdJoystick || e.jaxis.value < -tresholdJoystick){
+					_game->player().goingLeft() = -e.jaxis.value/maxJoystickValue;
+				}
+			}
+			if (e.jaxis.axis == 1)	// RT
+			{
+				//if(debug) std::cout << "MOVE UP" << std::endl;
+				if(debug) std::cout << "VALUE Y : " << -e.jaxis.value/maxJoystickValue << std::endl;
+				if(e.jaxis.value > tresholdJoystick || e.jaxis.value < -tresholdJoystick){
+					_game->player().goingUp() = -e.jaxis.value/maxJoystickValue;
+				}
+			}
 			break;
     case SDL_KEYDOWN:
         if (input.left.has(e.key.keysym.sym)){ //going left

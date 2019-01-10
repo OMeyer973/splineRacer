@@ -295,11 +295,9 @@ void RenderManager::updateGameLights() {
 	lightMatrix = glm::transpose(_globalMatrix);
 	lightVector = glm::normalize(glm::vec4(1, 1, 1, 0) * lightMatrix);
 
-	// TODO: throw exception
-	if (_lightsCount > 0) {
-		_lights[0].posOrDir() = glm::vec3(lightVector);
-		_lights[1].posOrDir() = glm::vec3(-lightVector);
-	}
+	assert(_lightsCount > 0);	
+	_lights[0].posOrDir() = glm::vec3(lightVector);
+	_lights[1].posOrDir() = glm::vec3(-lightVector);
 }
 
 void RenderManager::clearLights() {
@@ -320,6 +318,7 @@ void RenderManager::drawDistanceToAlien(const float distance) {
 	}
 	_enableGlBlend = false;
 	_textColor = glm::vec3(1.f - distanceToAlien/(1.f*maxWidth), (.9f*distanceToAlien)/(1.f*maxWidth), (.4f*distanceToAlien)/(1.f*maxWidth));
+	_textColor = glm::normalize(_textColor);
 	useProgram(TEXT);
 	AssetManager::instance().textManager().renderText(
 		distanceToAlienText,
@@ -357,9 +356,9 @@ void RenderManager::drawWinCard() {
 	useProgram(TEXT);
 	AssetManager::instance().textManager().renderText(
 		"Bravo !",
-		Settings::instance().windowWidth() * .5f - 105.f,
+		Settings::instance().windowWidth() * .5f - 75.f,
 		Settings::instance().windowHeight() * .7f,
-		1.5f
+		1.2f
 	);
 }
 
@@ -369,9 +368,9 @@ void RenderManager::drawLoseCard() {
 	useProgram(TEXT);
 	AssetManager::instance().textManager().renderText(
 		"Dommage !",
-		Settings::instance().windowWidth() * .5f - 180.f,
+		Settings::instance().windowWidth() * .5f - 130.f,
 		Settings::instance().windowHeight() * .7f,
-		1.5f
+		1.2f
 	);
 }
 

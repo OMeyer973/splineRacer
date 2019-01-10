@@ -12,14 +12,24 @@ namespace splineengine{
 	Texture::Texture(const Texture& tex):
 		_texID(0), _texName(tex._texName) 
 	{
-		loadTexture();
+		try {
+			loadTexture();
+		}
+		catch (const Error &e) {
+			e.what();
+		}
 	};
 
 	Texture::Texture(const std::string &textureName):
 		_texID(0), 
 		_texName(textureName) 
 	{
-		loadTexture();
+		try {
+			loadTexture();
+		}
+		catch (const Error &e) {
+			e.what();
+		}
 	}
 
 	bool Texture::loadTexture() {
@@ -27,23 +37,23 @@ namespace splineengine{
 
 		_textureToLoad = loadImage(texPath);
 
-		if ( _textureToLoad == NULL ) {
-			// TODO : Throw exception
-			std::cout << "Image " << _texName << " couldn't be loaded" << std::endl;
-			return false;
+		if (_textureToLoad == NULL) {
+			throw Error("Image " + _texName + " couldn't be loaded", __FILE__, __LINE__);
 		}
 
 		glGenTextures(1, &_texID);
 		glBindTexture(GL_TEXTURE_2D, _texID);
-		glTexImage2D(GL_TEXTURE_2D,
-							0,
-							GL_RGBA,
-							_textureToLoad->getWidth(),
-							_textureToLoad->getHeight(),
-							0,
-							GL_RGBA,
-							GL_FLOAT,
-							_textureToLoad->getPixels());
+		glTexImage2D(
+			GL_TEXTURE_2D,
+			0,
+			GL_RGBA,
+			_textureToLoad->getWidth(),
+			_textureToLoad->getHeight(),
+			0,
+			GL_RGBA,
+			GL_FLOAT,
+			_textureToLoad->getPixels()
+		);
 		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 		glBindTexture(GL_TEXTURE_2D, 0);

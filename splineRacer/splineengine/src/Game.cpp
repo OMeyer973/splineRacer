@@ -173,7 +173,7 @@ void Game::loadLevel(const std::string& levelName) {
 		_obstacles.push_back(Obstacle(GameObject(
 			assetManager.models()["prism"], _spline,
 			"cloud.jpg",
-			 false,
+			false,
 			Transform(
 				glm::vec3(i, 0, 0),
 				glm::vec3(1.f),
@@ -430,14 +430,14 @@ void Game::render() {
 	glDepthMask(GL_TRUE);
 
 	// TODO : display the end cards under these conditions
-	if (_gameState == LEVELWIN) {
+	if (_gameState == LEVELWIN)
 		_renderManager.drawWinCard();
-	}
 
-	if (_gameState == LEVELLOSE) {
+	if (_gameState == LEVELLOSE) 
 		_renderManager.drawLoseCard();
-	}
-	// if (_gameState == ENDLESSOVER)
+
+	if (_gameState == ENDLESSOVER)
+		_renderManager.drawLoseCard();
 
 	_renderManager.drawDistanceToAlien(_player.sPosition()[FWD] - _alien.sPosition()[FWD]);
 
@@ -530,8 +530,5 @@ void Game::renderObjList(std::list<T>& objList) {
 		}
 	}
 }
-
-
-
 
 }

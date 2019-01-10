@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include "splineengine/Error.hpp"
+#include <cstdlib>
 
 namespace splineengine {
 
@@ -19,7 +20,7 @@ Game::Game()
 		"planetexture2.jpg",
 		 false,
 		Transform(defaultPlayerPos)
-	)),
+	), defaultPlayerMaxSpeed * 0.8f), // creation of the firs map part will increase the speed back to 1
 	_skybox(GameObject(
 		AssetManager::instance().models()["skybox"],
 		_spline,
@@ -51,7 +52,7 @@ Game::Game()
 	_chosenCamera = TRACKBALL_CAMERA;
 	RenderManager _renderManager(*_cameras[_chosenCamera]);
 
-	generateLevel(0.f, _spline.length());
+	generateLevel(0.f, _spline.length(), 0); // first generation is always with rings
 }
 
 
@@ -172,7 +173,7 @@ void Game::loadLevel(const std::string& levelName) {
 		_obstacles.push_back(Obstacle(GameObject(
 			assetManager.models()["prism"], _spline,
 			"cloud.jpg",
-			 false,
+			false,
 			Transform(
 				glm::vec3(i, 0, 0),
 				glm::vec3(1.f),
@@ -189,15 +190,15 @@ void Game::loadLevel(const std::string& levelName) {
 }
 
 
-void Game::generateLevel(const float start, const float finish) {
+void Game::generateLevel(const float start, const float finish, const int partToGenerate) {
 	// TODO
 	AssetManager& assetManager = AssetManager::instance();
 
 
-
+	// base clouds
 	for (float i=start; i<finish; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
-			assetManager.models()["prism"], _spline,
+			assetManager.models()["cloud"], _spline,
 			"cloud.jpg",
 			true,
 			Transform(
@@ -206,16 +207,9 @@ void Game::generateLevel(const float start, const float finish) {
 				glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
 			)
 		)));
-		// _obstacles.push_back(Obstacle(GameObject(
-		// 	assetManager.models()["cloud"], _spline, true,
-		// 	Transform (
-		// 		glm::vec3(i, 0, 0),
-		// 		glm::vec3(1.f, 1.f, 1.f),
-		// 		glm::vec3(glm::cos(i*2.f), 0.f, glm::sin(i))
-		// 	)
-		// )));
 	}
 
+	// base coins
 	for (float i=start; i<finish; i+=10.f) {
 		for (float j = 0; j < 2.5; j+=.5f) {
 			for (float k = 0; k <= .2f; k+=.2f) {
@@ -232,19 +226,44 @@ void Game::generateLevel(const float start, const float finish) {
 				)));
 			}
 		}
-		for (float j = 0; j < 6.28; j+=.3f) {
-			_obstacles.push_back(Obstacle(GameObject(
-				assetManager.models()["prism"], _spline,
-				"cloud.jpg",
-				 false,
-				Transform(
-					glm::vec3(i-5, j, 15),
-					glm::vec3(3),
-					glm::vec3(j, -20*j, 3*j)
-				),
-				{ MOVE_CONST_LEFT, ROT_CONST_LEFT, MOVE_SIN_UP }
-			)));
-		}
+	}	
+
+	switch (partToGenerate) {
+		case 0 : //moving rings
+			for (float i=start; i<finish; i+=10.f) { // full rings on the chunk
+				for (float j = 0; j < 2.f * M_PI; j+=.3f) { // ring perimeter
+					_obstacles.push_back(Obstacle(GameObject(
+						assetManager.models()["cloud"], _spline,
+						"cloud.jpg",
+						 false,
+						Transform(
+							glm::vec3(i-5, j, 15),
+							glm::vec3(3),
+							glm::vec3(j, -20*j, 3*j)
+						),
+						{ MOVE_CONST_LEFT, ROT_CONST_LEFT, MOVE_SIN_UP }
+					)));
+				}
+			}
+			break;
+		case 1 : //spiral
+			for (float i=start; i<finish; i+=20.f) {// full spirals on the chunk
+				for (float h = minPlayerUp+4; h <= maxPlayerUp; h+=6) { // spiral parts - height
+					for (float j = 0; j < 2.f * M_PI; j+=.4f) { // spiral parts - length
+						_obstacles.push_back(Obstacle(GameObject(
+							assetManager.models()["prism"], _spline,
+							"cloud.jpg",
+							 true,
+							Transform(
+								glm::vec3(i-5+2.f*j, j, h),
+								glm::vec3(5),
+								glm::vec3(j, -20*j, 3*j)
+							)
+						)));
+					}
+				}
+			}
+			break;
 	}
 
 	orderObjListFwd(_obstacles);
@@ -290,7 +309,7 @@ void Game::update() {
 		while (_spline.length() < oldLength + maxRenderDistance) {
 			_spline.addAnchor();
 		}
-		generateLevel(oldLength, _spline.length());
+		generateLevel(oldLength, _spline.length(), rand()%nbOfRandomCHunks);
 		if (debug) std::cout << "player speed increased" << std::endl;
 		_player.increaseSpeed();
 	}
@@ -376,9 +395,14 @@ void Game::render() {
 	glDepthMask(GL_TRUE);
 
 	// TODO : display the end cards under these conditions
-	// if (_gameState == LEVELWIN)
-	// if (_gameState == LEVELLOSE)
-	// if (_gameState == ENDLESSOVER)
+	if (_gameState == LEVELWIN)
+		_renderManager.drawWinCard();
+
+	if (_gameState == LEVELLOSE) 
+		_renderManager.drawLoseCard();
+
+	if (_gameState == ENDLESSOVER)
+		_renderManager.drawLoseCard();
 
 	_renderManager.drawDistanceToAlien(_player.sPosition()[FWD] - _alien.sPosition()[FWD]);
 
@@ -471,8 +495,5 @@ void Game::renderObjList(std::list<T>& objList) {
 		}
 	}
 }
-
-
-
 
 }

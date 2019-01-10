@@ -20,7 +20,7 @@ class Menu {
 	public:
 		// CONSTRUCTORS - DESTRUCTORS
 		/// \brief constructor
-	    Menu();
+		Menu();
 
 		/// \brief destructor
 		~Menu();
@@ -28,7 +28,7 @@ class Menu {
 
 		//METHODS
 		/// \brief init menu when launching the game
-		void init();
+		int init();
 
 		/// \brief update called at each frame
 		void update();
@@ -89,7 +89,7 @@ class Menu {
 
 		Player _player;
 		/// \brief  vector containing menu items
-  	std::vector<GameObject> _menuItems;
+		std::vector<GameObject> _menuItems;
 		/// \brief  vector containing skybox
 		std::vector<GameObject> _skybox;
 		std::string _frontMenuModelName = "frontmenu";
@@ -103,7 +103,8 @@ class Menu {
 		/// \brief array of levels 
 		std::vector<std::string> _levels = { "Easy", "Normal", "Hard", "Infinite" };
 
-
 };
+
 }
+
 #endif

@@ -101,9 +101,7 @@ void TextManager::renderText(const std::string &text, const GLfloat &x, const GL
 
 		GLfloat xpos = x_ + glyph._bearing.x * scale;
 		GLfloat ypos = y - (glyph._size.y - glyph._bearing.y) * scale;
-
 		
-
 		// Update VBO for each character
 		GLfloat vertices[6][4] = {
 			{xpos, ypos + h, 0.0, 0.0},

@@ -3,6 +3,7 @@
 #define __COMMON__HPP
 
 #include <glm/gtc/random.hpp>
+#include <splineengine/Error.hpp>
 
 // declare global variables here
 

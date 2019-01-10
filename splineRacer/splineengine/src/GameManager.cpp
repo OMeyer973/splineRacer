@@ -7,8 +7,10 @@ GameManager::GameManager()
 {}
 
 void GameManager::init() {
-	_menu.init();
-	_pause.init();
+	if (_menu.init() != 0 || _pause.init() != 0)
+	{
+		throw Error("GameManager initialisation error", __FILE__, __LINE__);
+	}
 }
 
 // function just used in this file

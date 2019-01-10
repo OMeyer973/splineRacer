@@ -7,16 +7,15 @@ namespace splineengine {
 
 Menu::Menu()
 {
-	std::cout << "front menu constructor called " << std::endl;
+	if (debug) std::cout << "front menu constructor called " << std::endl;
 	_cameras.emplace_back(new POVCamera());
 	_cameras.emplace_back(new TrackballCamera());
 	_chosenCamera = TRACKBALL_CAMERA;
 	RenderManager _renderManager(*_cameras[_chosenCamera]);
 }
 
-void Menu::init() {
-	//Text skurt = Text();
-	std::cout << "menu init" << std::endl;
+int Menu::init() {
+	if (debug) std::cout << "menu init" << std::endl;
 	AssetManager& assetManager = AssetManager::instance();
 
 	assetManager.setupText();
@@ -42,9 +41,8 @@ void Menu::init() {
 		)
 	));
 
-	//pushing pannels to chose level -maybe change name of model to be more specific
+	// Pushing pannels to chose level -maybe change name of model to be more specific
 	for(int i =0; i<4; i++){
-		// std::cout << "Nom texture : " << _levels[3-i] + std::string(".png") << std::endl;
 		_menuItems.push_back(GameObject(
 			assetManager.models()["menu"],Spline(),
 			_levels[3-i] + std::string(".png"),
@@ -58,7 +56,8 @@ void Menu::init() {
 			//glm::vec3(0.f,-(-10.f + i*10.f),0.f)
 		));
 	}
-	//pushing skybox
+
+	// Pushing skybox
 	_skybox.push_back(GameObject(
 		assetManager.models()["skybox"], Spline(),
 		"skybox_desert.png",
@@ -73,10 +72,11 @@ void Menu::init() {
 	_renderManager.initMenuLights();
 
 	glEnable(GL_DEPTH_TEST);
+	return 0;
 }
 
 Menu::~Menu(){
-	std::cout << "menu desctructor called " << std::endl;
+	if (debug) std::cout << "menu destructor called " << std::endl;
 }
 
 void Menu::update() {

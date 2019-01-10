@@ -68,7 +68,6 @@ void RenderManager::sendUniformsToShaders(FS shader)
 	const ProgramList& programList = AssetManager::instance().programList();
 
 	glDisable(GL_BLEND);
-	// // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	switch (shader)
 	{
@@ -143,16 +142,15 @@ void RenderManager::sendUniformsToShaders(FS shader)
 			break;
 
 		case TEXT :
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			if (_enableGlBlend) {
+				glEnable(GL_BLEND);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			}
 
 			_uProjection = glm::ortho(0.0f, static_cast<GLfloat>(Settings::instance().windowWidth()), 0.0f, static_cast<GLfloat>(Settings::instance().windowHeight()));
 
-			glUniformMatrix4fv(programList.textProgram.uProjection, 1, GL_FALSE,
-				glm::value_ptr(_uProjection));
-
+			glUniformMatrix4fv(programList.textProgram.uProjection, 1, GL_FALSE, glm::value_ptr(_uProjection));
 			glUniform1i(programList.textProgram.uTexture, 0);
-
 			glUniform3fv(programList.textProgram.uTextColor, 1, glm::value_ptr(_textColor));
 
 			break;
@@ -320,6 +318,7 @@ void RenderManager::drawDistanceToAlien(const float distance) {
 	for (int i = 0; i < maxWidth; ++i) {
 		distanceToAlienTextBackground += "I";
 	}
+	_enableGlBlend = false;
 	_textColor = glm::vec3(1.f - distanceToAlien/(1.f*maxWidth), (.9f*distanceToAlien)/(1.f*maxWidth), (.4f*distanceToAlien)/(1.f*maxWidth));
 	useProgram(TEXT);
 	AssetManager::instance().textManager().renderText(
@@ -327,7 +326,7 @@ void RenderManager::drawDistanceToAlien(const float distance) {
 		Settings::instance().windowWidth() * .1f,
 		Settings::instance().windowHeight() - 40,
 		.4f,
-		glm::vec3(1.f, 1.f, 1.f)
+		true
 	);
 	_textColor = glm::vec3(1.f, 1.f, 1.f);
 	useProgram(TEXT);
@@ -336,19 +335,19 @@ void RenderManager::drawDistanceToAlien(const float distance) {
 		Settings::instance().windowWidth() * .1f,
 		Settings::instance().windowHeight() - 40,
 		.4f,
-		glm::vec3(1.f, 1.f, 1.f)
+		true
 	);
 }
 
 void RenderManager::drawScore(const unsigned int score) {
 	_textColor = glm::vec3(1.f, .5f, 0.3f);
+	_enableGlBlend = true;
 	useProgram(TEXT);
 	AssetManager::instance().textManager().renderText(
 		"Score : " + std::to_string(score),
 		Settings::instance().windowWidth() * .75f,
 		Settings::instance().windowHeight() - 40,
-		.4f,
-		glm::vec3(1.f, 1.f, 1.f)
+		.4f
 	);
 }
 

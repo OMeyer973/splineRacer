@@ -76,33 +76,10 @@ void TextManager::setupTTF() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-
-	// Send the projection
-	// glCheckError();
-
-	// glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(Settings::instance().windowWidth()), 0.0f, static_cast<GLfloat>(Settings::instance().windowHeight()));
-	// glCheckError();
-
-	// AssetManager::Get()->glyphProgram()._Program.use();
-	// glUniformMatrix4fv(AssetManager::Get()->glyphProgram()._uProjection, 1, GL_FALSE, glm::value_ptr(projection));
-
-	// RenderManager renderManager;
-	// renderManager.useProgram(TEXT);
-
-	// glCheckError();
 }
 
-void TextManager::renderText(const std::string &text, const GLfloat &x, const GLfloat &y, const GLfloat &scale, const glm::vec3 &color)
+void TextManager::renderText(const std::string &text, const GLfloat &x, const GLfloat &y, const GLfloat &scale, bool stickLetters)
 {
-	// Setup the program
-	// const GlyphProgram &gp = AssetManager::Get()->glyphProgram();
-	// gp._Program.use();
-	// RenderManager renderManager;
-	// renderManager.useProgram(TEXT);
-
-	// Send the color
-	// glUniform3fv(gp._uTextColor, 1, glm::value_ptr(color));
-
 	// Texture unit
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(_vao);
@@ -114,11 +91,18 @@ void TextManager::renderText(const std::string &text, const GLfloat &x, const GL
 	{
 		Glyph glyph = _glyphes[*c];
 
+		GLfloat w = glyph._size.x * scale;
+		GLfloat h = glyph._size.y * scale;
+
+		if (stickLetters)
+		{
+			w = glyph._size.x * scale *2.2;
+		}
+
 		GLfloat xpos = x_ + glyph._bearing.x * scale;
 		GLfloat ypos = y - (glyph._size.y - glyph._bearing.y) * scale;
 
-		GLfloat w = glyph._size.x * scale;
-		GLfloat h = glyph._size.y * scale;
+		
 
 		// Update VBO for each character
 		GLfloat vertices[6][4] = {

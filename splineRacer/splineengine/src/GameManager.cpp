@@ -153,8 +153,6 @@ void GameManager::doMenuEvent(SDL_Event e) {
 }
 
 void GameManager::doGameEvent(SDL_Event e) {
-	// _game->player().goingLeft() = 0.f;
-	// _game->player().goingUp() = 0.f;
 	switch (e.type) {
 		case SDL_JOYAXISMOTION:
 
@@ -182,25 +180,26 @@ void GameManager::doGameEvent(SDL_Event e) {
 					}
 				}
 			}
+
 			break;
 		case SDL_KEYDOWN:
 			if (input.left.has(e.key.keysym.sym)){ //going left
-					_game->player().goingLeft() = 1.f;
+				_game->player().goingLeft() = 1.f;
 			}
 			if (input.right.has(e.key.keysym.sym)){//going right
-					_game->player().goingLeft() = -1.f;
+				_game->player().goingLeft() = -1.f;
 			}
 			if (input.up.has(e.key.keysym.sym)){//going up
-					_game->player().goingUp() = 1.f;
+				_game->player().goingUp() = 1.f;
 			}
 			if (input.down.has(e.key.keysym.sym)){//going down
-					_game->player().goingUp() = -1.f;
+				_game->player().goingUp() = -1.f;
 			}
 			if (input.togglePause.has(e.key.keysym.sym)) {
-					goToPause();
+				goToPause();
 			}
 			if (debug && e.key.keysym.sym==SDLK_SPACE) {
-					goToMenu();
+				goToMenu();
 			}
 
 			// Camera handling
@@ -263,7 +262,9 @@ void GameManager::doGameEvent(SDL_Event e) {
 					break;
 			}
 			break;
-		}
+		default: 
+			break;
+	}
 }
 
 

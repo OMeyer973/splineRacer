@@ -151,10 +151,10 @@ void GameManager::doMenuEvent(SDL_Event e) {
 }
 
 void GameManager::doGameEvent(SDL_Event e) {
+	// 
 	// _game->player().goingLeft() =0.f;
 	// _game->player().goingUp() =0.f;
 	switch (e.type) {
-
 		case SDL_JOYAXISMOTION:
 
 			if (e.jaxis.axis == 0)	// LT

@@ -295,7 +295,7 @@ void RenderManager::updateGameLights() {
 	lightMatrix = glm::transpose(_globalMatrix);
 	lightVector = glm::normalize(glm::vec4(1, 1, 1, 0) * lightMatrix);
 
-	assert(_lightsCount > 0);	
+	assert(_lightsCount > 0);
 	_lights[0].posOrDir() = glm::vec3(lightVector);
 	_lights[1].posOrDir() = glm::vec3(-lightVector);
 }

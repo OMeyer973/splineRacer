@@ -1,4 +1,5 @@
 #include "glimac/SDLWindowManager.hpp"
+#include <splineengine/common.hpp>
 #include <iostream>
 
 namespace glimac {
@@ -8,10 +9,18 @@ SDLWindowManager::SDLWindowManager(uint32_t width, uint32_t height, const char* 
         std::cerr << SDL_GetError() << std::endl;
         return;
     }
-    if(!SDL_SetVideoMode(width, height, 32, SDL_OPENGL)) {
-        std::cerr << SDL_GetError() << std::endl;
-        return;
+    if(debug){
+      if(!SDL_SetVideoMode(width, height, 32, SDL_OPENGL)) {
+          std::cerr << SDL_GetError() << std::endl;
+          return;
+      }
+    }else{
+      if(!SDL_SetVideoMode(0,0, 32, SDL_OPENGL | SDL_FULLSCREEN)) {
+          std::cerr << SDL_GetError() << std::endl;
+          return;
+      }
     }
+
     SDL_WM_SetCaption(title, nullptr);
 }
 

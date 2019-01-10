@@ -13,7 +13,15 @@ class Settings {
 	// SINGLETON CONSTRUCTORS - DESTRUCTORS
 	private:
 		/// \brief private constructor
-		Settings() {};
+		Settings() {
+			if(debug){
+				_windowWidth = 800.f;
+				_windowHeight = 600.f;
+			}else{
+				_windowWidth=1920.f;
+				_windowHeight=1080.f;
+			}
+		};
 		/// \brief private destructor
 		~Settings() {};
 
@@ -32,7 +40,7 @@ class Settings {
 		// CONST GETTERS
 		/// \brief get the time difference in seconds between the current frame and the previous (enforced)
 		float deltaTime() const { return _deltaTime; };
-		
+
 		/// \brief get the current time since the application is running
 		float time() const { return _time; };
 
@@ -44,14 +52,14 @@ class Settings {
 
 		/// \brief get the application path
 		const glimac::FilePath& appPath() const { return _appPath; };
-		
+
 		/// \brief get the frame rate
 		const Uint32 framerate() const { return _framerate_ms; };
 
 		// NON-CONST GETTERS (can be used as setters)
 		/// \brief set the application path
 		glimac::FilePath& appPath() { return _appPath; };
-		
+
 		// METHODS
 		/// \brief updates the current time at each frame
 		void updateTime() { _time += _deltaTime; };
@@ -61,8 +69,8 @@ class Settings {
 		// CONSTANTS
 		/// \brief path of the app
 		glimac::FilePath _appPath;
-		const uint32_t _windowWidth = 800;
-		const uint32_t _windowHeight = 600;
+		float _windowWidth;
+		float _windowHeight;
 		/// \brief time between 2 frames (ms)
 		const Uint32 _framerate_ms = 1000 / 30;
 		/// \brief time between 2 frames (seconds)

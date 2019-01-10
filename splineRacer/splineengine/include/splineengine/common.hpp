@@ -8,11 +8,11 @@
 // declare global variables here
 
 // print debug messages ?
-const bool debug = true;
+const bool debug = false;
 
 // directions for spline-space vectors
 const int FWD = 0;
-const int LEFT = 1; 
+const int LEFT = 1;
 const int UP = 2;
 
 // spline-space vectors

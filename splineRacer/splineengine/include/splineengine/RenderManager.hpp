@@ -12,6 +12,7 @@
 #include <splineengine/GLSLProgram.hpp>
 #include <splineengine/Light.hpp>
 #include <splineengine/AssetManager.hpp>
+#include <splineengine/Settings.hpp>
 
 namespace splineengine {
 
@@ -26,7 +27,7 @@ class RenderManager {
 
 		/// \brief Default constructor
 		RenderManager() {
-			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 200.f);
+			_projMatrix = glm::perspective(glm::radians(70.f), Settings::instance().windowWidth() / Settings::instance().windowHeight(), 0.1f, 200.f);
 			_lightsCount = 0;
 		};
 
@@ -34,7 +35,7 @@ class RenderManager {
 			if (debug) std::cout << "rendermanager construction from camera : " << std::endl
 			<< "	setting projMatrix, MVMatrix, normalMatrix" << std::endl;
 			// TODO : get resolution from settings instead of hard coded 800x600
-			_projMatrix = glm::perspective(glm::radians(70.f), 800 / 600.f, 0.1f, 200.f);
+			_projMatrix = glm::perspective(glm::radians(70.f), Settings::instance().windowWidth() / Settings::instance().windowHeight(), 0.1f, 200.f);
 			_MVMatrix = glm::translate(camera.getViewMatrix(), -5.f*fwdVec);
 			_normalMatrix = glm::transpose(glm::inverse(_MVMatrix));
 			_globalMatrix = _MVMatrix;

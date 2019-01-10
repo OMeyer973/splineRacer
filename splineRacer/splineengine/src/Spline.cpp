@@ -18,7 +18,7 @@ Spline::Spline(const std::string& levelName)
 	:_segmentLength(defaultSegmentLength)
 {
 	// TODO THIS IS PLACEHOLDER UNTIL WE CAN LOAD A SPLINE FROM FILE
-	 if (levelName == "Infinite") {
+	 if (levelName == "Endless") {
 		// first point : gives the general direction of the spline (random with y = 0)
 		glm::vec3 tmpAnchor = glm::normalize(glm::abs(glm::sphericalRand(1.f)*glm::vec3(1.f,0.f,1.f)));
 		_anchors.push_back(tmpAnchor);

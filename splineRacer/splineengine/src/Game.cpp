@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include "splineengine/Error.hpp"
+#include <cstdlib>
 
 namespace splineengine {
 
@@ -196,7 +197,7 @@ void Game::generateLevel(const float start, const float finish) {
 
 	for (float i=start; i<finish; i+=.7f) {
 		_obstacles.push_back(Obstacle(GameObject(
-			assetManager.models()["prism"], _spline,
+			assetManager.models()["cloud"], _spline,
 			"cloud.jpg",
 			true,
 			Transform(
@@ -233,7 +234,7 @@ void Game::generateLevel(const float start, const float finish) {
 		}
 		for (float j = 0; j < 6.28; j+=.3f) {
 			_obstacles.push_back(Obstacle(GameObject(
-				assetManager.models()["prism"], _spline,
+				assetManager.models()["cloud"], _spline,
 				"cloud.jpg",
 				 false,
 				Transform(

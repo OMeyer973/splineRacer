@@ -21,7 +21,7 @@ namespace splineengine {
 			}
 		}
 		catch (const Error &e) {
-			std::cerr << e.what() << std::endl;
+			e.what();
 		}
 
 		// OBJ is correctly loaded

@@ -48,7 +48,7 @@ Game::Game()
 		Transform()
 	))
 {
-	std::cout << "infinite game constructor called " << std::endl;
+	if (debug) std::cout << "infinite game constructor called " << std::endl;
 	_cameras.emplace_back(new POVCamera());
 	_cameras.emplace_back(new TrackballCamera());
 	_chosenCamera = TRACKBALL_CAMERA;
@@ -96,8 +96,7 @@ Game::Game(const std::string& levelName)
 		Transform(glm::vec3(0.f), glm::vec3(8.f))
 	))
 {
-	// TODO - OK now ?
-	std::cout << "game constructor from level caled : " << levelName << std::endl;
+	if (debug) std::cout << "game constructor from level caled : " << levelName << std::endl;
 	_cameras.emplace_back(new POVCamera());
 	_cameras.emplace_back(new TrackballCamera());
 	_chosenCamera = TRACKBALL_CAMERA;
@@ -108,7 +107,7 @@ Game::Game(const std::string& levelName)
 
 
 Game::~Game() {
-	std::cout << "game destructor called " << std::endl;
+	if (debug) std::cout << "game destructor called " << std::endl;
 	GameObject::resetDrawing();
 }
 
@@ -124,7 +123,7 @@ GameObject Game::gameObjFromJson(nlohmann::json j) {
 	for (uint i=1; i<=nbAnimInJson; i++) {
 		// if to clean bad values in unregistered fields
 		if (j["anim" + std::to_string(i)].is_number()) {
-			std::cout << j["anim" + std::to_string(i)].get<int>() << std::endl;
+			if (debug) std::cout << j["anim" + std::to_string(i)].get<int>() << std::endl;
 			animList.emplace_back(j["anim" + std::to_string(i)].get<int>());
 		}
 	}
@@ -261,7 +260,7 @@ void Game::generateLevel(const float start, const float finish, const int partTo
 
 	//base towers
 	for (float i=start; i<finish; i+=10.f) {
-		std::cout << (rand()%2)  << "   ";
+		if (debug) std::cout << (rand()%2)  << "   ";
 		int sign = (rand()%2) * 2 -1;
 		_decorations.push_back(std::unique_ptr<GameObject>(new Decoration(GameObject(
 			assetManager.models()["tower"], _spline,
@@ -488,7 +487,7 @@ void Game::drawGameObjList (std::list<std::unique_ptr<GameObject>>& objList) {
 			++it;
 		} else if ((*it)->sPosition()[FWD] < _player.sPosition()[FWD]) {
 			objList.erase(it++);
-			std::cout << "erasing object far behind" << std::endl;
+			if (debug) std::cout << "erasing object far behind" << std::endl;
 		} else {
 			++it;
 		}

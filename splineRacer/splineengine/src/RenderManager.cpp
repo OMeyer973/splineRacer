@@ -121,7 +121,7 @@ void RenderManager::sendUniformsToShaders(FS shader)
 			break;
 
 		case MULTI_LIGHT :
-			ambientLight = glm::vec3(.08);
+			ambientLight = glm::vec3(.12);
 
 			for (std::vector<Light>::iterator it = _lights.begin(); it != _lights.end(); ++it) {
 				it->sendLightShader(programList.multiLightProgram, refLight);
@@ -175,7 +175,8 @@ void RenderManager::initGameLights() {
 	addLight(
 		false,
 		glm::vec3(lightVector),
-		glm::vec3(1, 0.8, 0.5),
+		// glm::vec3(1, 0.8, 0.5),
+		glm::vec3(1, 1, 1),
 		glm::vec3(1, 0.75, .35),
 		64,
 		glm::vec3(1.0)
@@ -185,10 +186,10 @@ void RenderManager::initGameLights() {
 	addLight(
 		false,
 		glm::vec3(lightVector),
-		glm::vec3(.2),
+		glm::vec3(.4),
 		glm::vec3(0.0, 0.1, 0.2),
 		2,
-		glm::vec3(.25)
+		glm::vec3(.35)
 	);
 
 	/* Red Point Lights under the plane */

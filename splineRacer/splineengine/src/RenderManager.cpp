@@ -121,7 +121,7 @@ void RenderManager::sendUniformsToShaders(FS shader)
 			break;
 
 		case MULTI_LIGHT :
-			ambientLight = glm::vec3(.08);
+			ambientLight = glm::vec3(.1);
 
 			for (std::vector<Light>::iterator it = _lights.begin(); it != _lights.end(); ++it) {
 				it->sendLightShader(programList.multiLightProgram, refLight);
@@ -187,6 +187,16 @@ void RenderManager::initGameLights() {
 		glm::vec3(lightVector),
 		glm::vec3(.2),
 		glm::vec3(0.0, 0.1, 0.2),
+		2,
+		glm::vec3(.25)
+	);
+
+	/* Pink Directional Light */
+	addLight(
+		false,
+		glm::vec3(lightVector),
+		glm::vec3(.2),
+		glm::vec3(1., 0.2, 1.),
 		2,
 		glm::vec3(.25)
 	);
@@ -298,6 +308,9 @@ void RenderManager::updateGameLights() {
 	assert(_lightsCount > 0);
 	_lights[0].posOrDir() = glm::vec3(lightVector);
 	_lights[1].posOrDir() = glm::vec3(-lightVector);
+	lightMatrix = glm::rotate(lightMatrix, 90.f, glm::vec3(0.f, 1.f, 0.f));
+	lightVector = glm::normalize(glm::vec4(1, 1, 1, 0) * lightMatrix);
+	_lights[2].posOrDir() = glm::vec3(lightVector);
 }
 
 void RenderManager::clearLights() {
@@ -350,6 +363,23 @@ void RenderManager::drawScore(const unsigned int score) {
 	);
 }
 
+void RenderManager::drawMenuScores() {
+	_textColor = glm::vec3(1.f, 1.f, 1.f);
+	_enableGlBlend = true;
+	useProgram(TEXT);
+	std::map<std::string, int> scores = AssetManager::instance().scores();
+	int currentPosition = 0;
+	for (std::map<std::string, int>::iterator it = scores.begin(); it != scores.end(); ++it) {
+		AssetManager::instance().textManager().renderText(
+			std::to_string(currentPosition+1) + ". " + it->first + " : " + std::to_string(it->second),
+			Settings::instance().windowWidth() * .1f,
+			Settings::instance().windowHeight() - 100.f - (currentPosition * 40.f),
+			.6f
+		);
+		currentPosition++;
+	}
+}
+
 void RenderManager::drawWinCard() {
 	_textColor = glm::vec3(.3f, 1.f, 0.5f);
 	_enableGlBlend = true;
@@ -367,10 +397,22 @@ void RenderManager::drawLoseCard() {
 	_enableGlBlend = true;
 	useProgram(TEXT);
 	AssetManager::instance().textManager().renderText(
-		"Dommage !",
+		"Game Over",
 		Settings::instance().windowWidth() * .5f - 130.f,
 		Settings::instance().windowHeight() * .7f,
 		1.2f
+	);
+}
+
+void RenderManager::drawGetName(const std::string& name) {
+	_textColor = glm::vec3(1.f, 1.f, 1.f);
+	_enableGlBlend = true;
+	useProgram(TEXT);
+	AssetManager::instance().textManager().renderText(
+		"Name :\n" + name,
+		Settings::instance().windowWidth() * .5f - 80.f,
+		Settings::instance().windowHeight() * .6f,
+		.75f
 	);
 }
 

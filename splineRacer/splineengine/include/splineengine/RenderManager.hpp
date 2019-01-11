@@ -128,11 +128,17 @@ class RenderManager {
 		/// \brief Draw score
 		void drawScore(const unsigned int score);
 
+		/// \brief Draw menu scores
+		void drawMenuScores();
+
 		/// \brief Draw win Card
 		void drawWinCard();
 
 		/// \brief Draw lose Card
 		void drawLoseCard();
+
+		/// \brief Draw get player name pannel
+		void drawGetName(const std::string& name);
 
 	// MEMBERS
 	protected:

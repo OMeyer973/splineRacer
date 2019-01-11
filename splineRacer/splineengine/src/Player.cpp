@@ -16,7 +16,8 @@ Player::Player(
     _sMaxSpeed(maxSpeed),
     _sAcceleration(acceleration),
     _sInput(1.f, 0.f, 0.f),
-    _score(0)
+    _score(0),
+    _name("Player Name")
 {
 	_music = Mix_LoadMUS("../splineRacer/assets/musics/coin.mp3");
 }

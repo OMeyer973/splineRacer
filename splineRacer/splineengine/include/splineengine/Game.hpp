@@ -121,6 +121,9 @@ class Game {
 		///\brief and handle the collision behaviour  
 		void updateCollectableList(std::list<std::unique_ptr<GameObject>>&  objList);
 
+		/// \brief Save Score
+		void saveScore(const int score);
+
 		// MEMBERS
 		// gamemodes : CLASSIC, ENDLESS
 		int _gameMode;

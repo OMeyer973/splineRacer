@@ -112,7 +112,7 @@ void Menu::update() {
 		_tickVertical++;
 	}
 
-	// Interaction with current selected
+	// Interaction with current level selected
 	for (int i = 0; i < _levels.size(); i++) {
 		if (i == _selectedLevel) {
 			_menuItems[4-i].scale() = glm::mix(_menuItems[4-i].scale(), glm::vec3(.35f), .45f);
@@ -154,8 +154,8 @@ void Menu::render() {
 
 	_menuItems[0].draw();
 
-	//display levels
-	if(_displayLevels){
+	// display levels
+	if (_displayLevels) {
 		for(float i=1; i< _menuItems.size(); i++) {
 			MVMatrix = _menuItems[i].staticMatrix();
 			_renderManager.updateMVMatrix(*_cameras[_chosenCamera], MVMatrix, _menuItems[i].scale());
@@ -163,6 +163,11 @@ void Menu::render() {
 			_menuItems[i].draw();
 		}
 	}
+
+	if (selectedMenu() == "Scores") {
+		_renderManager.drawMenuScores();
+	}
+
 }
 
 void Menu::changePannel(const int pannelState) {
@@ -194,7 +199,7 @@ void Menu::changeLevel(const int lvlUpOrDown) {
 		_isRotatingVertically = false;
 	} else {
 	 	_selectedLevel += -lvlUpOrDown;
-		if (debug) std::cout << "Level : " << selectedLevel() << " Selected" <<  std::endl;
+		// if (debug) std::cout << "Level : " << selectedLevel() << " Selected" <<  std::endl;
 		_rotationDirection = -lvlUpOrDown;
 		_isRotatingVertically = true;
 	}

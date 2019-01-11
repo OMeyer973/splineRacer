@@ -9,6 +9,7 @@
 #include <splineengine/TextManager.hpp>
 #include <splineengine/Model.hpp>
 #include <splineengine/Texture.hpp>
+#include <splineengine/json.hpp>
 
 namespace splineengine {
 
@@ -21,7 +22,9 @@ class AssetManager {
 
 		/// \brief private destructor
 		~AssetManager()
-		{};
+		{
+			saveScores();
+		};
 
 	public:
 		/// \brief access the singleton instance
@@ -41,7 +44,7 @@ class AssetManager {
 
 		const std::map<std::string, Texture>& textures() const { return _textures; };
 
-		//const std::map<std::string, Texture>& textures() const { return _textures; };
+		const std::map<std::string, int>& scores() const { return _scores; };
 
 		const ProgramList& programList() { return _programList; };
 
@@ -52,21 +55,33 @@ class AssetManager {
 
 		std::map<std::string, Texture>& textures(){return _textures;};
 
+		std::map<std::string, int>& scores(){return _scores;};
+
 		void setupText();
 
-
-
+		void saveScores();
 
 	private:
 		// METHODS
+		/// \brief load assets
 		void loadAssets();
 
+		/// \brief load scores
+		void loadScores();
 
 		// MEMBERS
 		/// \brief 3D models assets
 		std::map<std::string, Model> _models;
 
+		/// \brief Textures
 		std::map<std::string, Texture> _textures;
+
+		/// \brief Scores
+		std::map<std::string, int> _scores;
+
+		//TODO : add this stuff
+		// std::map<int, Program> _programs;
+		/// \brief shader programs
 
 		/// \brief Program List
 		const ProgramList _programList;

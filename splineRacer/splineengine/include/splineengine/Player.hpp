@@ -66,8 +66,11 @@ class Player : public GameObject {
         /// \brief get the up_down input direction as a const
         const float& goingUp() const { return _sInput[UP]; }
 
-        /// \brief get the up_down input direction as a const
+        /// \brief get score of the player
         const unsigned int& score() const { return _score; }
+
+        /// \brief get name of the player
+        const std::string& name() const { return _name; }
 
 
         // NON-CONST GETTERS (can be used as setters
@@ -82,6 +85,9 @@ class Player : public GameObject {
 
         /// \brief get the up_down input direction as a reference
         float& goingUp() { return _sInput[UP]; }
+
+        /// \brief get name of the player
+        std::string& name() { return _name; }
 
 
         // METHODS
@@ -120,6 +126,8 @@ class Player : public GameObject {
         glm::vec3 _sAcceleration;
         /// \brief Score of the player
         unsigned int _score;
+        /// \brief Score of the player
+        std::string _name;
 
         /// \ Sound played
         Mix_Music *_music; //creation of musique

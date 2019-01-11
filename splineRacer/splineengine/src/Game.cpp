@@ -204,8 +204,6 @@ void Game::loadLevel(const std::string& levelName) {
 		))));	
 	}
 	
-
-
 	_finishLine.sPosition() = glm::vec3(_spline.length(), 0.f, 0.f);
 
 	_renderManager.initGameLights();
@@ -395,6 +393,7 @@ void Game::update() {
 	if (_gameState == LEVELWIN || _gameState == LEVELLOSE || _gameState == ENDLESSOVER) {
 		if (_endScreenTimer <= 0) {
 			_gameState = EXITING;
+			saveScore(_player.score());
 			if (debug) std::cout << "gameState : EXITING (going back to menu)" << std::endl;
 		}
 		_endScreenTimer -= Settings::instance().deltaTime();
@@ -463,14 +462,15 @@ void Game::render() {
 	glDepthMask(GL_TRUE);
 
 	// TODO : display the end cards under these conditions
-	if (_gameState == LEVELWIN)
+	if (_gameState == LEVELWIN) {
 		_renderManager.drawWinCard();
+		_renderManager.drawGetName(_player.name());
+	}
 
-	if (_gameState == LEVELLOSE)
+	if (_gameState == LEVELLOSE || _gameState == ENDLESSOVER) {
 		_renderManager.drawLoseCard();
-
-	if (_gameState == ENDLESSOVER)
-		_renderManager.drawLoseCard();
+		_renderManager.drawGetName(_player.name());
+	}
 
 	_renderManager.drawDistanceToAlien(_player.sPosition()[FWD] - _alien.sPosition()[FWD]);
 
@@ -573,6 +573,10 @@ void Game::updateCollectableList(std::list<std::unique_ptr<GameObject>>& objList
 			 throw(Error("bad cast : collectable list contains not collectable GameObjects",__FILE__,__LINE__));
 		}
 	}
+}
+
+void Game::saveScore(const int score) {
+	AssetManager::instance().scores().insert(std::make_pair(_player.name(), score));
 }
 
 }

@@ -200,6 +200,15 @@ void RenderManager::initGameLights() {
 		6,
 		glm::vec3(2.0)
 	);
+
+	addLight(
+		true,
+		glm::vec3(lightVector),
+		glm::vec3(.2),
+		glm::vec3(1,1,1),
+		30,
+		glm::vec3(1.0)
+	);
 }
 
 void RenderManager::initMenuLights() {

@@ -71,10 +71,10 @@ void Player::doCollisionWith(Obstacle& other) {
 
 void Player::doCollisionWith(Collectable& collectable) {
 	if (!collectable.isTaken()) {
-		Mix_PauseMusic();
+		//Mix_PauseMusic();
 		_score+=100;
-		Mix_PlayMusic(_music,1);
-		Mix_VolumeMusic(MIX_MAX_VOLUME/2);
+		//Mix_PlayMusic(_music,1);
+		//Mix_VolumeMusic(MIX_MAX_VOLUME/2);
 	}
 }
 

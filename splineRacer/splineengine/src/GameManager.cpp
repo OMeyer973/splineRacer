@@ -262,7 +262,7 @@ void GameManager::doGameEvent(SDL_Event e) {
 					break;
 			}
 			break;
-		default: 
+		default:
 			break;
 	}
 }
@@ -383,7 +383,7 @@ void GameManager::goToGame() {
 	std::cout << "going to game " << std::endl;
 	//if no level has been initialized yet, load the infinite game
 	Mix_Music *music; //creation of musique
-  music = Mix_LoadMUS("../splineRacer/assets/musics/pause.mp3");
+  music = Mix_LoadMUS("../splineRacer/assets/musics/instru_imac.mp3");
   Mix_PlayMusic(music, -1);
 	Mix_VolumeMusic(MIX_MAX_VOLUME);
 
@@ -407,6 +407,10 @@ void GameManager::goToPause() {
 void GameManager::goToMenu() {
 	std::cout << "going to menu " << std::endl;
 	_game.reset();
+	Mix_Music *music; //creation of musique
+	music = Mix_LoadMUS("../splineRacer/assets/musics/menu.mp3");
+	Mix_PlayMusic(music, -1);
+	Mix_VolumeMusic(MIX_MAX_VOLUME);
 
 	_activeScreen = MENU;
 

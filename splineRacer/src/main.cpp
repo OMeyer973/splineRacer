@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
         std::cout << Mix_GetError() << std::endl;
 
   Mix_Music *music; //creation of musique
-  music = Mix_LoadMUS("../splineRacer/assets/musics/menu:.mp3");
+  music = Mix_LoadMUS("../splineRacer/assets/musics/menu.mp3");
   Mix_PlayMusic(music, -1);
 	Mix_VolumeMusic(MIX_MAX_VOLUME);
 

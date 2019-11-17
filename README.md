@@ -5,7 +5,7 @@ IMAC semester 3 C++ and openGL 3 project. temple run clone but about a plane fly
 
 [see demo video](https://youtu.be/6p8Vq_vyp4g)
 
-#### Install project
+## Install project
 ```shell
 mkdir splineRacer-build
 cd splineRacer-build
@@ -13,9 +13,12 @@ cmake ../splineRacer
 make
 ./src/SPLINERACER
 ```
-## Possible optimisations
 
-- to check collisions: instead of checking several colliders per object, first check one big bounding box collider per object and if a collision is detected with this bounding box, the list of colliders is checked 
+## Game engine features
+- Analogic movement in spline-space : rotate around the spline - X-axis: radial angle, Y-axis: radial distance
+- World-space spheric collisions
+- transform animation of objects
+- optimised render and physics - far away objects are not computed
 
 ## Inspirations and references
 
@@ -27,8 +30,16 @@ make
 - [Catmull Rom spline reference](https://en.wikipedia.org/wiki/Cubic_Hermite_spline)
 - [ogldev opengl tutorials](http://ogldev.atspace.co.uk/)
 
-## Coding norms
+## Libraries used
+- tinyObjLoader
+- Json for modern c++
+- SDL_mixer
+- FreeType
 
+## Possible optimisations
+- less collision detection: sort colliders in a octo-tree like hierarchy
+
+## Coding norms
 - all variables must be in lowerCamelCase
 ```c++
 int myVariable = 1;
